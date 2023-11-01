@@ -1,0 +1,43 @@
+package lab1z1;
+import java.util.Scanner;
+/**
+ *
+ * @author fpm.perevyaz
+ */
+public class Program 
+{
+
+    public static boolean palindrom(int n)
+    {
+        int obr=0;
+        int copy=1;
+        copy=n;
+        while(copy>0)
+        {
+            obr=obr*10+copy%10;
+            copy=copy/10;
+        }
+        if(n==obr)
+            return true;
+        else
+            return false;
+    }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n;
+        System.out.println("Введите число");
+        n=sc.nextInt();
+        if(palindrom(n))
+            System.out.println("Число "+n+" - падинром");
+        else
+            System.out.println("Число "+n+" - не падинром");
+        int n2=n*n;
+        if(palindrom(n2))
+            System.out.println("Число "+n+" - двойной падинром");
+        else
+            System.out.println("Число "+n+" - не двойной падинром");
+    }
+    
+}
+

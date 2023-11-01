@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1590837695 source:d:\Учеба\Программирование\Проекты c++\aisd3\aisd3\3ai.cpp
+	<fstream>
+	<cstdlib>
+	<algorithm>
+

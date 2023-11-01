@@ -1,0 +1,343 @@
+package com.company;
+import javax.imageio.spi.ImageInputStreamSpi;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static int count = 1;
+
+    public static void main(String[] args) {
+
+        try {
+            FileInputStream in = new FileInputStream("input.txt");
+            PrintStream out = new PrintStream("output.txt");
+            Scanner file=new Scanner(in);
+            Scanner console=new Scanner(System.in);
+
+            VoyageOfTrawler[] voyages=new VoyageOfTrawler[8];
+            String str="";
+            int count1=0, count2, number;
+            int[] massInt;
+            String[] words;
+
+            for(int i=0; i<voyages.length;i++){
+                voyages[i]=new VoyageOfTrawler();
+                voyages[i].SetId(count);
+                voyages[i].SetNumberOfTrawler(file.nextInt());
+                voyages[i].SetData(file.next());
+                voyages[i].SetNameOfPlace(file.next());
+
+                while (file.hasNextInt()==false) {
+                    str+=file.next();
+                    count1++;
+                }
+
+                if(count1!=0) {
+                    voyages[i].SetNameOfFishes(str.split(","));
+                }
+                str="";
+
+                count2=count1;
+                while (count2>0) {
+                    str+=file.next();
+                    count2--;
+                }
+
+                words=str.split(",");
+                massInt=new int[count1];
+
+                for (int k=0;k<count1;k++) {
+                    massInt[k] = Integer.parseInt(words[k]);
+                }
+
+                voyages[i].SetQuantOfFishes(massInt);
+
+                count++;
+                str="";
+                count1=0;
+            }
+
+            Voyage voyage=new Voyage(file.next(),file.next(),voyages);
+
+            System.out.println(voyage.toString());
+            out.println(voyage.toString());
+
+            System.out.println(" Введите дату: ");
+            str=console.next();
+            System.out.println(" Введите число: ");
+            number=console.nextInt();
+
+            System.out.println(voyage.QuantAtADay(str,number));
+            System.out.println(voyage.QuantAtAPlace());
+            System.out.println(voyage.MaxQuant());
+            out.println(voyage.QuantAtADay(str,number));
+            out.println(voyage.QuantAtAPlace());
+            out.println(voyage.MaxQuant());
+
+            /*figures3[0]=new Rectangle(file.nextInt(), file.nextInt(), file.nextInt(), file.nextInt());
+            figures3[1]=new Circle(file.nextInt(), file.nextInt(), file.nextInt());
+            figures3[2]=new Triangle(file.nextInt(), file.nextInt(), file.nextInt());
+
+            for (Planefigure i : figures3) {
+                System.out.println(i.toString());
+            }
+
+            Arrays.sort(figures3, new Sort());
+
+            Location[] locations= new Location[2];
+
+            locations[0]=new Rectangle(file.nextInt(), file.nextInt(), file.nextInt(), file.nextInt());
+            locations[1]=new Circle(file.nextInt(), file.nextInt(), file.nextInt());
+
+            System.out.println(((Rectangle)locations[0]).RelativeLocation(((Circle)locations[1])));
+            System.out.println(((Circle)locations[1]).RelativeLocation(((Rectangle)locations[0])));*/
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+
+    }
+}
+
+class VoyageOfTrawler{
+    private int id;
+    private  int numberOfTrawler;
+    private String data;
+    private String nameOfPlace;
+    private String[] nameOfFishes;
+    private int[] quantOfFishes;
+
+    public VoyageOfTrawler(){
+        this.id=0;
+        this.numberOfTrawler=0;
+        this.data="";
+        this.nameOfPlace="";
+        this.nameOfFishes=new String[0];
+        this.quantOfFishes=new int[0];
+    }
+
+    public VoyageOfTrawler(int id, int numberOfTrawler, String data, String nameOfPlace, String[] nameOfFishes, int[] quantOfFishes){
+        this.id=id;
+        this.numberOfTrawler=numberOfTrawler;
+        this.data=data;
+        this.nameOfPlace=nameOfPlace;
+        this.nameOfFishes=new String[nameOfFishes.length];
+        this.quantOfFishes=new int[quantOfFishes.length];
+        for(int i=0;i<quantOfFishes.length;i++) {
+            this.quantOfFishes[i] = quantOfFishes[i];
+            this.nameOfFishes[i] = nameOfFishes[i];
+        }
+    }
+
+    public void SetId(int id) {
+        this.id = id;
+    }
+
+    public void SetNumberOfTrawler(int numberOfTrawler) {
+        this.numberOfTrawler = numberOfTrawler;
+    }
+
+    public void SetData(String data) {
+        this.data = data;
+    }
+
+    public void SetNameOfPlace(String nameOfPlace) {
+        this.nameOfPlace = nameOfPlace;
+    }
+
+    public void SetNameOfFishes(String[] nameOfFishes) {
+        this.nameOfFishes=new String[nameOfFishes.length];
+        for(int i=0;i<nameOfFishes.length;i++) {
+            this.nameOfFishes[i] = nameOfFishes[i];
+        }
+    }
+
+    public void SetQuantOfFishes(int[] quantOfFishes) {
+        this.quantOfFishes=new int[quantOfFishes.length];
+        for(int i=0;i<quantOfFishes.length;i++) {
+            this.quantOfFishes[i] = quantOfFishes[i];
+        }
+    }
+
+    public int GetId() {
+        return this.id;
+    }
+
+    public int GetNumberOfTrawler() {
+        return numberOfTrawler;
+    }
+
+    public String GetData() {
+        return data;
+    }
+
+    public String GetNameOfPlace() {
+        return nameOfPlace;
+    }
+
+    public String[] GetNameOfFishes() {
+        return nameOfFishes;
+    }
+
+    public int[] GetQuantOfFishes() {
+        return quantOfFishes;
+    }
+
+    public String toString(){
+
+        String str=" Рейс траулера номер "+this.id+". Номер траулера "+this.numberOfTrawler+
+                ".\n Дата посещения банки "+this.data+". Название банки "+this.nameOfPlace+
+                ".\n Наименования пойманных рыб: ";
+
+        for(int i=0;i<this.nameOfFishes.length;i++) {
+            str+=this.nameOfFishes[i];
+            if(i!=this.nameOfFishes.length-1){
+                str+=", ";
+            }
+        }
+        str+=".\n Количевства пойманных рыб: ";
+
+        for(int i=0;i<this.quantOfFishes.length;i++) {
+            str+=this.quantOfFishes[i];
+            if(i!=this.quantOfFishes.length-1){
+                str+=", ";
+            }
+        }
+        str+=".";
+
+        return str;
+    }
+
+    public int GetCount(){
+        return Main.count-1;
+    }
+}
+
+class Voyage{
+    public String name;
+    public String location;
+    private VoyageOfTrawler[] voyages;
+
+    public Voyage(){
+        this.name="";
+        this.location="";
+        this.voyages=new VoyageOfTrawler[0];
+    }
+
+    public Voyage(String name, String location, VoyageOfTrawler[] voyages){
+        this.name=name;
+        this.location=location;
+        this.voyages = new VoyageOfTrawler[voyages.length];
+        for(int i=0;i<voyages.length;i++){
+            this.voyages[i]=new VoyageOfTrawler(voyages[i].GetId(),voyages[i].GetNumberOfTrawler(),voyages[i].GetData(),voyages[i].GetNameOfPlace(),
+                    voyages[i].GetNameOfFishes(),voyages[i].GetQuantOfFishes());
+        }
+    }
+
+    public void SetName(String name) {
+        this.name = name;
+    }
+
+    public void SetLocation(String location) {
+        this.location = location;
+    }
+
+    public void SetVoyages(VoyageOfTrawler[] voyages) {
+        this.voyages = new VoyageOfTrawler[voyages.length];
+        for(int i=0;i<voyages.length;i++){
+            voyages[i]=new VoyageOfTrawler(voyages[i].GetId(),voyages[i].GetNumberOfTrawler(),voyages[i].GetData(),voyages[i].GetNameOfPlace(),
+                    voyages[i].GetNameOfFishes(),voyages[i].GetQuantOfFishes());
+        }
+    }
+
+    public String GetName() {
+        return name;
+    }
+
+    public String GetLocation() {
+        return location;
+    }
+
+    public VoyageOfTrawler[] GetVoyages() {
+        return voyages;
+    }
+
+    public String toString(){
+
+        String str= " Наименование пароходства "+this.name+". Местоположение пароходства "+this.location +".\n ";
+
+        for(int i=0;i<this.voyages.length;i++){
+            str+=(i+1)+" посещение: \n "+this.voyages[i].toString()+"\n ";
+        }
+
+        return str;
+    }
+
+    public String QuantAtADay(String data, int quant){
+
+        String str="";
+        for (VoyageOfTrawler i : this.voyages) {
+            if(i.GetData().equals(data)){
+                for (int k : i.GetQuantOfFishes()) {
+                    if(k>quant){
+                        str+=i.toString();
+                    }
+                }
+            }
+        }
+
+        return str;
+    }
+
+    public String QuantAtAPlace(){
+
+        String str="";
+        int sum=0;
+
+        for (VoyageOfTrawler i : this.voyages) {
+
+            str+=i.GetNameOfPlace()+" ";
+
+                for (int k : i.GetQuantOfFishes()) {
+                        sum+=k;
+                }
+
+                str+=sum+"\n";
+                sum=0;
+        }
+
+        return str;
+    }
+
+    public String MaxQuant(){
+
+        String str="";
+        int sum=0, sum1=0;
+        VoyageOfTrawler voyage=new VoyageOfTrawler();
+
+        for (VoyageOfTrawler i : this.voyages) {
+            for (int k : i.GetQuantOfFishes()) {
+                sum+=k;
+            }
+
+            if(sum1<sum){
+                sum1=sum;
+                voyage=i;
+            }
+
+            sum=0;
+        }
+
+        str+=voyage.GetNameOfPlace();
+        for(String i:voyage.GetNameOfFishes()){
+            str+=i+" ";
+        }
+
+        return str;
+    }
+}

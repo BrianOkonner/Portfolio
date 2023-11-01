@@ -1,0 +1,318 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package shop2;
+
+/**
+ *
+ * @author lesha
+ */
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+import java.util.*;
+
+enum Grade {
+    fgrade, sgrade, tgrade
+
+}
+class wrongCost extends Exception{}
+class wrongNumber extends Exception{}
+class Comparer_name implements Comparator <Products>
+{
+    public int compare(Products a, Products b)
+    {
+        return a.getName().compareTo(b.getName());
+    }
+}
+    class Comparer_shelfLife implements Comparator <Products>
+    {
+         public int compare(Products a, Products b)
+    {
+        if(a.getShelfLife() == b.getShelfLife())
+            return 0;
+        if(a.getShelfLife() > b.getShelfLife())
+            return -1;
+        return 1;
+    }
+    }
+    class Products {
+
+        protected final int id;
+        protected final String name;
+        protected final String manufacturer;
+        protected  int cost;
+        protected final int shelfLife;
+        protected final Grade prodGrade;
+        protected final int number;
+        protected static int count = 0;
+
+//        {
+//            count += 1;
+//        }
+
+        public Products( String name, String manufacturer, int cost, int shelfLife, Grade prodGrade, int number)throws wrongCost, wrongNumber {
+            count ++;
+            if( cost<= 0)
+                throw new wrongCost();
+             if( number<= 0)
+                throw new wrongNumber();
+            this.id = count;
+            this.name = name;
+            this.manufacturer = manufacturer;
+            this.cost = cost;
+            this.shelfLife = shelfLife;
+            this.prodGrade = prodGrade;
+            this.number = number;
+
+        }
+        public Products(Products product)throws wrongCost, wrongNumber {
+            count ++;
+           
+            this.id = count;
+            this.name = product.name;
+            this.manufacturer = product.manufacturer;
+            this.cost = product.cost;
+            this.shelfLife = product.shelfLife;
+            this.prodGrade = product.prodGrade;
+            this.number = product.number;
+
+        }
+
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public void setManufacturer(String manufacturer) {
+//            this.manufacturer = manufacturer;
+//        }
+
+        public void setCost(int cost) {
+            this.cost = cost;
+        }
+
+//        public void setShelfLife(int shelfLife) {
+//            this.shelfLife = shelfLife;
+//        }
+//
+//        public void setProdGrade(Grade prodGrade) {
+//            this.prodGrade = prodGrade;
+//        }
+//
+//        public void setNumber(int number) {
+//            this.number = number;
+//        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getManufacturer() {
+            return manufacturer;
+        }
+
+        public int getCost() {
+            return cost;
+        }
+
+        public int getShelfLife() {
+            return shelfLife;
+        }
+
+        public Grade getProdGrade() {
+            return prodGrade;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public  int get_count() {
+            return count;
+        }
+@Override
+        public String toString() {
+            return "id = " + id + " " + "name = " + name + " " + "manufacturer = " + manufacturer + " " + "cost = " + cost + " " + "shelfLife = " + shelfLife + " " + "prodGrade = " + prodGrade + " " + "number = " + number;
+        }
+    }
+       class SpecialProd extends Products {
+
+            private int koef;
+            private String sugarSub;
+
+            public SpecialProd( String name, String manufacturer, int cost, int shelfLife, Grade prodGrade, int number, int koef, String sugarSub)throws wrongCost, wrongNumber {
+                super( name, manufacturer, cost, shelfLife, prodGrade, number);
+                this.koef = koef;
+                this.sugarSub = sugarSub;
+
+            }
+            public SpecialProd(Products product, int koef, String sugarSub) throws wrongCost, wrongNumber
+            {
+                super(product);
+                  this.koef = koef;
+                this.sugarSub = sugarSub;
+                
+            }
+            public int getKoef()
+            {
+                return this.koef;
+            }
+            public void setKoef(int koef)
+            {
+                this.koef = koef;
+            }
+            public String getSugarSub()
+            {
+                return this.sugarSub;
+            }
+            public void setSugarSub(String sugarSub)
+            {
+                this.sugarSub = sugarSub;
+            }
+            @Override
+            public int getCost() {
+            return cost*this.koef;
+        }
+            @Override
+            public String toString()
+            {
+                return "id = " + id + " " + "SugarSub = " + sugarSub + " " + "cost of Special prod = " + getCost() + " " + super.toString();
+            }
+        }
+        class Shop
+        {
+            private String name;
+            private String adress;
+            private Products []products;
+            public Shop(String name, String adress, Products []products) throws wrongCost
+                    
+            {
+                this.name = name;
+                this.adress = adress;
+                this.products = new Products[products.length];
+                System.arraycopy(products, 0, this.products, 0, products.length);
+            }
+            @Override
+            public String toString()
+            {
+                return "Shop: " + this.name + "Adress: " + this.adress + "\n" + Arrays.toString(this.products);
+            }
+            public String getNameGrade(String name, Grade grade)
+            {
+                StringBuffer sb = new StringBuffer();
+                for(Products a: this.products)
+                {
+                    if(a.getProdGrade() == grade && a.getName().equalsIgnoreCase(name))
+                    {
+                        sb.append("\n");
+                        sb.append(a);
+                    }
+                }
+                return sb.toString();
+                        
+            }
+            public String getNameCost(String name, int cost)
+            {
+                StringBuffer sb = new StringBuffer();
+                for(Products a: this.products)
+                {
+                    if(a.getCost() <= cost && a.getName().equalsIgnoreCase(name))
+                    {
+                        sb.append("\n");
+                        sb.append(a);
+                    }
+                }
+                return sb.toString();
+            }
+              public String getShelfShop( int shelfLife)
+            {
+                StringBuffer sb = new StringBuffer();
+                for(Products a: this.products)
+                {
+                    if(a.getShelfLife() > shelfLife)
+                    {
+                        sb.append("\n");
+                        sb.append(a);
+                    }
+                }
+                return sb.toString();
+            }
+              public void sortbyname()
+              {
+                  Arrays.sort(this.products, new Comparer_name());
+              }
+               public void sortbyshelflife()
+              {
+                  Arrays.sort(this.products, new Comparer_shelfLife());
+              }
+              
+            
+        }
+    
+
+public class Shop2 {
+
+    /**
+     * @param args the command line arguments
+     */
+//   protected final int id;
+//        protected final String name;
+//        protected final String manufacturer;
+//        protected  int cost;
+//        protected final int shelfLife;
+//        protected final Grade prodGrade;
+//        protected final int number;
+//        protected static int count = 0;
+//     private int koef;
+//            private String sugarSub;
+    public static void main(String[] args) throws IOException, wrongCost, wrongNumber {
+        FileInputStream ifr = new FileInputStream("input.txt");
+        System.setProperty("console.encoding","Cp1251");
+        Scanner sr = new Scanner(ifr ,"Cp1251");
+        
+        PrintStream pw = new PrintStream("output.txt");
+        Products[] products = new Products[4];
+        int i =0;
+        while(sr.hasNext())
+        {
+            String str = sr.nextLine();
+            String a[]  =str.split(" ");
+            String name = a[0];
+            String manufacturer = a[1];
+            int cost = Integer.parseInt(a[2]);
+            int shelfLife = Integer.parseInt(a[3]);
+            Grade prodGrade = Grade.valueOf(a[4]);
+            int number = Integer.parseInt(a[5]);
+            if(a.length == 6)
+                products[i++] = new Products(name,  manufacturer, cost, shelfLife, prodGrade, number);
+            else
+            {
+                int koef = Integer.parseInt(a[6]);
+                String sugarSub = a[7];
+                products [i++] = new SpecialProd (name,  manufacturer, cost, shelfLife, prodGrade, number, koef,sugarSub );
+            }
+                
+        }
+        System.setProperty("console.encoding","Cp866");
+        Shop shop = new Shop("aaa", "bbb",products );
+        System.out.println(shop.toString());
+        System.out.println(shop.getNameGrade("Собака", Grade.fgrade));
+        System.out.println(shop.getNameCost("Волк", 10));
+        System.out.println(shop.getShelfShop(6));
+         shop.sortbyname();
+         System.out.println(shop.toString());
+         shop.sortbyshelflife();
+         System.out.println(shop.toString());
+         
+        // TODO code application logic here
+    }
+
+}

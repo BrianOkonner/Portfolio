@@ -1,0 +1,141 @@
+﻿Построение начато 16.02.2020 23:14:47.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\1235\1235\1235.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Release\1235.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt 12.cpp
+         12.cpp
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\1235.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.lib" /MACHINE:X86 Release\12.obj
+         Создание кода
+         Создание кода завершено
+         1235.vcxproj -> D:\Учеба\Программирование\Проекты c++\1235\Release\1235.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.exe;#1" /manifest Release\1235.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Release\1235.unsuccessfulbuild" удаляется.
+         Обращение к "Release\1235.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\1235\1235\1235.vcxproj" завершено (целевые объекты build).
+
+Итоги по проекту:
+      981 мс вызовов   1 D:\Учеба\Программирование\Проекты c++\1235\1235\1235.vcxproj
+                981 мс вызовов   1 build                                   
+
+Итоги по целям:
+        0 мс вызовов   1 _CheckForCompileOutputs                 
+        0 мс вызовов   1 GetCopyToOutputDirectoryXamlAppDefs     
+        0 мс вызовов   1 BuildLink                               
+        0 мс вызовов   1 _PrepareForBuild                        
+        0 мс вызовов   1 _SelectedFiles                          
+        0 мс вызовов   1 ComputeCLCompileGeneratedXDCFiles       
+        0 мс вызовов   1 AfterBuildGenerateSources               
+        0 мс вызовов   1 ComputeManifestGeneratedLinkerInputs    
+        0 мс вызовов   1 SelectClCompile                         
+        0 мс вызовов   1 ResolveReferences                       
+        0 мс вызовов   1 _Midl                                   
+        0 мс вызовов   1 _Manifest                               
+        0 мс вызовов   1 ComputeLinkImportLibraryOutputsForClean 
+        0 мс вызовов   1 AfterBuild                              
+        0 мс вызовов   1 GetCopyToOutputDirectoryItems           
+        0 мс вызовов   1 AfterBuildCompileEvent                  
+        0 мс вызовов   1 _ClCompile                              
+        0 мс вызовов   1 SelectCustomBuild                       
+        0 мс вызовов   1 GetReferenceAssemblyPaths               
+        0 мс вызовов   1 _GenerateXMLData                        
+        0 мс вызовов   1 CreateCustomManifestResourceNames       
+        0 мс вызовов   1 MakeDirsForCl                           
+        0 мс вызовов   1 MakeDirsForResourceCompile              
+        0 мс вызовов   1 PostBuildEvent                          
+        0 мс вызовов   1 _ResourceCompile                        
+        0 мс вызовов   1 Build                                   
+        0 мс вызовов   1 ComputeLinkInputsFromProject            
+        0 мс вызовов   1 _Xsd                                    
+        0 мс вызовов   1 AfterResourceCompile                    
+        0 мс вызовов   1 _DetermineManagedStateForLink           
+        0 мс вызовов   1 MakeDirsForBscMake                      
+        0 мс вызовов   1 ComputeCustomBuildOutput                
+        0 мс вызовов   1 GetFrameworkPaths                       
+        0 мс вызовов   1 CreateSatelliteAssemblies               
+        0 мс вызовов   1 _XdcMake                                
+        0 мс вызовов   1 MakeDirsForManifest                     
+        0 мс вызовов   1 BuildCompileTraverse                    
+        0 мс вызовов   1 ExpandSDKReferences                     
+        0 мс вызовов   1 BuildLinkTraverse                       
+        0 мс вызовов   1 _Link                                   
+        0 мс вызовов   1 ComputeManifestInputsTargets            
+        0 мс вызовов   1 GetInstalledSDKLocations                
+        0 мс вызовов   1 ComputeRCOutputs                        
+        0 мс вызовов   1 BeforeResourceCompile                   
+        0 мс вызовов   1 _BscMake                                
+        0 мс вызовов   1 MakeDirsForMidl                         
+        0 мс вызовов   1 _DetermineManagedStateFromCL            
+        0 мс вызовов   1 RegisterOutput                          
+        0 мс вызовов   1 _Appverifier                            
+        0 мс вызовов   1 BeforeResolveReferences                 
+        0 мс вызовов   1 AfterResolveReferences                  
+        0 мс вызовов   1 DoLinkOutputFilesMatch                  
+        0 мс вызовов   1 PreBuildEvent                           
+        0 мс вызовов   1 ComputeMIDLGeneratedCompileInputs       
+        0 мс вызовов   1 ComputeReferenceCLInput                 
+        0 мс вызовов   1 BuildGenerateSourcesTraverse            
+        0 мс вызовов   1 ResolveProjectReferences                
+        0 мс вызовов   1 AssignTargetPaths                       
+        0 мс вызовов   1 MakeDirsForLink                         
+        0 мс вызовов   1 ComputeCLInputPDBName                   
+        0 мс вызовов   1 ComputeCLCompileGeneratedSbrFiles       
+        0 мс вызовов   1 _ALink                                  
+        0 мс вызовов   1 ResolveSDKReferences                    
+        0 мс вызовов   1 ComputeCLGeneratedLinkInputs            
+        0 мс вызовов   1 BuildGenerateSources                    
+        0 мс вызовов   1 PlatformPrepareForBuild                 
+        0 мс вызовов   1 ResolvedXDCMake                         
+        0 мс вызовов   1 _CopySourceItemsToOutputDirectory       
+        0 мс вызовов   1 AssignProjectConfiguration              
+        0 мс вызовов   1 BeforeLink                              
+        0 мс вызовов   1 PreLinkEvent                            
+        0 мс вызовов   1 AfterMidl                               
+        0 мс вызовов   1 _Deploy                                 
+        0 мс вызовов   1 AfterClCompile                          
+        0 мс вызовов   1 BeforeBuildGenerateSources              
+        0 мс вызовов   1 AfterLink                               
+        0 мс вызовов   1 BeforeClCompile                         
+        0 мс вызовов   1 AfterBuildGenerateSourcesEvent          
+        0 мс вызовов   1 PrepareResourceNames                    
+        0 мс вызовов   1 BuildCompile                            
+        0 мс вызовов   1 _GenerateWebServiceProxy                
+        0 мс вызовов   1 MakeDirsForXdcMake                      
+        0 мс вызовов   1 ComputeRCGeneratedLinkInputs            
+        1 мс вызовов   1 _GenerateSatelliteAssemblyInputs        
+        1 мс вызовов   1 ComputeCLOutputs                        
+        1 мс вызовов   1 CopyFilesToOutputDirectory              
+        1 мс вызовов   1 _SplitProjectReferencesByFileExistence  
+        1 мс вызовов   1 PrepareForBuild                         
+        1 мс вызовов   1 SplitResourcesByCulture                 
+        1 мс вызовов   1 FinalizeBuildStatus                     
+        1 мс вызовов   1 SetBuildDefaultEnvironmentVariables     
+        2 мс вызовов   1 InitializeBuildStatus                   
+        2 мс вызовов   1 _CheckForInvalidConfigurationAndPlatform
+        4 мс вызовов   1 ResolveAssemblyReferences               
+      178 мс вызовов   1 Manifest                                
+      378 мс вызовов   1 ClCompile                               
+      408 мс вызовов   1 Link                                    
+
+Итоги по задачам:
+        0 мс вызовов   1 Delete                                  
+        0 мс вызовов   1 AssignProjectConfiguration              
+        0 мс вызовов   3 Message                                 
+        0 мс вызовов  10 MakeDir                                 
+        0 мс вызовов   4 SetEnv                                  
+        0 мс вызовов   6 AssignTargetPath                        
+        0 мс вызовов   2 WriteLinesToFile                        
+        1 мс вызовов   1 ReadLinesFromFile                       
+        1 мс вызовов   1 AssignCulture                           
+        2 мс вызовов   2 Touch                                   
+        4 мс вызовов   1 ResolveAssemblyReference                
+      177 мс вызовов   1 Mt                                      
+      377 мс вызовов   1 CL                                      
+      406 мс вызовов   1 Link                                    
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.98

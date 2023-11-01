@@ -1,0 +1,173 @@
+package com.company;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Car{
+    private int id;
+    private String mark;
+    private String model;
+    private double price;
+    private int year;
+    private Type color;
+    private int number;
+
+   public Car(){
+    this.id=0;
+        this.mark="";
+        this.model="";
+        this.price=0;
+        this.year=0;
+        this.color=color;
+        this.number=0;
+    }
+
+    public Car(int id, String mark, String model,double price,int year,Type color,int number){
+
+        this.id=id;
+        this.mark=mark;
+        this.model=model;
+        this.price=price;
+        this.year=year;
+        this.color=color;
+        this.number=number;
+    }
+
+    public void SetId(int id) {
+        this.id = id;
+    }
+
+    public int GetId() {
+        return id;
+    }
+
+    public void SetMark(String mark) {
+        this.mark = mark;
+    }
+
+    public String GetMark() {
+        return mark;
+    }
+
+    public void SetModel(String model) {
+        this.model = model;
+    }
+
+    public String GetModel() {
+        return model;
+    }
+    public void SetPrice(double price) {
+        this.price = price;
+    }
+
+    public double GetPrice() {
+        return price;
+    }
+    public void SetYear(int year) {
+        this.year = year;
+    }
+
+    public int GetYear() {
+        return year;
+    }
+    public void SetNumber(int id) {
+        this.number = number;
+    }
+
+    public int GetNumber() {
+        return number;
+    }
+
+    public void SetType(Type color) {
+        this.color = color;
+    }
+
+    public Type GetType() {
+        return color;
+    }
+
+    public String toString() {
+       return id+" "+mark+" "+model+" "+price+" "+year+" "+color+" "+number;
+    }
+}
+enum Type{
+   red,black,green ;
+}
+
+class pricecomp implements Comparator<Car>
+{
+    @Override
+    public int compare(Car A,Car B){
+        if(A.GetPrice()==B.GetPrice())
+            return 0;
+        if(A.GetPrice()>B.GetPrice())
+            return -1;
+        return 1;}
+}
+class markcomp implements Comparator<Car>
+{
+    @Override
+    public int compare(Car A,Car B)
+    {
+        return A.GetMark().compareTo(B.GetMark());
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner sc = new Scanner(System.in);
+        Car []mas= {
+                new Car(12345, "Kia", "K1281", 354000,2015, Type.red, 4322434 ),
+                new Car(12345, "Volvo", "K2431", 456000,2014, Type.green, 2356534 ),
+                new Car(12345, "Bmv", "Mds23iw3", 286000,2017, Type.red, 6464533 ),
+                new Car(12345, "Audi", "Lsj234", 300000,2011, Type.black, 535353 ),
+                new Car(12345, "Ford", "P244kk", 560000,2010, Type.black, 4353463 ),
+        };
+        for(Car r:mas)
+        {
+            System.out.println(r);
+        }
+
+        System.out.println("Автомобили красного цвета");
+        for(Car r:mas)
+        {
+            if(r.GetType()==Type.red)
+                System.out.println(r);
+        }
+
+        System.out.println("Введите количество лет эксплуатации :");
+        int  n=sc.nextInt();
+        for(Car r:mas)
+        {
+            if((2019-r.GetYear())>n)
+                System.out.println(r);
+        }
+
+        System.out.println("Задайте год выпуска и цену :");
+        int  year1=sc.nextInt();int  price1=sc.nextInt();
+        for(Car r:mas) {
+            if ((r.GetYear() == year1) && (r.GetPrice() > price1))
+                System.out.println(r);
+        }
+
+        System.out.println("Отсортированый по цене");
+        Arrays.sort(mas,new pricecomp());
+        for(Car r:mas)
+        {
+            System.out.println(r);
+        }
+
+        System.out.println("Отсортированый по марке");
+        Arrays.sort(mas,new markcomp());
+        for(Car r:mas)
+        {
+            System.out.println(r);
+        }
+
+
+    }
+}
+
+

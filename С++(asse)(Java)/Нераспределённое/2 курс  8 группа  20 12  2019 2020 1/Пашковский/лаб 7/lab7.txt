@@ -1,0 +1,204 @@
+package myclasses;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class wrongYear extends Exception{}
+class wrongNumber extends Exception{}
+class runcmpMini implements Comparator<minibus>
+{
+	@Override
+	public int compare(minibus b1,minibus b2)
+	{
+		if(b1.getrun()==b2.getrun())
+			return 0;
+		if(b1.getrun()>b2.getrun())
+			return -1;
+		return 1;
+	}
+}
+class runcmp implements Comparator<bus>
+{
+	@Override
+	public int compare(bus b1,bus b2)
+	{
+		if(b1.getrun()==b2.getrun())
+			return 0;
+		if(b1.getrun()>b2.getrun())
+			return -1;
+		return 1;
+	}
+}
+
+class fiocmp implements Comparator<bus>
+{
+	@Override
+	public int compare(bus b1,bus b2)
+	{
+		return b1.getdriver().compareTo(b2.getdriver());
+	}
+}
+enum busType{city,intercity,international}
+class bus
+{
+	protected static int count=0;
+	protected int id;
+	protected String driver;
+	protected int number;
+	protected busType type;
+	protected double mileage;
+	protected final String brand;
+	protected final int firstRace;
+	bus(String driver1,int num,busType type1,String brand,int firstRun, double path)
+	throws wrongYear,wrongNumber
+	{
+		if(firstRun>2019 || firstRun<1945)
+			throw new wrongYear();
+		if(num<=0)
+			throw new wrongNumber();
+		count++;
+		id=count;
+		driver=driver1;
+		number=num;
+		type=type1;
+		this.brand=brand;
+		firstRace=firstRun;
+		mileage=path;
+		
+	}
+	public busType getType()
+	{
+		return type;
+	}
+	public int getid()
+	{
+		return id;
+	}
+	public int getnum()
+	{
+		return number;
+	}
+	public double getrun()
+	{
+		return mileage;
+	}
+	public int getyear()
+	{
+		return firstRace;
+	}
+	public String getdriver()
+	{
+		return driver;
+	}
+	public String getbrand()
+	{
+		return brand;
+	}
+	public int getcount()
+	{
+		return count;
+	}
+	public String toString()
+	{
+		return "id="+id+"\nМарка: "+brand+"\nВодитель: "+driver+"\nНомер: "+number+
+				"\nТип: "+type+"\nПервый рейс: "+firstRace+"\nПробег: "+mileage+"\n";
+	}
+}
+class minibus extends bus
+{
+	private double cost;
+	private double koeff=1.5;
+	minibus(String driver1,int num,busType type1,String brand,int
+	firstRun, double path,double ticket) throws wrongYear, wrongNumber
+	{
+		super(driver1, num,type1, brand,firstRun,path);
+		cost=ticket;
+	}
+	public void setCost(double c)
+	{
+		cost=c;
+	}
+	public void setKf(double k)
+	{
+		koeff=k;
+	}
+	public double getCost()
+	{
+		return cost;
+	}
+	@Override
+	public double getrun()
+	{
+		return this.mileage*koeff;
+	}
+	@Override
+	public String toString()
+	{
+		return "id="+id+"\nМарка: "+brand+"\nВодитель: "+driver+"\nНомер: "+number+
+			"\nТип: "+type+"\nПервый рейс: "+firstRace+"\nПробег: "+mileage*koeff+"\n"+"цена билета:"+cost+"\n";
+	}
+}
+public class lab7 {
+
+	public static void main(String[] args) throws FileNotFoundException, wrongYear, wrongNumber{
+		FileInputStream fis=new FileInputStream("input.txt");
+		Scanner sc=new Scanner(fis);
+		Scanner input=new Scanner(System.in);
+		PrintStream printFile=new PrintStream("output.txt");
+		minibus []mas=new minibus[7];
+		int i=0;
+		while(sc.hasNext())
+		{
+			String str=sc.nextLine();
+			String[] a=str.split(" ");
+			StringBuilder NAME=new StringBuilder();
+			NAME.append(a[0]+" "+a[1]+" "+a[2]);
+			int num=Integer.parseInt(a[3]);
+			busType type=busType.valueOf(a[4]);
+			String brand=a[5];
+			int year=Integer.parseInt(a[6]);
+			double run=Double.parseDouble(a[7]);
+			double cost=Double.parseDouble(a[8]);
+			//if(a.length<=4)
+			mas[i]=new minibus(NAME.toString(),num,type,brand,year,run,cost);
+			System.out.println(mas[i].toString());
+			i++;
+		}
+		printFile.println(mas[2].getcount());
+		System.out.println("Введите тип маршрута:");
+		String in=input.next();
+		printFile.println("Тип маршрута:"+in+"//////////////////////////////");
+		busType t=busType.valueOf(in);
+		for(bus a:mas)
+			if(a.getType()==t)
+				printFile.println(a.toString());
+		
+		System.out.println("Введите марку автобуса:");
+		String in2=input.next();
+		printFile.println("Марка:"+in2+" и пробег >10 лет //////////////////////////////");
+		for(minibus a:mas)
+			if(a.getbrand().equals(in2) && (2019-a.getyear())>10)
+				printFile.println(a.toString());
+		printFile.println("Пробег более 100000 км: //////////////////////////////");
+		for(minibus a:mas)
+			if(a.getrun()>100000)
+				printFile.println(a.toString());
+		printFile.println("Сортировка по пробегу: //////////////////////////////");
+		Arrays.sort(mas,new runcmpMini());
+		for(minibus a:mas)
+			printFile.println(a+"\n");
+		printFile.println("Сортировка в алфавитном порядке: //////////////////////////////");
+		Arrays.sort(mas,new fiocmp());
+		for(minibus a:mas)
+			printFile.println(a+"\n");
+		System.out.println("Результат работы программы можно увидеть в файле output.txt:");
+		sc.close();
+		printFile.close();
+
+	}
+
+}

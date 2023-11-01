@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="5431423" />
+		<Option pch_mode="2" />
+		<Option compiler="msvc10" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/5431423" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="msvc10" />
+				<Compiler>
+					<Add option="/Zi" />
+					<Add option="/D_DEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="/DEBUG" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/5431423" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="msvc10" />
+				<Compiler>
+					<Add option="/Ox" />
+					<Add option="/DNDEBUG" />
+				</Compiler>
+			</Target>
+			<Target title="5424230">
+				<Option output="bin/5424230/5431423" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/5424230/" />
+				<Option object_output="obj/5424230/" />
+				<Option type="1" />
+				<Option compiler="msvc10" />
+				<Compiler>
+					<Add option="/Zi" />
+					<Add option="/D_DEBUG" />
+					<Add option="/MDd" />
+				</Compiler>
+				<Linker>
+					<Add option="/DEBUG" />
+					<Add library="msvcrtd.lib" />
+					<Add library="msvcprtd.lib" />
+				</Linker>
+			</Target>
+			<Target title="5431423">
+				<Option output="bin/5431423/5431423" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/5431423/" />
+				<Option object_output="obj/5431423/" />
+				<Option type="1" />
+				<Option compiler="msvc10" />
+				<Compiler>
+					<Add option="/Ox" />
+					<Add option="/DNDEBUG" />
+					<Add option="/MD" />
+				</Compiler>
+				<Linker>
+					<Add library="msvcrt.lib" />
+					<Add library="msvcprt.lib" />
+				</Linker>
+			</Target>
+			<Target title="21">
+				<Option output="bin/21/5431423" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/21/" />
+				<Option object_output="obj/21/" />
+				<Option type="1" />
+				<Option compiler="msvc10" />
+				<Compiler>
+					<Add option="/Zi" />
+					<Add option="/D_DEBUG" />
+					<Add option="/MDd" />
+				</Compiler>
+				<Linker>
+					<Add option="/DEBUG" />
+					<Add library="msvcrtd.lib" />
+					<Add library="msvcprtd.lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="/W3" />
+		</Compiler>
+		<Unit filename="1.cpp" />
+		<Unit filename="tst.in" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

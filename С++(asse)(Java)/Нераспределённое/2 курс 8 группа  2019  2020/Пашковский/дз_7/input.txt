@@ -1,0 +1,7 @@
+Karpovich A V 7 city maz 1998 324047 5
+Shienok P E 1 city PA 2016 14255 7
+Kotov M P 144 international Setra 2006 115692 12
+Alexeev A V 1 city maz 2000 244044 5
+Kamysh V A 43 intercity ikarus 1989 501923 6
+Novikov S M 1 city PA 2008 54255 7
+Lobach V I 34 intercity maz 2010 43570 6

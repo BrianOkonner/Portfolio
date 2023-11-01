@@ -1,0 +1,45 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab1z2;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Brian
+ */
+public class Program 
+{
+
+    public static double step(double n,int s)
+    {
+        double m=1;
+        for(int i=1;i<=s;i++)
+            m=m*n;
+        return m;
+    }
+    public static void main(String[] args) 
+    {
+        double tochn,perem=0,pi=0;
+        int i;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Введите точность");
+        tochn=sc.nextDouble();
+        if(tochn<=0||tochn>4)
+            System.out.println("Неверная точность");
+        else
+        {
+            pi+=perem=(step(-1,1+1)*4)/(1+2*(1-1));
+            for(i=2;Math.abs(perem)>=tochn;i++)
+            {
+                perem=(step(-1,i+1)*4)/(1+2*(i-1));
+                pi+=perem;
+            }
+            System.out.println("Pi своё ="+pi);
+            System.out.println("Pi через Math ="+Math.PI);
+        }
+    }
+    
+}

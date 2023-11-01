@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+void SFraction (int a,int b,int c,int d,int &e,int&f)
+{    int fr,gr;
+	        //e:=a*d+c*b;
+        //f:=b*d;
+_asm
+{
+        mov eax, a
+        mul   d
+        mov ecx,eax        //a*d
+
+        mov eax, c
+        mul   b           //c*b;
+        add ecx,eax    //a*d+c*b -> ecx;
+
+        mov eax, b
+        mul   d        //b*d -> eax;
+	    
+		mov esi, e  
+		mov [esi],ecx
+        
+		mov esi, f  
+		mov [esi],eax//           
+    	}
+}
+void print(int c,int d)
+{
+	cout<<"("<<c<<"/"<<d<<") ";
+}
+int main()
+{
+	int c1,d1,c2,d2,c3,d3;
+	cin>>c1>>d1;
+
+	cin>>c2>>d2;
+	print(c1,d1);cout<<" + ";	print(c2,d2); cout<<" = ";
+	SFraction (c1,d1,c2,d2,c3,d3);
+	print(c3,d3);cout<<endl;
+
+
+}

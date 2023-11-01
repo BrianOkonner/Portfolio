@@ -1,0 +1,390 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package krflowers;
+import java.util.*;
+import java.util.Scanner;
+import java.io.*;
+import java.util.Arrays;
+/**
+ *
+ * @author Maxim
+ */
+class CompareComp implements Comparator<Prodanny_flowers>
+{
+@Override
+public int compare(Prodanny_flowers A,Prodanny_flowers B)
+{
+return A. getName_of_composition().compareTo(B.getName_of_composition());
+}
+}
+
+
+class Flowerscost implements Comparator<Prodanny_flowers>
+{
+@Override
+public int compare(Prodanny_flowers A,Prodanny_flowers B)
+{
+if((A.Getcost()==B.Getcost())&&(A.getName_of_composition().equals(B.getName_of_composition())))
+    return 0;
+if((A.Getcost()>B.Getcost())&&(A.getName_of_composition().equals(B.getName_of_composition())))
+        return -1;
+return 1;
+   }
+}
+
+enum flowers
+{
+    rosa,
+    gerbera,
+    lilia;
+}
+class wrongkol extends Exception{}
+class wrongcost extends Exception{}
+
+class Prodanny_flowers
+{
+    protected final int id;
+    protected final flowers flow;
+    protected final String Name_of_composition;
+    protected final int kol;
+    protected final double cost;
+    protected static int count=0;
+   
+    
+    Prodanny_flowers(flowers flow , String Name_of_composition , int kol, double cost)
+     throws  wrongkol,wrongcost
+    {
+      if(kol< 0 )
+          throw new wrongkol(); 
+       if(cost< 0 )
+          throw new wrongcost(); 
+      count++;
+      
+      this.id=count;
+      this.flow=flow;
+      this.Name_of_composition= Name_of_composition;
+      this.kol=kol;
+      this.cost=cost;
+      
+    }
+    
+       public int getid()
+      {
+         return this.id;
+      }
+       
+       public String toString()
+       {
+        return " Id= "+this.id+" Flow: "+this.flow+" Name_of_composition: "+this.Name_of_composition+" kol: "+this.kol+" cost: "+this.cost+"\n";
+       }
+       
+       public flowers getflow()
+       {
+         return this.flow;
+       }
+       
+       public String getName_of_composition()
+       {
+        return this.Name_of_composition;
+       }
+       
+       public int getkol()
+       {
+         return this.kol;
+       }
+       
+        public  double Getcost()
+       {
+         return this.cost;
+       }    
+}
+
+class Oranjaray
+{ 
+    protected Prodanny_flowers[]Fl;
+    private String name;
+    private String adress;
+    public Oranjaray(String name,String adress, Prodanny_flowers[]Fl)
+    {
+       this.Fl=new Prodanny_flowers[Fl.length];
+       System.arraycopy(Fl,0,this.Fl,0,Fl.length);
+       name=this.name;
+       adress=this.adress;
+       
+    }
+    
+    @Override
+    public String toString()
+    {
+        return Arrays.toString(this.Fl);
+    } 
+    
+    public String GetKol(double num1)
+    {
+        StringBuffer sb=new StringBuffer();
+        for( Prodanny_flowers a:this.Fl)
+            if(a.getkol()>num1)
+               sb.append(a);
+        return sb.toString();
+    }
+    
+     public String SumFlowers()
+    {
+       int[] B=new int[Fl.length];
+       StringBuffer[] str=new StringBuffer[Fl.length];
+       for(int i=0;i<str.length;i++)
+           str[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<Fl.length;++i)
+       {
+           str[m].append(" "+this.Fl[i].Name_of_composition);
+           
+         for(int k=0;k<m;k++)
+             if(str[m].toString().endsWith(str[k].toString()))
+                 prov=1;
+         if(prov!=1){       
+           B[m]+=Fl[i].kol;
+           for(int j=i+1;j<Fl.length;++j)
+           {
+               if(str[m].toString().endsWith(Fl[j].Name_of_composition))
+               {
+                   B[m]+=Fl[j].kol;
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else{
+             str[m].delete(0, str[m].length());
+             prov=0;}
+         
+       }
+       StringBuilder str1=new StringBuilder();
+       str1.append("Суммарное количество цветов входящих в композицию:\n");
+       for(int i=0;i<m;++i)
+       {
+           str1.append(str[i]).append(" = ").append(B[i]).append("\n");
+       }
+       return str1.toString();
+    }
+     
+      public String Sumpochislu(int c)
+    {
+       int[] B=new int[Fl.length];
+       StringBuffer[] str=new StringBuffer[Fl.length];
+       for(int i=0;i<str.length;i++)
+           str[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<Fl.length;++i)
+       {
+           if(Fl[i].kol>c)
+           {
+           str[m].append(" "+this.Fl[i].Name_of_composition);
+           
+         for(int k=0;k<m;k++)
+             if(str[m].toString().endsWith(str[k].toString()))
+                 prov=1;
+         if(prov!=1){   
+               B[m]=Fl[i].kol;
+           for(int j=i+1;j<Fl.length;++j)
+           {
+               if(str[m].toString().endsWith(Fl[j].Name_of_composition))
+               {
+                   if(Fl[j].kol>c)
+                   {
+                       B[m]=Fl[j].kol;
+                   }
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else{
+             str[m].delete(0, str[m].length());
+             prov=0;}
+           }
+         
+       }
+       StringBuilder str1=new StringBuilder();
+       str1.append("Композиции в которых есть цветы одного вида более 22\n");
+       for(int i=0;i<m;++i)
+       {
+           str1.append(str[i]).append(" = ").append(B[i]).append("\n");
+       }
+       return str1.toString();
+    }
+      
+      
+      
+    public String SumD()
+    {
+       int[] B=new int[Fl.length];
+       StringBuffer[] str=new StringBuffer[Fl.length];
+       for(int i=0;i<str.length;i++)
+           str[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<Fl.length;++i)
+       {
+           str[m].append(" "+this.Fl[i].Name_of_composition);
+           
+         for(int k=0;k<m;k++)
+             if(str[m].toString().endsWith(str[k].toString()))
+                 prov=1;
+         if(prov!=1){       
+           B[m]+=Fl[i].cost*Fl[i].kol;
+      
+           for(int j=i+1;j<Fl.length;++j)
+           {
+               if(str[m].toString().endsWith(Fl[j].Name_of_composition))
+               {
+                   B[m]+=Fl[j].cost*Fl[j].kol;
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else{
+             str[m].delete(0, str[m].length());
+             prov=0;}
+         
+       }
+       StringBuilder str1=new StringBuilder();
+       StringBuilder str2=new StringBuilder();
+       str2.append("По самой дорогой композиции информация о количестве и стоимости входящих в нее цветов:\n");
+       int max=0;
+       int d=0;
+       for(int i=0;i<m;++i)
+       {
+           if(B[i]>max)
+           {
+               max=B[i];
+                d=i;
+           }
+          
+       }
+          str1.append(str[d]).append(" = ").append(max).append("\n");
+       //return str1.toString();
+      
+       for(int i=0;i<Fl.length;++i)
+       {
+           if(str[d].toString().endsWith(Fl[i].Name_of_composition))
+           {
+                str2.append(this.Fl[i].flow).append(" ").append(this.Fl[i].kol).append(" ").append(this.Fl[i].cost).append(" ");
+           }
+            
+       }
+        return str2.toString();
+    }
+    
+    public String Sumcost()
+    {
+       int[] B=new int[Fl.length];
+       StringBuffer[] str=new StringBuffer[Fl.length];
+       for(int i=0;i<str.length;i++)
+           str[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<Fl.length;++i)
+       {
+           str[m].append(" "+this.Fl[i].Name_of_composition);
+           
+         for(int k=0;k<m;k++)
+             if(str[m].toString().endsWith(str[k].toString()))
+                 prov=1;
+         if(prov!=1){       
+           B[m]+=Fl[i].cost*Fl[i].kol;
+           for(int j=i+1;j<Fl.length;++j)
+           {
+               if(str[m].toString().endsWith(Fl[j].Name_of_composition))
+               {
+                   B[m]+=Fl[j].cost*Fl[j].kol;
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else
+         {
+             str[m].delete(0, str[m].length());
+             prov=0;
+         }
+         
+       }
+       StringBuilder str1=new StringBuilder();
+       str1.append("Вся цена потраченная на цветы в композиции :\n");
+       for(int i=0;i<m;++i)
+       {
+           str1.append(str[i]).append(" = ").append(B[i]).append("\n");
+       }
+       return str1.toString();
+    }
+    
+    public void sortbyNameOfComposition()
+    {
+        Arrays.sort(this.Fl,new CompareComp());
+         Arrays.sort(this.Fl,new Flowerscost());
+    }
+
+}
+
+public class KrFlowers {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException,wrongkol,wrongcost
+    {
+       String s;
+        FileInputStream ifr=new FileInputStream("input.txt");
+        Scanner sr=new Scanner(ifr);
+        PrintStream pw=new PrintStream("output.txt");
+        s= sr.nextLine();
+        int num=Integer.parseInt(s);
+        Prodanny_flowers [] prod=new Prodanny_flowers[num];
+        int i=0;
+        while(sr.hasNext())
+        {
+            String str=sr.nextLine();
+            String[]a=str.split(" ");
+            flowers flow=flowers.valueOf(a[0]);
+            String Name_of_composition=a[1];
+            int kol=Integer.parseInt(a[2]);
+            double cost=Double.parseDouble(a[3]);
+            prod[i++]=new Prodanny_flowers(flow ,Name_of_composition ,kol,cost);
+         
+        }
+        
+        Oranjaray g=new Oranjaray("Oranjaray","Timiryzevskay 12 34",prod);
+        
+        System.out.println("\n1-Все композиции");
+        pw.println("\n1-Все композиции");
+        System.out.println(g);
+        pw.println(g);
+  
+
+   
+         System.out.println(g.SumFlowers());
+         pw.println(g.SumFlowers());
+         System.out.println(g.Sumpochislu(22));
+         pw.println(g.Sumpochislu(22));
+         System.out.println(g.SumD());
+         pw.println(g.SumD());
+         System.out.println(g.Sumcost());
+         pw.println(g.Sumcost());
+         
+        System.out.println("\n3-Сортировка по названиям и по цене");
+        pw.println("\n3-Сортировка по названиям и по цене");
+        g.sortbyNameOfComposition();
+        System.out.println(g);
+        pw.println(g);
+        
+     
+    }
+    
+}

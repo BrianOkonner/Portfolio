@@ -1,0 +1,168 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package kp2;
+
+/**
+ *
+ * @author lesha
+ */
+import java.io.*;
+import java.util.*;
+
+class  Comparer_s implements Comparator <Figure>
+{
+    public int compare(Figure a, Figure b)
+    {
+        if(a.s() == b.s())
+            return 0;
+        else
+        {
+            if(a.s()> b.s())
+                return 1;
+            else
+                return -1;
+        }
+    }
+}
+interface Figure
+{
+    abstract public double s();
+    abstract public double v();
+    
+}
+class Elips implements Figure
+{
+      private int x;
+        private int y;
+        private int z;
+        private int a;
+        private int b;
+        private int c;
+        Elips(int x, int y,int z, int a, int b, int c)
+        {
+            this.x = x;
+            this.y =y;
+            this.z =z;
+            this.a = a;
+            this.b =b;
+            this.c =c;
+        }
+        public int getX()
+        {
+            return this.x;
+        }
+          public int getY()
+        {
+            return this.y;
+        }
+                 public int getZ()
+        {
+            return this.z;
+        }
+        
+           public int getA()
+        {
+            return this.a;
+        }
+          public int getB()
+        {
+            return this.b;
+        }
+                 public int getC()
+        {
+            return this.c;
+        }
+             public double s()
+             {
+                 return Math.PI*getA()*getB();
+             }
+               public double v()
+             {
+                 return (4/3)*(Math.PI*getA()*getB()*getC());
+             }
+                public String toString()
+            {
+                return  x + " "+  y + " " +  z+ " " +  a + " "+ b + " "+ c+ " " + this.s()+ " " + this.v();
+            }
+}
+class Pyramid implements Figure
+{
+      private int x;
+        private int y;
+        private int z;
+        private int a;
+        private int h;
+        Pyramid(int x, int y,int z, int a, int h)
+        {
+            this.x = x;
+            this.y =y;
+            this.z =z;
+            this.a = a;
+            this.h =h;
+            
+        }
+           public int getX()
+        {
+            return this.x;
+        }
+          public int getY()
+        {
+            return this.y;
+        }
+                 public int getZ()
+        {
+            return this.z;
+        }
+        
+           public int getA()
+        {
+            return this.a;
+        }
+          public int getH()
+        {
+            return this.h;
+        }
+           public double s()
+             {
+                 return (1/2) * getA()*getH();
+             }
+               public double v()
+             {
+                 return (1/3)*getH()*getA()*getA();
+             }
+                public String toString()
+            {
+                return  x + " "+  y + " " +  z+ " " +  a + " "+ h + " " + this.s()+ " " + this.v() ;
+            }
+          
+       
+       
+}
+
+public class KP2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Pyramid p1 = new Pyramid(1,2,3,4,5);
+        Pyramid p2 = new Pyramid(2,3,4,9,5);
+        Elips e1 = new Elips(1,2,3,4,5,6);
+      Elips e2 = new Elips(1,6,3,4,4,6);
+        Figure f[] = new Figure[4];
+        f[0] = p1;
+        f[1] = e1;
+        f[2]= p2;
+        f[3] = e2;
+        Arrays.sort(f, new Comparer_s());
+        for(int i =0; i< f.length; i++)
+        System.out.println(f[i].toString());
+        
+        
+    }
+    
+}

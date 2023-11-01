@@ -1,0 +1,118 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab3e3;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+/**
+ *
+ * @author Maxim
+   Квадрат из 1
+ */
+public class Lab3E3 {
+    
+    
+    public static void perestanovkastrok(int a1,int a2,int[][]Mat)
+   {
+       int temp;
+       for(int j=0;j<6;j++)
+       {
+           temp=Mat[a1][j];
+           Mat[a1][j]=Mat[a2][j];
+           Mat[a2][j]=temp;
+       }
+   }
+    
+   public static void perestanovkastolb(int a1,int a2,int[][]Mat)
+   {
+       int temp;
+       for(int i=0;i<6;i++)
+       {
+           temp=Mat[i][a1];
+           Mat[i][a1]=Mat[i][a2];
+           Mat[i][a2]=temp;
+       }
+   }
+   
+   public static void print(int[][]Mat)
+   {
+         for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<6;j++)
+                {
+                    System.out.print(Mat[i][j]+" ");
+                }
+                System.out.println();
+            }
+   }
+   
+   
+   
+    public static void main(String[] args) 
+    {
+        
+        try
+        {
+            FileInputStream InputF=new FileInputStream("Input.txt");
+            Scanner sc=new Scanner(InputF);
+            int [][]Mat=new int[6][6];
+            
+            for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<6;j++)
+                {
+                    Mat[i][j]=sc.nextInt();
+                }
+            }
+            System.out.println("Первоначальная матрица");
+            print(Mat);
+         
+            int a=1;
+            int b=1;
+            
+            int stroka1=0;
+            int stroka2=0;
+            int stolbec1=0;
+            int stolbec2=0;
+            
+            while((a!=5)&&(b!=5))
+            {
+                for(int i=0;i<6-a;i++)
+                {
+                    for(int j=0;j<6-b;j++)
+                    {
+                        if((Mat[i][j]==1)&&(Mat[i+a][j]==1)&&(Mat[i][j+b]==1)&&(Mat[i+a][j+b]==1))
+                        {
+                            stroka1=i;
+                            stroka2=i+a;
+                            stolbec1=j;
+                            stolbec2=j+b;
+                        }
+                    }
+                }
+               a++;
+               if(a==5)
+               {
+                   b++;
+                   a=1;
+               }
+            } 
+            
+           perestanovkastrok(2,stroka1,Mat);
+           perestanovkastrok(3,stroka2,Mat);
+           perestanovkastolb(2,stolbec1,Mat);       
+           perestanovkastolb(3,stolbec2,Mat);
+  
+           System.out.println("Переставленная матрица ");
+           print(Mat);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Файл не найден");
+        }
+    }
+    
+}

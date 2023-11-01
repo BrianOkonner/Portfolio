@@ -1,0 +1,114 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader1 = new BufferedReader(new InputStreamReader(
+                new FileInputStream("input1.txt"), "windows-1251"));
+        BufferedReader bufferedReader2 = new BufferedReader(new InputStreamReader(
+                new FileInputStream("input2.txt"), "windows-1251"));
+        FileOutputStream outputFile = new FileOutputStream("output.txt");
+        Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
+        Book books[] = new Book[12];
+        int count = 0;
+        PrintStream printStream = new PrintStream(outputFile);
+
+        String line;
+        while ((line = bufferedReader1.readLine()) != null) {
+            String[] arr = line.split(",");
+            int number = Integer.valueOf(arr[0]);
+            String title = arr[1];
+            int year = Integer.valueOf(arr[2]);
+            String publisher = arr[3];
+            Bound bound = Bound.valueOf(arr[4]);
+            double price = Double.valueOf(arr[5]);
+            line = bufferedReader1.readLine();
+            String[] authorsArr = line.split(",");
+            books[count] = new Book(number, title, authorsArr, year, publisher, bound, price);
+            count++;
+        }
+        bufferedReader1.close();
+        while ((line = bufferedReader2.readLine()) != null) {
+            String[] arr = line.split(",");
+            int number = Integer.valueOf(arr[0]);
+            String title = arr[1];
+            int year = Integer.valueOf(arr[2]);
+            String publisher = arr[3];
+            Bound bound = Bound.valueOf(arr[4]);
+            double price = Double.valueOf(arr[5]);
+            double rate = Double.valueOf(arr[6]);
+            String designer = arr[7];
+            line = bufferedReader2.readLine();
+            String[] authorsArr = line.split(",");
+            books[count] = new AnniversaryEdition(number, title, authorsArr, year, publisher,
+                    bound, price, designer, rate);
+            count++;
+        }
+        bufferedReader2.close();
+        Library library = new Library(books);
+        System.out.println("¬ыберите, какой список вывести в файл: ");
+        System.out.println("1 - список всех книг;");
+        System.out.println("2 - список всех книг определенного автора;");
+        System.out.println("3 - список всех книг определенного издательства и с определенным переплетом;");
+        System.out.println("4 - список книг, выпущенных после определенного года;");
+        System.out.println("5 - список, отсортированный по цене;");
+        System.out.println("6 - список, отсортированный по авторам по алфавиту;");
+        System.out.println("7 - вывести результат метода getCount();");
+        System.out.println("0 - выход.");
+        int choice = scanner.nextInt();
+        String[] arrToPrint;
+        switch (choice) {
+            case 1:
+                arrToPrint = library.getAllBooks().split("\n");
+                for (String current : arrToPrint) {
+                    printStream.println(current);
+                }
+                break;
+            case 2:
+                System.out.println("¬ведите автора: ");
+                String author = scanner1.nextLine();
+                arrToPrint = library.getAllBooksByAuthor(author).split("\n");
+                for (String current : arrToPrint) {
+                    printStream.println(current);
+                }
+                break;
+            case 3:
+                System.out.println("¬ведите издател€: ");
+                String publisher = scanner1.nextLine();
+                System.out.println("¬ведите limp дл€ м€гкого переплета, " +
+                        "hardcover дл€ твердого и ebook дл€ электронной книги: ");
+                Bound bound = Bound.valueOf(scanner1.nextLine().toUpperCase());
+                arrToPrint = library.getAllBooksByPublisherAndBound(bound, publisher).split("\n");
+                for (String current : arrToPrint) {
+                    printStream.println(current);
+                }
+                break;
+            case 4:
+                System.out.println("¬ведите год: ");
+                int year = scanner1.nextInt();
+                arrToPrint = library.getAllBooksAfterCertainYear(year).split("\n");
+                for (String current : arrToPrint) {
+                    printStream.println(current);
+                }
+                break;
+            case 5:
+                arrToPrint = library.getAllBooksSortByPrice().split("\n");
+                for (String current : arrToPrint) {
+                    printStream.println(current);
+                }
+                break;
+            case 6:
+                arrToPrint = library.getAllBooksSortByAuthors().split("\n");
+                for (String current : arrToPrint) {
+                    printStream.println(current);
+                }
+                break;
+            case 7:
+                printStream.println(Book.getCount());
+                break;
+            default:
+        }
+        outputFile.close();
+    }
+}

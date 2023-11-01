@@ -1,0 +1,120 @@
+package jap1;
+import java.util.Scanner;
+import java.util.Arrays;
+
+class Drob{
+    private int a;
+    private int b;
+
+    public Drob(){
+        this.a = 0;
+        this.b = 1;
+    }
+
+    public Drob (int a, int b){
+
+        if(b==0){
+            //throw
+            System.out.println("Деление на 0");
+
+        }
+        this.a = a;
+        this.b = b;
+    }
+    public void setA(int a1){
+        this.a = a;
+    }
+
+    public void setB(int b1){
+        this.b = b1;
+    }
+
+    public int  getA(){
+        return  a;
+    }
+
+    public int getB(){
+        return  b;
+    }
+    
+    public Drob add( Drob drob2){
+        if (this.b == drob2.getB()){
+            int newA = this.a +drob2.getA();
+            int newB = this.b;
+            return new Drob(newA,newB);
+        }
+        else{
+            int newA = (this.a*drob2.getB() )+ (drob2.getA()* this.b);
+            int newB = this.b * drob2.getB();
+            return new Drob(newA,newB);
+        }
+
+    }
+
+
+    public Drob sub( Drob drob2){
+        if (this.b == drob2.getB()){
+        int newA = this.a - drob2.getA();
+        int newB = this.b;
+        return new Drob(newA,newB);
+    }
+    else{
+        int newA = (this.a*drob2.getB() ) - (drob2.getA()* this.b);
+        int newB = this.b * drob2.getB();
+        return new Drob(newA,newB);
+    }
+    }
+
+    public Drob multiple( Drob drob2){
+        int newA = this.a * drob2.getA();
+        int newB = this.b * drob2.getB();
+        return new Drob(newA,newB);
+    }
+
+    public Drob devide(Drob drob2){
+        int newA = this.a * drob2.getB();
+        int newB = this.b * drob2.getA();
+        return new Drob(newA,newB);
+    }
+
+
+    public String toString(){
+        return "Drob a/b : "+this.a+"/"+this.b;
+    }
+
+
+}
+
+public class Jap1{
+    public static void main(String[] args){
+
+    Scanner sc = new Scanner(System.in);
+    System.out.println("введите размер массива");
+    int size = sc.nextInt();
+    Drob arr[] = new Drob[ size];
+    for(int i=0;i<arr.length;i++)
+    {
+        arr[i] = new Drob((int)(Math.random()*20), (int)(Math.random()*20));
+    }
+    
+        System.out.println(Arrays.toString(arr));
+    
+        myMetod(arr);
+        
+        System.out.println(Arrays.toString(arr));
+    
+}
+    public static void myMetod(Drob[] arr)
+    {
+     for(int i=1; i<arr.length;i=i+2)
+     {
+         arr[i] = arr[i].add(arr[i-1]);
+         
+     }
+     
+    }
+
+    
+    
+}
+

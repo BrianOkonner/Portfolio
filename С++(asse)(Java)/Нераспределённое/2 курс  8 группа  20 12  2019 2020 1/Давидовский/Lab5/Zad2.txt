@@ -1,0 +1,199 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Triangle[] triangles = new Triangle[3];
+        Triangle triangle;
+        int compare = 0, number1 = 0, number2 = 0;
+        double Smax = 0, Smin = 2000000;
+
+        System.out.println(" Введите длины сторон для 3 треугольников.");
+
+        for (int i = 0; i < 3; i++) {
+
+            System.out.println(" Введите длины сторон для " + (i + 1) + "-го треугольника:");
+            triangles[i] = new Triangle(sc.nextInt(), sc.nextInt(), sc.nextInt());
+            System.out.println(triangles[i].toString());
+
+            if (triangles[i].compare() == 1) {
+                System.out.println((i + 1) + " треугольник равносторонний");
+            }
+            if (triangles[i].compare() == 2) {
+                System.out.println((i + 1) + " треугольник равнобедренный");
+            }
+            if (triangles[i].compare() == 3) {
+                System.out.println((i + 1) + " треугольник прямоугольник");
+            }
+            if (triangles[i].compare() == 4) {
+                System.out.println((i + 1) + " треугольник произвольный");
+            }
+
+            triangles[i].NewTriangle();
+
+            if (triangles[i].S() > Smax) {
+                Smax = triangles[i].S();
+                number1 = i + 1;
+            }
+            if (triangles[i].S() < Smin) {
+                Smin = triangles[i].S();
+                number2 = i + 1;
+            }
+
+            System.out.println();
+        }
+
+        if (triangles[0].equals(triangles[1])) {
+
+            System.out.println("Совпадают треугольники 1 и 2");
+            compare = 1;
+        }
+        if (triangles[1].equals(triangles[2])) {
+
+            System.out.println("Совпадают треугольники 2 и 3");
+            compare = 1;
+        }
+        if (triangles[2].equals(triangles[0])) {
+
+            System.out.println("Совпадают треугольники 3 и 1");
+            compare = 1;
+        }
+        if (compare == 0) {
+            System.out.println("Никакие из трех треугольников не совпадают");
+        }
+
+        System.out.println();
+
+        System.out.println("Треугольник номер " + number1 + " имеет наибольшую площадь равную " + Smax);
+        System.out.println("Треугольник номер " + number2 + " имеет наименьшую площадь равную " + Smin);
+
+        for (int out = 2; out >= 1; out--) {
+            for (int in2 = 0; in2 < out; in2++) {
+                if (triangles[in2].P() > triangles[in2 + 1].P()) {
+                    triangle = triangles[in2];
+                    triangles[in2] = triangles[in2 + 1];
+                    triangles[in2 + 1] = triangle;
+                }
+            }
+        }
+
+    }
+}
+
+    class Triangle {
+        private int side1;
+        private int side2;
+        private int side3;
+
+        public Triangle() {
+            this.side1 = 1;
+            this.side2 = 1;
+            this.side3 = 1;
+        }
+
+        public Triangle(int side1, int side2, int side3) {
+
+            if (side1 >= side2 + side3 || side2 >= side3 + side1 || side3 >= side1 + side2) {
+                System.out.println(" Такой треугольник не может существовать, идите нафиг");
+                System.exit(0);
+            }
+
+            this.side1 = side1;
+            this.side2 = side2;
+            this.side3 = side3;
+        }
+
+        public void SetSide1(int side1) {
+
+            if (side1 >= this.side2 + this.side3) {
+                System.out.println(" Такой треугольник не может существовать");
+                return;
+            }
+
+            this.side1 = side1;
+        }
+
+        public int GetSide1() {
+            return this.side1;
+        }
+
+        public void SetSide2(int side2) {
+
+            if (side2 >= this.side3 + this.side1) {
+                System.out.println(" Такой треугольник не может существовать");
+                return;
+            }
+
+            this.side2 = side2;
+        }
+
+        public int GetSide2() {
+            return this.side2;
+        }
+
+        public void SetSide3(int side3) {
+
+            if (side3 >= this.side1 + this.side2) {
+                System.out.println(" Такой треугольник не может существовать");
+                return;
+            }
+
+            this.side3 = side3;
+        }
+
+        public int GetSide3() {
+            return this.side3;
+        }
+
+        public int P() {
+            return this.side1 + this.side2 + this.side3;
+        }
+
+        public double S() {
+            return Math.pow((P() / 2) * (P() / 2 - side1) * (P() / 2 - side2) * (P() / 2 - side3), 0.5);
+        }
+
+        public boolean equals(Triangle triangle) {
+
+            if (this == triangle) {
+                return true;
+            }
+
+            return (triangle.GetSide1() == this.side1) && (triangle.GetSide2() == this.side2) && (triangle.GetSide3() == this.side3);
+        }
+
+        public int compare() {
+
+            if (this.side1 == this.side2 && this.side2 == this.side3) {
+                return 1;
+            }
+
+            if (this.side1 == this.side2 || this.side2 == this.side3 || this.side3 == this.side1) {
+                return 2;
+            }
+
+            if (Math.pow(this.side1, 2) + Math.pow(this.side2, 2) == Math.pow(this.side3, 2) || Math.pow(this.side2, 2) + Math.pow(this.side3, 2) == Math.pow(this.side1, 2) || Math.pow(this.side3, 2) + Math.pow(this.side1, 2) == Math.pow(this.side2, 2)) {
+                return 3;
+            }
+
+            return 4;
+        }
+
+        public Triangle NewTriangle() {
+
+            Triangle triangle = new Triangle(2 * this.side1, 2 * this.side2, 2 * this.side3);
+
+            return triangle;
+        }
+
+        public String toString() {
+            String info;
+
+            info = "Треугольник со сторонами длиной " + this.side1 + ", " + this.side2 + " и " + this.side3;
+
+            return info;
+        }
+    }

@@ -1,0 +1,23 @@
+<html>
+<title>fffff</title>
+<body>
+   <a href="input.txt"> ggg </a> /
+   yes<a href ="NO.html"></a>
+ <TR   BGCOLOR="#B0B190"><TD><IMG SRC="/p.gif" HEIGHT=3 WIDTH=1
+ALT=""></TD></TR>
+   <a href="out.txt">hhhhhhhh</a>/
+   <a href="out.txt">hhh</a> /
+<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=4 BGCOLOR="#E9EAD6"
+WIDTH="100%">
+   <a href="input.txt"> jjj </a> /
+   <a href="output.txt">dddddd</a> /
+<TR BGCOLOR="#C7CBB1"><TD><FONT COLOR="#000090">
+   <a href="input.txt">bbbbbbb</a> /
+<td width="10%" align="left" valign="botom">
+   <a href="x68375.html">
+     accesskey="P">GFTR</a></td>
+</TABLE>
+   <a href="x7794.html">
+   yes<a href="ABCD.html"></a>
+</body>
+</html>

@@ -1,0 +1,157 @@
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+
+//В матрице 6x6 из нулей и единиц перестановками строк и столбцов сделать
+// в центре таблицы квадрат из единиц
+
+class Matrix {
+    int rows;
+    int cols;
+    double[][] p;
+
+    Matrix() {
+        cols = 3;
+        rows = 3;
+        p = new double[rows][cols];
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                p[i][j] = 0;
+    }
+
+    Matrix(int rows1, int cols1, double[][] init) {
+        rows = rows1;
+        cols = cols1;
+        p = new double[rows][cols];
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++)
+                p[i][j] = init[i][j];
+    }
+
+    void swapCols(int col1, int col2) {
+        double[] buff = new double[rows];
+        for (int i = 0; i < cols; i++)
+            buff[i] = p[i][col1];
+        for (int i = 0; i < cols; i++)
+            p[i][col1] = p[i][col2];
+        for (int i = 0; i < cols; i++)
+            p[i][col2] = buff[i];
+    }
+
+    void print() {
+        for (int i = 0; i < rows; i++)
+            System.out.println(Arrays.toString(p[i]));
+    }
+
+    void swapRows(int row1, int row2) {
+        double[] buff = new double[cols];
+        for (int i = 0; i < rows; i++)
+            buff[i] = p[row1][i];
+        for (int i = 0; i < rows; i++)
+            p[row1][i] = p[row2][i];
+        for (int i = 0; i < rows; i++)
+            p[row2][i] = buff[i];
+    }
+
+}
+
+class unit {
+    public int number;
+    public int point[] = new int[2];
+
+    //0-y,1-x
+    unit() {
+        number = -1;
+        point[0] = -1;
+        point[1] = -1;
+    }
+
+    unit(int n, int y, int x) {
+        number = n;
+        point[0] = y;
+        point[1] = x;
+    }
+
+    void print() {
+        System.out.println("#" + this.number + " (" + this.point[0] + "," + this.point[1] + ")");
+    }
+
+}
+
+public class appMatrix3 {
+
+    static unit units[] = new unit[36];
+
+    public static void main(String[] args) {
+        try {
+
+            FileInputStream InputFile = new FileInputStream("input.txt");
+            Scanner sc = new Scanner(InputFile);
+
+            double array[][] = new double[6][6];
+
+            int number = 0;
+
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 6; j++) {
+                    array[i][j] = sc.nextDouble();
+                    if (array[i][j] == 1) {
+                        units[number] = new unit(number, i, j);
+                        number++;
+                    }
+                }
+
+            boolean flag = false;
+
+            int x1 = 3, y1 = 3, x2 = 3, y2 = 3;
+            for (int i1 = 0; i1 < number - 3; i1++) {
+                for (int i2 = 0; i2 < number - 2; i2++) {
+                    for (int i3 = 0; i3 < number - 1; i3++) {
+                        for (int i4 = 0; i4 < number; i4++) {
+                            if (units[i1].point[0] == units[i2].point[0] && units[i1].point[1] == units[i3].point[1] && units[i2].point[1] == units[i4].point[1] && units[i3].point[0] == units[i4].point[0] && (i1 != i2 && i1 != i3 && i1 != i4 && i2 != i3 && i2 != i4 && i3 != i4)) {
+
+                                System.out.println("Can use:");
+                                units[i1].print();
+                                units[i2].print();
+                                units[i3].print();
+                                units[i4].print();
+                                flag = true;
+                                x1 = units[i1].point[1];
+                                y1 = units[i1].point[0];
+                                x2 = units[i4].point[1];
+                                y2 = units[i4].point[0];
+                                break;
+
+                            }
+                            if (flag == true)
+                                break;
+                        }
+                        if (flag == true)
+                            break;
+                    }
+                    if (flag == true)
+                        break;
+                }
+            }
+            Matrix matrix = new Matrix(6, 6, array);
+
+            matrix.print();
+            matrix.swapCols(x1, 2);
+            System.out.println("\nChanging columns " + x1 + " and 2:");
+            matrix.print();
+            matrix.swapCols(x2, 3);
+            System.out.println("\nChanging columns " + x2 + " and 3:");
+            matrix.print();
+            matrix.swapRows(y2, 3);
+            System.out.println("\nChanging rows " + y2 + " and 3:");
+            matrix.print();
+            matrix.swapRows(y1, 2);
+            System.out.println("\nChanging rows " + y1 + " and 2:");
+            matrix.print();
+            InputFile.close();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
+}

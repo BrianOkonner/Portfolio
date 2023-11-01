@@ -1,0 +1,70 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
+class WordComp implements Comparator<Word> {
+    @Override
+    public int compare(Word word1, Word word2) {
+        return word1.getWord().compareTo(word2.getWord());
+    }
+}
+
+class LengthComp implements Comparator<Word> {
+    @Override
+    public int compare(Word word1, Word word2) {
+        if (word1.getWord().length() > word2.getWord().length()) {
+            return 1;
+        } else if (word1.getWord().length() < word2.getWord().length()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+class RepeatComp implements Comparator<Word> {
+    @Override
+    public int compare(Word word1, Word word2) {
+        if (word1.getLines().size() > word2.getLines().size()) {
+            return 1;
+        } else if (word1.getLines().size() < word2.getLines().size()) {
+            return -1;
+        } else {
+            return word1.getWord().compareTo(word2.getWord());
+        }
+    }
+}
+
+public class Word {
+    private String word;
+    private ArrayList<Integer> lines;
+
+    public Word() {
+    }
+
+    public Word(String word, ArrayList<Integer> lines) {
+        this.word = word;
+        this.lines = lines;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public ArrayList<Integer> getLines() {
+        return lines;
+    }
+
+    public String getLinesAsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int line : lines) {
+            stringBuilder.append(line + " ");
+        }
+        return stringBuilder.toString();
+    }
+
+    @Override
+    public String toString() {
+        return word + " " + getLinesAsString();
+    }
+}

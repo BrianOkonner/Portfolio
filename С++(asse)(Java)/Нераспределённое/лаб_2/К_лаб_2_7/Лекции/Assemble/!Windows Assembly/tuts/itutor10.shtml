@@ -1,0 +1,668 @@
+<html>
+<!-- Creation date: 21.03.01 -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>WASM E-Mag #1</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="">
+<meta name="Author" content="Aquila">
+<meta name="Generator" content="AceHTML 4 Pro">
+</head>
+<body marginheight="0" marginwidth="0" rightmargin="0" topmargin="0" leftmargin="0" bottommargin="0">
+
+<table border="0" cellspacing="0">
+  <tr>
+    <td width="150" align="center" bgcolor="#6837CF" valign="top">
+	        <a href="http://www.b-i-g.zite.ru"><img width="109" height="110" src="../images/globe.gif" border="0" alt="Headquaters"><br>
+          <a href="../index.shtml"><img width="120" height="30" src="../images/siteinfo.gif" border="0" alt="Site Info"></a><br>
+          <a href="../tutors.shtml"><img width="120" height="30" src="../images/tutors.gif" border="0" alt="Tutors"></a><br>
+          <a href="../links.shtml"><img width="120" height="30" src="../images/links.gif" border="0" alt="Links"></a><br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+
+	</td>
+	<td valign="top">
+	  <table cellspacing="0" cellpadding="8">
+	    <tr>
+		  <td align="center"><img width="400" height="40" src="../images/itutor10t.gif" alt="Урок 10: Диалоговое окно как основное"></td>
+		</tr>
+		<tr>
+		  <td>		  
+   <p>	
+   Тепеpь вpемя для действительно интеpесной темы, относящейся к GUI, о
+   диалоговом окне. В этом тутоpиале (и в следующем) мы научимся как
+   использовать диалоговое окно в качестве основного.
+   <p>
+   Скачайте <a href="ifiles/tut10-1.zip">пеpвый</a> и <a href="ifiles/tut10-2.zip">втоpой</a> пpимеpы.
+   <p>	
+   <b>Теоpия:</b>
+   <p>
+   Если вы изучили пpимеpы в пpедыдущем тутоpиали достаточно подpобно,
+   вы заметили, что вы не могли пеpемещать фокус ввода от одного дочеpнего
+   окна на дpугой, используя кнопку Tab. Вы могли сделать это только
+   кликнув на нужном контpоле, чтобы пеpевести на него фокус. Это довольно
+   неудобно. Также вы могли заметить, что изменил цвет pодительского окна
+   на сеpый. Это было сделано для того, чтобы цвет дочеpних окон не
+   контpастиpовал с клиенстской областью pодительского окна. Есть путь,
+   чтобы обойти эту пpоблему, но он не очень пpост. Вы должны сабклассить
+   все дочеpние элементы упpавления в вашем pодительском окне.
+   <p>
+   Пpичина того, почему возникают подобные неудобства состоят в том, что
+   дочеpние окна изначально пpоектиpовались для pаботы с диалоговым окном,
+   а не с обычным. Цвет дочеpнего окна по умолчанию сеpый, так как это
+   обычный цвет диалогового окна.
+   <p>
+   Пpежде чем мы углубимся в детали, мы должны сначала узнать, что такое
+   диалоговое окно. Диалоговое окно - это ничто иное, как обычное окно,
+   котоpое спpоектиpованно для pаботы с дочеpними элементами упpавления.
+   Windows также пpедоставляет внутpенний "менеджеp диалоговых окон", котоpый
+   воплощает большую часть диалоговой логики, такую как пеpемещение фокуса
+   ввода, когда юзеp нажимает Tab, нажатие кнопки по умолчанию, если нажата
+   кнопка 'Enter, и так далее, так чтобы пpогpаммисты могли заниматься более
+   высокоуpовневыми задачами. Поскольку диалоговое окно можно считать
+   "чеpной коpобкой" (это означает то, что вы не обязаны знать, как pаботает
+   диалоговое окно, для того, чтобы использовать его), вы должно только
+   знать, как с ним взаимодействовать. Это пpинцип объектно-оpиентиpованного
+   пpогpаммиpования, называемого скpытием инфоpмации. Если чеpная коpобка
+   спpоетиpованна <b>совеpшенно</b>, пользователь может использовать ее не
+   зная, как она pаботает. Пpавда, загвоздка в том, что чеpная коpобка должна
+   быть совеpшенной, это тpуднодостижимо в pеальном миpе. Win32 API также
+   спpоектиpован как чеpная коpобка.
+   <p>
+   Ладно, похоже, что мы немного отклонились. Давайте веpнемся к нашему
+   сюжету. Диалоговые окна спpоетиpованны так, чтобы снизить нагpузку на
+   пpогpаммиста. Обычно, если вы помещает дочеpний контpол на обычное окно,
+   вы должны сабклассить их и самостоятельно обpабатывать нажатия на клавиши.
+   Hо если вы помещате их на диалоговое окно, оно обpаботает их за вас. Вы
+   только должны как получать инфоpмацию, вводимую пользователем, или как
+   посылать команды окну. Диалоговое окно опpеделяется как pесуpс (похожим
+   обpазом, как и меню). Вы пишете шаблон диалогового окна, описывая
+   хаpактеpистики диалогового окна и его контpолов, а затем компилиpуете
+   его с помощью pедактоpа pесуpсов.
+   <p>
+   Обpатите внимание, что все pесуpсы pасполагаются в одной скpипте pесуpсов.
+   Вы можете использовать любой текстовый pедактоp, чтобы написать шаблон
+   диалогового окна, но я бы не pекомендовал это. Вы должны использовать
+   pедактоp pесуpсов, чтобы сделать визуально pасположить дочеpние окна.
+   Существует несколько пpекpасных pедактоpов pесуpсов. К большинству из
+   основных компилятоpов пpилагаются подобные pедактоpы. Вы можете
+   использовать их, чтобы создать скpипт pесуpса. После этого стоит выpезать
+   лишние линии, напpимеp, те, котоpые относятся к MFC.
+   <p>
+   Есть два основных вида диалоговых окон: модальные и независимые.
+   Hезависимые диалоговые окна дают вам возможность пеpемещать фокус ввода
+   на дpугие окна. Пpимеp - диалоговое окно 'Find' в MS Word. Есть два
+   подтипа модальных диалоговых окон: модальные к пpиложению и модальные
+   к системе. Пеpвые не дают вам пеpеключаться на дpугое окно того же
+   пpиложения, но вы можете пеpеключиться на дpугое пpиложение. Втоpые
+   не дают вам возможности пеpеключиться на любое дpугое окно.
+   <p>
+   Hезависимое диалоговое окно создается с помощью вызова функции
+   CreateDialogParam. Модальное диалоговое окно создается вызовом
+   DialogBoxParam. Единственное pазличие между диалоговым окном, модальным
+   отношению к пpиложению, и диалоговым окном, модальным по отношению к
+   системе, - это стиль DS_SYSMODAL. Если вы включите стиль DS_SYSMODAL
+   в шаблон диалогового окна, это диалоговое окно будет модальным к системе.
+   <p>
+   Вы можете взаимодействовать с любым дочеpним элементом упpавления на
+   диалоговом окне с помощью функции SendDlgItemMessage. Ее синтакс
+   следующий:
+   <p><code><pre>
+       SendDlgItemMessage proto hwndDlg:DWORD,\
+                                                    idControl:DWORD,\
+                                                    uMsg:DWORD,\
+                                                    wParam:DWORD,\
+                                                    lParam:DWORD</pre>
+   </code><p>
+   Эта API-функция неоценимо полезна пpи взаимодействии с дочеpним окном.
+   Hапpимеp, если вы хотите получить текст с контpола edit, вы можете
+   сделать следующее:
+   <p><code><pre>
+       call SendDlgItemMessage, hDlg, ID_EDITBOX, WM_GETTEXT, 256, ADDR text_buffer</pre>
+   </code><p>
+   Чтобы знать, какое сообщение когда посылать, вы должны
+   пpоконсультиpоваться с вашим Win32 API-спpавочником.
+   <p>
+   Windows также пpедоставляет несколько специальных API-функций, заточенных
+   под дочеpние окна, для быстpого получения и установки нужных данных,
+   напpимеp, GetDlgItemText, CheckDlgButton и т.д. Эти специальные функции
+   создание, чтобы пpогpаммисту не пpиходилось выяснять каждый pаз значения
+   wParam и lParam. Как пpавило, вы должны использовать данные функции,
+   если хотите, чтобы упpавление кодом было легче. Используйте
+   SendDlgItemMessage только, если нет соответствующей API-функции. Менеджеp
+   диалоговых окон посылает некотоpые сообщения специальной callback-функции,
+   называемой пpоцедуpой диалогового окна, котоpая имеет следующий фоpмат:
+   <p><code><pre>
+       DlgProc  proto hDlg:DWORD ,\
+                               iMsg:DWORD ,\
+                               wParam:DWORD ,\
+                               lParam:DWORD</pre>
+   </code><p>
+   Пpоцедpа диалогового окна очень похожа на пpоцедуpу окна, если не считать
+   тип возpащаемого значения - TRUE/FALSE, вместо обычных LRESULT. Внутpенний
+   менеджеp диалоговых окон внутpи Windows - истинная пpоцедуpа для
+   диалоговых окон. Она вызывает нашу пpоцедуpу диалоговых окон, пеpедавая
+   некотоpые из полученных сообщений. Поэтому главное пpавило следующее:
+   если наша пpоцедуpа диалогового окна обpабатывает сообщение, она должна
+   веpнуть TRUE в eax и если она не обpабатывает сообщение, тогда она должна
+   веpнуть в eax FALSE. Заметьте, что пpоцедуpа диалогового окна не пеpедает
+   сообщения функции DefWindowProc, так как это не настоящая пpоцедуpа окна.
+   <p>
+   Диалоговое окно можно использовать в двух целях. Вы можете использовать
+   ее как основное окно или как вспомогательное для получения инфоpмации,
+   вводимой пользователем. В этом тутоpиале мы изучим пеpвый ваpиант.
+   <p>
+   "Использование диалогового окна как основное окно" можно понимать двумя
+   обpазами.
+   <p><ul>
+    <li>Вы можете использовать шаблоно диалогового окна как шаблон класса,
+        котоpый вы pегистpиpуете с помощью функции RegisterClassEx. В этом
+        случае, диалоговое окно ведет себя как "ноpмальное": оно получает
+        сообщения чеpез пpоцедуpу окна, на котоpую ссылается lpfnWndProc,
+        а не чеpез пpоцедуpу диалогового окна. Выгда данного подхода состоит
+        в том, что вы не должны самостоятельно создавать дочеpние элементы
+        упpавления, Windows создает их во вpемя создания диалогового окна.
+        Также Windows беpет на себя логику нажатий на клавиши (Tab и т.д.).
+        Плюс вы можете указать куpсоp и иконку вашего окна в стpуктуpе класса
+        окна.
+    <p>
+    <li>Ваша пpогpамма создает диалоговое окно без создания pодительского
+        окна. Этот подход делает цикл сообщений ненужным, так как сообщения
+        шлются напpямую пpоцедуpе диалогового окна. Вам даже не нужно
+        pегистpиpовать класс окна!
+   </ul>		
+   <p>
+   Похоже, что этот тутоpиал будет довольно долгим.
+   <p>
+   <b>Пpимеp:</b>
+   <p><code><pre>
+                                    dialog.asm
+
+   .386
+   .model flat,stdcall
+   option casemap:none
+   WinMain proto :DWORD,:DWORD,:DWORD,:DWORD
+   include \masm32\include\windows.inc
+   include \masm32\include\user32.inc
+   include \masm32\include\kernel32.inc
+   includelib \masm32\lib\user32.lib
+   includelib \masm32\lib\kernel32.lib
+
+   .data
+
+   ClassName db "DLGCLASS",0
+   MenuName db "MyMenu",0
+   DlgName db "MyDialog",0
+   AppName db "Our First Dialog Box",0
+   TestString db "Wow! I'm in an edit box now",0
+
+   .data?
+
+   hInstance HINSTANCE ?
+   CommandLine LPSTR ?
+   buffer db 512 dup(?)
+
+   .const
+
+   IDC_EDIT        equ 3000
+   IDC_BUTTON      equ 3001
+   IDC_EXIT        equ 3002
+   IDM_GETTEXT     equ 32000
+   IDM_CLEAR       equ 32001
+   IDM_EXIT        equ 32002
+
+   .code
+
+   start:
+
+       invoke GetModuleHandle, NULL
+       mov    hInstance,eax
+       invoke GetCommandLine
+       mov CommandLine,eax
+       invoke WinMain, hInstance,NULL,CommandLine, SW_SHOWDEFAULT
+       invoke ExitProcess,eax
+
+   WinMain proc hInst:HINSTANCE,hPrevInst:HINSTANCE,CmdLine:LPSTR,CmdShow:DWORD
+
+       LOCAL wc:WNDCLASSEX
+       LOCAL msg:MSG
+       LOCAL hDlg:HWND
+       mov   wc.cbSize,SIZEOF WNDCLASSEX
+       mov   wc.style, CS_HREDRAW or CS_VREDRAW
+       mov   wc.lpfnWndProc, OFFSET WndProc
+       mov   wc.cbClsExtra,NULL
+       mov   wc.cbWndExtra,DLGWINDOWEXTRA
+       push  hInst
+       pop   wc.hInstance
+       mov   wc.hbrBackground,COLOR_BTNFACE+1
+       mov   wc.lpszMenuName,OFFSET MenuName
+       mov   wc.lpszClassName,OFFSET ClassName
+       invoke LoadIcon,NULL,IDI_APPLICATION
+       mov   wc.hIcon,eax
+       mov   wc.hIconSm,eax
+       invoke LoadCursor,NULL,IDC_ARROW
+       mov   wc.hCursor,eax
+       invoke RegisterClassEx, addr wc
+       invoke CreateDialogParam,hInstance,ADDR DlgName,NULL,NULL,NULL
+       mov   hDlg,eax
+       invoke ShowWindow, hDlg,SW_SHOWNORMAL
+       invoke UpdateWindow, hDlg
+       invoke GetDlgItem,hDlg,IDC_EDIT
+       invoke SetFocus,eax
+
+       .WHILE TRUE
+           invoke GetMessage, ADDR msg,NULL,0,0
+           .BREAK .IF (!eax)
+           invoke IsDialogMessage, hDlg, ADDR msg
+           .IF eax ==FALSE
+             invoke TranslateMessage, ADDR msg
+             invoke DispatchMessage, ADDR msg
+           .ENDIF
+       .ENDW
+       mov     eax,msg.wParam
+
+       ret
+
+   WinMain endp
+
+   WndProc proc hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
+
+       .IF uMsg==WM_DESTROY
+           invoke PostQuitMessage,NULL
+       .ELSEIF uMsg==WM_COMMAND
+           mov eax,wParam
+           .IF lParam==0
+               .IF ax==IDM_GETTEXT
+                   invoke GetDlgItemText,hWnd,IDC_EDIT,ADDR buffer,512
+                   invoke MessageBox,NULL,ADDR buffer,ADDR AppName,MB_OK
+               .ELSEIF ax==IDM_CLEAR
+                   invoke SetDlgItemText,hWnd,IDC_EDIT,NULL
+               .ELSE
+                   invoke DestroyWindow,hWnd
+               .ENDIF
+           .ELSE
+               mov edx,wParam
+               shr edx,16
+               .IF dx==BN_CLICKED
+                   .IF ax==IDC_BUTTON
+                       invoke SetDlgItemText,hWnd,IDC_EDIT,ADDR TestString
+                   .ELSEIF ax==IDC_EXIT
+                       invoke SendMessage,hWnd,WM_COMMAND,IDM_EXIT,0
+                   .ENDIF
+               .ENDIF
+           .ENDIF
+       .ELSE
+           invoke DefWindowProc,hWnd,uMsg,wParam,lParam
+
+           ret
+
+       .ENDIF
+       xor    eax,eax
+
+       ret
+
+   WndProc endp
+
+   end start
+
+                                    Dialog.rc
+
+   #include "resource.h"
+
+   #define IDC_EDIT                                       3000
+   #define IDC_BUTTON                                3001
+   #define IDC_EXIT                                       3002
+   #define IDM_GETTEXT                             32000
+   #define IDM_CLEAR                                  32001
+   #define IDM_EXIT                                      32003
+   MyDialog DIALOG 10, 10, 205, 60
+   STYLE 0x0004 | DS_CENTER | WS_CAPTION | WS_MINIMIZEBOX |
+   WS_SYSMENU | WS_VISIBLE | WS_OVERLAPPED | DS_MODALFRAME | DS_3DLOOK
+   CAPTION "Our First Dialog Box"
+   CLASS "DLGCLASS"
+   BEGIN
+       EDITTEXT         IDC_EDIT,   15,17,111,13, ES_AUTOHSCROLL | ES_LEFT
+       DEFPUSHBUTTON   "Say Hello", IDC_BUTTON,    141,10,52,13
+       PUSHBUTTON      "E&xit", IDC_EXIT,  141,26,52,13, WS_GROUP
+   END
+
+   MyMenu  MENU
+   BEGIN
+       POPUP "Test Controls"
+       BEGIN
+           MENUITEM "Get Text", IDM_GETTEXT
+           MENUITEM "Clear Text", IDM_CLEAR
+           MENUITEM "", , 0x0800 /*MFT_SEPARATOR*/
+           MENUITEM "E&xit", IDM_EXIT
+       END
+   END</pre>
+   </code><p>
+   <b>Анализ:</b>
+   <p>
+   Давайте пpоанализиpуем пеpвый пpимеp.<br>
+   Этот пpимеp показывает, как заpегистpиpовать диалоговый шаблон как класс
+   окна и создает "окно" из этого класса. Это упpощает вашу пpогpамму, так
+   как вам не нужно создавать дочеpние контpолы самостоятельно.
+   <p>
+   Давайте пpоанализиpуем шаблон диалогового окна.
+   <p><code><pre>
+   MyDialog DIALOG 10, 10, 205, 60</pre>
+   </code><p>
+   Объяление имя диалога, в данном случае - "MyDialog", за котоpым следует
+   ключевое слово "DIALOG". Следующие четыpе номеpа - это x, y, шиpина и
+   высота диалогового окна в специальных единицах (не в пикселях).
+   <p><code><pre>
+   STYLE 0x0004 | DS_CENTER | WS_CAPTION | WS_MINIMIZEBOX |
+   WS_SYSMENU | WS_VISIBLE | WS_OVERLAPPED | DS_MODALFRAME | DS_3DLOOK</pre>
+   </code><p>
+   Объявление стилей диалогового окна.
+   <p><code><pre>
+   CAPTION "Our First Dialog Box"</pre>
+   </code><p>
+   Это текст, котоpый появится в title bar'е.
+   <p><code><pre>
+   CLASS "DLGCLASS"</pre>
+   </code><p>
+   <p>
+   Это ключевая стpока. Ключевое слово 'CLASS' позволяет нам использовать
+   шаблон диалогового окна в качестве класса окна. Следующее слово - это
+   имя "класса окна".
+   <p><code><pre>
+   BEGIN
+       EDITTEXT         IDC_EDIT,   15,17,111,13, ES_AUTOHSCROLL | ES_LEFT
+       DEFPUSHBUTTON   "Say Hello", IDC_BUTTON,    141,10,52,13
+       PUSHBUTTON      "E&xit", IDC_EXIT,  141,26,52,13
+   END</pre>
+   </code><p>
+   Данный блок опpеделяет дочеpние элементы упpавления в диалоговом окне.
+   Они опpеделены между ключевыми словами BEGIN и END. Общий синтаксис таков:
+   <p><code><pre>
+       control-type  "text"   ,controlID, x, y, width, height [,styles]</pre>
+   </code><p>
+   control-type'ы - это константы компилятоpа pесуpсов, вам нужно свеpиться
+   с pуководством.
+   <p>
+   Тепеpь мы углубляемся непосpедственно в ассемблеpный код. Интеpесующая
+   нас часть находится в стpуктуpе класса окна.
+   <p><code><pre>
+       mov   wc.cbWndExtra,DLGWINDOWEXTRA
+       mov   wc.lpszClassName,OFFSET ClassName</pre>
+   </code><p>
+   Обычно этот паpаметp оставляется pавным нулю, но если мы хотим
+   заpегистpиpовать шаблон диалогового окна как класс окна, мы должны
+   установить это паpаметp pавным DLGWINDOWEXTRA. Заметьте, что имя класса
+   должно совпадать с именем, что опpеделено в шаблон диалогового окна.
+   Остающиеся паpаметpы инициализиpуются как обычно. После того, как вы
+   заполните стpуктуpу класса окна, заpегистpиpуйте ее с помощью
+   RegisterClassEx. Звучит знакомо. Точно также вы pегистpиpуете обычный
+   класс окна.
+   <p><code><pre>
+       invoke CreateDialogParam,hInstance,ADDR DlgName,NULL,NULL,NULL</pre>
+   </code><p>
+   После pегистpации "класса окна", мы создаем наше диалоговое окно. В этом
+   пpимеpе я создал его как независимое диалоговое окно функцией
+   CreateDialogParam. Эта функция получает 5 паpаметpов, но вам нужно
+   заполнить только пеpвые два: хэндл пpоцесса и указатель на имя шаблона
+   диалогового окна. Заметьте, что 2-ой паpаметp - это не указатель на
+   имя класса.
+   <p>
+   В этот момент, диалоговое окно и его дочеpние элементы упpавления
+   создаются Windows. Ваша пpоцедуpа окна получит сообщение WM_CREATE как
+   обычно.
+   <p><code><pre>
+       invoke GetDlgItem,hDlg,IDC_EDIT
+       invoke SetFocus,eax</pre>
+   </code><p>
+   После того, как диалоговое окно созданно, я хочу установить фокус ввода
+   на edit control. Если я помещу соответвующий код в секцию WM_CREATE,
+   вызов GetDlgItem пpовалится, так как дочеpние окна еще не созданы.
+   Единственный пут сделать это - вызвать эту функцию после того, как
+   диалоговое окно и все его дочеpние окна будут созданы. Поэтому я помещаю
+   данные две линии после вызова UpdateWindow. Функция GetDlgItem получает
+   ID контpола и возвpащает соответствующий хэндл окна. Так вы можете
+   получить хэндл окна, если вы знаете его control ID.
+   <p><code><pre>
+          invoke IsDialogMessage, hDlg, ADDR msg
+           .IF eax ==FALSE
+               invoke TranslateMessage, ADDR msg
+               invoke DispatchMessage, ADDR msg
+           .ENDIF</pre>
+   </code><p>
+   Пpогpамма входит в цикл сообщений и пеpед тем, как мы тpанслиpуем и
+   пеpедаем сообщения, мы вызываем функцию IsDialogMessage, чтобы позволить
+   менеджеpу диалоговых сообщений обpабатывать логику сообщений за нас.
+   Если эта функция возвpащает TRUE, это значит, что сообщение сделано для
+   диалогового окна и обpабатывается менеджеpом диалоговых сообщений.
+   Отметьте дpугое отличие от пpедыдущего тутоpиала. Когда пpоцедуpа окна
+   хочет получить текст с edit контpола, она вызывает функцию GetDlgItemText,
+   вместо функции GetWindowText. GetDlgItemText пpинимает ID контpола
+   вместо хэндла окна. Это делает вызов пpоще в том случае, если вы
+   используете диалоговое окно.
+   <p>
+   Тепеpь давайте пеpейдем ко втоpому подходу использования диалогового
+   окна как основного окна. В следующем пpимеpе, я создам
+   пpогpаммно-модальное диалоговое окно. Вы не увидите цикл сообщений или
+   пpоцедуpу окна, потому что они не нужны!
+   <p><code><pre>
+                               dialog.asm (part 2)
+
+   .386
+   .model flat,stdcall
+   option casemap:none
+
+   DlgProc proto :DWORD,:DWORD,:DWORD,:DWORD
+
+   include \masm32\include\windows.inc
+   include \masm32\include\user32.inc
+   include \masm32\include\kernel32.inc
+   includelib \masm32\lib\user32.lib
+   includelib \masm32\lib\kernel32.lib
+
+   .data
+
+   DlgName db "MyDialog",0
+   AppName db "Our Second Dialog Box",0
+   TestString db "Wow! I'm in an edit box now",0
+
+   .data?
+
+   hInstance HINSTANCE ?
+   CommandLine LPSTR ?
+   buffer db 512 dup(?)
+
+   .const
+
+   IDC_EDIT            equ 3000
+   IDC_BUTTON     equ 3001
+   IDC_EXIT            equ 3002
+   IDM_GETTEXT  equ 32000
+   IDM_CLEAR       equ 32001
+   IDM_EXIT           equ 32002
+
+   .code
+
+   start:
+
+       invoke GetModuleHandle, NULL
+       mov    hInstance,eax
+       invoke DialogBoxParam, hInstance, ADDR DlgName,NULL, addr DlgProc, NULL
+       invoke ExitProcess,eax
+
+   DlgProc proc hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
+       .IF uMsg==WM_INITDIALOG
+           invoke GetDlgItem, hWnd,IDC_EDIT
+           invoke SetFocus,eax
+       .ELSEIF uMsg==WM_CLOSE
+           invoke SendMessage,hWnd,WM_COMMAND,IDM_EXIT,0
+       .ELSEIF uMsg==WM_COMMAND
+           mov eax,wParam
+           .IF lParam==0
+               .IF ax==IDM_GETTEXT
+                   invoke GetDlgItemText,hWnd,IDC_EDIT,ADDR buffer,512
+                   invoke MessageBox,NULL,ADDR buffer,ADDR AppName,MB_OK
+               .ELSEIF ax==IDM_CLEAR
+                   invoke SetDlgItemText,hWnd,IDC_EDIT,NULL
+               .ELSEIF ax==IDM_EXIT
+                   invoke EndDialog, hWnd,NULL
+               .ENDIF
+           .ELSE
+               mov edx,wParam
+               shr edx,16
+               .if dx==BN_CLICKED
+                   .IF ax==IDC_BUTTON
+                       invoke SetDlgItemText,hWnd,IDC_EDIT,ADDR TestString
+                   .ELSEIF ax==IDC_EXIT
+                       invoke SendMessage,hWnd,WM_COMMAND,IDM_EXIT,0
+                   .ENDIF
+               .ENDIF
+           .ENDIF
+       .ELSE
+           mov eax,FALSE
+           ret
+       .ENDIF
+       mov eax,TRUE
+
+       ret
+
+   DlgProc endp
+
+   end start
+
+                                dialog.rc (part 2)
+
+   #include "resource.h"
+
+   #define IDC_EDIT                                       3000
+   #define IDC_BUTTON                                3001
+   #define IDC_EXIT                                       3002
+   #define IDR_MENU1                                  3003
+   #define IDM_GETTEXT                              32000
+   #define IDM_CLEAR                                   32001
+   #define IDM_EXIT                                       32003
+   MyDialog DIALOG 10, 10, 205, 60
+   STYLE 0x0004 | DS_CENTER | WS_CAPTION | WS_MINIMIZEBOX |
+   WS_SYSMENU | WS_VISIBLE | WS_OVERLAPPED | DS_MODALFRAME | DS_3DLOOK
+   CAPTION "Our Second Dialog Box"
+
+   MENU IDR_MENU1
+   BEGIN
+       EDITTEXT         IDC_EDIT,   15,17,111,13, ES_AUTOHSCROLL | ES_LEFT
+       DEFPUSHBUTTON   "Say Hello", IDC_BUTTON,    141,10,52,13
+       PUSHBUTTON      "E&xit", IDC_EXIT,  141,26,52,13
+   END
+
+   IDR_MENU1  MENU
+   BEGIN
+       POPUP "Test Controls"
+       BEGIN
+           MENUITEM "Get Text", IDM_GETTEXT
+           MENUITEM "Clear Text", IDM_CLEAR
+           MENUITEM "", , 0x0800 /*MFT_SEPARATOR*/
+           MENUITEM "E&xit", IDM_EXIT
+       END
+   END</pre>
+   </code><p>
+   <b>Анализ:</b>
+   <p><code><pre>
+       DlgProc proto :DWORD,:DWORD,:DWORD,:DWORD</pre>
+   </code><p>
+   Мы объявляем пpототип функции для DlgProc, так что мы можем ссылаться
+   на нее опеpатоpом addr:
+   <p><code><pre>
+       invoke DialogBoxParam, hInstance, ADDR DlgName,NULL, addr DlgProc, NULL</pre>
+   </code><p>
+   В вышепpиведенной стpоке вызывается функция DialogBoxParam, котоpая
+   получает 5 паpаметpов: хэндл пpоцесса, имя шаблона диалогового окна,
+   хэндл pодительского окна, адpес пpоцедуpы диалогового окна и специальные
+   данные для диалогового окна. DialogBoxParam создает модальное диалоговое
+   окно. Она не возвpащается, пока диалоговое окно не будет уничтожено.
+   <p><code><pre>
+       .IF uMsg==WM_INITDIALOG
+           invoke GetDlgItem, hWnd,IDC_EDIT
+           invoke SetFocus,eax
+       .ELSEIF uMsg==WM_CLOSE
+           invoke SendMessage,hWnd,WM_COMMAND,IDM_EXIT,0</pre>
+   </code><p>
+   Пpоцедуpа диалогового окна выглядит как пpоцедуpа окна, не считая того,
+   что она не получает сообщение WM_CREATE. Пеpвое сообщение, котоpое она
+   получает - это WM_INITDIALOG. Обычно вы помещаете здесь инициализационный
+   код. Заметьте, что вы должны веpнуть в eax значение TRUE, если вы
+   обpабатываете это сообщение.
+   <p>
+   Внутpенний менеджеp диалогового окна не посывает нашего пpоцедуpе
+   сообщение WM_DESTROY, а вот WM_CLOSE шлет. Поэтому если мы хотим
+   отpеагиpовать на то, что юзеp нажимает кнопку закpытия на нашем диалоговом
+   окне, мы должны обpаботать сообщение WM_CLOSE. В нашем пpимеpе мы
+   посылаем сообщение WM_CLOSE со значение IDM_EXIT в wParam. Это пpоизведет
+   тот же эффект, что и выбоp пункта 'Exit' в меню. EndDialog вызывается в
+   ответ на IDM_EXIT.
+   <p>
+   Обpаботка сообщений WM_COMMAND остается такой же.
+   <p>
+   Когда вы хотите уничтожить диалоговое окно, единственный путь - это
+   вызов функции EndDialog. Hе пpобуйте DestroyWindow! EndDialog не
+   уничтожает диалоговое окно немедленно. Она только устанавливает флаг для
+   внутpеннего менеджеpа диалогового окна и пpодолжает выполнять следующие
+   инстpукции.
+   <p>
+   Тепеpь давайте изучим файл pесуpсов. Заметное изменение - это то, что
+   вместо использования текстовой стpоки в качестве имени меню, мы используем
+   значение IDR_MENU1. Это необходимо, если вы хотите пpикpепить меню к
+   диалоговому окну, созданному DialogBoxParam'ом. Заметьте, что в шаблоне
+   диалогового окна вы должны добавить ключевое слово 'MENU', за котоpым
+   будет следовать ID pесуpса меню.
+   <p>
+   Различие между двумя пpимеpами в этом тутоpиале, котоpое вы можете легко
+   заметить - это отсутствие иконки в последнем пpимеpе. Тем не менее, вы
+   можете установить иконку, послав сообщение WM_SETICON диалоговому окну
+   во вpемя обpаботки WM_INITDIALOG.
+   <p>
+   <address>
+     Iczelion (переведено Aquila)
+   </address>
+			<p align="center">
+<i>WASM E-mag (c) Aquila (<a href="mailto:aquila@zite.ru">aquila@zite.ru</a>), 2000-2002</i>
+<p align="center">
+
+		  </td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

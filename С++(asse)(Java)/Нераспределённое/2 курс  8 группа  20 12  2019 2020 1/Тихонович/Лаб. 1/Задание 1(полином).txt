@@ -1,0 +1,61 @@
+package com.metahit;
+import java.util.Scanner;
+public class Main {
+    public static boolean polinom(int n)
+    {
+        int temp;
+        int reverse=0;
+        temp = n;
+        while(temp>0)
+        {
+            reverse=reverse*10+temp%10;
+            temp=temp/10;
+        }
+        if(n==reverse)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int left;
+        int right;
+        System.out.println("Input left border:");
+        do
+            {
+                left=sc.nextInt();
+                if(left<0)
+                {
+                    System.out.println("Wrong border.Try again:");
+                }
+            }while(left<0);
+        System.out.println("Input right border:");
+        do
+        {
+            right=sc.nextInt();
+            if(right<left)
+            {
+                System.out.println("Wrong border.Try again:");
+            }
+        }while(right<left);
+        for(int i = left;i<=right;i++)
+        {
+            if(polinom((int)(Math.pow(i,2))))
+            {
+                System.out.println(" "+i+" double polinom");
+            }
+            else {
+                if(polinom(i))
+                {
+                    System.out.println(" "+i+" polinom");
+                }
+            }
+        }
+    }
+}

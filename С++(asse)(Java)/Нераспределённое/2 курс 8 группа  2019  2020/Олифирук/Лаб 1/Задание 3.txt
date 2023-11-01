@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package homeworkex3;
+import java.util.Scanner;
+/**
+ *
+ * @author Maxim
+ */
+public class program {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static double fact(double n)
+    {
+        int a=1;
+        double sum=1;
+        while(a<=n)
+        {
+            sum=sum*a;
+            a=a+1;
+        }
+        return sum;
+    }
+    
+    public static double sin(double x)
+    {
+        int step1=0;
+        double step2=1;
+        double fact=1;
+        double sin=0;
+        double e=0.01;
+        while(Math.abs(1/fact)>e)
+        {
+            sin=sin+Math.pow(x,step2)*Math.pow(-1,step1)/fact(fact);
+            step1++;
+            step2=step2+2;
+            fact=fact+2;
+        }
+        return sin;
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Введите аргумент синуса: ");
+        double x=sc.nextDouble();
+        double sin=sin(x);
+        System.out.println("Ответ полученный с помощью формулы Тейлора: "+sin);
+        double sin1=Math.sin(x);
+        System.out.println("Ответ полученный с помощью функции Math.sin(x): "+sin1);
+    }
+    
+}

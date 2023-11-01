@@ -1,0 +1,19 @@
+﻿Построение начато 24.09.2018 1:02:37.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\1\1\1.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Обращение к "Debug\1.unsuccessfulbuild".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "С3.cpp"
+         С3.cpp
+     1>d:\учеба\программирование\проекты c++\1\1\с3.cpp(94): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+     1>d:\учеба\программирование\проекты c++\1\1\с3.cpp(96): warning C4101: l: неиспользованная локальная переменная
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\1\Debug\1.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\1.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\1\Debug\1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\1\Debug\1.lib" /MACHINE:X86 Debug\functions.obj
+         "Debug\С3.obj"
+     1>С3.obj : error LNK2019: ссылка на неразрешенный внешний символ _PER в функции _main
+     1>D:\Учеба\Программирование\Проекты c++\1\Debug\1.exe : fatal error LNK1120: 1 неразрешенных внешних элементов
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\1\1\1.vcxproj" завершено (целевые объекты build) с ошибкой.
+
+СБОЙ построения.
+
+Затраченное время: 00:00:01.24

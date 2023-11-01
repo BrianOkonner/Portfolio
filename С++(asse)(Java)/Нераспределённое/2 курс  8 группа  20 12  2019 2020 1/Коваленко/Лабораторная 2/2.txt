@@ -1,0 +1,52 @@
+package com.company;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+
+        int size, n=0;
+        Scanner sc=new Scanner(System.in);
+
+        System.out.println("Size of sequence");
+        size=sc.nextInt();
+        Integer []arr=new Integer[size];
+
+        System.out.println("Input sequence");
+
+        for(int i=0;i<size;i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        for(int i=0;i<size;i++) {
+
+            if (i == size - 1) {
+                Arrays.sort(arr, n, i+1, new Mycomp());
+                break;
+            }
+
+            if (arr[i] >= arr[i + 1]) {
+                Arrays.sort(arr, n, i+1, new Mycomp());
+                n = i + 1;
+            }
+        }
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+class Mycomp implements Comparator <Integer>{
+    @Override
+    public int compare(Integer t1, Integer t2){
+
+        if(t1==t2)
+            return 0;
+        else if(t1<t2)
+            return 1;
+        else return -1;
+    }
+
+}

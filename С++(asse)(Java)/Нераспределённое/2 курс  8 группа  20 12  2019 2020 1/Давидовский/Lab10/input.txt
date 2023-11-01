@@ -1,0 +1,9 @@
+ASUS Taiwan
+CPU USA 800 notperipheral 150 inside critical
+Cooler Germany 20 notperipheral 100 inside critical
+Mouse China 30 peripheral 50 outside notcritical
+Motherboard Taiwan 100 notperipheral 100 inside critical
+Keyboard Taiwan 65 peripheral 30 outside notcritical
+Monitor Taiwan 150 peripheral 200 outside notcritical
+HDD USA 79 notperipheral 200 inside critical
+Battery Taiwan 69 notperipheral 10 inside critical

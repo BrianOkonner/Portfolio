@@ -1,0 +1,133 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+class WrongArgumentTypeException extends Exception {
+    @Override
+    public String toString() {
+        return "Invalid type of the argument";
+    }
+}
+
+class CompLength implements Comparator<Vector> {
+    @Override
+    public int compare(Vector o1, Vector o2) {
+        if (o1.length() == o2.length()) {
+            return 0;
+        } else {
+            if (o1.length() > o2.length()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
+}
+
+abstract class Vector {
+    protected double x;
+    protected double y;
+    protected double z;
+
+    public abstract Vector sum(Vector vector) throws WrongArgumentTypeException;
+
+    public abstract double length();
+}
+
+class TwoDVector extends Vector {
+    public TwoDVector(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public Vector sum(Vector vector) throws WrongArgumentTypeException {
+        if (vector instanceof TwoDVector) {
+            return new TwoDVector(x + vector.x, y + vector.y);
+        } else {
+            throw new WrongArgumentTypeException();
+        }
+    }
+
+    public double mul(Vector vector) {
+        return x * vector.x + y * vector.y;
+    }
+
+    @Override
+    public double length() {
+        return Math.sqrt(x * x + y * y);
+    }
+
+    @Override
+    public String toString() {
+        return "2d vector: x=" + x + ", y=" + y + ", length=" + length();
+    }
+}
+
+class ThreeDVector extends Vector {
+
+    public ThreeDVector(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    @Override
+    public Vector sum(Vector vector) throws WrongArgumentTypeException {
+        if (vector instanceof ThreeDVector) {
+            return new ThreeDVector(x + vector.x, y + vector.y, z + vector.z);
+        } else {
+            throw new WrongArgumentTypeException();
+        }
+    }
+
+    public Vector mul(Vector vector) {
+        return new ThreeDVector((y * vector.z) - (z * vector.y),
+                -((x * vector.z) - (z * vector.x)),
+                (y * vector.x) - (x * vector.y));
+    }
+
+    @Override
+    public double length() {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+    @Override
+    public String toString() {
+        return "3d vector: x=" + x + ", y=" + y + ", z=" + z + ", length=" + length();
+    }
+}
+
+public class VectorProgram {
+    public static void main(String[] args) {
+        Vector vectors[] = new Vector[4];
+        TwoDVector twoDVector1 = new TwoDVector(1, 2);
+        TwoDVector twoDVector2 = new TwoDVector(3, 4);
+        ThreeDVector threeDVector1 = new ThreeDVector(3, 4, 5);
+        ThreeDVector threeDVector2 = new ThreeDVector(6, 7, 8);
+        vectors[0] = twoDVector1;
+        vectors[1] = twoDVector2;
+        vectors[2] = threeDVector1;
+        vectors[3] = threeDVector2;
+        System.out.println(vectors[0]);
+        System.out.println(vectors[1]);
+        try {
+            System.out.println("Sum: " + vectors[0].sum(vectors[1]));
+        } catch (WrongArgumentTypeException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Scalar multiplication: " + twoDVector1.mul(twoDVector2) + "\n");
+        System.out.println(vectors[2]);
+        System.out.println(vectors[3]);
+        try {
+            System.out.println("Sum: " + vectors[2].sum(vectors[3]));
+        } catch (WrongArgumentTypeException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Vector multiplication: " + threeDVector1.mul(threeDVector2) + "\n");
+        Arrays.sort(vectors, new CompLength());
+        System.out.println("Sorted by length:");
+        for (Vector vector : vectors) {
+            System.out.println(vector);
+        }
+    }
+}

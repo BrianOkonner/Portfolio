@@ -1,0 +1,40 @@
+package sample;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc= new Scanner(System.in);
+
+        System.out.println("¬ведите точность");
+
+        int znak=-1, a=sc.nextInt();
+        double accuracy=a, n=1, number;
+
+        if(a<1){
+            return;
+        }
+
+        for(double i=accuracy; i>0;i--){
+
+            if(i==accuracy){
+                accuracy=1;
+            }
+
+            accuracy=accuracy/10;
+        }
+
+        number=4;
+
+        while(accuracy<(1/n)) {
+
+            n=n+2;
+            number=number+4*znak/n;
+            znak=znak*(-1);
+        }
+
+        System.out.printf("%.10f\n",number);
+        System.out.printf("%.10f",Math.PI);
+    }
+}

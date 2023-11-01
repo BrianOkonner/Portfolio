@@ -1,0 +1,1 @@
+void  _cdecl print(int ,int);

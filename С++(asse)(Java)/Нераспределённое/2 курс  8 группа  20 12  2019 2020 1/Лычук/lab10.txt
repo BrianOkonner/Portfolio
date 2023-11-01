@@ -1,0 +1,348 @@
+package com.company;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.*;
+class wrongpages extends Exception{};
+
+class Paper implements Serializable {
+    private String Title;
+    private String Type;
+    private boolean Monthly;
+    private String House;
+    private boolean color;
+    private int pages;
+    private boolean gloss;
+    private double index;
+
+    public Paper(String Title, String Type,boolean Monthly,String House, boolean color, int pages, boolean gloss,
+                 double index) throws wrongpages
+    {
+
+        if(pages<=0)
+        { throw new wrongpages();
+        }
+        this.Title=Title;
+        this.Type=Type;
+        this.Monthly=Monthly;
+        this.House=House;
+        this.color=color;
+        this.pages=pages;
+        this.gloss=gloss;
+        this.index=index;
+
+    }
+    @Override
+    public String toString()
+    {
+        return "Title:"+this.Title+ "  Type: "+this.Type+"  Monthly?  "+this.getMonthly()+
+                "  House: "+this.House+"  Color? "+this.getcolor() +"   Pages: "+
+                this.getpages() +"  Gloss? "+this.getgloss()+"  Index: "+this.index;
+    }
+    public String getTitle()
+    {
+        return this.Title;
+    }
+    public String getType()
+    {
+        return this.Type;
+    }
+    public String getHouse()
+    {
+        return this.House;
+    }
+    public int getpages()
+    {
+        return this.pages;
+    }
+    public double getIndex()
+    {
+        return this.index;
+    }
+    public String getMonthly()
+    {
+        if(this.Monthly)
+            return "Yes";
+        else
+            return "No";
+    }
+
+    public String getcolor()
+    {
+        if(this.color)
+            return "Yes";
+        else
+            return "No";
+    }
+    public String getgloss()
+    {
+        if(this.gloss)
+            return "Yes";
+        else
+            return "No";
+    }
+
+    public void setpages(int pages)
+    {
+        this.pages=pages;
+    }
+
+}
+
+class  ListPaper implements Serializable{
+    private String name;
+    private String address;
+    private List<Paper> Periodicals;
+
+    public ListPaper(String Name,String Address)
+    {
+        name=Name;
+        address=Address;
+        Periodicals=new ArrayList<>();
+    }
+
+    public String getname()
+    {
+        return this.name;
+    }
+
+    public String getaddress()
+    {
+        return this.address;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuffer s=new StringBuffer();
+        for(Paper r: Periodicals)
+            s.append(r+"\n");
+        return this.getname()+" "+this.getaddress()+"\n"+s.toString();
+    }
+
+    public ListPaper Addelement(Paper A)
+    {
+        Periodicals.add(A);
+        return this;
+    }
+
+    public ListPaper Delete(Paper A)
+    {
+        Periodicals.remove(A);
+        return this;
+    }
+
+    public ListPaper ChangeElement(Paper A,int index)
+    {
+        Periodicals.remove(index);
+        Periodicals.add(index, A);
+        return this;
+    }
+
+    public String Existence(Paper A)
+    {
+        for(Paper r: Periodicals)
+            if(r.equals(A))
+                return "Есть объект"; return "Нет объекта";
+    }
+    public void SaveToFile(String NameFile) throws Exception
+    {
+        PrintStream p=new PrintStream(NameFile);
+       p.println(this.name+" "+this.address);
+        for(Paper r: Periodicals){
+            p.println(r);   }
+        p.close();
+    }
+
+    public ListPaper NewCollection(int pages)
+    {
+        ListPaper A=new ListPaper(this.name,this.address);
+        for(Paper r: Periodicals)
+        {
+            if(r.getpages()>=pages)
+                A.Addelement(r);
+        }
+        return A;
+    }
+
+    public ListPaper NewCollectionWithHouse(String House)
+    {
+        ListPaper A=new ListPaper(this.name,this.address);
+        for(Paper r: Periodicals)
+        {
+            if(r.getHouse().equals(House))
+                A.Addelement(r);
+        }
+        return A;
+    }
+
+    public void reversePrint()
+    {
+        ListIterator<Paper> iterator=Periodicals.listIterator(Periodicals.size());
+        while(iterator.hasPrevious()){
+            System.out.println(iterator.previous());
+        }
+    }
+
+
+    public void straightPrint( )
+    {
+        ListIterator<Paper> iterator=Periodicals.listIterator(Periodicals.size());
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    }
+    public void SortWithTitle()
+    {
+        Periodicals.sort(  new Comparator<Paper>()
+        {
+            @Override
+            public int compare(Paper s1, Paper s2)
+            {
+                return s1.getTitle().compareTo(s2.getTitle());
+            }
+        });
+    }
+
+    public void Sortpages()
+    {
+        Periodicals.sort(new Comparator<Paper>()
+        {
+            @Override
+            public int compare(Paper  s1, Paper  s2)
+            {
+                if(s1.getpages()==s2.getpages())
+                    return 0;
+                if(s1.getpages()<s2.getpages())
+                    return -1;
+                return 1;
+            }
+        });
+    }
+
+
+    public Set<String> getT1()
+    {
+        Set<String> Titles=new HashSet<String>();
+        for(Paper s: Periodicals)
+            Titles.add(s.getType());
+        return Titles;
+    }
+    public Set<String> getT2()
+    {
+        Set<String> Titles=new TreeSet<String>();
+        for(Paper s: Periodicals)
+            Titles.add(s.getType());
+        return Titles;
+    }
+
+
+    public static Set<String> Sum(Set<String> A,Set<String> B)
+    {
+        Set<String> C=new HashSet<String>();
+        for(String str1:A)
+            C.add(str1);
+        C.addAll(B);
+        return C;
+    }
+    public static Set<String> Substraction(Set<String> A,Set<String> B)
+    {
+        Set<String> C=new HashSet<String>();
+        Set<String> D=new HashSet<String>();
+        for(String st1:A)
+            D.add(st1);
+        D.removeAll(B);
+        for(String st2:D)
+            C.add(st2);
+        return C;
+    }
+    public static Set<String> Intersection(Set<String> A,Set<String> B)
+    {
+        Set<String> C=new HashSet<String>();
+        Set<String> D=new HashSet<String>();
+        for(String st1:A)
+            D.add(st1);
+        C=Substraction(D,Substraction(Sum(D,B),B));
+        return C;
+    }
+
+
+
+
+}
+
+
+public class Main {
+
+    public static void main(String[] args) throws wrongpages
+    {
+        try{
+            ListPaper A=new ListPaper("Periodicals","Golubeva Street");
+           Paper[] List=new Paper[6];
+            List[0]=new Paper("Bazaar","Magazine",true,"Hearst Communications",true,200,true, 1234);
+            List[1]=new Paper("Traveller","Booklet",true,"Travel Agency",true,65,true, 0);
+            List[2]=new Paper("Daily Mail","Newspaper",true,"Associated Newspapers ",true,100,false, 6432);
+            List[3]=new Paper("Guardian ","Newspaper",true,"Guardian Media Group",true,79,false, 6543);
+            List[4]=new Paper("Vogue","Magazine",true," Conde Nast Publications",true,287,true, 6543);
+            List[5]=new Paper("Elle","Magazine",true," Hachette Filipacchi Medias",true,190,true, 2344);
+
+            for(Paper r:List)
+                A.Addelement(r);
+            A.SaveToFile("Output.txt");
+            System.out.println(A);
+
+            Paper C=new Paper("Elle","Magazine",true," Hachette Filipacchi Medias",true,190,true, 2344);
+
+            System.out.println("Коллекция в прямом порядке: ");
+            A.straightPrint();
+
+            System.out.println("Коллекция в обратном порядке: ");
+            A.reversePrint();
+
+            System.out.println("Добавленный элемент в коллекцию: ");
+            A.Addelement(C);
+            System.out.println(A);
+
+            System.out.println("Этото же элемент удаленный из коллекции: ");
+            A.Delete(C);
+            System.out.println(A);
+
+            System.out.println("Замена элемента коллекции по индексу: ");
+            A.ChangeElement(C, 3);
+            System.out.println(A);
+
+            System.out.println("Наличие элемента в коллекции: ");
+            System.out.println(A.Existence(C));
+            A.SaveToFile("output.txt");
+
+            System.out.println("Сформированая новая коллекция по числовому типу: ");
+            System.out.println(A.NewCollection(150));
+
+            System.out.println("Сформированая новая коллекция по строковому типу: ");
+            System.out.println(A. NewCollectionWithHouse("Travel Agency"));
+
+            System.out.println("Сортировка по названиям изданий: ");
+            A.SortWithTitle();
+            System.out.println(A);
+            System.out.println("Сортировка по объему: ");
+            A.Sortpages();
+            System.out.println(A);
+
+            System.out.println("Set");
+            Set<String> h1=new HashSet(A.getT1() );
+            Set<String> h2=new TreeSet(A.getT2());
+
+            System.out.println("Сумма: \n"+A.Sum(h1,h2));
+            System.out.println("Вычитаие: \n"+A.Substraction(h1,h2));
+            System.out.println("Пересечение: \n"+A.Intersection(h1,h2));
+        }
+        catch(wrongpages e)
+        {
+            System.out.println("Количество страниц не должно быть отрицательным");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Ошибка");
+        }
+    }
+
+}

@@ -1,0 +1,258 @@
+
+package контрольная13.pkg12.pkg19;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.*;
+import java.io.*;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Vector;
+import java.util.Collections;
+import java.util.Map;
+class compSymbols implements Comparator<String>
+{
+    @Override
+    public int compare( String A, String B)
+    {
+        
+        if(A.length()==B.length())
+            return 0;
+        if(A.length()>B.length())
+            return -1;
+        return 1;
+               
+    }
+}
+class compsu implements Comparator<Integer>
+{
+    @Override
+    public int compare( Integer A, Integer B)
+    {
+        
+        if(A==B)
+            return 0;
+        if(A>B)
+            return -1;
+        return 1;
+               
+    }
+}
+class compS implements Comparator<String>
+{
+    @Override
+    public int compare( String A, String B)
+    {
+        
+        if(A.length()==B.length())
+            return 0;
+        if(A.length()>B.length())
+            return -1;
+        return 1;
+               
+    }
+}
+class Disks{
+    private List<String> Keys;
+    private List<Integer> k1;
+    private int[] k;
+    private Map<String,Integer> map;
+    private Map<String,Integer> map2;
+      private Map<String,Integer> map3;
+      private List<String> Keys2;
+   public Disks()
+   {
+       k=new int[100];
+    map=new HashMap<String,Integer>();
+    map2=new HashMap<String,Integer>();
+     map3=new HashMap<String,Integer>();
+       k1=new ArrayList<Integer>();
+       this.Keys=new ArrayList<String>();
+       this.Keys2=new ArrayList<String>();
+   }
+   public List<String> ReadFile(String FileName)throws Exception
+   {
+       FileInputStream fis=new FileInputStream(FileName);
+       Scanner sc=new Scanner(fis);
+       while(sc.hasNext()){
+           String line=sc.nextLine();
+           String[] str=line.split(";");
+           int help=0;
+           this.Keys.addAll(Arrays.asList(str));
+           for(String r:str)
+           {
+               k1.add(help);
+           }
+           help++;
+       }
+       return this.Keys;
+   }
+   public void ReadFileVoid(String FileName)throws Exception
+   {
+       FileInputStream fis=new FileInputStream(FileName);
+       Scanner sc=new Scanner(fis);
+       int y=1;
+       int in=0;
+       Integer temp=0;
+       while(sc.hasNext()){
+           String line=sc.nextLine();
+           String[] str=line.split(";");
+          in=y; 
+          for(String r:str){
+          if(map2.containsKey(r)){
+              temp=map2.get(r);
+              temp=temp*10+y;
+              map2.put(r, temp);
+              }
+          else
+          {
+              map2.put(r, in);
+          }
+        
+       }
+            y++;
+       }
+       System.out.println(map2);
+   }
+    public void ReadFileVoid2(String FileName,String FileOutput,String FileOutput2,String FileOutput3)throws Exception
+   {
+       FileInputStream fis=new FileInputStream(FileName);
+       PrintStream pv=new PrintStream(FileOutput);
+        PrintStream pv2=new PrintStream(FileOutput2);
+          PrintStream pv3=new PrintStream(FileOutput3);
+       Scanner sc=new Scanner(fis);
+       Integer temp=1;
+       Integer in=0;
+       Pattern p=Pattern.compile("println|public|static|String|System|char|int|out|byte|void|main|class");
+       int y=1;
+       while(sc.hasNext()){
+           String line=sc.nextLine();
+           Matcher m=p.matcher(line);
+          
+          while(m.find())
+          {
+              Keys.add(m.group());
+              in=y;  
+              if(map.containsKey(m.group())){
+                temp=map.get(m.group());
+                temp=temp*10+y;
+                map.put(m.group(), temp);}
+            else
+            {
+                map.put(m.group(), in);
+            }
+          }    
+          y++;
+       }
+       fis.close();
+       for(int i=0;i<Keys.size();++i)
+       {
+           if(map.containsKey(Keys.get(i)))
+           {
+               temp=map.get(Keys.get(i));
+                temp=temp*10+k[i];
+                map.put(Keys.get(i), temp);
+           }
+       }
+       Set<String> setKeys1=map.keySet();
+        Set<String> setKeys2=map2.keySet();
+     List<String> O=new ArrayList<String>();
+     for(int i=0;i<setKeys1.size();i++)
+     {
+         O.add(setKeys1.toArray()[i].toString());
+     }
+     O.sort(new compSymbols());
+       for(int i=0;i<setKeys2.size();i++)
+       {
+        
+           if(setKeys1.contains(setKeys2.toArray()[i].toString())==true)
+                   {
+                       temp=map.get(setKeys2.toArray()[i].toString());
+                       temp=temp*10+map2.get(setKeys2.toArray()[i].toString());
+                       map.put(setKeys2.toArray()[i].toString(), temp);
+                      
+                   }
+           else
+           {
+              pv2.println(setKeys2.toArray()[i].toString()+" "+map2.get(setKeys2.toArray()[i].toString()));
+           }
+           }
+     for(int i=0;i<O.size();++i)
+     {
+         
+         if(setKeys2.contains(O.get(i))==true)
+         {
+             StringBuffer stur=new StringBuffer();
+             int t=map.get(O.get(i));
+             while(t!=0)
+             {
+                 stur.append(t%10+" ");
+                 t/=10;
+             }
+         pv.println(O.get(i)+" "+stur);
+         }
+         else
+         {
+               StringBuffer stur=new StringBuffer();
+             int t=map.get(O.get(i));
+             while(t!=0)
+             {
+                 stur.append(t%10+" ");
+                 t/=10;
+             }
+             pv.println(O.get(i)+" "+stur+" No");
+         }
+     }
+      List<Integer> U=new ArrayList<Integer>();
+    for(int i=0;i<map.size();++i)
+    {
+        int t=map.get(O.get(i));
+        int g=0;
+        t/=10;
+        while(t!=0)
+        {
+            g++;
+            t/=10;
+        }
+        map3.put(O.get(i), g);
+        U.add(g);
+    }
+     U.sort(new compsu());
+    for(int i=0;i<U.size();++i)
+    {
+        int f=U.get(i);
+        while(f!=0)
+        {
+            pv3.println(O.get(i));
+            f--;
+        }
+    }
+   }
+    
+   public String toString()
+   {
+       StringBuffer ster=new StringBuffer();
+        ListIterator<String> it=Keys.listIterator();
+        int u=0;
+      while(it.hasNext())
+      {
+          ster.append(it.next()+" ");
+          ster.append(k[u]+"\n");
+         u++;
+
+      }
+      return ster.toString();
+   }
+}
+public class Контрольная131219 {
+
+ 
+    public static void main(String[] args) throws Exception{
+        Disks A=new Disks();
+        A.ReadFileVoid("In2.txt");
+        A.ReadFileVoid2("in1.txt","out1.txt","out2.txt","out3.txt");
+    }
+    
+}

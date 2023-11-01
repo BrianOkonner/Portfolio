@@ -1,0 +1,120 @@
+import java.util.Arrays;
+
+class PriceException extends Exception {
+    @Override
+    public String toString() {
+        return "Цена должна быть больше нуля.";
+    }
+}
+
+class YearException extends Exception {
+    @Override
+    public String toString() {
+        return "Год должен быть больше нуля.";
+    }
+}
+
+enum Bound {
+    LIMP("мягкий переплёт"),
+    HARDCOVER("твёрдый переплёт"),
+    EBOOK("электронная книга");
+
+    private String russianOutput;
+
+    Bound(String russianOutput) {
+        this.russianOutput = russianOutput;
+    }
+
+    public String getRussianOutput() {
+        return russianOutput;
+    }
+}
+
+public class Book {
+    private final int id;
+    private final String bookTitle;
+    private final String[] authorsNames;
+    private final int yearOfPublication;
+    private final String publisher;
+    private final Bound bookBinding;
+    private double price;
+    private static int count = 0;
+
+    public Book(int id, String bookTitle, String[] authorsNames, int yearOfPublication,
+                String publisher, Bound bookBinding) {
+        try {
+            if (price < 0) {
+                throw new PriceException();
+            }
+            if (yearOfPublication < 0) {
+                throw new YearException();
+            }
+            count++;
+        } catch (PriceException | YearException exception) {
+            System.out.println(exception.getMessage());
+        }
+        this.id = id;
+        this.bookTitle = bookTitle;
+        this.authorsNames = authorsNames;
+        this.yearOfPublication = yearOfPublication;
+        this.publisher = publisher;
+        this.bookBinding = bookBinding;
+    }
+
+    public Book(int id, String bookTitle, String[] authorsNames, int yearOfPublication,
+                String publisher, Bound bookBinding, double price) {
+        this(id, bookTitle, authorsNames, yearOfPublication, publisher, bookBinding);
+        try {
+            if (price < 0) {
+                throw new PriceException();
+            }
+            this.price = price;
+            count++;
+        } catch (PriceException exception) {
+            System.out.println(exception.getMessage());
+        }
+
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String[] getAuthorsNames() {
+        return authorsNames;
+    }
+
+    public Bound getBookBinding() {
+        return bookBinding;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public int getYearOfPublication() {
+        return yearOfPublication;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    @Override
+    public String toString() {
+        return "ID " + id + ". \"" + bookTitle + "\"" + Arrays.toString(authorsNames) + ", " + yearOfPublication +
+                ", " + publisher + ", " + bookBinding.getRussianOutput() + ", " + price + " руб.";
+    }
+}

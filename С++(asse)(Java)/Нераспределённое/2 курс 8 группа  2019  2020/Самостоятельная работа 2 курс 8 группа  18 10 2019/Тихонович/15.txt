@@ -1,0 +1,210 @@
+public class Matr {
+    private int n;
+    private int m;
+    private int Matr[][];
+    public Matr()
+    {
+        int n=1;
+        int Matr[][]=new int[n][n];
+        Matr[0][0]=0;
+    }
+    public Matr(int n)
+    {
+        this.n=n;
+        this.m=n;
+        int Matr[][]=new int[n][n];
+        this.Matr=Matr;
+    }
+    public Matr(int n,int m)
+    {
+        this.n=n;
+        this.m=m;
+        int Matr[][]=new int[n][m];
+        this.Matr=Matr;
+    }
+    public int get(int n,int m)
+    {
+        return this.Matr[n][m];
+    }
+    public void set(int n,int m,int a)
+    {
+        this.Matr[n][m]=a;
+    }
+    public int getn()
+    {
+        return this.n;
+    }
+    public int getm()
+    {
+        return this.m;
+    }
+    public void Add(Matr A)
+    {
+        if(this.n==A.n&&this.m==A.m)
+        {
+            for(int i=0;i<n;i++) {
+                for(int j=0;j<m;j++) {
+
+                    this.Matr[i][j]+=A.Matr[i][j];
+                }
+            }
+        }
+        else{
+            System.out.println("Error. Should be (m1=m2)&&(n1=n2)");
+        }
+    }
+    public boolean equals(Matr A)
+    {
+        boolean fl=true;
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<m;j++) {
+                if(this.Matr[i][j]!=A.Matr[i][j])
+                {
+                    fl=false;
+                }
+            }
+        }
+        return fl;
+    }
+    public int SecondNorm()
+    {
+        int sum=0;
+        for(int i = 0;i<this.n;i++)
+        {
+            sum+=this.Matr[i][1];
+        }
+        int max = sum;
+        for (int j=1;j<this.m;j++)
+        {
+            sum=0;
+            for(int i = 0;i<this.n;i++)
+            {
+                sum+=this.Matr[i][j];
+            }
+            if(sum>max)
+            {
+                max=sum;
+            }
+        }
+         return max;
+    }
+    public String ItoString(int n,int m)
+    {
+
+        return " "+this.Matr[n][m];
+    }
+    public String ToString(int a)
+    {
+        String str="";
+        for(int i=0;i<this.m;i++)
+        {
+            str+=this.ItoString(a,i);
+        }
+        return str;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.metahit;
+import java.util.Scanner;
+import java.io.*;
+import java.util.Arrays;
+
+
+
+public class  Main {
+
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        Matr Mas[] = new Matr[4];
+        Mas[0]=new Matr();
+        Mas[1]=new Matr(3);
+        Mas[2]=new Matr(3,3);
+        Mas[3]=new Matr(3,3);
+        System.out.println("Input Mas[1](3,3):");
+        for(int i=0;i<Mas[1].getn();i++)
+        {
+            for(int j=0;j<Mas[1].getm();j++)
+            {
+                Mas[1].set(i,j,sc.nextInt());
+            }
+        }
+        for(int i=0;i<Mas[2].getn();i++)
+        {
+            for(int j=0;j<Mas[2].getm();j++)
+            {
+                Mas[2].set(i,j,Mas[1].get(i,j));
+            }
+        }
+        System.out.println("Input Mas[3](3,3):");
+        for(int i=0;i<Mas[3].getn();i++)
+        {
+            for(int j=0;j<Mas[3].getm();j++)
+            {
+                Mas[3].set(i,j,sc.nextInt());
+            }
+        }
+        if(Mas[1].equals(Mas[2]))
+        {
+            System.out.println("Mas[1]=Mas[2]");
+        }
+        else
+        {
+            System.out.println("Mas[1]!=Mas[2]");
+        }
+        if(Mas[1].equals(Mas[3]))
+        {
+            System.out.println("Mas[1]=Mas[3]");
+        }
+        else
+        {
+            System.out.println("Mas[1]!=Mas[3]");
+        }
+        Mas[1].Add(Mas[2]);
+        System.out.println("Mas[1]+Mas[2]:");
+        for(int i=0;i<Mas[1].getn();i++)
+        {
+            System.out.println(Mas[1].ToString(i));
+        }
+        System.out.println("Mas[1] Second Norm = "+Mas[1].SecondNorm());
+        System.out.println("Mas[0]:");
+        for(int i=0;i<Mas[0].getn();i++)
+        {
+            System.out.println(Mas[0].ToString(i));
+        }
+        System.out.println("Mas[1]:");
+        for(int i=0;i<Mas[1].getn();i++)
+        {
+            System.out.println(Mas[1].ToString(i));
+        }
+        System.out.println("Mas[2]:");
+        for(int i=0;i<Mas[2].getn();i++)
+        {
+            System.out.println(Mas[2].ToString(i));
+        }
+        System.out.println("Mas[3]:");
+        for(int i=0;i<Mas[3].getn();i++)
+        {
+            System.out.println(Mas[3].ToString(i));
+        }
+    }
+}
+
+
+
+
+
+
+

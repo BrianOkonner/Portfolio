@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+//сортировка по гласным английского алфавита
+
+class strComp implements Comparator<String> {
+    @Override
+    public int compare(String word1, String word2) {
+        String letters = "aeioyu";
+
+        int count1 = 0;
+        int count2 = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < word1.length(); j++) {
+                if (word1.charAt(j) == letters.charAt(i)) {
+                    count1++;
+                }
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < word2.length(); j++) {
+                if (word2.charAt(j) == letters.charAt(i)) {
+                    count2++;
+                }
+            }
+        }
+
+        return count2 - count1;
+    }
+}
+
+public class AppString1 {
+    public static void main(String[] args) throws IOException {
+        FileInputStream inputFile = new FileInputStream("input1.txt");
+        FileOutputStream outputFile = new FileOutputStream("output1.txt");
+        Scanner scanner = new Scanner(inputFile);
+        PrintStream printStream = new PrintStream(outputFile);
+        while (scanner.hasNext()) {
+            String str = scanner.nextLine();
+            String[] arr = str.split(" ");
+            Arrays.sort(arr);
+            StringBuffer buffer = new StringBuffer();
+            for (String r : arr) {
+                buffer.append(r + " ");
+            }
+            printStream.println(buffer);
+            buffer.delete(0, buffer.length() - 1);
+        }
+
+        inputFile.close();
+        outputFile.close();
+    }
+
+}

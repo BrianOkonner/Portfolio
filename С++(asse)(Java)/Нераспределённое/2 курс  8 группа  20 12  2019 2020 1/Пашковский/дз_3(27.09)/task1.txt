@@ -1,0 +1,59 @@
+//Пашковский Лев 8 группа
+//Найти строку с наибольшей цепочкой подряд идущих одинаковых чисел
+//Читает из файла input1.txt
+
+package packAge;
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+
+public class Task1 {
+	
+	public static void main(String[] args) {
+		try {
+		FileInputStream InputF=new FileInputStream("input1.txt");
+		Scanner sc=new Scanner(InputF);
+		//System.out.println("Введите размерность массива:");
+		
+		int m,n;
+		m=sc.nextInt();
+		n=sc.nextInt();
+		
+		int array[][]=new int[m][n];
+		
+		//System.out.println("Введите последовательность:");
+		for(int i=0;i<m;i++)
+			for(int j=0;j<n;j++)
+				array[i][j]=sc.nextInt();	
+		int maxNum=-1;
+		int maxLength=1;
+		for(int i=0;i<m;i++)
+			for(int j=0;j<n-1;j++)
+			{
+				int slength=1;
+				while(j<n-1 && array[i][j]==array[i][j+1])
+				{
+					slength++;
+					j++;
+				}
+				if(slength>maxLength)
+					{
+						maxNum=i;
+						maxLength=slength;
+						System.out.println(Arrays.toString(array[i]));
+						System.out.println();
+					}
+			}
+		maxNum++;//пусть отсчёт строк будет с 1 
+		
+		System.out.println("Номер строки: "+maxNum+" длина: "+maxLength);
+		InputF.close();
+	}
+	catch(IOException e)
+	{
+		System.out.println("Файл не найден!");
+	}
+
+}
+}

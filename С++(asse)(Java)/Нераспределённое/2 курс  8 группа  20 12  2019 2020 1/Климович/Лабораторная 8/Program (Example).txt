@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+abstract class Progression {
+    protected int a1;
+    protected int k;
+
+    public Progression(int a1, int k) {
+        this.a1 = a1;
+        this.k = k;
+    }
+
+    public abstract int getAtN(int n);
+
+    public abstract int getSumN(int n);
+}
+
+class AProgression extends Progression {
+    public AProgression(int a1, int k) {
+        super(a1, k);
+    }
+
+    @Override
+    public int getAtN(int n) {
+        return a1 + k * (n - 1);
+    }
+
+    @Override
+    public int getSumN(int n) {
+        return (a1 + getAtN(n)) * n / 2;
+    }
+
+    @Override
+    public String toString() {
+        return "Ar. prg.(a1 = " + a1 + ", k = " + k + ") ";
+    }
+}
+
+class GProgression extends Progression {
+    public GProgression(int a1, int k) {
+        super(a1, k);
+    }
+
+    @Override
+    public int getAtN(int n) {
+        return a1 + (int) Math.pow(k, n - 1);
+    }
+
+    @Override
+    public int getSumN(int n) {
+        return (int) ((a1 * (1 - Math.pow(k, n))) / (1 - k));
+    }
+
+    @Override
+    public String toString() {
+        return "Geometric prg.(b1 = " + a1 + ", q = " + k + ") ";
+    }
+}
+
+public class Program {
+    public static void main(String[] args) {
+        int nMax;
+        Progression[] progrs = {
+                new AProgression(1, 2),
+                new AProgression(10, 2),
+                new AProgression(100, -2),
+                new GProgression(1, 2),
+                new GProgression(-1, 2),
+                new GProgression(2, -2)
+        };
+        System.out.println("Enter n: ");
+        nMax = new Scanner(System.in).nextInt();
+        for (Progression p : progrs) {
+            System.out.println(p + ": ");
+            for (int n = 1; n <= nMax; n++)
+                System.out.print(p.getAtN(n) + ", ");
+            System.out.println(" sum = " + p.getSumN(nMax));
+        }
+    }
+}

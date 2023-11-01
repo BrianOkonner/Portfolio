@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="УП9(vector+algorithm)">
+</Property><Property Name="Файл решения" Value="D:\Учеба\Программирование\Проекты c++\4\УП9(vector+algorithm)\УП9(vector+algorithm).sln">
+</Property><Property Name="Date" Value="19 сентября 2018 г.">
+</Property><Property Name="Time" Value="17:03:58">
+</Property></Properties><Event ErrorLevel="0" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Converting project file 'D:\Учеба\Программирование\Проекты c++\4\УП9(vector+algorithm)\УП9(vector+algorithm).vcproj'.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Done converting to new project file 'D:\Учеба\Программирование\Проекты c++\4\УП9(vector+algorithm)\УП9(vector+algorithm).vcxproj'.">
+</Event><Event ErrorLevel="3" Project="УП9(vector+algorithm)" Source="УП9(vector+algorithm).vcproj" Description="Converted">
+</Event></UpgradeLog>

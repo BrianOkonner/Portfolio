@@ -1,0 +1,39 @@
+﻿Сборка начата 21.04.2016 10:35:06.
+     1>Проект "\\fpmi-stud\Subfaculty\Каф. ТП\Карпович Н А\1_курс\2015_16\2_семестр\Учебная практика15_16\WindowsForm\Matrix WF Demo\Matrix WF Demo\Matrix WF Demo.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files\Windows Kits\8.0\References\CommonConfiguration\Neutral" /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\Matrix WF Demo.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /TP /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib stdafx.cpp
+         stdafx.cpp
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files\Windows Kits\8.0\References\CommonConfiguration\Neutral" /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\Matrix WF Demo.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /TP /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib AssemblyInfo.cpp "Matrix WF Demo.cpp" Matrix_lib.cpp
+         AssemblyInfo.cpp
+         Matrix WF Demo.cpp
+     1>\\fpmi-stud\subfaculty\каф. тп\карпович н а\1_курс\2015_16\2_семестр\учебная практика15_16\windowsform\matrix wf demo\matrix wf demo\Form1.h(529): warning C4018: <: несоответствие типов со знаком и без знака
+     1>\\fpmi-stud\subfaculty\каф. тп\карпович н а\1_курс\2015_16\2_семестр\учебная практика15_16\windowsform\matrix wf demo\matrix wf demo\Form1.h(489): warning C4101: det: неиспользованная локальная переменная
+         Matrix_lib.cpp
+     1>Matrix_lib.cpp(13): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+     1>Matrix_lib.cpp(28): warning C4018: <: несоответствие типов со знаком и без знака
+     1>Matrix_lib.cpp(39): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+     1>Matrix_lib.cpp(66): warning C4018: <: несоответствие типов со знаком и без знака
+     1>Matrix_lib.cpp(88): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+     1>Matrix_lib.cpp(239): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+     1>Matrix_lib.cpp(524): warning C4172: возвращение адреса локальной или временной переменной
+     1>Matrix_lib.cpp(529): warning C4172: возвращение адреса локальной или временной переменной
+     1>Matrix_lib.cpp(534): warning C4172: возвращение адреса локальной или временной переменной
+         Создание кода...
+     1>\\fpmi-stud\subfaculty\каф. тп\карпович н а\1_курс\2015_16\2_семестр\учебная практика15_16\windowsform\matrix wf demo\matrix wf demo\matrix_lib.cpp(156): warning C4715: Matrix::operator(): значение возвращается не при всех путях выполнения
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /TP /analyze- /errorReport:prompt "C:\Users\karpovichna\AppData\Local\Temp\.NETFramework,Version=v4.5.AssemblyAttributes.cpp"
+         .NETFramework,Version=v4.5.AssemblyAttributes.cpp
+       ResourceCompile:
+         C:\Program Files\Windows Kits\8.0\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\app.res" app.rc 
+       Link:
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\fpmi-stud\Subfaculty\Каф. ТП\Карпович Н А\1_курс\2015_16\2_семестр\Учебная практика15_16\WindowsForm\Matrix WF Demo\Debug\Matrix WF Demo.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\MatrixWFDemo.Form1.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\fpmi-stud\Subfaculty\Каф. ТП\Карпович Н А\1_курс\2015_16\2_семестр\Учебная практика15_16\WindowsForm\Matrix WF Demo\Debug\Matrix WF Demo.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\app.res
+         Debug\AssemblyInfo.obj
+         "Debug\Matrix WF Demo.obj"
+         Debug\Matrix_lib.obj
+         Debug\stdafx.obj
+         "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
+         Matrix WF Demo.vcxproj -> \\fpmi-stud\Subfaculty\Каф. ТП\Карпович Н А\1_курс\2015_16\2_семестр\Учебная практика15_16\WindowsForm\Matrix WF Demo\Debug\Matrix WF Demo.exe
+     1>Построение проекта "\\fpmi-stud\Subfaculty\Каф. ТП\Карпович Н А\1_курс\2015_16\2_семестр\Учебная практика15_16\WindowsForm\Matrix WF Demo\Matrix WF Demo\Matrix WF Demo.vcxproj" завершено (целевые объекты Build).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:22.37

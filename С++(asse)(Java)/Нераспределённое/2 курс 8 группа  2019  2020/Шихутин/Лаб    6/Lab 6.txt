@@ -1,0 +1,160 @@
+
+package javaapplication4;
+//Шихутин Влад 11 номер
+
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import java.io.PrintStream; 
+import java.math.BigDecimal; 
+import java.math.RoundingMode; 
+import java.text.DecimalFormat; 
+import java.util.Arrays; 
+import java.util.Scanner;
+import java.util.Comparator;
+
+class CompareMoney implements Comparator<Bank>
+{
+@Override
+public int compare(Bank A,Bank B){
+if(A.getMoneyOnAccount()==B.getMoneyOnAccount())
+    return 0;
+if(A.getMoneyOnAccount()>B.getMoneyOnAccount())
+        return -1;
+return 1;}
+}
+class CompareNames implements Comparator<Bank>
+{
+@Override
+public int compare(Bank A,Bank B){
+return A.getName().compareTo(B.getName());}
+}
+enum TypeOfOperation
+        {
+    Add, close, open,transfer, pay_for_tax;
+}
+class WrongMoney extends Exception{};
+class Bank{
+    private   int id;
+    private final String  SirNameOfOwner;
+  private   double SumOnAccount;
+ private   final String Date;
+ private   TypeOfOperation Type;
+  private  double MoneyOnType;
+  private static int Count=0;
+  public Bank(String  SirNameOfOwner,double SumOnAccount, String Date, TypeOfOperation Type, double MoneyOnType)
+      throws WrongMoney{
+      if(SumOnAccount<0 || MoneyOnType<0)
+          throw new WrongMoney();
+      Count++;
+     this.id=Count;
+      this.Date=Date;
+      this.SirNameOfOwner=SirNameOfOwner;
+      this.SumOnAccount=SumOnAccount;
+      this.Type=Type;
+      this.MoneyOnType=MoneyOnType;
+}
+  public int getid()
+  {
+      return this.id;
+  }
+  public String toString()
+  {
+      return "Id= "+this.id+" Фамилия:"+this.SirNameOfOwner+" Деньги на счёте:"+this.SumOnAccount+" Дата последней операции:"+this.Date+" Вид операции:"+this.Type+" Деньги в операции:"+this.MoneyOnType;
+  }
+  public String getName(){
+      return this.SirNameOfOwner;
+    
+}
+  public String getDate()
+  {
+      return this.Date;
+  }
+  public Double getMoneyOnAccount()
+  {
+      return this.SumOnAccount;
+  }
+   public TypeOfOperation GetType(){
+       return this.Type;
+   }
+   public void SetMoney(double Money)
+   {
+       this.SumOnAccount=Money;}
+}
+
+public class JavaApplication4 {
+
+public static void main(String[] args) {   
+    try{
+      Bank[] A={new Bank("Ivanov",200.5,"15 03 2006",TypeOfOperation.close,30.0),new Bank("Lizovec",300.17,"16 02 2011",TypeOfOperation.transfer,18.0),new Bank("Lizovec",125.17,"22 11 2014",TypeOfOperation.open,1000.50),new Bank("Karoziya",300000.99,"13 12 2012",TypeOfOperation.pay_for_tax,20000.0),new Bank("hihihok",1000000.0,"01 01 1992",TypeOfOperation.Add,200000.0)};
+      for(Bank r:A)
+      {
+          System.out.println(r);
+      }
+      Scanner sc=new Scanner(System.in);
+        Scanner sc1=new Scanner(System.in);
+      System.out.println("Введите Фамилию: ");
+
+      String Fam=sc.nextLine();
+      System.out.println("Список счетов с фамилией "+Fam);
+      int p=0;
+      for(Bank r:A)
+      {
+          if(r.getName().equals(Fam)==true)
+          {
+              System.out.println(r);
+              p++;
+          }
+      }
+       if(p==0)
+        System.out.println("Таких нету");
+       p=0;
+       System.out.println("Введите день: ");
+       String u=sc.nextLine();
+       for(Bank r: A)
+       {
+           String[] arr=r.getDate().split(" ");
+           if(arr[0].equals(u)==true)
+           {
+               System.out.println(r);
+               p++;
+           }
+       }
+        if(p==0){
+        System.out.println("Таких нету");}
+      System.out.println("Введите операцию: ");
+      String mute=sc1.nextLine();
+      p=0;  
+       
+       
+        for(Bank r:A)
+        {
+            if(r.GetType().toString().equals(mute))
+            {
+                System.out.println(r);
+                p++;}
+        }
+          if(p==0)
+        System.out.println("Таких нету");
+          System.out.println("Отсортированный по суммам: ");
+          Arrays.sort(A,new CompareMoney());
+           for(Bank r:A)
+      {
+          System.out.println(r);
+      }
+           System.out.println("Отсортированный по именам: ");
+           Arrays.sort(A,new CompareNames());
+              for(Bank r:A)
+      {
+          System.out.println(r);
+      }
+    }
+   
+        catch(WrongMoney e)
+                {
+                System.out.println("Error Money");
+                }
+    }
+    }
+
+    
+

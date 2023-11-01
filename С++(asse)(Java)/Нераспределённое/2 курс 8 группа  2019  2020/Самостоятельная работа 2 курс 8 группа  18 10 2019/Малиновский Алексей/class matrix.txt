@@ -1,0 +1,131 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package matrixclass;
+
+/**
+ *
+ * @author fpm.malinovsAR
+ */
+import java.util.Arrays;
+public class MatrixClass {
+
+    /**
+     * @param args the command line arguments
+     */
+    static final class Matrix
+    {
+        private int n;
+        private int m;
+        private int mat[][] =  new int[n][m] ;
+        Matrix()
+        {
+            n =10;
+            m = 10;
+            for(int i=0; i< n; i++)
+            {
+                for(int j =0; j< m; j++)
+                {
+                    mat[i][j] = 0;
+
+                }
+            }
+        }
+        Matrix(int mat[][], int n, int m)
+        {
+          this.n =n;
+          this.m =m;
+            this.mat = mat;
+        }
+        int norm1()
+        {
+            int res;
+            int arr[] = new int[this.n];
+            for(int i =0; i< this.n; i++)
+            {
+                arr[i]= 0;
+            }
+          for(int i=0; i< n; i++)
+            {
+                for(int j =0; j< m; j++)
+                {
+                    arr[i]+=mat[i][j];
+
+                }
+            }
+          int max = arr[0];
+          for(int i =1; i< n; i++)
+          {
+              if(max< arr[i])
+                  max = arr[i];
+          }
+            return max;
+        }
+        int norm2()
+        {
+            int res;
+            int arr[] = new int[m];
+            for(int i =0; i< m; i++)
+            {
+                arr[i]= 0;
+            }
+          for(int i=0; i< m; i++)
+            {
+                for(int j =0; j< n; j++)
+                {
+                    arr[i]+=mat[j][i];
+
+                }
+            }
+          int max = arr[0];
+          for(int i =1; i< m; i++)
+          {
+              if(max< arr[i])
+                  max = arr[i];
+          }
+            return max;
+        }
+         public String toString() {
+             String res = "";
+             for(int i =0; i< n ; i++)
+             {
+            res += Arrays.toString(mat[i]);
+             }
+             return res;
+        }
+         public void set(int mat[][], int n, int m)
+         {
+             this.n = n;
+             this.m = m;
+             this.mat = mat;
+         }
+        
+    }
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Matrix []mas = new Matrix[3];
+        int [][]m1 = {{3,4,5},{4,6,7},{6,7,8}};
+        int [][]m2 = {{3,4},{4,6},{6,7}};
+        int [][]m3 = {{3,8,5},{4,9,7}};
+        mas[0] = new Matrix(m1, 3,3);
+        mas[1] = new Matrix(m2, 3,2);
+        mas[2] = new Matrix(m3, 2,3);
+        int max1 = mas[0].norm1();
+        int max2 = mas[0].norm2();
+       
+        for(int i =1;i< 3; i++)
+                {
+                    if(max1< mas[i].norm1())
+                        max1 = mas[i].norm1();
+                    if(max2< mas[i].norm2())
+                        max2 = mas[i].norm2();
+                }
+        System.out.println("Макисмальная первая норма: " + max1 + " " + "Максимальная вторая норма: " + max2);
+        System.out.println(Arrays.toString(mas));
+        
+    }
+    
+}

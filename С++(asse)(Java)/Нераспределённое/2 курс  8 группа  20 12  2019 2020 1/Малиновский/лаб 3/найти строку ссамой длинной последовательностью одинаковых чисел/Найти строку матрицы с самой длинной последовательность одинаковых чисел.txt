@@ -1,0 +1,81 @@
+//Найти строку с самой длинной последовательность одинаковых чисел
+package javaapplication8;
+
+/**
+ *
+ * @author lesha
+ */
+import java.io.*;
+import java.util.*;
+
+public class JavaApplication8 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int n=5;
+        int m=5;
+        int p = 0;
+        int a =0;
+        int[][] matrix = new int[n][m];
+          try(Scanner inFile = new Scanner (new File("matrix.txt")))
+        {
+            for(int i =0; i< n; i++)
+            {
+                for(int j =0; j<m; j++)
+                {
+                matrix[i][j] = inFile.nextInt();
+                }
+            }
+            
+        }
+        catch(IOException ex){
+              
+            System.out.println("The file has been written");
+        } 
+          int[] max = new int[n];
+          for(int i =0; i< n; i++)
+            {
+                for(int j =0; j<m-1; j++)
+                {
+                    if(matrix[i][j]== matrix[i][j+1])
+                    {
+                        j++;
+                        p++;
+                        while(j != m-1 && matrix[i][j]==matrix[i][j+1])
+                        {
+                            
+                            
+                            j++;
+                            
+                            p++;
+                        }
+                        if(p>a)
+                        {
+                            a=p;
+                        }
+                        p=0;
+                    }
+                }
+                max[i] = a;
+                a =0;
+  
+            }
+          int max1 = max[0];
+          int index =0;
+          for (int i = 0; i < max.length; i++) 
+		{
+			if (max1 < max[i]) 
+			{
+				max1 = max[i];
+				index = i;
+			}
+		}
+         
+          System.out.println("Строка с самой длинной последовательностью одинаковых чисел:"); 
+       System.out.println(index+1); 
+    }
+    
+}

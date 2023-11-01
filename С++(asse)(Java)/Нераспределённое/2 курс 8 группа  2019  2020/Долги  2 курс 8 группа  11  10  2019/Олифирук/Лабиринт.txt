@@ -1,0 +1,108 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package labirint;
+import java.util.Scanner;
+import java.io.*;
+/**
+ *
+ * @author Maxim
+ */
+public class Labirint 
+{
+
+    public static void prochit(int[][]Mat,Scanner sc)
+    {
+        for(int i=0;i<10;i++)
+        {
+            for(int j=0;j<10;j++)
+            {
+                Mat[i][j]=sc.nextInt();
+            }
+        }
+    }
+    
+    public static void print(int[][]Mat)
+    {
+        for(int i=0;i<10;i++)
+        {
+            for(int j=0;j<10;j++)
+            {
+                 System.out.print(Mat[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void step(int[][]Mat,int x,int y)
+    {
+        if ((x == 0) || (y == 0) ||(x==9) ||(y==9)) 
+          {
+          System.out.println("Можно");
+          System.exit(0);
+          }      
+                
+          Mat[x][y]=0;
+          if (Mat[x - 1][y] == 1)
+          {
+          step(Mat,x - 1, y);
+          }
+          
+          if (Mat[x][y+1] == 1)
+          {
+          step(Mat,x, y+1);
+          }
+          
+          if (Mat[x+1][y] == 1)
+          {
+          step(Mat,x+1, y);
+          }
+           
+          if (Mat[x][y-1] == 1)
+          {
+          step(Mat,x,y-1);
+          }
+       
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args)
+    {
+      try
+      {
+          FileInputStream InputF=new FileInputStream("input.txt");
+          Scanner sc=new Scanner(InputF);
+          Scanner sc1=new Scanner(System.in);
+          int[][]Mat=new int[10][10];
+          
+          prochit(Mat,sc);
+          print(Mat);
+          
+          System.out.println("Введите начало");
+          int a=sc1.nextInt();
+          int b=sc1.nextInt();
+          
+          
+        if(Mat[a][b]==0)
+        {
+            System.out.println("Выхода нет");
+        }
+        else
+        {
+          step(Mat,a,b);
+          System.out.println("Выхода нет");
+        }
+        
+        
+          
+      }
+      catch(IOException e)
+      {
+       System.out.println("Файл не найден");           
+      }
+    }
+    
+}

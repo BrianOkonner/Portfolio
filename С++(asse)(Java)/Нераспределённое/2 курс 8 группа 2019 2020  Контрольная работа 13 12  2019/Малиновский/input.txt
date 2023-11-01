@@ -1,0 +1,5 @@
+aabbccddeegghhhh
+rrllmmoptfzha
+/R 0 2 5;R 0 10 15;S 1 8 12;
+mnopabkffgg
+/S 3 2 6;R 3 7 10;

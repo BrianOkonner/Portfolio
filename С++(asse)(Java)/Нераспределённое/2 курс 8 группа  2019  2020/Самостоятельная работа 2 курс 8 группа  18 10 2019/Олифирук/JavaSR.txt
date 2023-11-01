@@ -1,0 +1,190 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javasr;
+
+import java.util.Scanner;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.io.*;
+/**
+ *
+ * @author Maxim
+ */
+
+class KvadMatr
+{
+   private int n;
+   private int mat[][];
+  
+   public KvadMatr()
+   {
+       this.n=1;
+       for(int i=0;i<this.n;i++)
+       {
+           for(int j=0;j<this.n;j++)
+           {
+               this.mat[i][j]=1;
+           }
+               
+       }
+   }
+   
+      public KvadMatr(int x)
+   {
+       this.n=x;
+       mat=new int[this.n][this.n];
+       
+       for(int i=0;i<this.n;i++)
+       {
+           for(int j=0;j<this.n;j++)
+           {
+               this.mat[i][j]=1;
+           }
+               
+       }
+   }
+   
+   public KvadMatr(int x,int y)
+   {
+       this.n=x;
+       mat=new int[this.n][this.n];
+       
+       for(int i=0;i<this.n;i++)
+       {
+           for(int j=0;j<this.n;j++)
+           {
+               this.mat[i][j]=y;
+           }
+               
+       }
+   }
+   public int Getsize()
+   {
+       return n;
+   }
+   
+   public int GetMatr(int i,int j)
+   {
+       return mat[i][j];
+   }
+   
+   public void GetMatr1(KvadMatr A)
+   {
+         for(int i=0;i<A.Getsize();i++)
+       {
+           for(int j=0;j<A.Getsize();j++)
+           {
+               System.out.print(A.GetMatr(i,j) +" ");
+           }
+           System.out.println();
+       }
+   }
+   
+   public void setMatr(KvadMatr A)
+   {
+       for(int i=0;i<A.n;i++)
+       {
+           for(int j=0;j<A.n;j++)
+           {
+               A.mat[i][j]=(int)(Math.random()*10+5);
+           }
+       }
+   }
+   
+   public void proverka(KvadMatr A,KvadMatr B)
+   {
+       if(A.n!=B.n)
+       {
+           System.out.println("Матрицы разного размера складывать нельзя ");
+           System.exit(0);
+       }
+   }
+   
+   public void sum(KvadMatr A,KvadMatr B)
+   {
+       for(int i=0;i<n;i++)
+       {
+           for(int j=0;j<n;j++)
+           {
+               this.mat[i][j]=A.mat[i][j]+B.mat[i][j];
+           }
+       }
+   }
+   
+   public int sled(KvadMatr A)
+   {
+       int sum=0;
+       for(int i=0;i<A.n;i++)
+       {
+          sum+=mat[i][i];
+       }
+       return sum;
+   }
+   
+   public int norm(KvadMatr A)
+   {
+       int max=A.mat[0][0];
+       for(int i=0;i<A.n;i++)
+       {
+           for(int j=0;j<A.n;j++)
+           {
+               if(A.mat[i][j]>max)
+               {
+                   max=mat[i][j];
+               }
+           }
+       }
+       return max;
+   }
+   
+   public String toString()
+   {
+       return "Рахмер иатрицы: "+"n="+this.n+" Квадратная матрица";
+   }
+   
+}
+public class JavaSR
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+       KvadMatr A=new KvadMatr(3);
+       KvadMatr B=new KvadMatr(3);
+       KvadMatr C=new KvadMatr(3);
+       
+      
+       
+       A.setMatr(A);
+       B.setMatr(B);
+       
+       
+     
+      
+       
+       System.out.println(A.toString());
+       A.GetMatr1(A);
+       
+       System.out.println(B.toString());
+       B.GetMatr1(B);
+       
+       System.out.println("Сумма матриц");
+       C.proverka(A,B);
+       C.sum(A,B);
+       System.out.println(C.toString());
+       C.GetMatr1(C);
+       
+ 
+       
+       System.out.println("След матрицы "+C.sled(C));
+       System.out.println("Норма матрицы "+C.norm(C));
+     
+           
+    }
+    
+}

@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+public class appArrays3 { //получить палиндром из числа путем перестановки его цифр
+
+    public static int length(int n) {
+        int len = 0;
+        while (n != 0) {
+            len++;
+            n /= 10;
+        }
+        return len;
+    }
+
+    public static int number(int n, int m) {
+        int number = 0;
+        while (n != 0) {
+            if (n % 10 == m)
+                number++;
+            n /= 10;
+        }
+        return number;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a number: ");
+        int n = scanner.nextInt();
+
+        int result = 0;
+        int err = 0;
+        int cons;
+        int cons1;
+
+        for (int i = 1; i < 10; i++) {
+            if (number(n, i) % 2 == 0) {
+                cons = number(n, i);
+                while (cons != 0) {
+                    result = result * 10 + i;
+                    result += i * Math.pow(10, (double) length(result));
+                    cons -= 2;
+                }
+            }
+            if (number(n, i) % 2 != 0) {
+
+                cons1 = (int) (result % Math.pow(10, (double) length(result) / 2));
+                result /= Math.pow(10, (double) length(result) / 2);
+                result = result * 10 + i;
+                result = (int) result * (int) Math.pow(10, (double) length(cons1)) + cons1;
+                cons = number(n, i) - 1;
+                while (cons != 0) {
+                    result = result * 10 + i;
+                    result += i * Math.pow(10, (double) length(result));
+                    cons = -2;
+                }
+                err++;
+            }
+        }
+        if ((number(n, 0) != 0) && (err == 0)) {
+            cons = (int) (result % Math.pow(10, (double) length(result) / 2));
+            result /= Math.pow(10, (double) length(result) / 2);
+            result *= Math.pow(10, number(n, 0));
+            result = (int) result * (int) Math.pow(10, (double) length(cons)) + cons;
+        }
+
+        if (err <= 1) {
+            System.out.println("Palindrome:  " + result);
+        } else {
+            System.out.println("Palindrome is impossible");
+        }
+
+    }
+}

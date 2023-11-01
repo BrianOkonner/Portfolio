@@ -1,0 +1,25 @@
+	 nomer slova 	 slovo		 simvol	 dlina	 nomer simvola
+	1			11111da				1		5		1
+	2			youoo				o		2		3
+	3			nowdays				s		1		6
+	4			everytt				t		2		5
+	5			ehalllll				l		5		3
+	6			kaktys				s		1		5
+	7			naaaa				a		5		1
+	8			kkkkone				k		4		1
+	9			mama				a		2		1
+	10			milaaa				a		3		3
+	11			ramyyy				y		3		3
+	12			11111da				1		5		1
+	13			mama				a		2		1
+	14			milaaa				a		3		3
+	15			ramyyy				y		3		3
+	16			11111da				1		5		1
+	17			mama				a		2		1
+	18			milaaa				a		3		3
+	19			ramyyy				y		3		3
+	20			11111da				1		5		1
+	21			mama				a		2		1
+	22			milaaa				a		3		3
+	23			ramyyy				y		3		3
+	24			11111da				1		5		1

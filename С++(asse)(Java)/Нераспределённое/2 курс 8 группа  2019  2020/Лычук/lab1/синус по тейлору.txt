@@ -1,0 +1,62 @@
+package com.company;
+public class Main {
+    public static void main(String[] args) {
+
+        try {
+            tailor a = new tailor();
+            a.input();
+            double s1 = a.count1();
+            double s2 = a.count2();
+            a.output("sin x=", s1);
+            a.output("по тейлору sin x=", s2);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("неверный ввод");
+        }
+    }
+}
+
+
+------tailor.java-----
+
+
+
+package com.company;
+import java.util.Scanner;
+
+public class tailor {
+
+    private int k;
+    private double x;
+
+    public void input() {
+        System.out.println("input x, k");
+        Scanner sc = new Scanner(System.in);
+        this.x = Double.parseDouble(sc.next());
+        this.k = Integer.parseInt(sc.next());
+    }
+
+    public double count2() {
+        double sx2 = 0;
+        double e = Math.pow((double) 10, (double) (-k));
+        double add = x;
+        int n = 1;
+        while (Math.abs(add) >= e) {
+            sx2 = sx2 + add;
+            add = add * (-1);
+            add = add * x * x;
+            add = add / ((2 * n + 1) * (2 * n));
+            n++;
+        }
+        return sx2;
+    }
+
+    public double count1() {
+        double sx1 = Math.sin(x);
+        return sx1;
+    }
+    public void output(String str, double num) {
+        System.out.printf(str + "%.3f\n", num);
+
+    }
+}

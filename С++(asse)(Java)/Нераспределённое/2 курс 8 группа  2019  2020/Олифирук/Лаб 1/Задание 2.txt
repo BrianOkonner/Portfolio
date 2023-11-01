@@ -1,0 +1,49 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package lab1ex2;
+import java.util.Scanner;
+/**
+ *
+ * @author fpm.olifirukMV
+ */
+public class program 
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    
+    public static double chislopi()
+    {
+        double pi=0;
+        double e=0.0001;
+        double n=1;
+        double k=1;
+        while(Math.abs(1/n)>e)
+        {
+            pi=pi+1/n*k;
+            n=n+2;
+            k=k*(-1);
+        }
+        return 4*pi;
+    }
+    
+    public static void main(String[] args) 
+    {
+        double pi=chislopi();
+        
+        System.out.println("Число полученное с помощью формулы");
+        System.out.printf("%.6f\n",pi);
+        
+        System.out.println("Число PI");
+        double k=Math.PI;
+        System.out.printf("%.6f\n",k);
+        
+        
+    }
+    
+}

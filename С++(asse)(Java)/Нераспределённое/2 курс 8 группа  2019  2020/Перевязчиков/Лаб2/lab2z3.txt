@@ -1,0 +1,163 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab2z3;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+class cmpub implements Comparator<Integer>
+{
+    @ Override public int compare(Integer t11,Integer t22)
+    {
+        int t1=t11;
+        int t2=t22;
+        if(t11==t22)
+            return 0;
+        if(t1>t22)
+            return -1;
+        return 1;
+    }
+}
+/**
+ *
+ * @author Brian
+ */
+public class Program 
+{
+    public static boolean palindrom(int n)
+    {
+        int obr=0;
+        int copy=1;
+        copy=n;
+        while(copy>0)
+        {
+            obr=obr*10+copy%10;
+            copy=copy/10;
+        }
+        if(n==obr)
+            return true;
+        else
+            return false;
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        int n;
+        int i=0,j=0,k,obr=0,g=0;
+        System.out.print("Введите число: ");
+        Scanner in=new Scanner(System.in);
+        n=in.nextInt();
+        k=n;
+        while(k>0)
+        {
+            k=k/10;
+            i++;
+        }
+        k=n;
+        Integer a[]=new Integer[i];
+        Integer b[]=new Integer[i];
+        i=0;
+        while(k>0)
+        {
+            a[i]=k%10;
+            if(a[i]==0)
+                g+=1;
+            k=k/10;
+            i++;
+        }
+        if(a.length==1)
+            System.out.println("Полученный из числа палиндром: "+n);
+        else
+        {
+            if(g==a.length-1)
+                System.out.println("Из числа нельзя создать палиндром");
+            else
+            {
+                Arrays.sort(a,new cmpub());
+                Arrays.fill(b, 0);
+                if (a.length%2==0)
+                {
+                    b[j]=1;
+                    for(i=1;i<a.length;i++)
+                    {
+                        if(a[i-1]==a[i])
+                        {
+                            b[j]+=1;
+                        }
+                        else
+                        {
+                            j++;
+                            b[j]=1;
+                        }
+                    }
+                }
+                else
+                {
+                    b[j]=1;
+                    for(i=1;i<a.length;i++)
+                    {
+                        if(a[i-1]==a[i])
+                        {
+                            b[j]+=1;
+                        }
+                        else
+                        {
+                            j++;
+                            b[j]=1;
+                        }
+                    }
+                }
+                Integer []c=new Integer[a.length];
+                i=0;
+                g=0;
+                k=0;
+                Arrays.sort(a,new cmpub());
+                for(j=1;b[j-1]>0;j++)
+                {
+                    if(b[j-1]%2==1)
+                    {
+                        c[a.length/2]=a[i];
+                        i++;
+                        for(int v=0;v<b[j-1]/2;v++)
+                        {                    
+                            c[g]=a[i];
+                            i++;
+                            c[a.length-g-1]=a[i];
+                            i++;
+                            g+=1;
+                        }
+			k+=1;
+                    }
+                    else
+                    {
+                        for(int v=0;v<b[j-1]/2;v++)
+                        {
+                            c[g]=a[i];
+                            i++;
+                            c[a.length-g-1]=a[i];
+                            i++;
+                            g+=1;
+                        }
+                    }
+                }
+                if(k>1)
+                    System.out.println("Из числа нельзя создать палиндром");
+                else
+                {
+                    k=1;
+                    for(i=0;i<c.length;i++)
+                    {
+                        obr+=k*c[i];
+                        k*=10;
+                    }
+                    System.out.print("Полученный из числа палиндром: ");
+                    System.out.println(obr);
+                }
+            }
+        }
+    }
+}

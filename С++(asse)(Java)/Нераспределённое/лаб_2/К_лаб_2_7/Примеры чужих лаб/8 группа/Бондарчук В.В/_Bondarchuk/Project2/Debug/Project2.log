@@ -1,0 +1,30 @@
+﻿  Source1.cpp
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(53): warning C4018: <: несоответствие типов со знаком и без знака
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(119): error C2065: S1: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(119): error C2065: S2: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(119): error C2065: S3: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(119): error C2065: N1: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(119): error C2065: N2: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(119): error C2065: N3: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(122): error C2065: N1: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(122): error C2065: N2: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(122): error C2065: N3: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(171): error C2065: i: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(176): error C3861: colvoslov: идентификатор не найден
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(180): error C2065: i: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(180): error C2228: выражение слева от ".name" должно представлять класс, структуру или объединение
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(181): error C2065: i: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(181): error C2228: выражение слева от ".name" должно представлять класс, структуру или объединение
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(186): error C2065: i: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(186): error C2228: выражение слева от ".numL" должно представлять класс, структуру или объединение
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(187): error C2065: i: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(213): error C2065: countFirms: необъявленный идентификатор
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(217): error C2039: tovar: не является членом "firms"
+  d:\desktop\_bondarchuk\project2\project2\source1.cpp(21): note:  см. объявление "firms"
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(217): error C2228: выражение слева от ".name" должно представлять класс, структуру или объединение
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(217): error C2228: выражение слева от ".price" должно представлять класс, структуру или объединение
+d:\desktop\_bondarchuk\project2\project2\source1.cpp(217): error C2039: fname: не является членом "firms"
+  d:\desktop\_bondarchuk\project2\project2\source1.cpp(21): note:  см. объявление "firms"
+  Source.cpp
+c1xx : fatal error C1083: Не удается открыть файл источник: Source.cpp: No such file or directory,
+  Создание кода...

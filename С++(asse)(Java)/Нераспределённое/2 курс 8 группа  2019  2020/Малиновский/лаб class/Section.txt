@@ -1,0 +1,200 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package classsectionx;
+
+/**
+ *
+ * @author lesha
+ */
+import java.util.Arrays;
+public class ClassSectionX {
+
+    /**
+     * @param args the command line arguments
+     */
+   static class SectionX
+    {
+        int a;
+        int b;
+        SectionX()
+        {
+        b =0;
+        a =1;
+        }
+         SectionX(int b, int a)
+        {
+        this.b = b;
+        this.a =a;
+        }
+        void setA(int a)
+        {
+            this.a =a;
+        }
+           void setB(int b)
+        {
+            this.b =b;
+        }
+           int getA()
+        {
+            return a;
+        }
+           int  getB()
+        {
+            return b;
+        }
+           int length()
+           {
+               return Math.abs(a-b);
+           }
+           SectionX simmetric()
+           {
+               SectionX res = new SectionX(-b, -a);
+               return res;
+           }
+            public boolean equals(Object o) {
+            if (o == this) {
+                return true;
+            }
+            if (!(o instanceof SectionX)) {
+                return false;
+            }
+            SectionX t = (SectionX) o;
+            return this.a == t.a && this.b == t.b;
+
+        }
+            int relation(SectionX s)
+            {
+                if((b<= s.b && s.a <= a) ||(s.b<= b && a <= s.a))
+                    return 4;
+                if(a == s.b || b == s.a)
+                    return 2;
+                if((a<= s.a && s.b <= a) || (s.a<= b && b <= s.b))
+                    return 3;
+                return 1;
+            }
+            SectionX union(SectionX s)
+            {
+                SectionX res = new SectionX();
+                if(this.relation(s) == 2)
+                {
+                    if(a == s.b)
+                    {
+                        res.b = b;
+                        res.a = s.a;
+                    }
+                    if(b == s.a)
+                    {
+                        res.b = s.b;
+                        res.a = a;
+                    }
+                        
+                }
+                if(this.relation(s) == 4)
+                {
+                    if(b<= s.b && s.a <= a)
+                    {
+                        res.a = a;
+                    res.b = b;
+                    }
+                    if(s.b<= b && a <= s.a)
+                    {
+                          res.a = s.a;
+                    res.b = s.b;
+                    }
+                            
+                }
+                return res;
+            }
+            SectionX minus(SectionX s)
+            {
+                SectionX res = new SectionX();
+                if(s.a == a && s.b>b)
+                {
+                   
+                        res.a = s.b;
+                    res.b =b;
+                    
+                        
+                    
+                }
+                if(s.b == b && s.a < a)
+                {
+                    res.a = a;
+                    res.b = s.a;
+                }
+                return res;
+            }
+            SectionX intersection(SectionX s)
+            {
+                SectionX res = new SectionX();
+                if(this.relation(s) == 3)
+                {
+                    if(a<= s.a && s.b <= a)
+                    {
+                        res.a = a;
+                        res.b = s.b;
+                    }
+                    if(s.a >= b && b >= s.b)
+                    {
+                        res.b = b;
+                        res.a = s.a;
+                    }
+                }
+                return res;
+            }
+             public String toString() {
+            return String.format("a = " + a + " " + "b = "+  b);
+        }
+        
+    }
+    public static void main(String[] args) {
+        // TODO code application logic here
+        SectionX mas[] = new SectionX[3];
+        mas[0] = new SectionX(3,4);
+        mas[1] = new SectionX();
+        mas[2] = new SectionX(3,4);
+        for (int j=0;j<mas.length;j++)
+  for (int k=j+1;k<mas.length;k++)
+    if (k!=j && mas[k].equals(mas[j]))
+     System.out.println("Cовпадающие отрезки: " + j + " и " + k+" ("+ mas[k]+ ")");
+        int max = Integer.MIN_VALUE;
+        SectionX max1 =  new SectionX();
+        SectionX max2 =  new SectionX();
+        for (int j=0;j<mas.length;j++)
+        {
+        for (int k=j+1;k<mas.length;k++)
+        {
+    if ( k != j && mas[j].getA()<= mas[k].getB() && max < Math.abs(mas[j].getA()- mas[k].getB()) )
+    {
+     max = Math.abs(mas[j].getA()- mas[k].getB());
+     max1 = mas[j];
+     max2 = mas[k];
+    }
+    if (k != j && mas[k].getA()<= mas[j].getB() && max < Math.abs(mas[k].getA() - mas[j].getB()))
+    {
+     max = Math.abs(mas[k].getA() - mas[j].getB());
+     max1 = mas[k];
+     max2 = mas[j];
+    }
+        }
+        }
+        System.out.println(max + ":" + max1 + " " + max2 );
+        mas[0] = mas[0].simmetric();
+        System.out.println(mas[0]);
+        System.out.println(mas[0] + " и " + mas[1] + " : " + mas[0].relation(mas[1]));
+        for (int i = 0; i < mas.length-1; i++) 
+            for (int j = 0; j < mas.length-i-1; j++) 
+                if (mas[j].length() < mas[j+1].length()) 
+                { 
+                    
+                    SectionX temp = mas[j]; 
+                    mas[j]= mas[j+1]; 
+                    mas[j+1] = temp; 
+                } 
+        System.out.println(Arrays.toString(mas));
+    }
+    
+}

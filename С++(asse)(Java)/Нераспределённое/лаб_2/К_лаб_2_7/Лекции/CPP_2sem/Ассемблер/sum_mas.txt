@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	int a[20];
+	int n,s;
+	cin>>n;
+	for (int i=0;i<n;i++)
+		cin>>a[i];
+	_asm
+	{
+		mov ecx,n
+		mov eax,0
+		lea ebx,a
+		mov esi,0
+for1:
+		add eax,[ebx][esi]
+		add esi,4
+		loop for1
+		mov s,eax
+	}
+	cout<<"sum="<<s<<endl;
+	return 0;
+}

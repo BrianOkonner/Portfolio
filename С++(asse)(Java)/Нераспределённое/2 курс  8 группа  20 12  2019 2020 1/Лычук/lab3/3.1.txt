@@ -1,0 +1,47 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
+//найти в матрице номер строки
+// содержащей самую длинную последовательность рядом стоящих одинаковых элементов
+public class Main {
+    public static void main(String[] args) {
+        try {
+            FileInputStream Input1 = new FileInputStream("Input1.txt");
+            Scanner sc = new Scanner(Input1);
+            int[][] M = new int[4][4];
+
+           // чтение из файла
+            while(sc.hasNext()) {
+                for (int i = 0; i < M.length; i++) {
+                    for (int j = 0; j < M[i].length; j++) {
+                        M[i][j] = sc.nextInt();
+                    }
+                }
+            }
+
+            //вывод в консоль
+            for (int i = 0; i < M.length; i++) {
+                for (int j = 0; j < M[i].length; j++) {
+                    System.out.print(M[i][j] + "\t");
+                }
+                System.out.println();
+            }
+
+
+            int max=0;   int count=1;   int strNumber=0;
+            for (int i = 0; i < M.length; i++) {
+                for (int j = 1; j < M[i].length; j++)
+                    if (M[i][j] == M[i][j - 1]) {
+                        count++;}
+                     else count = 0;
+
+                if (count > max) {
+                    strNumber = i+1;
+                    max = count;
+                }
+            }
+            System.out.println("Самая длинная последовательность одинаковых элементов в строке №"+strNumber);
+
+        }  catch (IOException e){System.out.println("Файл не найден"); } }}

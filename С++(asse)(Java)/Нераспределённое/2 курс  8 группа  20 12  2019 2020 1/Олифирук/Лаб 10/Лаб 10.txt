@@ -1,0 +1,408 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab10;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.*;
+import java.io.*;
+/**
+ *
+ * @author Maxim
+ */
+class wrongMas extends Exception{};
+class wrongDlina extends Exception{};
+class wrongShirina extends Exception{};
+        
+class FlatWare implements Serializable {
+    private String Type;
+    private String NameOfcountry;
+    private double  dlina;
+    private double shirina;
+    private String material;
+    private String material_of_rukoyatb;
+    private boolean value;
+
+
+   public FlatWare(String Type,String NameOfcountry,
+ double  dlina, double shirina,
+ String material, String material_of_rukoyatb,boolean value) throws wrongDlina,wrongShirina
+   {
+         if(dlina<=0)
+         {
+           throw new wrongDlina();
+         }
+         if(shirina<=0)
+         {
+           throw new wrongShirina();
+         }
+       
+       this.Type=Type;
+       this.NameOfcountry=NameOfcountry;
+       this.dlina=dlina;
+       this.shirina=shirina;
+       this.material=material;
+       this.material_of_rukoyatb=material_of_rukoyatb;
+       this.value=value;
+   }
+    @Override
+    public String toString()
+    {
+        return " Тип столового прибора: "+this.Type+" Страна производства "+this.NameOfcountry+" Длина лезвия "+this.dlina+" Ширина лезвия "+
+                this.shirina+" Материал прибора "+this.material+" Материал рукояти "+this.material_of_rukoyatb+"Коллекционный или нет? "+this.getValue();
+    }
+
+    public String getType() 
+    {
+        return this.Type;
+    }
+    
+    public String getNameOfcountry()
+    {
+        return this.NameOfcountry;
+    }
+    
+    public Double getdlina()
+    {
+        return this.dlina;
+    }
+     
+    public Double getShirina()
+    {
+        return this.shirina;
+    }
+    
+    public String getmaterial()
+    {
+        return this.material;
+    }
+    
+    public String getMaterialOF()
+    {
+        return this.material_of_rukoyatb;
+    }
+  
+     public String getValue()
+    {
+        if(this.value==true)
+        return "Yes";
+        else
+        return "No";
+    }
+           
+    public void setDlina(double dlina)
+    {
+        this.dlina=dlina;
+    }
+    
+    public void setShirina(double shirina)
+    {
+        this.shirina=shirina;
+    }         
+}
+
+class  ListFlatWare implements Serializable{
+    private String name;
+    private String address;
+    private List<FlatWare> Flat;
+    
+    public ListFlatWare(String Name,String Address)
+    {
+        name=Name;
+        address=Address;
+        Flat=new ArrayList<>();
+    }
+    
+
+    public String getname() 
+    {
+        return this.name;
+    }
+    
+      public String getaddress() 
+    {
+        return this.address;
+    }
+    
+     @Override
+     public String toString()
+       {
+          StringBuffer sf=new StringBuffer();
+          for(FlatWare r: Flat)
+              sf.append(r+"\n");
+          return this.name+" "+this.address+"\n"+sf.toString();
+      }
+    
+    public ListFlatWare Addelement(FlatWare A)
+    {
+        Flat.add(A);
+        return this;
+    }
+    
+     public ListFlatWare DeleteKnife(FlatWare A)
+     {
+        Flat.remove(A);
+        return this;
+    }
+     
+    public ListFlatWare ChangeIndex(FlatWare A,int index)
+    {
+        Flat.remove(index);
+        Flat.add(index, A);
+        return this;
+    }
+    
+    public String HaveObject(FlatWare A)
+      {
+          for(FlatWare r: Flat)
+              if(r.equals(A))
+          return "Есть объект";
+          return "Нет объекта";
+      }
+
+    
+    public void SafeToFile(String NameFile) throws Exception
+    {
+        PrintStream pv=new PrintStream(NameFile);
+        pv.println(this.name+" "+this.address);
+        for(FlatWare r: Flat){
+            pv.println(r);
+           
+        }
+         pv.close();
+    }
+    
+    public ListFlatWare NewCollectionWithDlina(double Dlina)
+    {
+        ListFlatWare A=new ListFlatWare(this.name,this.address);
+        for(FlatWare r: Flat)
+        {
+            if(r.getdlina()>=Dlina)
+                A.Addelement(r);
+        }
+        return A;
+    }
+    
+    public ListFlatWare NewCollectionWithNameOfcountry(String NameOfcountry)
+    {
+        ListFlatWare A=new ListFlatWare(this.name,this.address);
+        for(FlatWare r: Flat)
+        {
+            if(r.getNameOfcountry().equals(NameOfcountry))
+                A.Addelement(r);
+        }
+        return A;
+    }
+    
+     public void reversePrint()
+    {
+        ListIterator<FlatWare> it=Flat.listIterator(Flat.size());
+        while(it.hasPrevious()){
+            System.out.println(it.previous());
+        }
+    }
+     
+    public void SortWithNameOfcountry()
+    {
+        Collections.sort(Flat, new Comparator<FlatWare>()
+        {
+            @Override
+            public int compare(FlatWare s1, FlatWare s2)
+            {
+                return s1.getNameOfcountry().compareTo(s2.getNameOfcountry());
+            }
+        });
+    }
+    
+     public void SortDlina()
+    {
+        Collections.sort(Flat, new Comparator<FlatWare>() 
+        {
+            @Override
+            public int compare(FlatWare  s1, FlatWare  s2)
+            {
+               if(s1.getdlina()==s2.getdlina())
+                   return 0;
+               if(s1.getdlina()<s2.getdlina())
+                   return -1;
+               return 1;
+            }
+        });
+    }
+     
+     public void SortShirina()
+    {
+        Collections.sort(Flat, new Comparator<FlatWare >() 
+        {
+            @Override
+            public int compare(FlatWare  s1, FlatWare  s2)
+            {
+               if(s1.getShirina()==s2.getShirina())
+                   return 0;
+               if(s1.getShirina()<s2.getShirina())
+                   return -1;
+               return 1;
+            }
+        });
+    }
+   
+ 
+     
+    public Set<String> getMat1()
+    {
+        Set<String> Origins=new HashSet<String>();
+        for(FlatWare s: Flat)
+            Origins.add(s.getMaterialOF());
+        return Origins;
+    }
+     public Set<String> getMat2()
+    {
+        Set<String> Origins=new TreeSet<String>();
+        for(FlatWare s: Flat)
+            Origins.add(s.getMaterialOF());
+        return Origins;
+    }
+
+}
+
+
+public class Lab10 {
+
+    public static Set<String> Summa(Set<String> A,Set<String> B)
+    {
+       Set<String> Set1=new HashSet<String>();
+       for(String str1:A)
+       {
+           Set1.add(str1);
+       }
+        Set1.addAll(B);
+        return Set1;
+    }
+       
+    public static Set<String> Raznica(Set<String> A,Set<String> B)
+    {
+       Set<String> Set1=new HashSet<String>();
+       Set<String> Set2=new HashSet<String>();
+       for(String st1:A)
+       {
+           Set2.add(st1);    
+       }
+       Set2.removeAll(B);
+       for(String st2:Set2)
+       {
+          Set1.add(st2);
+       }
+      return Set1;
+    }
+    
+    
+    public static Set<String> Peresechenie(Set<String> A,Set<String> B)
+    {
+       Set<String>  Set1=new HashSet<String>();
+       Set<String>  Set2=new HashSet<String>();
+       for(String st1:A)
+       {
+           Set2.add(st1);     
+       }
+        Set1=Raznica(Set2,Raznica(Summa(Set2,B),B));
+       return  Set1;
+    }
+     
+    public static void main(String[] args) throws wrongDlina,wrongShirina
+    {
+      try{
+      ListFlatWare A=new ListFlatWare("Instrument factory","Independence Avenue");
+             FlatWare[] List=new FlatWare[8];
+        List[0]=new FlatWare("Ложка","Беларусь",13.2,12,"Пластик","Металл",true);
+        List[1]=new FlatWare("Вилка","Турция",13,11.3,"Дерево","Пластик",false);
+        List[2]=new FlatWare("Ложка","Россия",14,18.4,"Металл","Дерево",false);
+        List[3]=new FlatWare("Ложка","Норвегия",15.1,18.4,"Металл","Дерево",true);
+        List[4]=new FlatWare("Нож","Израиль",18.3,9,"Дерево","Металл",true);
+        List[5]=new FlatWare("Черпак","Германия",11,11,"Пластик","Дерево",true);
+        List[6]=new FlatWare("Нож","Канада",13,17,"Пластик","Металл",true);
+        List[7]=new FlatWare("Вилка","Швейцария",16,15.3,"Дерево","Металл",true);
+   
+    for(FlatWare r:List)
+    A.Addelement(r);
+    A.SafeToFile("Output.txt");
+    System.out.println(A);
+ 
+    FlatWare C=new FlatWare("Вилка","Китай",10,12,"Дерево","Пластик",true);
+    
+    System.out.println("Добавленный элемент в коллекцию: ");
+    A.Addelement(C);
+    System.out.println(A);
+     
+    System.out.println("Этото же элемент удаленный из коллекции: ");
+    A.DeleteKnife(C);
+    System.out.println(A);
+    
+    System.out.println("Замена элемента коллекции по индексу: ");
+    A.ChangeIndex(C, 3);
+    System.out.println(A);
+    
+  System.out.println("Проверка на элемент коллекцию: ");
+  System.out.println(A.HaveObject(C));
+  
+  System.out.println("Коллекция с помощью итератора в обратном порядке: ");
+  A.reversePrint();
+  System.out.println(A);
+  
+  System.out.println("Коллекция записанная в файл");
+  A.SafeToFile("output.txt");
+  
+    System.out.println("Сформированая новая коллекция по числовому типу: ");
+    System.out.println(A.NewCollectionWithDlina(9));
+    
+    System.out.println("Сформированая новая коллекция по строковому типу: ");
+    System.out.println(A. NewCollectionWithNameOfcountry("Швейцария"));
+    
+    System.out.println("Сортировка по названиям стран: ");
+    A.SortWithNameOfcountry();
+    System.out.println(A);
+    
+    System.out.println("Сортировка по длине: ");
+    A.SortDlina();
+    System.out.println(A);
+    
+    System.out.println("Сортировка по ширине: ");
+    A.SortShirina();
+    System.out.println(A);
+    
+    System.out.println("Set");
+    Set<String> Hash1=new HashSet(A.getMat1());
+    Set<String> Hash2=new TreeSet(A.getMat2());
+     
+     Hash1.remove("Металл");
+     Hash2.remove("Пластик");
+
+
+     System.out.println(Hash1);
+     System.out.println(Hash2);
+     
+      System.out.println("Сумма: \n"+Summa(Hash1,Hash2));
+      System.out.println("Объединение: \n"+Raznica(Hash2,Hash1));
+      System.out.println("Пересечение: \n"+Peresechenie(Hash1,Hash2));
+    
+        }
+        catch(wrongDlina e)
+        {
+            System.out.println("Длига не может быть отрицателтной");
+        }
+        catch(wrongShirina e)
+        {
+            System.out.println("Ширина не может быть отрицательной");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Ошибка");
+        }
+   
+      
+    }
+    
+}

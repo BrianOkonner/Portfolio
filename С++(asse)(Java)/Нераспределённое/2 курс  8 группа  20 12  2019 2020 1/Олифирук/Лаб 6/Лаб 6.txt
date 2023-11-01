@@ -1,0 +1,189 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab6;
+import java.util.*;
+import java.util.Arrays;
+/**
+ *Музыкальная композиция
+ * @author Maxim
+ */
+enum MusicG
+{
+    song,
+    opera,
+    simphonia,
+    another;
+}
+
+class Musiclong implements Comparator<MusicComposition>
+{
+@Override
+public int compare(MusicComposition A,MusicComposition B){
+if(A.Getlongsin()==B.Getlongsin())
+    return 0;
+if(A.Getlongsin()>B.Getlongsin())
+        return -1;
+return 1;}
+}
+
+class CompareComp implements Comparator<MusicComposition>
+{
+@Override
+public int compare(MusicComposition A,MusicComposition B)
+{
+return A.getNameOfComposition().compareTo(B.getNameOfComposition());
+}
+}
+
+class wronglongsing extends Exception{}
+class wrongrate extends Exception{}
+
+class MusicComposition
+{
+    private final int id;
+    private final String NameOfComposition;
+    private final MusicG ganre;
+    final String Author;
+    private final String Firstname;
+    private final double longsing;
+    private final double rate;
+    private static int count=0;
+    
+    MusicComposition(MusicG ganre,String NameOfComposition , String Author , String Firstname, double longsing  ,double rate)
+     throws wronglongsing
+    {
+      if(longsing < 0 )
+          throw new wronglongsing(); 
+      count++;
+      
+      this.id=count;
+      this.ganre=ganre;
+      this.NameOfComposition= NameOfComposition;
+      this.Author=Author;
+      this.Firstname=Firstname;
+      this.longsing=longsing;
+      this.rate=rate;
+      
+    }
+    
+       public int getid()
+      {
+         return this.id;
+      }
+       
+       public String toString()
+       {
+        return "Id= "+this.id+" NameOfComposition:"+this.NameOfComposition+" Author:"+this.Author+" Firstname:"+this.Firstname+" longsing:"+this.longsing+" rate:"+this.rate;
+       }
+       
+       public String getNameOfComposition()
+       {
+         return this.NameOfComposition;
+       }
+       
+       public String getAuthor()
+       {
+        return this.Author;
+       }
+       
+       public String getFirstname()
+       {
+         return this.Firstname;
+       }
+  
+       public MusicG Getganre()
+       {
+         return this.ganre;
+       }
+       
+        public  double Getrate()
+       {
+         return this.rate;
+       }
+        
+         public  double Getlongsin()
+       {
+         return this.longsing;
+       }
+    
+}
+public class Lab6 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        try
+        {
+            MusicComposition[]a={new MusicComposition(MusicG.song,"Лунная соната","Людвиг ван бетховен","Майк",50.5,76),
+           new MusicComposition(MusicG.another,"К элизе","Людвиг ван бетховен","Ван",32.5,77),
+           new MusicComposition(MusicG.simphonia,"Реквием","Вольфганг Амадей Моцарт","Вольф",31.5,97),
+           new MusicComposition(MusicG.simphonia,"Город","Петр Чайковский","Петя",41.5,94),
+           new MusicComposition(MusicG.opera,"Ноты","Иоганн Себастьян Бах","Себа",21.5,90)};
+            
+            
+             for(MusicComposition r:a)
+             {
+              System.out.println(r);
+             }
+             
+             System.out.println("Имена с Людвиг ван бетховен");
+             String name="Людвиг ван бетховен";
+             for(MusicComposition r:a)
+             {
+                if(r.Author.equals(name)==true)
+                {
+                  System.out.println(r);
+                }
+             }
+             
+             System.out.println("песни с типом song");
+             String name1="song";
+             
+             for(MusicComposition r:a)
+             {
+              if(r.Getganre().toString().equals(name1))
+                {
+                   System.out.println(r);
+                }
+              }
+             
+             
+             System.out.println("Песни с рейтингом от 88 до 95");
+             double num1=88;
+             double num2=95;
+             for(MusicComposition r:a)
+             {
+              if((r.Getrate()>num1)&&(r.Getrate()<num2))
+                {
+                   System.out.println(r);
+                }
+              }
+             
+           System.out.println("Отсортированый по длительности");
+           Arrays.sort(a,new Musiclong());
+           for(MusicComposition r:a)
+           {
+               System.out.println(r);
+           }
+           
+             System.out.println("Отсортированый по алфавиту");
+              Arrays.sort(a,new CompareComp());
+              for(MusicComposition r:a)
+             {
+                System.out.println(r);
+             }
+             
+             
+        }
+        catch(wronglongsing e)
+        {
+                System.out.println("Error Money");
+       }
+    }
+    
+}

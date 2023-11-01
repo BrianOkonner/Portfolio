@@ -1,0 +1,1 @@
+char MaxString(char *s, int &pos, int &maxl);

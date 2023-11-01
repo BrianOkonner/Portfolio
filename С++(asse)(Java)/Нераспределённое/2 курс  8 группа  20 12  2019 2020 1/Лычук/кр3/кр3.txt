@@ -1,0 +1,169 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Const find= new Const();
+        try {
+            find.readFile("in1.txt");
+            find.printList();
+            find.readFile2("in2.txt");
+
+            find.findTags();
+            // find.printList();
+            find.findSearch();
+            find.printTags();
+            find.printSearch();
+          //  find.writeFileTags();
+          // find.printSearch();
+            find.writeFileSearch();
+        }
+        catch (IOException e) {
+            System.out.println("Файл не найден");
+        }
+    }
+}
+
+
+ class Const {
+    private List<String> text;
+    private Map<String, Integer> search;
+    private List<String> tags;
+    public Const() {
+        text = new ArrayList<>();
+        search = new HashMap<>();
+        tags = new ArrayList<>();
+    }
+
+    public void readFile(String filename) throws IOException {
+        try (FileReader reader = new FileReader(filename)) {
+            BufferedReader br = new BufferedReader(reader);
+            String str = br.readLine();
+            while (str != null) {
+                text.add(str);
+                str = br.readLine();
+            }
+            System.out.println(text);
+        }
+    }
+
+    public void readFile2(String filename) throws IOException {
+        try(Scanner sc = new Scanner(new File("in2.txt"))) {
+            sc.useDelimiter("[;\n\r]+");
+            while (sc.hasNext()) {
+                String str = sc.next();
+                search.put(str, -1);
+            }
+        }
+    }
+    public void printList() {
+        for(String str: text) {
+            System.out.println(str);
+        }
+    }
+
+
+    public void printTags() {
+        for (String str: tags) {
+            System.out.println(str);
+        }
+    }
+
+     public void printList1( ) {
+         ListIterator<String> iterator = tags.listIterator(tags.size());
+         while (iterator.hasNext()) {
+             System.out.println(iterator.next());
+         }
+     }
+         public void printSearch() {
+        search.forEach((Key, Value) -> System.out.println(Value + " "+ Key));
+    }
+
+    public void findTags() {
+        for (int i = 0; i < text.size(); i++) {
+            String str = text.get(i);
+            StringBuilder sb = new StringBuilder();
+            sb.append(str);
+            boolean tag = false;
+            int beg = 0;
+            for (int j = 0; j < sb.length(); j++) {
+                if (sb.charAt(j) == '=') {
+                    tag = true;
+                    beg = j;
+                }
+                if (sb.charAt(j) == ';' && tag == true) {
+                    tag = false;
+                    char[] newtag = new char[j - beg + 2];
+                    int l = 0;
+                    char c;
+                    for (int k = beg+1; k < (j ); k++) {
+
+                        {
+                        newtag[l] = sb.charAt(k);
+                        l++;}
+                    }
+                    tags.add(new String(newtag));
+                    sb.delete(beg, j + 1);
+                    j = beg - 1;
+                }
+
+            }
+            text.set(i, sb.toString());
+        }
+
+    }
+
+
+    public void findSearch() {
+        for (Map.Entry<String, Integer> entry : search.entrySet()) {
+            boolean isContains=false;
+            String key = entry.getKey();
+            String key1 = entry.getKey();
+            for (int i = 0; i < text.size(); i++) {
+                if(!isContains) {
+                    String str = text.get(i);
+                    if (str.contains(key1)) {
+                        search.put(key, i);
+                        isContains = true;
+                    }
+                }
+            }
+        }
+    }
+ 
+
+    public void writeFileTags() throws IOException {
+        try (FileWriter writer = new FileWriter("output1.txt")) {
+            for(String str: tags)
+                writer.write(str+'\n');
+        }
+    }
+
+/*
+    public void writeFileSearch() throws IOException {
+        try (FileWriter writer2 = new FileWriter("output2.txt"); FileWriter writer3 = new FileWriter("output3.txt") ) {
+            for (Map.Entry<String, Integer> entry : search.entrySet()) {
+                if(entry.getValue()>-1) {
+                    writer2.write(entry.getValue() +" "+ entry.getKey()+'\n');
+                }
+                else {
+                    writer3.write(entry.getKey()+'\n');
+                }
+            }
+        }
+    }
+    */
+
+     public void writeFileSearch() throws IOException {
+         try  ( FileWriter writer3 = new FileWriter("out3.txt") ) {
+             for (Map.Entry<String, Integer> entry : search.entrySet()) {
+                 if(entry.getValue()==-1) {
+                     writer3.write(entry.getKey()+'\n');
+             }
+         }
+     }}
+}
+

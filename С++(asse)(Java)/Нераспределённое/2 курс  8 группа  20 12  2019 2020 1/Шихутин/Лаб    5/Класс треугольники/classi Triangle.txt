@@ -1,0 +1,161 @@
+
+package javaapplication4;
+//Шихутин Влад
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Scanner;
+class TriangleSort implements Comparator<Triangle>
+ {
+     @Override
+     public int compare(Triangle A,Triangle B)
+     {
+      
+         if (A.P()==B.P())
+             return 0;
+         if (A.P()<B.P())
+             return -1;
+         return 1;
+     }
+ }
+class Triangle{
+ private double a,b,c;
+
+ public Triangle(){
+     this.a=1;
+     this.b=1;
+     this.c=1;
+ }
+ public Triangle(double a,double b,double c){
+     this.a=a;
+     this.b=b;
+     this.c=c;
+ }
+  public Triangle(double a,double b){
+   this.a=a;
+   this.b=b;
+   this.c=Math.sqrt(a*a+b*b);
+  }
+  
+  
+     public double geta()
+     {
+         return this.a;
+     }
+    public double getb()
+    {
+        return this.b;
+    }
+     public double getc()
+    {
+        return this.c;
+    }
+    public void seta(double a)
+    {
+        this.a=a;
+    }
+    public void setb(double  b)
+    {
+        this.b=b;
+    }
+    public void setc(double c)
+    {
+        this.c=c;
+    }
+    public double P()
+    {
+        return this.a+this.b+this.c;
+    }
+    public double S()
+    {
+        return Math.sqrt((this.P()/2)*(this.P()/2-this.a)*(this.P()/2-b)*(this.P()/2-c));
+    }
+    public Triangle UDV()
+    {
+        return new Triangle(this.a*this.a,this.b*this.b,this.c*this.c);
+    }
+    public boolean equals(Triangle A)
+    {
+        if(this==A) return true;
+        return this.a==A.a&&this.b==A.b&&this.c==A.c ? true:false;
+    }
+  
+    public String toString()
+    {
+        return "Triangle : A= "+this.a+" , B= "+this.b+" , C= "+this.c;
+    }
+    public int TIP()
+    {
+        if((this.a==this.b)&&(this.a==this.c))
+            return 1;
+        if((this.a==this.b)||(this.b==this.c)||(this.a==this.c))
+            return 2;
+        if(this.c==Math.sqrt(this.a*this.a+this.b*this.b))
+            return 3;
+        return 4;
+    }
+}
+
+public class JavaApplication4 {
+
+ public static void main(String[] args) {   
+              Triangle A = new Triangle();
+        Triangle B=new Triangle(3,4);
+        Triangle C=new Triangle(2,2,4);
+        System.out.println(C.TIP()+"asfqf"+B.TIP());
+        Triangle[] mas=new Triangle[3];
+        mas[0]=A;
+        mas[1]=B;
+        mas[2]=C;
+        System.out.println("Наш массив: ");
+        for(Triangle R: mas)
+        {
+            System.out.println(R);
+        }
+        System.out.println("Типы треугольников: ");
+        for(Triangle R: mas)
+        {
+            System.out.println(R.TIP());
+        }
+        System.out.println("Новые треугольники: ");
+        for(Triangle R: mas)
+        {
+            System.out.println(R.UDV());
+        }
+        double max=0;
+        double min=mas[0].S();
+        int nomer1=0;
+        int nomer2=0;
+        for(int i=0;i<3;i++)
+        {
+            if(mas[i].S()>=max){
+                max=mas[i].S();
+                nomer1=i;}
+            if(mas[i].S()<=min){
+                min=mas[i].S();
+                nomer2=i;
+            }
+        }
+        System.out.println("Маскимальная площадь у треугульнико номер "+nomer1+" = "+max);
+        System.out.println("Минимальная площадь у треугольника номер "+nomer2+" = "+min);
+         int prov=0;
+        for (int i = 0; i < 3; i++){
+            for (int j = i + 1; j < 3; j++) {
+                if (mas[i].equals(mas[j]))
+                {
+                    System.out.println(i + " and " + j + " - совпадают");
+                    prov=1;
+                }
+            }
+        
+    }     
+      if(prov==0)
+            System.out.println("Совпадающих отрезков нет!");
+        Arrays.sort(mas,new TriangleSort() );
+        System.out.println("Отсортированный массив: ");
+        for(Triangle R: mas)
+        {
+            System.out.println(R);
+        }
+    }
+    
+}

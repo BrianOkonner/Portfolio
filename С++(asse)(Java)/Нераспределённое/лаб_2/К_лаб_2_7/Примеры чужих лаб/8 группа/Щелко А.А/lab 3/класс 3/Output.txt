@@ -1,0 +1,7 @@
+Name      Group     Grade    
+
+Pasha     5         2        
+Aleks     1         2        
+Vlad      2         2        
+Maksim    1         2        
+Danik     1         2        

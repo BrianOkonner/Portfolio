@@ -1,0 +1,13 @@
+Ингалипт Украина 4,29 200 transparent spray respiratory
+Пиносол Украина 3,80 150 yellow liquid respiratory
+Лоратадин Беларусь 2,45 100 white pill organism_disorders
+Лоратадин Украина 2,70 100 white pill organism_disorders
+Витаминол Беларусь 5,21 250 blue pill bracing
+Витаминол Россия 4,89 240 green pill bracing
+Амброксол Беларусь 5,40 300 transparent mixture respiratory
+Корвалол Беларусь 3,45 200 transparent liquid mental_disorders
+Корвалол Россия 3,80 200 transparent liquid mental_disorders
+Фурасол Беларусь 7,80 100 orange powdery respiratory
+Терафлю Россия 6,59 150 white powdery bracing
+Санорин Чехия 4,29 20 transparent spray respiratory
+Глицин Россия 5,72 100 white pill mental_disorders

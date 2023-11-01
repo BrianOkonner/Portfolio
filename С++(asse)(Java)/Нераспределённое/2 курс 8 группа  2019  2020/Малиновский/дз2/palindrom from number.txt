@@ -1,0 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication7;
+
+import java.util.Arrays;
+
+/**
+ *
+ * @author lesha
+ */
+import java.util.Scanner;
+public class JavaApplication7 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        int a;
+        Scanner Reader = new Scanner(System.in);
+        System.out.println("Введите число для палиндрома: ");
+        a = Reader.nextInt();
+        int b = a;
+        int n =0;
+        while(a != 0)
+       {
+           
+           a= a/10;
+           n++;
+       }
+     
+       int c[] = new int[n];
+       int i =0;
+       while(b != 0)
+       {
+           c[i] = b%10;
+           i++;
+           b= b/10;
+       }
+Arrays.sort(c);
+int l = 1;
+printAllRecursive(n, c, n);
+        
+    
+
+        
+    }
+     static   private void swap(int[] input, int a, int b) {
+    int tmp = input[a];
+    input[a] = input[b];
+    input[b] = tmp;
+}
+    static public long printAllRecursive(int n, int[] elements, int n1){
+        if(n == 1) {
+            int k =0;
+        for(int j =0; j< n1; j++)
+{
+
+        k = k+ elements[j] * (int)Math.pow(10, j);
+}
+        if(k == reverse(k))
+        System.out.println(k);
+        
+            
+    } else {
+     for(int i = 0; i < n-1; i++) {
+            printAllRecursive(n - 1, elements, n1);
+            if(n % 2 == 0) {
+                swap(elements, i, n-1);
+            } else {
+                swap(elements, 0, n-1);
+            }
+        }
+        printAllRecursive(n - 1, elements, n1);
+        }
+     return 0;
+    }
+
+   static public long reverse(long number) {
+        long reverse = 0;
+        long n = number;
+        while (n != 0)
+        {
+            reverse *= 10;
+            reverse = reverse + n % 10;
+            n /= 10;
+        }
+        return reverse;
+    }
+
+    static public boolean palindrome(long number) {
+        return reverse(number) == number;
+    }
+
+    
+
+   
+    
+}
+

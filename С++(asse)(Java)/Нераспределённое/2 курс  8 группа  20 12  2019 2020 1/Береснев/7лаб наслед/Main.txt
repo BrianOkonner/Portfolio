@@ -1,0 +1,148 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
+
+
+
+public class Main {
+
+
+    public static void main(String[] args)throws IOException{
+        try{
+            BufferedReader bufRead1 = new BufferedReader(new InputStreamReader(
+                    new FileInputStream("in_shtat.txt")));
+            BufferedReader bufRead2 = new BufferedReader(new InputStreamReader(
+                    new FileInputStream("in_vneshtat.txt")));
+            FileOutputStream outFile = new FileOutputStream("output.txt");
+
+            SotrFirm arrNewSotr[] = new SotrFirm[12];
+            int count = 0;
+            PrintStream printStream = new PrintStream(outFile);
+
+            String line;
+            while ((line = bufRead1.readLine()) != null) {
+                String[] arr = line.split(",");
+                String fIO = arr[0];
+                int yearOfBirth = Integer.valueOf(arr[1]);
+                Job job = Job.valueOf(arr[2]);
+                double oclad = Double.valueOf(arr[3]);
+                String otdel = arr[4];
+
+                arrNewSotr[count] = new SotrFirm( fIO, yearOfBirth, job, oclad, otdel );
+                count++;
+            }
+            bufRead1.close();
+
+            while ((line = bufRead2.readLine()) != null) {
+                String[] arr = line.split(",");
+                String fIO = arr[0];
+                int yearOfBirth = Integer.valueOf(arr[1]);
+                Job job = Job.valueOf(arr[2]);
+                double oclad = Double.valueOf(arr[3]);
+                String otdel = arr[4];
+                double coeff = Double.valueOf(arr[5]);
+                String mainJob = arr[6];
+                arrNewSotr[count] = new VneshtSotr(fIO, yearOfBirth, job, oclad, otdel,coeff,mainJob);
+                count++;
+            }
+            bufRead2.close();
+
+            Scanner sc1 = new Scanner(System.in);
+            Scanner sc2 = new Scanner(System.in);
+            System.out.println("Введите название фирмы:");
+            String choice1 = sc1.nextLine();
+            Firma my_Firm = new Firma(choice1, arrNewSotr);
+
+
+
+            System.out.println("Что выводить в файл?");
+            System.out.println("1 - все сотрудники");
+            System.out.println("2 - сотрудники должности ...");
+            System.out.println("3 - родившиеся после ...");
+            System.out.println("4 - работающие в отделе ...");
+            System.out.println("5 - список в порядке убывания оклада");
+            System.out.println("6 - список в алфавитном порядке");
+            System.out.println("7 - getCount()");
+            System.out.println("0 - выход");
+
+
+            int choice2;
+            choice2 = sc2.nextInt();
+           while (choice2 != 0){
+               switch (choice2) {
+                   case 1:
+
+                       printStream.println(my_Firm.toString());
+
+                       break;
+                   case 2:
+
+                       System.out.println("введите должность");
+                       String job = sc1.nextLine();
+                       printStream.println("Работники на должности "+ job+":");
+                       for(SotrFirm i:my_Firm.getArrSotrFirm())
+                           if (i.getJobOfSotr()==Job.valueOf(job))
+                               printStream.println(i.toString());
+
+                       break;
+                   case 3:
+
+                       System.out.println("введите год");
+                       int lYear = sc1.nextInt();
+                       printStream.println("Работники, родившиеся после "+ lYear+":");
+                       for(SotrFirm i:my_Firm.getArrSotrFirm())
+                           if (i.getYearOfBirth()>= lYear)
+                               printStream.println(i.toString());
+
+                       break;
+                   case 4:
+
+                       System.out.println("введите отдел");
+                       String lotdel = sc1.nextLine();
+                       printStream.println("Работники отдела "+ lotdel+":");
+                       for(SotrFirm i:my_Firm.getArrSotrFirm())
+                           if (i.getNameOfOtdel().equalsIgnoreCase(lotdel))
+                               printStream.println(i.toString());
+
+                       break;
+                   case 5:
+                       printStream.println("сорт по уменьш оклада:");
+                       Arrays.sort(my_Firm.getArrSotrFirm(), new cmpRevOclad());
+                       printStream.println(Arrays.toString(my_Firm.getArrSotrFirm()));
+                       break;
+                   case 6:
+                       printStream.println("сорт по алфавиту:");
+                       Arrays.sort(my_Firm.getArrSotrFirm(), new cmpFIO());
+                       printStream.println(Arrays.toString(my_Firm.getArrSotrFirm()));
+                       break;
+                   case 7:
+                       SotrFirm A[] = my_Firm.getArrSotrFirm();
+                       printStream.println("count:"+A[A.length-1].getCount());
+                       break;
+                   default:
+               }
+               printStream.println();
+               System.out.println("Что выводить в файл?");
+               System.out.println("1 - все сотрудники");
+               System.out.println("2 - сотрудники должности ...");
+               System.out.println("3 - родившиеся после ...");
+               System.out.println("4 - работающие в отделе ...");
+               System.out.println("5 - список в порядке убывания оклада");
+               System.out.println("6 - список в алфавитном порядке");
+               System.out.println("7 - getCount()");
+               System.out.println("0 - выход");
+               choice2 = sc2.nextInt();
+           }
+            outFile.close();
+
+        }
+        catch (WrongYear e){
+            System.out.println(e.getMessage());
+        }
+        catch (WrongOclad e){
+            System.out.println(e.getMessage());
+        }
+    }
+}

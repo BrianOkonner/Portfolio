@@ -1,0 +1,159 @@
+package app;
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+
+class lencmp implements Comparator<SectionX>
+{
+	@Override
+	public int compare(SectionX t1,SectionX t2)
+	{
+		if(t1.length()==t2.length())
+			return 0;
+		if(t1.length()>t2.length())
+			return -1;
+		return 1;
+	}
+}
+class SectionX{
+	private int x0;
+	private int x1;
+	
+	public SectionX()
+	{
+		this.x0=0;
+		this.x1=1;
+	}
+	public SectionX (int a,int b)
+	{
+
+		if(a<b)
+		{
+			this.x0=a;
+			this.x1=b;
+		}
+		else
+			System.out.println("Отрезок задан неверно!");		
+	}
+	
+	public int getx0()
+	{
+		return this.x0;
+	}
+	public int getx1()
+	{
+		return this.x1;
+	}
+	public void setx0(int x0)
+	{
+		this.x0=x0;
+	}
+	public void setx1(int x1)
+	{
+		this.x1=x1;
+	}
+	
+	public int length()
+	{
+		return (x0<x1)? x1-x0:x0-x1;
+	}
+	public SectionX simmetric()
+	{
+		return new SectionX(-this.x1,-this.x0);
+	}
+	public boolean equals(SectionX A)
+	{
+		if(this==A)
+			return true;
+		return (this.x0==A.x0 && this.x1==A.x1); 
+	}
+	public int place(SectionX A)
+	{
+		if((A.x0>this.x1) ||  (A.x1<this.x0))
+			return 1;
+		if((A.x0==this.x1) || (A.x1==this.x0))
+			return 2;
+		if((A.x0<this.x0 && A.x1>this.x0 && A.x1<this.x1) || (A.x1>this.x1 && A.x0>this.x0 && A.x0<this.x1))
+			return 3;
+		if((A.x1<=this.x1 && A.x0>=this.x0) ||(A.x1>=this.x1 && A.x0<=this.x0))
+			return 4;
+		return -1;
+	}
+	public SectionX add(SectionX A)
+	{
+		if(A.x0==this.x1 && A.x1>this.x1)
+			return new SectionX(this.x0,A.x1);
+		if(A.x0<this.x0 && A.x1==this.x0)
+			return new SectionX(A.x0,this.x1);
+		return new SectionX();
+	}
+	public SectionX cross(SectionX A)
+	{
+		if(A.x0<this.x0 && A.x1>this.x0 && A.x1<this.x1)
+			return new SectionX(this.x0,A.x1);
+		if(A.x1>this.x1 && A.x0>this.x0 && A.x0<this.x1)
+			return new SectionX(A.x0,this.x1);
+		return new SectionX();
+	}
+	public SectionX sub(SectionX A)
+	{
+		if(A.x1==this.x1)
+			return new SectionX(this.x0,A.x0);
+		if(A.x0==this.x0)
+			return new SectionX(A.x1,this.x1);
+		return new SectionX();
+	}
+	public String toString() {
+		return " Отрезок ("+this.x0+";"+this.x1+") ";
+	}
+}
+public class lab5 {
+
+	public static void main(String[] args) {
+		SectionX A=new SectionX();
+		SectionX B=new SectionX(3,7);
+		SectionX C=new SectionX(0,1);
+		SectionX Badd=new SectionX(7,10);
+		SectionX Bcross=new SectionX(-1,4);
+		SectionX []mas=new SectionX[3];
+		mas[0]=A;
+		mas[1]=B;
+		mas[2]=C;
+		for(int i=0;i<2;i++)
+			for(int j=i+1;j<3;j++)
+				System.out.println(mas[i].equals(mas[j]));
+		for(int i=0;i<3;i++)
+			System.out.println(mas[i].simmetric());
+		int max=0;
+		for(int i=0;i<2;i++)
+			for(int j=i+1;j<3;j++)
+				{
+				if(mas[i].getx1()<mas[j].getx0())
+					if(mas[i].getx1()-mas[j].getx0()>max)
+						max=mas[i].getx1()-mas[j].getx0();
+				if(mas[i].getx0()<mas[j].getx1())
+					if(mas[j].getx1()-mas[i].getx0()>max)
+						max=mas[j].getx1()-mas[i].getx0();
+				}
+		for(int i=0;i<2;i++)
+			for(int j=i+1;j<3;j++)
+				if(Math.abs(mas[i].getx1()-mas[j].getx0())==max)
+					System.out.println("Наибольшее расстояние между отрезками: "+mas[i]+"и"+mas[j]);
+		for(int i=0;i<2;i++)
+			for(int j=i+1;j<3;j++)
+				System.out.println(mas[i]+"и"+mas[j]+mas[i].place(mas[j]));
+		SectionX E=B.add(Badd);
+		System.out.println("Сумма: "+E);
+		E=E.sub(B);
+		System.out.println("Разность: "+E);
+		E=B.cross(Bcross);
+		System.out.println("Пересечение: "+E);
+		Arrays.sort(mas,new lencmp());
+		for(int i=0;i<3;i++)
+			System.out.println(mas[i]);
+		
+	}
+
+}

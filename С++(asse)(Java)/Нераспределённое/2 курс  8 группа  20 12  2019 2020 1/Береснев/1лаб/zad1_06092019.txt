@@ -1,0 +1,61 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication1;
+import java.util.Scanner;
+
+/**
+ *
+ * @author fpm.beresnevoa
+ */
+public class JavaApplication1 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static boolean pol(int arg)
+    {
+       int ch=0;
+       while(ch<=arg)
+       {
+            ch += arg%10;
+            if (ch == arg)
+                return true;
+            arg /=10;
+            if (ch == arg)
+                return true;
+            ch*=10;
+       }
+       return false;
+    }
+    
+    public static boolean doublepol(int arg)
+    {
+        if ( pol(arg * arg))
+            return true;
+        else
+            return false;
+        
+    }
+    
+
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("input num");
+        int b1 = sc.nextInt();
+        if( pol(b1) )
+            if(doublepol(b1))
+                System.out.println("congtas doublepol");
+            else
+                System.out.println("congtas pol");
+        else
+            System.out.println("not poli");
+      
+       
+        // TODO code application logic here
+    }
+    
+}

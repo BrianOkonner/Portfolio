@@ -1,0 +1,179 @@
+package com.company;
+import java.util.Arrays;
+import java.util.Comparator;
+public class Main {
+    public static void main(String[] args) {
+        Triangle A = new Triangle(3, 5, 3);
+        // Triangle B=new Triangle(2,2,3);
+        Triangle B = new Triangle(2, 3, 6);
+        Triangle C = new Triangle(3, 4);
+
+        Triangle mas[] = new Triangle[3];
+        mas[0] = A;
+        mas[1] = B;
+        mas[2] = C;
+
+
+        for (Triangle r : mas) {
+            System.out.print(r.ToString());
+
+            if (r.Type() == 1) {
+                System.out.println(" равносторонний");
+            }
+            if (r.Type() == 2) {
+                System.out.println(" равнобедренный");
+            }
+            if (r.Type() == 3) {
+                System.out.println(" прямоугольный");
+            }
+            if (r.Type() == 4) {
+                System.out.println(" обычный");
+            }
+        }
+
+        for (Triangle r : mas) {
+            r = r.DoubleSides(r);
+            System.out.println(r.ToString());
+        }
+
+        double max=mas[0].S();
+        double min=mas[0].S();
+        int n1=0;int n2=0;
+        for(int i=1;i<3;i++)
+        {
+            if(mas[i].S()>=max){
+                max=mas[i].S();
+                n1=i;}
+            if(mas[i].S()<=min){
+                min=mas[i].S();
+                n2=i;
+            }
+        }
+        System.out.println("Маскимальная площадь у треугульника "+ mas[n1].ToString() +" = "+max);
+        System.out.println("Минимальная площадь у треугольника "+mas[n2].ToString() +" = "+min);
+
+        for (int i = 0; i < 2; i++)
+            for (int j = i + 1; j < 3; j++)
+                if (mas[i].equals(mas[j]))
+                    System.out.println("Треугольники [" + i + "] и  [" + j + "] равны.");
+        System.out.println("Нет совпадающих Треугольников  ");
+
+        System.out.println("Отсортированный массив:");
+        Arrays.sort(mas, new revcomp());
+        for(Triangle r:mas)
+        {
+            System.out.println(r.ToString());
+        }
+        }
+    }
+
+class Triangle {
+    private double a;
+    private double b;
+    private double c;
+
+    public Triangle() {
+        this.a = 1;
+        this.b = 1;
+        this.c = 1;
+    }
+
+    public Triangle(double a, double b, double c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    public Triangle(double a, double b) {
+        this.a = a;
+        this.b = b;
+        this.c = Math.sqrt(this.a * this.a + this.b * this.b);
+    }
+
+    public Triangle(double a) {
+        this.a = a;
+        this.b = a;
+        this.c = a;
+    }
+
+    public double GetA() {
+        return this.a;
+    }
+
+    public double GetB() {
+        return this.b;
+    }
+
+    public double GetC() {
+        return this.c;
+    }
+
+    public void SetA(double a) {
+        this.a = a;
+    }
+
+    public void SetB(double b) {
+        this.b = b;
+    }
+
+    public void SetC(double c) {
+        this.c = c;
+    }
+
+    public double P() {
+        return (this.a + this.b + this.c);
+    }
+
+    public double S() {
+        return Math.sqrt(this.P() / 2 * (this.P() / 2 - a) * (this.P() / 2 - b) * (this.P() / 2 - c));
+    }
+
+
+    public double Type() {
+        if ((this.a == this.b) && (this.b == this.c)) {
+            return 1;
+        }
+
+        if ((this.a == this.b) || (this.b == this.c) || (this.c == this.a)) {
+            return 2;
+        }
+
+        if ((this.c == Math.sqrt(this.a * this.a + this.b * this.b)) || (this.b == Math.sqrt(this.a * this.a + this.c * this.c)) || (this.a == Math.sqrt(this.b * this.b + this.c * this.c))) {
+            return 3;
+        }
+        return 4;
+    }
+
+    public Triangle DoubleSides(Triangle r) {
+        return new Triangle(2 * this.a, 2 * this.b, 2 * this.c);
+    }
+
+    public boolean equals(Triangle A) {
+        if (this == A) return true;
+        // return this.a==A.a&&this.b==A.b&&this.c==A.c ? true:false;
+        return this.a == A.a && this.b == A.b && this.c == A.c;
+    }
+
+    public String ToString() {
+        return "(" + this.a + "," + this.b + "," + this.c+ ")";
+    }
+
+}
+
+
+class revcomp implements Comparator<Triangle>
+{
+    @Override
+    public int compare(Triangle t1,Triangle t2)
+    {
+        if(t1.P()==t2.P())
+        {
+            return 0;
+        }
+        if(t1.P()<t2.P())
+        {
+            return -1;
+        }
+        return 1;
+    }
+}

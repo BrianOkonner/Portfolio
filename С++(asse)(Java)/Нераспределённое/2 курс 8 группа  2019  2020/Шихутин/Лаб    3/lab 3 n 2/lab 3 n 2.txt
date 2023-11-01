@@ -1,0 +1,82 @@
+﻿//построить по часовой стрелке от 0,1,2....
+
+package javaapplication3;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
+public class JavaApplication3 {
+
+   
+    public static void main(String[] args) {
+        
+        Scanner sc=new Scanner(System.in);
+System.out.println("Введите размерность матрицы:(кол-во строк,затем столбцов) ");
+int k=sc.nextInt();
+int s=sc.nextInt();
+
+int[][] m=new int[k][s];
+int nujnoe=0;
+int nujnee=1;
+int x=k-1;
+int y=s-1;
+int case1=0;
+int case2=s-1;
+int case3=k-1;
+int case4=0;
+int napravl=1;
+int f=0;
+while(f!=k*s){
+switch(napravl)
+        {
+        case 1:
+        {
+            for(int i=nujnoe;i<y;i++)
+            {
+                m[case1][i]=f;
+                f++;
+                
+            }
+            case1++;
+            napravl=2;
+        }
+        case 2:
+        {
+            for(int i=nujnoe;i<x;i++)
+            {
+                m[i][case2]=f;
+                f++;
+            }
+            case2--;
+            napravl=3;
+        }
+        case 3:
+        {
+            for(int i=y;i>=nujnee;i--)
+            {
+                m[case3][i]=f;
+                f++;
+            }
+            case3--;
+            napravl=4;
+        }
+        case 4:
+        {
+            for(int i=x;i>=nujnee;i--)
+            {
+                m[i][case4]=f;
+                f++;
+            }
+            case4++;
+            napravl=1;
+            y--;
+            x--;
+            nujnoe++;
+            nujnee++;
+        }
+        }
+}
+for(int i=0;i<m.length;i++)
+    System.out.println(Arrays.toString(m[i]));
+    }
+    
+}

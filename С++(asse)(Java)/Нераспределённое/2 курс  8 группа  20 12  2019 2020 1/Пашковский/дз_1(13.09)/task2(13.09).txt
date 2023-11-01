@@ -1,0 +1,38 @@
+﻿
+--------------------=====================TASK2==========================--------------------------------
+
+
+
+package packAge;
+
+import java.util.Scanner;
+
+public class Task2 {
+
+	public static double PreCalc(double precision)
+	{
+		double n=1;
+		double res=0;
+		double sign=1;
+		while(1/n>precision/10)
+		{
+			res+=1/n*sign;
+			sign*=-1;
+			n+=2;
+		}
+		return res;
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		double precision;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Введите точность для числа Pi:");
+		precision=sc.nextDouble();
+		double res;
+		res=4*PreCalc(precision);
+		System.out.println("Результат:"+res);
+	}
+
+}
+

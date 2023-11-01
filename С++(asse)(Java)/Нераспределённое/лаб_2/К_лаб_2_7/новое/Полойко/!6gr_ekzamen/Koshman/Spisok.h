@@ -1,0 +1,12 @@
+void InitList();
+void RemoveList();
+void add_front(int* newst);
+void add_back(int* newst);
+void del_front();
+int get_front();
+void del_back();
+int get_back();
+void insert(int data, int pos);
+void del_poz(int pos);
+int get_pos(int pos);
+bool isEmpty();

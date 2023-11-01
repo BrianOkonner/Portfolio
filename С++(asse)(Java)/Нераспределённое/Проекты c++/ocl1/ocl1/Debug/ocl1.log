@@ -1,0 +1,17 @@
+﻿Построение начато 30.04.2020 0:33:30.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\ocl1\ocl1\ocl1.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\ocl1.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         Для всех выходных данных обновления не требуется.
+         ocl1.vcxproj -> D:\Учеба\Программирование\Проекты c++\ocl1\Debug\ocl1.exe
+       FinalizeBuildStatus:
+         Файл "Debug\ocl1.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\ocl1.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\ocl1\ocl1\ocl1.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.06

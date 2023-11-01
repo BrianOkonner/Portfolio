@@ -1,0 +1,83 @@
+package sample;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc= new Scanner(System.in);
+
+        System.out.println("Вас приветствует программа проверки на двойной палиндром");
+        System.out.println("Введите пределы ,в которых будет произведен поиск двойных палиндромов:");
+
+        int number, down=sc.nextInt(), up=sc.nextInt();
+
+        if(down>up){
+            number=down;
+            down=up;
+            up=number;
+        }
+
+        if((down<1)||(up<1)){
+            return;
+        }
+
+        while(down<=up) {
+
+            number=down;
+
+            if(palindrom(number)){
+
+                if(palindrom(number*number)) {
+
+                    System.out.println("Число " + number + " двойной палиндром");
+
+                }else {
+
+                    System.out.println("Число "+number+" не двойной палиндром");
+                }
+
+            }else {
+                System.out.println("Число "+number+" не двойной палиндром");
+            }
+
+            down++;
+        }
+
+    }
+
+    public static boolean palindrom(int number){
+        int i=0;
+        int k;
+        int ten1=1, ten2=1;
+
+        k=number;
+        while(k>1){
+            k=k/10;
+            i++;
+        }
+
+        k=i;
+        i=0;
+
+        while(i<k){
+
+            for (int i2=0;i2<i;i2++){
+                ten1*=10;
+            }
+            for (int k2=0;k2<k;k2++){
+                ten2*=10;
+            }
+
+            if((number/ten1)%10!=((number/ten2)%10)){
+                return false;
+            }
+
+            ten1=1;
+            ten2=1;
+            i++;
+            k--;
+        }
+        return true;
+    }
+}

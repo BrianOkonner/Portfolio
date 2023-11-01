@@ -1,0 +1,66 @@
+﻿Построение начато 21.12.2017 15:34:15.
+     1>Проект "D:\Программирование\Проекты c++\L8\L8\L8.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\L8.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "B9(L5).cpp"
+         B9(L5).cpp
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(127): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(136): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(151): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(175): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(196): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(210): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(212): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(105): см. объявление "strcpy"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(218): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(219): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(105): см. объявление "strcpy"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(222): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(225): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(230): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(105): см. объявление "strcpy"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(234): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(241): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(105): см. объявление "strcpy"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(243): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(247): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(105): см. объявление "strcpy"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(249): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(250): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(254): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(271): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(278): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+     1>d:\программирование\проекты c++\l8\l8\b9(l5).cpp(101): warning C4101: ARRWORD: неиспользованная локальная переменная
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Программирование\Проекты c++\L8\Debug\L8.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\L8.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Программирование\Проекты c++\L8\Debug\L8.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Программирование\Проекты c++\L8\Debug\L8.lib" /MACHINE:X86 "Debug\B9(L5).obj"
+         Debug\fun.obj
+         Debug\stdafx.obj
+         LINK : не найден или не выполнена сборка D:\Программирование\Проекты c++\L8\Debug\L8.exe при последней инкрементной компоновке; выполняется полная компоновка
+         L8.vcxproj -> D:\Программирование\Проекты c++\L8\Debug\L8.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Программирование\Проекты c++\L8\Debug\L8.exe;#1" /manifest Debug\L8.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Debug\L8.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\L8.lastbuildstate".
+     1>Построение проекта "D:\Программирование\Проекты c++\L8\L8\L8.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:02.09

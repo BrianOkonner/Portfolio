@@ -1,0 +1,20 @@
+﻿Построение начато 22.06.2018 18:41:11.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\Ekzam\Ekzam\Ekzam.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\Ekzam.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\Ekzam\Debug\Ekzam.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Ekzam.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\Ekzam\Debug\Ekzam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\Ekzam\Debug\Ekzam.lib" /MACHINE:X86 Debug\Med.obj
+         LINK : не найден или не выполнена сборка D:\Учеба\Программирование\Проекты c++\Ekzam\Debug\Ekzam.exe при последней инкрементной компоновке; выполняется полная компоновка
+         Ekzam.vcxproj -> D:\Учеба\Программирование\Проекты c++\Ekzam\Debug\Ekzam.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\Ekzam\Debug\Ekzam.exe;#1" /manifest Debug\Ekzam.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Debug\Ekzam.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\Ekzam.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\Ekzam\Ekzam\Ekzam.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.30

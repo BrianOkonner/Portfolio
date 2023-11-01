@@ -1,0 +1,42 @@
+package com.company;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class Main {
+    private static boolean test(String s) {
+        int count = 1;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i + 1; j < s.length(); j++)
+                if (s.charAt(i) == s.charAt(j)) {
+                    count++;
+                    return false;
+                }
+        }
+        return true;
+    }
+
+
+    public static void main(String[] args) throws IOException {
+
+
+        FileInputStream file = new FileInputStream("Input");
+        Scanner sc = new Scanner(file);
+        PrintStream printfile = new PrintStream("Output.txt");
+        StringBuffer buf = new StringBuffer();
+        String str = sc.nextLine();//считали строку
+        String[] arr = str.split(" ");
+        for (int i = 1; i < arr.length-1; i++) {
+            if ((test(arr[i - 1])) && (test(arr[i + 1]))) {
+                      buf.append(arr[i] + " ");
+                }
+            }
+            System.out.println(buf);
+            printfile.println(buf);
+
+            printfile.close();
+            file.close();
+
+        }
+    }

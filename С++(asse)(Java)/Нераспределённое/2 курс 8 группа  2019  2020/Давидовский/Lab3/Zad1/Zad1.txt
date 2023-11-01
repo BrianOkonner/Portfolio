@@ -1,0 +1,60 @@
+package com.company;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Integer[][] arr;
+        int quan1, quan2, num1 = 0, num2 = 0, num3 = 0, num4 = 0;
+
+        try {
+            FileInputStream in = new FileInputStream("Input.txt");
+            Scanner sc = new Scanner(in);
+
+
+            quan1 = sc.nextInt();
+            quan2 = sc.nextInt();
+
+            arr = new Integer[quan1][quan2];
+
+            for (int i = 0; i < quan1; i++) {
+                for (int k = 0; k < quan2; k++) {
+
+                    arr[i][k] = sc.nextInt();
+                    if (k > 0) {
+
+                        if (arr[i][k] == arr[i][k - 1]) {
+
+                            num1++;
+
+                        } else {
+
+                            if (num1 > num3) {
+                                num3 = num1;
+                            }
+                        }
+                    }
+                }
+
+                if (num1 > num3) {
+                    num3 = num1;
+                }
+
+                if (num3 > num2) {
+                    num2 = num3;
+                    num4 = i + 1;
+                }
+                num3 = 0;
+                num1 = 0;
+            }
+
+            System.out.println("Номер строки с наибольшим количеством повторений:" + num4);
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА ОШИБКА");
+        }
+    }
+}

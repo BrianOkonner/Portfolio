@@ -1,0 +1,130 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Integer[][] matr = new Integer[4][4];
+        TriangleMatr[] matrs = new TriangleMatr[2];
+
+        for (int i = 0, q = 0; i < 4; i++) {
+            for (int k = i; k < 4; k++) {
+                matr[i][k] = k + 3;
+            }
+        }
+
+        matrs[0] = new TriangleMatr(4, matr);
+
+        for (int i = 0, q = 0; i < 4; i++) {
+            for (int k = i; k < 4; k++) {
+                matr[i][k] = k - 13;
+            }
+        }
+
+        matrs[1] = new TriangleMatr(4, matr);
+
+        System.out.println(matrs[0].toString());
+        System.out.println(matrs[0].Det());
+        System.out.println();
+        System.out.println(matrs[0].Step());
+        System.out.println();
+        System.out.println(matrs[0].Mult(3).toString());
+        System.out.println(matrs[0].Sum(matrs[1]).toString());
+    }
+}
+
+class TriangleMatr {
+    private Integer[] matr;
+    private int shape;
+    private int leng;
+
+    public TriangleMatr() {
+        this.shape = 1;
+        this.leng = 1;
+        this.matr = new Integer[1];
+        matr[0] = 1;
+    }
+
+    public TriangleMatr(int shape, Integer[][] matr) {
+
+        this.shape = shape;
+        this.leng = 0;
+        for (int i = shape; i > 0; i--) {
+            this.leng = this.leng + i;
+        }
+
+        this.matr = new Integer[leng];
+        for (int i = 0, q = 0; i < shape; i++) {
+            for (int k = i; k < shape; k++) {
+                this.matr[q] = matr[i][k];
+                q++;
+            }
+        }
+    }
+
+    public TriangleMatr Sum(TriangleMatr matr) {
+
+        for (int i = 0; i < this.leng; i++) {
+            this.matr[i] += matr.matr[i];
+        }
+
+        return this;
+    }
+
+    public TriangleMatr Mult(int mult) {
+
+        for (int i = 0; i < this.leng; i++) {
+            this.matr[i] *= mult;
+        }
+
+        return this;
+    }
+
+    public int Step() {
+        int step = 0;
+
+        for (int i = this.shape, k = 0; i > 0; i--) {
+            step += this.matr[k];
+            k += i;
+        }
+
+        return step;
+    }
+
+    public int Det() {
+        int det = 1;
+
+        for (int i = this.shape, k = 0; i > 0; i--) {
+            det *= this.matr[k];
+            k += i;
+        }
+
+        return det;
+    }
+
+    public String toString() {
+
+        String str = "";
+
+        for (int i = 0, q = 0; i < shape; i++) {
+            str = str + "[ ";
+
+            for (int k = 0; k < i; k++) {
+                str = str + "0, ";
+            }
+            for (int k = i; k < shape; k++) {
+                str = str + this.matr[q];
+                if (k != shape - 1) {
+                    str = str + ", ";
+                }
+                q++;
+            }
+            
+            str = str + "] \n";
+        }
+
+        return str;
+    }
+}

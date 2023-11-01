@@ -1,0 +1,238 @@
+
+package javaapplication6;
+
+interface figure{
+    public abstract double P();
+    public abstract double S();
+    
+}
+interface location{
+    public abstract int Location(Object o);
+}
+class circle implements figure,location{
+    protected final double r;
+    protected final double x,y;
+    public circle(double r,double x,double y)
+    {
+        this.r=r;
+        this.x=x;
+        this.y=y;
+    }
+    @Override
+    public double P(){
+        return 2*r*Math.PI;
+    }
+    @Override
+    public double S(){
+        return r*r*Math.PI;
+    }
+    @Override
+    public String toString(){
+        return "Радиус: "+r+"Координаты: ("+x+","+y+")";
+    }
+        public static double RST(double x1,double y1,double x2,double y2)
+    {
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+    @Override
+    public int Location(Object o)
+    {
+        
+        if(!(o instanceof circle))
+        {
+            rect S=(rect)o;
+            if(RST(S.x1+(S.x2-S.x1)/2,S.y1+(S.y2-S.y1)/2,this.x,this.y)<this.r+(S.x2-S.x1)/2||RST(S.x1+(S.x2-S.x1)/2,S.y1+(S.y2-S.y1)/2,this.x,this.y)<this.r+(S.y2-S.y1)/2)
+                   return 3;
+           double help=0.0001;
+           double start=0,finish=0;
+           if(this.x<=S.x1&&this.y<=S.y2&&this.x>=S.y1){
+           start=S.y1;
+           finish=S.y2;
+           while(start<=finish)
+           {
+               if((S.x1-this.x)*(S.x1-this.x)+((start-this.y)*(start-this.y))==this.r*this.r)
+               {
+                   return 2;
+               }
+               start+=help;
+           }
+           }
+           if(this.x>=S.x1&&this.y>=S.y2&&this.y<=S.x2){
+          start=S.x1;
+          finish=S.x2;
+           while(start<=finish)
+           {
+               if((start-this.x)*(start-this.x)+((S.y2-this.y)*(S.y2-this.y))==this.r*this.r)
+               {
+                   return 2;
+               }
+               start+=help;
+           }}
+           if(this.x>=S.x2&&this.y<=S.y2&&this.y>=S.y1){
+         start=S.y2;
+          finish=S.y1;
+           while(start>=finish)
+           {
+               if((S.x2-this.x)*(S.x2-this.x)+((start-this.y)*(start-this.y))==this.r*this.r)
+               {
+                   return 2;
+               }
+               start-=help;
+           }}
+           if(this.x>=S.x1&&this.y<=S.y1&&this.x<=S.x2){
+            start=S.x2;
+          finish=S.x1;
+           while(start>=finish)
+           {
+               if((start-this.x)*(start-this.x)+((S.y1-this.y)*(S.y1-this.y))==this.r*this.r)
+               {
+                   return 2;
+               }
+               start-=help;
+           }}
+           
+            return 1;               
+        }
+        else{
+        circle S=(circle)o;
+        if(RST(this.x,this.y,S.x,S.y)>this.r+S.r)
+        return 1;
+        if(RST(this.x,this.y,S.x,S.y)==this.r+S.r)
+        return 2;
+        if(RST(this.x,this.y,S.x,S.y)<=this.r+S.r) 
+        return 3;
+        return 0;}
+             
+    }
+    }
+class rect implements figure,location{
+    protected double x1,x2,y1,y2;
+    public rect(double x1,double y1,double x2,double y2)
+    {
+        this.x1=x1;
+        this.x2=x2;
+        this.y1=y1;
+        this.y2=y2;
+    }
+        public static double RST(double x1,double y1,double x2,double y2)
+    {
+        return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+     @Override
+    public double P(){
+        return 2*(Math.abs(x1-x2)+Math.abs(y1-y2));
+    }
+    @Override
+    public double S(){
+        return Math.abs(x1-x2)*Math.abs(y1-y2);
+    }
+    @Override
+    public String toString(){
+        return "Координаты: ("+x1+","+y1+"),("+x2+","+y2+")";
+    }
+    @Override
+    public int Location(Object o)
+    {
+        if((o instanceof rect))
+        {
+            rect S=(rect)o;
+            if(S.x1<this.x2&&S.x1>this.x1&&S.y1<this.y2&&S.y1>this.y1||
+               S.x1<this.x2&&S.x1>this.x1&&S.y2<this.y2&&S.y2>this.y1||
+                    S.x2<this.x2&&S.x2>this.x1&&S.y1<this.y2&&S.y1>this.y1||
+                    S.x2<this.x2&&S.x2>this.x1&&S.y2<this.y2&&S.y2>this.y1)  
+                return 3;
+            if(S.x1<=this.x2&&S.x1>=this.x1&&S.y1<=this.y2&&S.y1>=this.y1||
+               S.x1<=this.x2&&S.x1>=this.x1&&S.y2<=this.y2&&S.y2>=this.y1||
+                    S.x2<=this.x2&&S.x2>=this.x1&&S.y1<=this.y2&&S.y1>=this.y1||
+                    S.x2<=this.x2&&S.x2>=this.x1&&S.y2<=this.y2&&S.y2>=this.y1) 
+                return 2;
+            return 1;
+        }
+        else
+        {
+           circle S=(circle)o;
+            if(RST(this.x1+(this.x2-this.x1)/2,this.y1+(this.y2-this.y1)/2,S.x,S.y)<S.r+(this.x2-this.x1)/2||RST(this.x1+(this.x2-this.x1)/2,this.y1+(this.y2-this.y1)/2,S.x,S.y)<S.r+(this.y2-this.y1)/2)
+                   return 3;
+           double help=0.0001;
+           double start=0,finish=0;
+           if(S.x<=this.x1&&S.y<=this.y2&&S.x>=this.y1){
+           start=this.y1;
+           finish=this.y2;
+           while(start<=finish)
+           {
+               if((this.x1-S.x)*(this.x1-S.x)+((start-S.y)*(start-S.y))==S.r*S.r)
+               {
+                   return 2;
+               }
+               start+=help;
+           }
+           }
+           if(S.x>=this.x1&&S.y>=this.y2&&S.y<=this.x2){
+          start=this.x1;
+          finish=this.x2;
+           while(start<=finish)
+           {
+               if((start-S.x)*(start-S.x)+((this.y2-S.y)*(this.y2-S.y))==S.r*S.r)
+               {
+                   return 2;
+               }
+               start+=help;
+           }}
+           if(S.x>=this.x2&&S.y<=this.y2&&S.y>=this.y1){
+         start=this.y2;
+          finish=this.y1;
+           while(start>=finish)
+           {
+               if((this.x2-S.x)*(this.x2-S.x)+((start-S.y)*(start-S.y))==S.r*S.r)
+               {
+                   return 2;
+               }
+               start-=help;
+           }}
+           if(S.x>=this.x1&&S.y<=this.y1&&S.x<=this.x2){
+            start=this.x2;
+          finish=this.x1;
+           while(start>=finish)
+           {
+               if((start-S.x)*(start-S.x)+((this.y1-S.y)*(this.y1-S.y))==S.r*S.r)
+               {
+                   return 2;
+               }
+               start-=help;
+           }}
+           
+            return 1;  
+        }
+        
+    }
+}
+public class JavaApplication6 {
+
+
+
+
+
+    public static void main(String[] args) {
+        location[] mas=new location[6];
+    
+     rect A=new rect(0,0,3,2);
+     rect B=new rect(2,1,4,3);
+     rect C=new rect(4,1,6,3);
+     rect D=new rect(0,4,2,5);
+     circle I=new circle(1,2,4);
+     circle F=new circle(1,5,5);
+    mas[0]=A;
+    mas[1]=B;
+    mas[2]=C;
+    mas[3]=D;
+    mas[4]=I;
+    mas[5]=F;
+    System.out.println("Пересекающиеся прямоугольники A и B возвращают: "+mas[0].Location(mas[1]));
+    System.out.println("Соприкосающиеся прямоугольники B и C возвращают: "+mas[2].Location(mas[1]));
+    System.out.println("Несоприкасающиеся прямоугольники A и D возвращают: "+mas[0].Location(mas[3]));
+    System.out.println("Касающиеся прямоугольник B и окружность I возвращают: "+mas[1].Location(mas[4]));
+    System.out.println("Пересекающиеся прямоугольник D и окружность I возвращают: "+mas[4].Location(mas[3]));
+    System.out.println("Непересекающиеся прямоугольник A и окружность F возвращают: "+mas[0].Location(mas[5]));
+    }
+    
+}

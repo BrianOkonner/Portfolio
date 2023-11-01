@@ -1,0 +1,153 @@
+//Шихутин Влад Множество символов
+package javaapplication3;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
+
+class MnSymbols{
+    static char[] prov(char[] a) //Функция убирающаая повторяшки
+    {
+        char[] x=new char[20];
+        int k;
+        int z=0;
+        for(int i=0;i<a.length;i++)
+        {
+            k=0;
+            for(int j=i+1;j<a.length;j++)
+            {
+                if(a[i]==a[j])
+                {
+                    k++;}
+                
+            }
+            if(k==0)
+            {
+                x[z]=a[i];
+                z++;
+            }
+        }
+        char[] str=new char[z];
+        for(int i=0;i<z;i++)
+            str[i]=x[i];
+        return str;
+    }
+    private int n;
+    private char[] A;
+    public MnSymbols()
+    {
+        n=1;
+        A=new char[n];
+        A[0]='a';
+    }
+    public MnSymbols(char[] a)
+    {
+        this.n=a.length;
+        this.A=new char[n];
+        for(int i=0;i<this.n;i++)
+            this.A[i]=a[i];
+    }
+    
+    public String toString(){
+        StringBuffer a=new StringBuffer();
+        for(int i=0;i<this.n;i++)
+            a.append(this.A[i]+" ");
+        String str=new String(a.toString());
+        return  str;
+    }
+   
+    public boolean Prinadl(char t)
+    {
+        for(int i=0;i<this.n;i++)
+        {
+            if(t==this.A[i])
+                return true;
+        }
+        return false;
+    }
+    public MnSymbols U(MnSymbols G)//объединение
+    {
+        int newn=G.n; 
+        char[] x=new char[30];
+        int k=0;
+        for(int i=0;i<this.n;i++)
+        {
+           
+                if(G.Prinadl(A[i])==false)
+                {
+                   newn++;
+                   x[k]=A[i];
+                   k++;
+                }     
+        }
+        int z=0;
+        char[] str=new char[newn];
+        for(int i=0;i<G.n;i++)
+            str[i]=G.A[i];
+       while(z!=k)
+       {
+           str[G.n+z]=x[z];
+           z++;
+       }
+       return new MnSymbols(prov(str));
+    }
+    public MnSymbols Peresech(MnSymbols G)//пересечение
+    {
+        char[] x=new char[30];
+        int k=0;
+       for(int i=0;i<this.n;i++)
+       {
+           if(G.Prinadl(this.A[i])==true)
+           {
+               x[k]=A[i];
+               k++;
+           }
+       }
+       char[] str=new char[k];
+       for(int i=0;i<k;i++)
+           str[i]=x[i];
+       return new MnSymbols(prov(str));
+    }
+    public MnSymbols Razn(MnSymbols G){
+        char[] x=new char[30];
+        int k=0;
+        for(int i=0;i<this.n;i++)
+        {
+            if(G.Prinadl(this.A[i])==false)
+            {
+                x[k]=A[i];
+                k++;
+            }
+        }
+        char[] str=new char[k];
+        for(int i=0;i<k;i++)
+            str[i]=x[i];
+        return new MnSymbols(prov(str));//Разность
+    }
+}
+public class JavaApplication3 {
+     
+    public static void main(String[] args) {
+      char[] a={'s','b',};
+      char[] a1={'a','b','g','m'};
+      char[] a2={'c','f','m','f','s','b','b'};
+      MnSymbols S=new MnSymbols(a);
+      MnSymbols S1=new MnSymbols(a1);
+      MnSymbols S2=new MnSymbols(a2);
+      MnSymbols[] mas=new MnSymbols[3];
+      mas[0]=S;
+      mas[1]=S1;
+      mas[2]=S2;
+      for(int i=0;i<3;i++)
+      {
+          for(int j=i+1;j<3;j++)
+          {
+              System.out.println("U номеров "+i+" "+j+" = "+mas[i].U(mas[j]));
+              System.out.println("peresech номеров "+i+" "+j+" = "+mas[i].Peresech(mas[j]));
+              System.out.println("razn номеров "+i+" "+j+" = "+mas[i].Razn(mas[j]));
+          }
+          
+      }
+      
+    }
+    
+}

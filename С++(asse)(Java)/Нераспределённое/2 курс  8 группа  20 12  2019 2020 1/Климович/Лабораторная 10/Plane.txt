@@ -1,0 +1,175 @@
+import java.util.Arrays;
+import java.util.Objects;
+
+class WrongNumberOfParams extends Exception {
+    @Override
+    public String toString() {
+        return "There can't be more than 3 parameters.";
+    }
+}
+
+class WrongPrice extends Exception {
+    @Override
+    public String toString() {
+        return "The price must be greater than zero.";
+    }
+}
+
+enum Type {
+    MULTIROLE_FIGHTER,
+    RECONNAISSANCE_AIRCRAFT,
+    MULTIROLE_COMBAT_AIRCRAFT,
+    INTERCEPTOR_AIRCRAFT,
+    SURVEILLANCE_AIRCRAFT
+}
+
+class Plane {
+    private final int key;
+    private final String model;
+    private final String origin;
+    private final Type type;
+    private final int seats;
+    private boolean hasArmament;
+    private int rocket;
+    private boolean hasRadar;
+    private double[] params = new double[3];
+    private double priceUSD;
+    private static int count = 100;
+
+    public Plane(String model, String origin, Type type, int seats, boolean hasArmament, int rocket,
+                 boolean hasRadar, double[] params, double priceUSD) throws WrongNumberOfParams, WrongPrice {
+        this.key = count;
+        count++;
+        this.model = model;
+        this.origin = origin;
+        this.type = type;
+        this.seats = seats;
+        this.hasArmament = hasArmament;
+        if (hasArmament) {
+            this.rocket = rocket;
+        } else {
+            this.rocket = 0;
+        }
+        this.hasRadar = hasRadar;
+        try {
+            if (params.length > 3) {
+                throw new WrongNumberOfParams();
+            } else {
+                this.params = params;
+            }
+        } catch (WrongNumberOfParams wrongNumberOfParams) {
+            wrongNumberOfParams.printStackTrace();
+        }
+        try {
+            if (priceUSD <= 0) {
+                throw new WrongPrice();
+            } else {
+                this.priceUSD = priceUSD;
+            }
+        } catch (WrongPrice wrongPrice) {
+            wrongPrice.printStackTrace();
+        }
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public boolean isHasArmament() {
+        return hasArmament;
+    }
+
+    public void setHasArmament(boolean hasArmament) {
+        this.hasArmament = hasArmament;
+    }
+
+    public int getRocket() {
+        return rocket;
+    }
+
+    public void setRocket(int rocket) {
+        this.rocket = rocket;
+    }
+
+    public boolean isHasRadar() {
+        return hasRadar;
+    }
+
+    public void setHasRadar(boolean hasRadar) {
+        this.hasRadar = hasRadar;
+    }
+
+    public double[] getParams() {
+        return params;
+    }
+
+    public void setParams(double[] params) {
+        this.params = params;
+    }
+
+    public double getPriceUSD() {
+        return priceUSD;
+    }
+
+    public void setPriceUSD(double priceUSD) {
+        this.priceUSD = priceUSD;
+    }
+
+    @Override
+    public String toString() {
+        return "Plain #" + key +
+                ": model='" + model + '\'' +
+                ", origin='" + origin + '\'' +
+                ", type='" + type.toString() + '\'' +
+                ", seats=" + seats + ", " +
+                ((hasArmament) ? (rocket + " rockets, ") : ("")) +
+                ((hasRadar) ? ("has a radar, ") : ("does not have a radar, ")) +
+                "\nparams=" + Arrays.toString(params) +
+                "(length, width, height), price in USD=" + priceUSD + " million $";
+    }
+
+    public String getShortInfo() {
+        return "Plain #" + key + ": model='" + model + '\'' +
+                ", origin='" + origin + '\'' + ", price in USD=" + priceUSD + " million $";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plane plane = (Plane) o;
+        return key == plane.key &&
+                seats == plane.seats &&
+                hasArmament == plane.hasArmament &&
+                rocket == plane.rocket &&
+                hasRadar == plane.hasRadar &&
+                Double.compare(plane.priceUSD, priceUSD) == 0 &&
+                Objects.equals(model, plane.model) &&
+                Objects.equals(origin, plane.origin) &&
+                type == plane.type &&
+                Arrays.equals(params, plane.params);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(key, model, origin, type, seats, hasArmament, rocket, hasRadar, priceUSD);
+        result = 31 * result + Arrays.hashCode(params);
+        return result;
+    }
+}

@@ -1,0 +1,48 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Scanner;
+
+public class Jap1{
+
+    /**
+     * @param args the command line arguments
+     */
+   public static double myPi(int tochn)
+    {
+        double pi=0;
+        double e= 1/Math.pow(10, tochn);
+        double n=1;
+        int znak = 1;
+  
+        while(Math.abs(1/n)>e)
+        {
+            pi += 1*znak/n;
+            n+=2;
+            znak *= -1;
+            
+        }
+        return 4*pi;
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc= new Scanner(System.in);
+        System.out.println("введите кол зн после запят");
+        int tochn = sc.nextInt();
+        double pi= myPi(tochn);
+         
+        
+        
+        System.out.printf("с помощью формулы: \n%.20f\n",pi);
+        System.out.printf("PI: \n%.20f\n",Math.PI);
+        System.out.printf("разн\n%.20f\n",Math.abs(Math.PI-pi));
+        
+        
+        
+    }
+    
+}

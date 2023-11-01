@@ -1,0 +1,9 @@
+SELECT
+  Kontinent,
+  COUNT(CASE WHEN KolNas > 100000000 THEN 1 ELSE NULL END) AS Kol
+FROM
+  Tabl_Kontinent$
+GROUP BY
+  Kontinent
+ORDER BY
+  Kol ASC;

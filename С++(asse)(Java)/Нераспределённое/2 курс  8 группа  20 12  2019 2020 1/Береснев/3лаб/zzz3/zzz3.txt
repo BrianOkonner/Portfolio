@@ -1,0 +1,118 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+/**
+ *
+ *
+    Сост квадрат из 1
+ */
+public class Jap1 {
+    
+    
+    public static void swapStrok(int a1,int a2,int[][]arr1)
+   {
+       int temp;
+       for(int j=0;j<6;j++)
+       {
+           temp=arr1[a1][j];
+           arr1[a1][j]=arr1[a2][j];
+           arr1[a2][j]=temp;
+       }
+   }
+    
+   public static void swapStolbc(int a1,int a2,int[][]arr1)
+   {
+       int temp;
+       for(int i=0;i<6;i++)
+       {
+           temp=arr1[i][a1];
+           arr1[i][a1]=arr1[i][a2];
+           arr1[i][a2]=temp;
+       }
+   }
+   
+   public static void print(int[][]arr1)
+   {
+         for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<6;j++)
+                {
+                    System.out.print(arr1[i][j]+" ");
+                }
+                System.out.println();
+            }
+   }
+   
+   
+   
+    public static void main(String[] args) 
+    {
+        
+        try
+        {
+            FileInputStream InputF=new FileInputStream("Input.txt");
+            Scanner sc=new Scanner(InputF);
+            int [][]arr1=new int[6][6];
+            
+            for(int i=0;i<6;i++)
+            {
+                for(int j=0;j<6;j++)
+                {
+                    arr1[i][j]=sc.nextInt();
+                }
+            }
+            System.out.println("Начальн матрица");
+            print(arr1);
+         
+            int a=1;
+            int b=1;
+            
+            int str1=0;
+            int str2=0;
+            int stol1=0;
+            int stol2=0;
+            
+            while((a!=5)&&(b!=5))
+            {
+                for(int i=0;i<6-a;i++)
+                {
+                    for(int j=0;j<6-b;j++)
+                    {
+                        if((arr1[i][j]==1)&&(arr1[i+a][j]==1)&&(arr1[i][j+b]==1)&&(arr1[i+a][j+b]==1))
+                        {
+                            str1=i;
+                            str2=i+a;
+                            stol1=j;
+                            stol2=j+b;
+                        }
+                    }
+                }
+               a++;
+               if(a==5)
+               {
+                   b++;
+                   a=1;
+               }
+            } 
+            
+           swapStrok(2,str1,arr1);
+           swapStrok(3,str2,arr1);
+           swapStolbc(2,stol1,arr1);       
+           swapStolbc(3,stol2,arr1);
+  
+           System.out.println("Новая матрица ");
+           print(arr1);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Нет файла");
+        }
+    }
+    
+}

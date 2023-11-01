@@ -1,0 +1,28 @@
+public class AnniversaryEdition extends Book {
+    private final String bookDesignerName;
+    private final double priceRate;
+
+    public AnniversaryEdition(int id, String bookTitle, String[] authorsNames, int yearOfPublication,
+                              String publisher, Bound bookBinding, String bookDesignerName, double priceRate) {
+        super(id, bookTitle, authorsNames, yearOfPublication, publisher, bookBinding);
+        this.bookDesignerName = bookDesignerName;
+        this.priceRate = priceRate;
+    }
+
+    public AnniversaryEdition(int id, String bookTitle, String[] authorsNames, int yearOfPublication, String publisher,
+                              Bound bookBinding, double price, String bookDesignerName, double priceRate) {
+        super(id, bookTitle, authorsNames, yearOfPublication, publisher, bookBinding, price * priceRate);
+        this.bookDesignerName = bookDesignerName;
+        this.priceRate = priceRate;
+    }
+
+    @Override
+    public double getPrice() {
+        return super.getPrice() * this.priceRate;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "(юбилейное издание, художник-оформитель " + this.bookDesignerName + ")";
+    }
+}

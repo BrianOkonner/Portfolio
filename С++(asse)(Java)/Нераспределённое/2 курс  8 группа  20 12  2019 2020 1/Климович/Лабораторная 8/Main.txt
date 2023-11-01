@@ -1,0 +1,234 @@
+package com.company;
+
+import java.util.Arrays;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Circle c1 = new Circle(2,2,3);
+	System.out.println(c1.toString());
+	Rectangle r1  = new Rectangle(1,1,5,4);
+        System.out.println(r1.toString());
+        Triangle t1  = new Triangle(3,4,5);
+        System.out.println(t1.toString());
+
+        System.out.println("\nArray1:");
+        PlaneFigure arrF1[] = new PlaneFigure[3];
+        arrF1[0] =c1;
+        arrF1[1] = r1;
+        arrF1[2] = t1;
+        for (PlaneFigure p :arrF1){
+            System.out.println(p);
+            System.out.println("perimetr = " + p.perimetr());
+            System.out.println("square = " + p.square());
+        }
+
+        System.out.println("\nSort Array1:");
+        Arrays.sort(arrF1, new cmp_square());
+        System.out.println(Arrays.toString(arrF1));
+
+        System.out.println("\nSort Array1:");
+        for(PlaneFigure p :arrF1){
+            System.out.print(p);
+            System.out.println(" square = " + p.square());
+
+        }
+
+        System.out.println("\nArray2:");
+        Circle c2 = new Circle(8,2,2);
+        System.out.println(c2);
+        Rectangle r2 = new Rectangle(1,1,5,4);
+        System.out.println(r2);
+        Location arrL1[] = new Location[2];
+        arrL1[0] = c2;
+        arrL1[1] = r2;
+
+        System.out.println("\nArray2 Location:");
+        for(Location p :arrL1){
+            System.out.println("who: "+ p);
+            System.out.println("with: " + c2);
+            System.out.println(p.location(c2));
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}

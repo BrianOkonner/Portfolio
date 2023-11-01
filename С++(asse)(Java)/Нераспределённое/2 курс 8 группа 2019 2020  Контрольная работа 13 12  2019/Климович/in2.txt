@@ -1,0 +1,5 @@
+public; class; int;
+static; void; 
+main;
+String; char;
+byte;

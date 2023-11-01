@@ -1,0 +1,146 @@
+
+package lab6;
+//9 задача
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+class wrongPrice extends Exception{}
+class ComparePrice implements Comparator<Film>
+{
+    @Override
+    public int compare(Film A,Film B)
+    {
+    if(A.getPrice()==B.getPrice())
+        return 0;
+    if(A.getPrice()>B.getPrice())
+            return -1;
+    return 1;
+    }
+}
+class CompareNames implements Comparator<Film>
+{
+    @Override
+    public int compare(Film A,Film B)
+    {
+        return A.getName().compareTo(B.getName());
+    }
+}
+enum Type
+{
+    comedy,document,detect,thriller,drame,fantazy
+}
+class Film
+{
+    private static int count=0;
+    private final int id;
+    private final String name;
+    private int price;
+    private final String surname;
+    private final Type type;
+    Film(int id1,String name1,int price1,String surname1,Type type1)
+	throws wrongPrice
+    {
+    if(price1<0)
+	throw new wrongPrice();
+    id=id1;
+    price=price1;
+    type=type1;
+    count++;
+    name=name1;
+    surname=surname1;
+    }
+	public Type getType()
+	{
+		return type;
+	}
+	public int getId()
+	{
+		return id;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public double getPrice()
+	{
+		return price;
+	}
+	public String getSurname()
+	{
+		return surname;
+	}
+        public void setPrice(int price1)
+        {
+                price=price1;
+        }
+	public String toString()
+	{
+            return "id:"+id+" Название фильма:"+name+" Стоимость билета:"+price
+                    +" Фамилия режиссёра:"+surname+" Жанр:"+type;
+	}
+        public int getCount()
+        {
+            return count;
+        }
+}
+public class Program 
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        try
+        {
+            Film[] f={new Film(6732,"Корпускула",12,"Kameron",Type.fantazy),
+            new Film(2474,"Ping Speed",10,"Waldener",Type.document),
+            new Film(8105,"Цветы жизни",8,"Петрушенко",Type.drame),
+            new Film(7493,"Караван",13,"Червяков",Type.detect),
+            new Film(3057,"Macros",15,"Kenon",Type.thriller),
+            new Film(1523,"Live in still",10,"Kameron",Type.comedy),
+            new Film(7895,"Палладин",7,"Червяков",Type.document)};
+            System.out.println("  Фильмы");
+            for(Film i:f)
+            {
+                System.out.println(i);
+            }
+            String r=new String("Kameron");
+            System.out.println("  Фильмы режиссёра с фамилией Kameron");
+            for(Film i:f)
+            {
+                if(r.equals(i.getSurname()))
+                System.out.println(i);
+            }
+            System.out.println("  Фильмы докуметального жанра");
+            Type t=Type.document;
+            for(Film i:f)
+            {
+                if(i.getType()==t)
+                System.out.println(i);
+            }
+            System.out.println("  Фильмы с ценой 10-14 рублей");
+            for(Film i:f)
+            {
+                if(i.getPrice()<=14&&i.getPrice()>=10)
+                System.out.println(i);
+            }
+            System.out.println("  Фильмы по убыванию цены");
+            Arrays.sort(f,new ComparePrice());
+            for(Film i:f)
+            {
+                System.out.println(i);
+            }
+            System.out.println("  Фильмы в алфавитном порядке");
+            Arrays.sort(f,new CompareNames());
+            for(Film i:f)
+            {
+                System.out.println(i);
+            }
+        }
+        catch(Exception o)
+        {
+            System.out.println("Wrong data");
+        }
+    }
+}

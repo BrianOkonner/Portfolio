@@ -1,0 +1,104 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+interface PlaneFigure{
+    abstract public int[]center();
+    abstract  public double area();
+    abstract public String toString();
+}
+class Comp implements Comparator<PlaneFigure> {
+    @Override
+    public int compare(PlaneFigure a,PlaneFigure b){
+        if(a.area()==b.area())
+            return 0;
+        else if(a.area()>b.area())
+            return 1;
+        else return -1;
+    }
+}
+class Romb implements PlaneFigure{
+    private int a;
+    private int h;
+    private int x;
+    private int y;
+
+    Romb(int x,int y,int a,int h){
+        this.x=x;
+        this.y=y;
+        this.a=a;
+        this.h=h;
+    }
+    public String toString() {
+        StringBuilder s=new StringBuilder();
+        s.append("Rect a,h ");
+        s.append(a);
+        s.append(" ");
+        s.append(h);
+
+        return s.toString();
+    }
+
+    @Override
+    public double area() {
+        return a*h;
+    }
+
+    @Override
+    public int[] center() {
+        int[] ar={x,y};
+        return ar;
+    }}
+    class Rect implements PlaneFigure{
+        private int a;
+        private int b;
+        private int x;
+        private int y;
+
+        Rect(int x,int y,int a,int b){
+            this.x=x;
+            this.y=y;
+            this.a=a;
+            this.b=b;
+        }
+
+        @Override
+        public double area() {
+            return a*b;
+        }
+
+        @Override
+        public int[] center() {
+            int[] ar={x,y};
+            return ar;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder s=new StringBuilder();
+            s.append("Rect a,b ");
+            s.append(a);
+            s.append(" ");
+            s.append(b);
+
+            return s.toString();
+        }
+    }
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        PlaneFigure ar[]= new PlaneFigure[3];
+        ar[1]=new Romb(0,0,3,2);
+        ar[2]=new Romb(0,0,7,5);
+        ar[0]=new Rect(0,0,10,10);
+        Arrays.sort(ar,new Comp());
+        System.out.println(ar[0].toString());
+        System.out.println(ar[1].toString());
+        System.out.println(ar[2].toString());
+
+
+    }
+}

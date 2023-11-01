@@ -1,0 +1,178 @@
+package com.company;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Meh{
+    protected final int id;
+    protected final String name;
+    protected final Type type;
+    protected final int sort;
+    protected final int number;
+    protected double price;
+    protected static int count = 0;
+
+
+    public Meh( String name,Type type, int sort,int number,double price){
+        count++;
+        this.id=count;
+        this.name=name;
+        this.type=type;
+        this.sort=sort;
+        this.number=number;
+        this.price=price;
+    }
+
+    Meh(Meh meh){
+        count++;
+        this.id=count;
+        this.name=meh.name;
+        this.type=meh.type;
+        this.sort=meh.sort;
+        this.number=meh.number;
+        this.price=meh.price;
+    }
+
+
+    public int GetId() {
+        return id;
+    }
+
+    public String GetName() {
+        return name;
+    }
+    public Type GetType() { return type; }
+    public int GetSort() {
+        return sort;
+    }
+    public void SetPrice(double price) {
+        this.price = price;
+    }
+    public double GetPrice() {
+        return price;
+    }
+    public int GetNumber() {
+        return number;
+    }
+
+    public String toString() {
+        return id+" "+name+" "+type+" "+sort+" "+number+" "+price;
+    }
+}
+enum Type{
+    sobol,kunitsa,pesets,rosomaha;
+}
+
+class Punct {
+    private String name;
+    private Meh[] meh;
+    private int n;
+
+    public Punct(String name, Meh[] meh)
+    //throws wrongYear
+    {
+        this.name = name;
+        this.meh = new Meh[meh.length];
+        System.arraycopy(meh, 0, this.meh, 0, meh.length);
+
+
+    }
+
+    public String toString() {
+        return "Punct:" + this.name + "\n" + Arrays.toString(this.meh) + "\n";
+
+    }
+
+
+    public String GetbySortNumber(int n) {
+        StringBuffer sb = new StringBuffer();
+        for (Meh r : this.meh)
+            if ((r.GetSort() == 1) && (r.GetNumber() > n))
+                sb.append(r);
+        return sb.toString();
+    }
+
+    public void sort() {
+        Arrays.sort(this.meh, new nymbercomp());
+    }
+}
+/*
+    public String GetSuccess(int n) {
+        StringBuffer sb = new StringBuffer();
+       int max=0;
+        for (Meh r : this.meh)
+            if ((r.GetNumber() > max))    max=r.GetNumber();
+                sb.append(r);
+        return sb.toString();
+    }
+*/
+
+    class nymbercomp implements Comparator<Meh> {
+        @Override
+        public int compare(Meh A, Meh B) {
+            if (A.GetNumber() == B.GetNumber())
+                return 0;
+            if (A.GetNumber() > B.GetNumber())
+                return -1;
+            return 1;
+        }
+    }
+
+    class sortcomp implements Comparator<Meh> {
+        @Override
+        public int compare(Meh A, Meh B) {
+            if (A.GetSort() == B.GetSort())
+                return 0;
+            if (A.GetSort() > B.GetSort())
+                return 1;
+            return -1;
+        }
+    }
+
+    public class Main {
+
+        public static void main(String[] args) throws FileNotFoundException {
+
+            FileInputStream fis = new FileInputStream("input.txt");
+            PrintStream printFile = new PrintStream("output.txt");
+            Scanner sc = new Scanner(fis);
+            Scanner in = new Scanner(System.in);
+            Meh[] meh = new Meh[5];
+            int i = 0;
+            while (sc.hasNext()) {
+                String str = sc.nextLine();
+                String[] a = str.split(" ");
+
+                String name = a[0];
+                Type type = Type.valueOf(a[1]);
+                int sort = Integer.parseInt(a[2]);
+                int number = Integer.parseInt(a[3]);
+                double price = Double.parseDouble(a[4]);
+
+                meh[i] = new Meh(name, type, sort, number, price);
+                System.out.println(meh[i].toString());
+                i++;
+            }
+
+            Punct p = new Punct("a", meh);
+            System.out.println(p);
+            printFile.println(p);
+
+            System.out.println("Введите количество меха :");
+            printFile.println("количество меха первого сорта больше заданной величины у:");
+            int n = in.nextInt();
+            System.out.println(p.GetbySortNumber(n));
+            printFile.println(p.GetbySortNumber(n));
+
+            System.out.println("Отсортированый ");
+            printFile.println("Отсортированый ");
+            p.sort();
+            System.out.println(p);
+            printFile.println(p);
+        }
+    }
+ 
+

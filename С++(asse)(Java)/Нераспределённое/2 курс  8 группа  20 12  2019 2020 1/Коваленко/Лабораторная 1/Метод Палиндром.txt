@@ -1,0 +1,24 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+    private static boolean Palindrome(int n) {
+        int original = n, reversed = 0;
+        while (n != 0) {
+            reversed = (reversed * 10) + (n % 10);
+            n /= 10;
+        }
+        return reversed == original;
+    }
+
+    public static void main(String[] args) {
+	System.out.println("Input number to check");
+        Scanner sc =new Scanner(System.in);
+        int input =sc.nextInt();
+        if (Palindrome(input)){
+            System.out.println("Palindrome");
+        } else System.out.println("Not a Palindrome");
+
+    }
+}

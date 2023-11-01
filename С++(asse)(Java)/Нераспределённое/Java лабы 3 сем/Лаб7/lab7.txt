@@ -1,0 +1,202 @@
+
+package lab6;
+//9 задача
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+class wrongPrice extends Exception{}
+class ComparePrice implements Comparator<Film>
+{
+    @Override
+    public int compare(Film A,Film B)
+    {
+    if(A.getPrice()==B.getPrice())
+        return 0;
+    if(A.getPrice()>B.getPrice())
+            return -1;
+    return 1;
+    }
+}
+class CompareNames implements Comparator<Film>
+{
+    @Override
+    public int compare(Film A,Film B)
+    {
+        return A.getName().compareTo(B.getName());
+    }
+}
+enum Type
+{
+    comedy,document,detect,thriller,drame,fantazy
+}
+class Film
+{
+    protected static int count=0;
+    protected final int id;
+    protected final String name;
+    protected int price;
+    protected final String surname;
+    protected final Type type;
+    Film(int id1,String name1,int price1,String surname1,Type type1)
+	throws wrongPrice
+    {
+        if(price1<0)
+            throw new wrongPrice();
+        id=id1;
+        price=price1;
+        type=type1;
+        count++;
+        name=name1;
+        surname=surname1;
+    }
+    public Type getType()
+    {
+    	return type;
+    }
+    public int getId()
+    {
+    	return id;
+    }
+    public String getName()
+    {
+    	return name;
+    }
+    public double getPrice()
+    {
+    	return price;
+    }
+    public String getSurname()
+    {
+    	return surname;
+    }
+    public void setPrice(int price1)
+    {
+        price=price1;
+    }
+    public String toString()
+    {
+        return "id:"+id+" Название фильма:"+name+" Стоимость билета:"+price
+            +" Фамилия режиссёра:"+surname+" Жанр:"+type;
+    }
+    public int getCount()
+    {
+        return count;
+    }
+}
+class Remake extends Film
+{
+    private   String NewProducer;
+    private int DateOfRe;
+    public Remake(int id1,String name1,int price1,String surname1,Type type1
+        ,String newroducer,int dateofre)throws wrongPrice            
+    {
+        super(id1,name1,price1,
+            surname1,type1);
+        this.NewProducer=newroducer;
+        this.DateOfRe=dateofre;
+    }
+    public String getNewProducer()
+    {
+        return this.NewProducer;
+    }
+    public int getDateOfRe()
+    {
+        return this.DateOfRe;
+    }
+    public String toString()
+    {
+        return super.toString()+" Режиссёр ремейка:"+this.getNewProducer()+" Год ремейка: "+this.DateOfRe;
+    }
+}
+class Cinema
+{
+    private Film[] film;
+    public Cinema(Film[] film1)
+    {
+        this.film=new Film[film1.length];
+        System.arraycopy(film1,0,film,0,film.length);
+    }
+    public String toString()
+    {
+        StringBuffer str=new StringBuffer();
+        for(int i=0;i<film.length;i++)
+        {
+            str.append(film[i].toString()+"\n");
+        }
+        return str.toString();
+    }
+    public String getFilmOfSurname(String surname1)
+    {
+        StringBuffer str=new StringBuffer();
+        for(Film i:film)
+        {
+            if(surname1.equals(i.getSurname()))
+                str.append(i+"\n");
+        }
+        return str.toString();
+    }
+    public String getFilmOfType(Type t)
+    {
+        StringBuffer str=new StringBuffer();
+        for(Film i:film)
+        {
+            if(i.getType()==t)
+                str.append(i+"\n");
+        }
+        return str.toString();
+     }
+      public String getFilmOfPrice(int b,int e)
+     {
+        StringBuffer str=new StringBuffer();
+        for(Film i:film)
+        {   
+            if(i.getPrice()<=e&&i.getPrice()>=b)
+                str.append(i+"\n");
+        }
+        return str.toString();
+     }
+      public void sortPrice()
+      {
+          Arrays.sort(film,new ComparePrice());
+      }
+      public void sortName(){
+          Arrays.sort(film,new CompareNames());
+      }
+}
+public class Program 
+{
+    public static void main(String[] args) 
+    {
+        try
+        {
+            Film[] f={new Film(6732,"Корпускула",12,"Kameron",Type.fantazy),
+            new Film(2474,"Ping Speed",10,"Waldener",Type.document),
+            new Film(8105,"Цветы жизни",8,"Петрушенко",Type.drame),
+            new Film(7493,"Караван",13,"Червяков",Type.detect),
+            new Film(3057,"Macros",15,"Kenon",Type.thriller),
+            new Film(1523,"Live in still",10,"Kameron",Type.comedy),
+            new Remake(7895,"Палладин",7,"Червяков",Type.document,"Порохов",2005)};
+            Cinema c=new Cinema(f);
+            System.out.println("  Фильмы");
+            System.out.println(c);
+            String r=new String("Kameron");
+            System.out.println("  Фильмы режиссёра с фамилией Kameron");
+            System.out.println(c.getFilmOfSurname(r));
+            System.out.println("  Фильмы докуметального жанра");
+            Type t=Type.document;
+            System.out.println(c.getFilmOfType(t));
+            System.out.println("  Фильмы с ценой 10-14 рублей");
+            System.out.println(c.getFilmOfPrice(10,14));
+            System.out.println("  Фильмы по убыванию цены");
+            c.sortPrice();
+            System.out.println(c);
+            System.out.println("  Фильмы в алфавитном порядке");
+            c.sortName();
+            System.out.println(c);
+        }
+        catch(Exception o)
+        {
+            System.out.println("Wrong data");
+        }
+    }
+}

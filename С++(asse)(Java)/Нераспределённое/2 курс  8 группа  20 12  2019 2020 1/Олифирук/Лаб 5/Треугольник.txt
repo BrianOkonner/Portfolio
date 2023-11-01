@@ -1,0 +1,267 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package labtriangle;
+
+import java.util.Scanner;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.io.*;
+
+class Triangle
+{
+    private double a;
+    private double b;
+    private double c;
+    
+    public Triangle()
+    {
+        this.a=1;
+        this.b=1;
+        this.c=1;
+    }
+    
+    public Triangle(double a,double b,double c)
+    {
+        this.a=a;
+        this.b=b;
+        this.c=c;
+    }
+    
+    public Triangle(double a,double b)
+    {
+        this.a=a;
+        this.b=b;
+        this.c=Math.sqrt(this.a*this.a+this.b*this.b);
+    }
+    
+    public Triangle(double a)
+    {
+        this.a=a;
+        this.b=a;
+        this.c=a;
+    }
+    
+    void proverka()
+    {
+        if((this.a+this.b>this.c)&&(this.b+this.c>this.a)&&(this.a+this.c>this.b))
+        {
+            //System.out.println("Такого треугольника не существует");
+        }
+        else
+        {
+            System.out.println("Такого треугольника не существует");
+             System.exit(0);
+        }
+    }
+    
+    public double geta()
+    {
+        return this.a;
+    }
+    
+    public double getb()
+    {
+        return this.b;
+    }
+    
+     public double getc()
+    {
+        return this.c;
+    }
+     
+    public void seta(double a)
+    {
+        this.a=a;
+    }
+    
+    public void setb(double b)
+    {
+        this.b=b;
+    }
+    
+    public void setc(double c)
+    {
+        this.c=c;
+    }
+    
+    public double perimeter()
+    {
+        return this.a+this.b+this.c;
+    }
+    
+    public double area()
+    {
+        double pol=(this.a+this.b+this.c)/2;
+        return Math.sqrt(pol*(pol-this.a)*(pol-this.b)*(pol-this.c));
+    }
+    
+    public double type()
+    {
+        int x=0;
+        if((this.a==this.b)&&(this.b==this.c))
+        {
+            x=1;
+        }
+        if((this.a==this.b)||(this.b==this.c)||(this.c==this.a))
+        {
+            x=2;
+        }
+        if((this.c==Math.sqrt(this.a*this.a+this.b*this.b))||(this.b==Math.sqrt(this.a*this.a+this.c*this.c))||(this.a==Math.sqrt(this.b*this.b+this.c*this.c)))
+        {
+            x=3;
+        }
+        if(x==0)
+        {
+            x=4;
+        }
+        return x;
+    }
+    
+    public void newTriangle(Triangle A)
+    {
+        this.a=2*A.a;
+        this.b=2*A.b;
+        this.c=2*A.c;
+    }
+    
+    public boolean eguals(Triangle A)
+    {
+        if((this.a==A.a)&&(this.a==A.a)&&(this.a==A.a))
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public String ToString()
+    {
+        return "Triangle: "+" a="+this.a+" b=" +this.b+" c="+this.c;
+    }
+
+}
+
+    
+class revcomp implements Comparator <Triangle>
+{
+    @Override
+    public int compare(Triangle P1,Triangle P2)
+    {
+      if(P1.perimeter()==P2.perimeter())
+      { 
+       return 0;
+      }          
+      if(P1.perimeter()<P2.perimeter())
+      {
+       return -1;
+      }
+     return 1;
+    }
+}
+
+
+/**
+ *
+ * @author Maxim
+ */
+public class LabTriangle {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        
+        Triangle A=new Triangle(2,2,3);
+        Triangle B=new Triangle(3,4,6);
+        Triangle C=new Triangle(3,4);
+        double a;
+        
+        A.proverka();
+        //B.newTriangle(A);
+        a=B.getc();
+        System.out.println(a);
+        
+        Triangle Mas[]=new Triangle[3];
+        Mas[0]=A;
+        Mas[1]=B;
+        Mas[2]=C;
+        
+        for(Triangle r:Mas)
+        {
+            System.out.println(r.ToString());
+        }
+        
+        for(int i=0;i<3;i++)
+        {
+            if(Mas[i].type()==1)
+            {
+                System.out.println("Равносторонний");
+            }
+            if(Mas[i].type()==2)
+            {
+                System.out.println("Равнобедренный");
+            }
+            if(Mas[i].type()==3)
+            {
+                System.out.println("Прямоугольный");
+            }
+            if(Mas[i].type()==4)
+            {
+                System.out.println("Обычный");
+            }
+        }
+        
+        for(Triangle r:Mas)
+        {
+            r.newTriangle(r);
+            System.out.println(r.ToString());
+        }
+        
+        double max=0;
+        Triangle D=new Triangle();
+        for(Triangle r:Mas)
+        {
+            if(r.area()>=max)
+            {
+                max=r.area();
+                D=r;
+            }
+        }
+        System.out.println("Треугольник с наибольшей площадью");
+        System.out.println(D.ToString());
+        
+        double min=Mas[0].area();
+        Triangle E=new Triangle();
+        for(Triangle r:Mas)
+        {
+            if(r.area()<=min)
+            {
+                min=r.area();
+                E=r;
+            }
+        }
+        System.out.println("Треугольник с наименьшей площадью");
+        System.out.println(E.ToString());
+        
+        if(A.equals(B)==true)
+        {
+            System.out.println("Треугольники совпадают");
+        }
+        else
+        {
+            System.out.println("Треугольники не совпадают");
+        }
+        
+        Arrays.sort(Mas, new revcomp());
+        for(Triangle r:Mas)
+        {
+            System.out.println(r.ToString());
+        }
+        
+        
+    }
+    
+}

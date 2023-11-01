@@ -1,0 +1,27 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input eps in number of digits after the dot");
+        double eps=sc.nextInt();
+        int epss=(int)eps;
+        double Result=1;
+        double Temp=-1.0/3;
+        int denominator=-3;
+        eps=Math.pow(10,((-1)*eps));
+        while(Math.abs(Temp)>eps){
+            Result=Result+Temp;
+            if(denominator>0)
+                denominator=(Math.abs(denominator)+2)*(-1);
+            else
+                denominator=(Math.abs(denominator)+2);
+            Temp=1.0/denominator;
+        }
+        Result=Result*4;
+        System.out.printf("My value=%.6f /n Preset value=%.10f", Result, Math.PI);
+    }
+}

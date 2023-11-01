@@ -1,0 +1,97 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Operations {
+    private final ArrayList<String> identifiers;
+
+    public Operations() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("short");
+        arrayList.add("byte");
+        arrayList.add("int");
+        arrayList.add("double");
+        arrayList.add("long");
+        arrayList.add("float");
+        arrayList.add("boolean");
+        arrayList.add("char");
+        arrayList.add("void");
+        arrayList.add("String");
+        arrayList.add("class");
+        this.identifiers = arrayList;
+    }
+
+    public String readFile(File file) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+            String currentLine;
+            while ((currentLine = bufferedReader.readLine()) != null) {
+                stringBuilder.append(currentLine + "\n");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
+    }
+
+    public void writeFile(File file, ArrayList<Word> arrayList, int out) throws IOException {
+        FileOutputStream outputFile = new FileOutputStream(file);
+        PrintStream printStream = new PrintStream(outputFile);
+        Iterator<Word> iterator = arrayList.iterator();
+        switch (out) {
+            case 1:
+                while (iterator.hasNext()) {
+                    printStream.println(iterator.next().toString());
+                }
+                outputFile.close();
+                break;
+            case 3:
+                for (Word current : arrayList) {
+                    for (int i = 0; i < current.getLines().size(); i++) {
+                        printStream.println(current.getWord());
+                    }
+                }
+                outputFile.close();
+                break;
+            default:
+                while (iterator.hasNext()) {
+                    printStream.println(iterator.next().getWord());
+                }
+                outputFile.close();
+        }
+
+    }
+
+    public ArrayList<Word> findIdentifiers(String text) {
+        String[] lines = text.split("\n");
+        ArrayList<Word> listOfIdentifiers = new ArrayList<>();
+        for (int i = 0; i < lines.length; i++) {
+            String[] words = lines[i].split("[\\s\\p{Punct}]+");
+            for (int j = 0; j < words.length - 1; j++) {
+                if (identifiers.contains(words[j])) {
+                    ArrayList<Integer> temp = new ArrayList<>();
+                    temp.add(i + 1);
+                    listOfIdentifiers.add(new Word(words[j + 1], temp));
+                }
+            }
+            for (int j = 0; j < words.length; j++) {
+                for (Word current : listOfIdentifiers) {
+                    if ((current.getWord().equals(words[j])) && (!current.getLines().contains(i + 1))) {
+                        current.getLines().add(i + 1);
+                    }
+                }
+            }
+        }
+        return listOfIdentifiers;
+    }
+
+    public ArrayList<Word> getKeyWords(String text) {
+        ArrayList<Word> listOfKeyWords = new ArrayList<>();
+        String[] words = text.split("[\\s\\p{Punct}]+");
+        for (String current : words) {
+            listOfKeyWords.add(new Word(current, new ArrayList<>()));
+        }
+        return listOfKeyWords;
+    }
+}

@@ -1,0 +1,43 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+    private static boolean Palindrome(int n) {
+        int original = n, reversed = 0;
+        while (n != 0) {
+            reversed = (reversed * 10) + (n % 10);
+            n /= 10;
+        }
+        return reversed == original;
+    }
+    public static void main(String[] args) {
+        Scanner sc =new Scanner(System.in);
+        System.out.println("Input left border");
+        int leftBorder =sc.nextInt();
+	    System.out.println("Input right border");
+	    int rightBorder =sc.nextInt();
+        while(rightBorder<leftBorder){
+            System.out.println("Nope, try the correct order of borders");
+            System.out.println("Input left border");
+             leftBorder =sc.nextInt();
+            System.out.println("Input right border");
+             rightBorder =sc.nextInt();
+        }
+        System.out.println("The double palindromes are:");
+        boolean flagPresence=false;
+        for(int i=leftBorder;i<=rightBorder;i++){
+                if(Palindrome(i)&&Palindrome(i*i)){
+                    System.out.println(i);
+                    flagPresence=true;
+                }
+
+            }
+        if(!flagPresence){
+            System.out.println("None!");
+        }
+
+
+
+    }
+}

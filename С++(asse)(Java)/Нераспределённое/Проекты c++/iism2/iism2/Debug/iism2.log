@@ -1,0 +1,26 @@
+﻿Build started 28.12.2022 13:09:51.
+     1>Project "D:\Учеба\Программирование\Проекты c++\iism2\iism2\iism2.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\iism2.unsuccessfulbuild".
+       ClCompile:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main2.cpp
+         main2.cpp
+     1>d:\учеба\программирование\проекты c++\iism2\iism2\main2.cpp(42): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\учеба\программирование\проекты c++\iism2\iism2\main2.cpp(77): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\учеба\программирование\проекты c++\iism2\iism2\main2.cpp(123): warning C4101: 'n' : unreferenced local variable
+     1>d:\учеба\программирование\проекты c++\iism2\iism2\main2.cpp(123): warning C4101: 'm' : unreferenced local variable
+       Link:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\iism2\Debug\iism2.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\iism2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\iism2\Debug\iism2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\iism2\Debug\iism2.lib" /MACHINE:X86 Debug\fun.obj
+         Debug\main2.obj
+         LINK : D:\Учеба\Программирование\Проекты c++\iism2\Debug\iism2.exe not found or not built by the last incremental link; performing full link
+         iism2.vcxproj -> D:\Учеба\Программирование\Проекты c++\iism2\Debug\iism2.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\iism2\Debug\iism2.exe;#1" /manifest Debug\iism2.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\iism2.unsuccessfulbuild".
+         Touching "Debug\iism2.lastbuildstate".
+     1>Done Building Project "D:\Учеба\Программирование\Проекты c++\iism2\iism2\iism2.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.98

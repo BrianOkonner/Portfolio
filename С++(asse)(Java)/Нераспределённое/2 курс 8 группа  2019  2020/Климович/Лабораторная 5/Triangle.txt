@@ -1,0 +1,180 @@
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
+
+class Triangle {
+    private int a;
+    private int b;
+    private int c;
+
+    public Triangle() {
+        this.a = 1;
+        this.b = 1;
+        this.c = 1;
+    }
+
+    public Triangle(int a, int b, int c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    public Triangle(int a, int b) {
+        this(a, b, b);
+    }
+
+    public Triangle(int a) {
+        this(a, a, a);
+    }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public void setB(int b) {
+        this.b = b;
+    }
+
+    public int getC() {
+        return c;
+    }
+
+    public void setC(int c) {
+        this.c = c;
+    }
+
+    public double perimeter() {
+        return this.a + this.b + this.c;
+    }
+
+    public double area() {
+        return Math.sqrt(this.perimeter() * (this.perimeter() - a) * (this.perimeter() - b) * (this.perimeter() - c));
+    }
+
+    public int type() {
+        if ((this.a == this.b) && (this.a == this.c)) {
+            return 1;
+        } else if (this.b == this.c) {
+            return 2;
+        } else if ((this.a * this.a + this.b * this.b == this.c * this.c) ||
+                (this.a * this.a + this.c * this.c == this.b * this.b) ||
+                (this.b * this.b + this.c * this.c == this.a * this.a)) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    public Triangle newTriangle() {
+        Triangle newT = new Triangle(this.a * 2, this.b * 2, this.c * 2);
+        return newT;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Triangle triangle = (Triangle) object;
+        return ((a == triangle.a) && (b == triangle.b) && (c == triangle.c));
+    }
+
+    @Override
+    public String toString() {
+        return "(" + a + ", " + b + ", " + c + ')';
+    }
+}
+
+class PerimeterSort implements Comparator<Triangle> {
+    @Override
+    public int compare(Triangle t1, Triangle t2) {
+        if (t1.perimeter() > t2.perimeter()) {
+            return -1;
+        } else if (t1.perimeter() < t2.perimeter()) {
+            return 1;
+        }
+        return 0;
+    }
+}
+
+
+public class Zadanie2 {
+    public static void main(String[] args) {
+        Triangle[] arr = new Triangle[3];
+        Triangle t1 = new Triangle(1, 2, 3);
+        Triangle t2 = new Triangle(3, 4, 5);
+        Triangle t3 = new Triangle(3, 5);
+        arr[0] = t1;
+        arr[1] = t2;
+        arr[2] = t3;
+        Triangle[] newArr = new Triangle[3];
+        int maxI = 0;
+        int minI = 0;
+        double max = 0;
+        double min = 100000;
+        for (int i = 0; i < arr.length; i++) {
+
+            switch (arr[i].type()) {
+                case 1:
+                    System.out.println("Треугольник №" + (i + 1) + arr[i].toString() + " равносторонний.");
+                    break;
+                case 2:
+                    System.out.println("Треугольник №" + (i + 1) + arr[i].toString() + " равнобедренный.");
+                    break;
+                case 3:
+                    System.out.println("Треугольник №" + (i + 1) + arr[i].toString() + " прямоугольный.");
+                    break;
+                case 4:
+                    System.out.println("Треугольник №" + (i + 1) + arr[i].toString() + " разносторонний.");
+                    break;
+            }
+
+            newArr[i] = arr[i].newTriangle();
+            System.out.println("Новый треугольник с удвоенными сторонами: " + newArr[i].toString());
+
+            if (arr[i].area() > max) {
+                max = arr[i].area();
+                maxI = i;
+            }
+
+            if (arr[i].area() < min) {
+                min = arr[i].area();
+                minI = i;
+            }
+        }
+
+        System.out.println("\nТреугольник с минимальной площадью: №" + (minI + 1) + arr[minI].toString() +
+                ", площадь = " + arr[minI].area());
+        System.out.println("Треугольник с максимальной площадью: №" + (maxI + 1) + arr[maxI].toString() +
+                ", площадь = " + arr[maxI].area());
+
+        boolean equalsCheck = true;
+        System.out.println();
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i].equals(arr[i + 1])) {
+                System.out.println("Треугольники №" + (i + 1) + " и №" + (i + 2) + " равны.");
+                equalsCheck = false;
+            }
+        }
+        if (equalsCheck) {
+            System.out.println("Равных треугольников не найдено.");
+        }
+
+        Arrays.sort(arr, new PerimeterSort());
+        System.out.println("\nМассив треугольников, отсортированный по периметрам: ");
+        for (Triangle triangle : arr) {
+            System.out.println("Треугольник " + triangle.toString() + ", периметр = " + triangle.perimeter());
+        }
+    }
+}

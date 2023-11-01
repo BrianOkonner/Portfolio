@@ -1,0 +1,21 @@
+package com.company;
+
+import java.util.Comparator;
+
+class cmpFIO implements Comparator<SotrFirm> {
+    @Override
+    public int compare(SotrFirm t1, SotrFirm t2) {
+        return t1.getfIO().compareToIgnoreCase(t2.getfIO());
+    }
+}
+
+class cmpRevOclad implements Comparator <SotrFirm>{
+    @Override
+    public int compare(SotrFirm t1, SotrFirm t2){
+        if(t1.getDoubleOclad() == t2.getDoubleOclad())
+            return 0;
+        if(t1.getDoubleOclad() < t2.getDoubleOclad())
+            return 1;
+        return -1;
+    }
+}

@@ -1,0 +1,50 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Scanner;
+
+public class Jap1{
+
+    /**
+     * @param args the command line arguments
+     */
+    
+    public static double mySin(double x, int tochn)
+    {
+        int znak=-1;
+        double step=2;
+        double sin=x;
+        double e= 1/ Math.pow(10, tochn);
+        double prev = x;
+        double x2 = Math.pow(x, 2);
+        while(Math.abs(prev)>e)
+        {
+            prev= (prev*x2*znak)/(step*(step+1));
+            sin+= prev;
+            znak *= -1;
+            step+=2;
+        }
+        return sin;
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Введите аргумент: ");
+        double x=sc.nextDouble();
+        System.out.println("Введите точн: ");
+        int tochn=sc.nextInt();
+        
+        double sin=mySin(x, tochn);
+        System.out.println("с помощью формулы Тейлора: \n"+sin);
+        double sin2 = Math.sin(x);
+        System.out.println("Math.sin: \n"+sin2);
+        System.out.printf("разн: \n%.20f\n", Math.abs(sin2-sin));
+        
+    }
+    
+}
+

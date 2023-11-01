@@ -1,0 +1,6 @@
+VEF,1834,Portrait,67.9,A,0.9,Teacher
+VHI,1845,Nature,47.99,A,0.7,Policeman
+VJK,1857,Nature,68.9,C,0.7,AgentFBI
+VLM,1871,Landscape,30,D,0.7,Teacher
+VFF,1835,Nature,68.9,A,0.7,Policeman
+VEF,1834,Landscape,77.8,A,0.7,Teacher

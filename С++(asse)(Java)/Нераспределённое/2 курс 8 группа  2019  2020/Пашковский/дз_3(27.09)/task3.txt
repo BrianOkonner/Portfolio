@@ -1,0 +1,179 @@
+//Пашковский Лев 8 группа
+//В матрице 6х6 из 0 и 1 поменять местами строки и столбцы так
+//чтобы в центре оказался квадрат из единиц
+//Читает из файла input2.txt
+
+package packAge;
+
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+
+class matrix{
+
+	int m;
+	int n;
+	double [][]p;
+	///////////////////////////////////////////////////////////////
+	matrix()
+	{
+		n=3; m=3;
+		p=new double[m][n];
+		for (int i = 0; i < m; i++)
+			for (int j = 0; j < n; j++)
+				p[i][j] = 0;
+	}
+///////////////////////////////////////////////////////////////
+	matrix(int m1, int n1, double[][] init)
+	{
+		m=m1; n=n1;
+		p=new double[m][n];
+		for (int i = 0; i < m; i++)
+			for (int j = 0; j < n; j++)
+				p[i][j] = init[i][j];
+	}
+///////////////////////////////////////////////////////////////
+	//Обмен столбцов местами
+	void swapc(int m1, int m2)
+	{
+		double[] buff = new double[m];
+		for (int i = 0; i < n; i++)
+			buff[i] = p[i][m1];
+		for (int i = 0; i < n; i++)
+			p[i][m1] = p[i][m2];
+		for (int i = 0; i < n; i++)
+			p[i][m2] = buff[i];
+	}
+///////////////////////////////////////////////////////////////
+	void print()
+	{
+		for(int i=0;i<m;i++)
+			System.out.println(Arrays.toString(p[i]));
+	}
+/////////////////////////////////////////////////////////////
+	//Обмен строк местами
+	void swapr(int n1, int n2)
+	{
+		double[] buff = new double[n];
+		for (int i = 0; i < m; i++)
+			buff[i] = p[n1][i];
+		for (int i = 0; i < m; i++)
+			p[n1][i]=p[n2][i];
+		for (int i = 0; i < m; i++)
+			p[n2][i]=buff[i];
+	}
+/////////////////////////////////////////////////////////////
+	
+	
+}
+
+class unit{
+	public int number;
+	public int point[]=new int[2];
+	//0-y,1-x
+	unit() {
+		number=-1;
+		point[0]=-1;
+		point[1]=-1;
+	}
+	unit(int n,int y,int x)
+	{
+		number=n;
+		point[0]=y;
+		point[1]=x;
+	}
+	void print()
+	{
+		System.out.println("#"+this.number+" ("+this.point[0]+","+this.point[1]+")");
+	}
+	
+}
+public class Task3 {
+	static unit units[]=new unit[36];
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+		
+		FileInputStream InputFile=new FileInputStream("input2.txt");
+		Scanner sc=new Scanner(InputFile);
+				
+		double array[][]=new double[6][6];
+		
+		int num=0;
+		
+		for(int i=0;i<6;i++)
+			for(int j=0;j<6;j++)
+				{
+					array[i][j]=sc.nextDouble();
+					if(array[i][j]==1)
+						{
+							units[num]=new unit(num,i,j);
+							num++;
+						}
+				}
+		
+		boolean flag=false;
+		
+		int x1=3,y1=3,x2=3,y2=3;//По умолчанию ничего не меняем
+		for(int i1=0;i1<num-3;i1++)
+		{
+			for(int i2=0;i2<num-2;i2++)
+			{
+				for(int i3=0;i3<num-1;i3++)
+				{
+					for(int i4=0;i4<num;i4++)
+					{
+						if(units[i1].point[0]==units[i2].point[0] && units[i1].point[1]==units[i3].point[1] && units[i2].point[1]==units[i4].point[1] && units[i3].point[0]==units[i4].point[0] &&(i1!=i2 && i1!=i3 && i1!=i4 && i2!=i3 && i2!=i4 && i3!=i4))	
+						{
+							
+							System.out.println("Сотавить можно из:");
+							units[i1].print();
+							units[i2].print();
+							units[i3].print();
+							units[i4].print();
+							flag=true;
+							x1=units[i1].point[1];
+							y1=units[i1].point[0];
+							x2=units[i4].point[1];
+							y2=units[i4].point[0];
+							break;
+							
+						}
+						if(flag==true)
+							break;
+					}
+					if(flag==true)
+						break;
+				}
+				if(flag==true)
+					break;
+			}
+		}
+		matrix mx=new matrix(6,6,array);
+		
+		mx.print();
+		mx.swapc(x1, 2);
+		System.out.println("\nМеняем местами столбцы "+x1+" и 2:");
+		mx.print();
+		mx.swapc(x2, 3);
+		System.out.println("\nМеняем местами столбцы "+x2+" и 3:");
+		mx.print();
+		mx.swapr(y2, 3);
+		System.out.println("\nМеняем местами строки "+y2+" и 3:");
+		mx.print();
+		mx.swapr(y1, 2);
+		System.out.println("\nМеняем местами строки "+y1+" и 2:");
+		mx.print();
+			
+		InputFile.close();
+		}
+		catch(IOException e)
+		{
+			System.out.println("Файл не найден!");
+		}
+	}	
+
+}
+

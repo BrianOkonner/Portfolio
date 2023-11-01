@@ -1,0 +1,140 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class PlaneMain {
+    public static void main(String[] args) throws WrongNumberOfParams, WrongPrice {
+        ArrayList<Plane> planeArrayList = new ArrayList<>();
+        Plane plane1 = new Plane("Sukhoi Su-9", "the Soviet Union",
+                Type.INTERCEPTOR_AIRCRAFT, 1, true, 4,
+                true, new double[]{18.055, 8.536, 4.82}, 20.0);
+        Plane plane2 = new Plane("Lockheed SR-71 Blackbird", "United States",
+                Type.RECONNAISSANCE_AIRCRAFT, 2, false, 0,
+                true, new double[]{32.74, 16.94, 5.64}, 34.0);
+        Plane plane3 = new Plane("Sukhoi Su-35", "the Soviet Union",
+                Type.MULTIROLE_FIGHTER, 1, true, 1,
+                true, new double[]{21.9, 14.75, 5.9}, 50.0);
+        Plane plane4 = new Plane("Chengdu J-10", "China",
+                Type.MULTIROLE_FIGHTER, 1, true, 11,
+                true, new double[]{16.43, 9.75, 5.43}, 27.84);
+        Plane plane5 = new Plane("Dassault Rafale", "France",
+                Type.MULTIROLE_FIGHTER, 2, true, 11,
+                true, new double[]{15.30, 10.90, 5.30}, 81.48);
+        Plane plane6 = new Plane("Lockheed Martin F-35 Lightning II", "United States",
+                Type.MULTIROLE_COMBAT_AIRCRAFT, 1, true, 10,
+                true, new double[]{15.57, 10.67, 4.38}, 83.0);
+        Plane plane7 = new Plane("Eurofighter Typhoon", "Multi-national",
+                Type.MULTIROLE_FIGHTER, 1, true, 12,
+                true, new double[]{15.96, 10.95, 5.28}, 99.1);
+        Plane plane8 = new Plane("Lockheed Martin F-22 Raptor", "United States",
+                Type.MULTIROLE_FIGHTER, 1, true, 12,
+                true, new double[]{18.9, 13.56, 5.09}, 138.0);
+        planeArrayList.add(plane1);
+        planeArrayList.add(plane2);
+        planeArrayList.add(plane3);
+        planeArrayList.add(plane4);
+        planeArrayList.add(plane5);
+        planeArrayList.add(plane6);
+        planeArrayList.add(plane7);
+        planeArrayList.add(plane8);
+        PlaneCollections planeCollections = new PlaneCollections("The I warplane exhibition",
+                "White str. 10-19", planeArrayList);
+        Plane newPlane = new Plane("Nakajima E2N", "Japan",
+                Type.RECONNAISSANCE_AIRCRAFT, 2, false, 0,
+                true, new double[]{9.565, 13.52, 3.688}, 38.0);
+        ArrayList<Plane> temp = planeCollections.getPlanes();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Choose an option: ");
+        System.out.println("(examples)");
+        System.out.println("0 - exit");
+        System.out.println("1 - print list");
+        System.out.println("2 - add new plane (Nakajima E2N)");
+        System.out.println("3 - delete added plane (Nakajima E2N)");
+        System.out.println("4 - change planes (plane #102 to Nakajima E2N)");
+        System.out.println("5 - check if plane is in the list (Nakajima E2N)");
+        System.out.println("6 - filter by rockets (11)");
+        System.out.println("7 - filter by country (United States)");
+        System.out.println("8 - sort by price");
+        System.out.println("9 - sort by model");
+        int choice = scanner.nextInt();
+        while (choice != 0) {
+            switch (choice) {
+                case 1:
+                    System.out.println(planeCollections.toString());
+                    break;
+                case 2:
+                    temp = planeCollections.addToList(newPlane, planeArrayList);
+                    System.out.println("Added 1 plane: Nakajima E2N");
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                case 3:
+                    System.out.println("\nDeleted Nakajima E2N");
+                    temp = planeCollections.deleteFromList(newPlane, temp);
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                case 4:
+                    System.out.println("\nChanged plane #102 to Nakajima E2N");
+                    temp = planeCollections.changeTheElement(plane3, newPlane, temp);
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                case 5:
+                    if (planeCollections.isInList(plane3, temp)) {
+                        System.out.println("Plane #102 is in the list");
+                    } else {
+                        System.out.println("Plane #102 is not in the list");
+                    }
+                    break;
+                case 6:
+                    System.out.println("\nAll planes with 11 rockets: ");
+                    temp = planeCollections.filterListByRockets(planeCollections.getPlanes(), 11);
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                case 7:
+                    System.out.println("\nAll planes from the US: ");
+                    temp = planeCollections.filterListByOrigin(planeCollections.getPlanes(), "United States");
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                case 8:
+                    System.out.println("\nSorted by price: ");
+                    planeCollections.sortByPrice(planeCollections.getPlanes());
+                    temp = planeCollections.getPlanes();
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                case 9:
+                    System.out.println("\nSorted by model: ");
+                    planeCollections.sortByModel(planeCollections.getPlanes());
+                    temp = planeCollections.getPlanes();
+                    for (Plane plane : temp) {
+                        System.out.println(plane.getShortInfo());
+                    }
+                    break;
+                default:
+            }
+            System.out.println("\nChoose an option: ");
+            System.out.println("(examples)");
+            System.out.println("0 - exit");
+            System.out.println("1 - print list");
+            System.out.println("2 - add new plane (Nakajima E2N)");
+            System.out.println("3 - delete added plane (Nakajima E2N)");
+            System.out.println("4 - change planes (plane #102 to Nakajima E2N)");
+            System.out.println("5 - check if plane is in the list (Nakajima E2N)");
+            System.out.println("6 - filter by rockets (11)");
+            System.out.println("7 - filter by country (United States)");
+            System.out.println("8 - sort by price");
+            System.out.println("9 - sort by model");
+            choice = scanner.nextInt();
+        }
+    }
+}

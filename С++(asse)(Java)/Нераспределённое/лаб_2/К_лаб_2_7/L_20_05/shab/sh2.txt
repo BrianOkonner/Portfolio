@@ -1,0 +1,158 @@
+//: C07:WordCount.cpp
+// Count occurrences of words using a map
+#include "../require.h"
+#include <string>
+#include <map>
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+typedef map<string, int> WordMap;
+typedef WordMap::iterator WMIter;
+
+int main(int argc, char* argv[]) {
+  char* fname = "WordCount.cpp";
+  if(argc > 1) fname = argv[1];
+  ifstream in(fname);
+  assure(in, fname);
+  WordMap wordmap;
+  string word;
+  while(in >> word)
+    wordmap[word]++;
+  for(WMIter w = wordmap.begin(); w != wordmap.end(); w++)
+    cout << w->first << ": "
+      << w->second << endl;
+} ///:~
+
+//: C07:StringVector.cpp
+// A vector of strings
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <sstream>
+#include <string>
+#include <vector>
+#include "../require.h"
+using namespace std;
+int main(int argc, char* argv[]) {
+  char* fname = "StringVector.cpp";
+  if(argc > 1) fname = argv[1];
+  ifstream in(fname);
+  assure(in, fname);
+  vector<string> strings;
+  string line;
+  while(getline(in, line))
+    strings.push_back(line);
+  // Do something to the strings...
+  int i = 1;
+  vector<string>::iterator w;
+  for(w = strings.begin();
+      w != strings.end(); w++) {
+    ostringstream ss;
+    ss << i++;
+    *w = ss.str() + ": " + *w;
+  }
+  // Now send them out:
+  copy(strings.begin(), strings.end(),
+    ostream_iterator<string>(cout, "\n"));
+  // Since they aren't pointers, string
+  // objects clean themselves up!
+} ///:~
+
+
+//: C07:StringDeque.cpp
+// Converted from StringVector.cpp
+#include <cstddef>
+#include <ctime>
+#include <deque>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <sstream>
+#include <string>
+#include <vector>
+#include "../require.h"
+using namespace std;
+
+int main(int argc, char* argv[]) {
+  char* fname = "StringDeque.cpp";
+  if(argc > 1) fname = argv[1];
+  ifstream in(fname);
+  assure(in, fname);
+  vector<string> vstrings;
+  deque<string> dstrings;
+  string line;
+  // Time reading into vector:
+  clock_t ticks = clock();
+  while(getline(in, line))
+    vstrings.push_back(line);
+  ticks = clock() - ticks;
+  cout << "Read into vector: " << ticks << endl;
+  // Repeat for deque:
+  ifstream in2(fname);
+  assure(in2, fname);
+  ticks = clock();
+  while(getline(in2, line))
+    dstrings.push_back(line);
+  ticks = clock() - ticks;
+  cout << "Read into deque: " << ticks << endl;
+  // Now compare indexing:
+  ticks = clock();
+  for(size_t i = 0; i < vstrings.size(); i++) {
+    ostringstream ss;
+    ss << i;
+    vstrings[i] = ss.str() + ": " + vstrings[i];
+  }
+  ticks = clock() - ticks;
+  cout << "Indexing vector: " << ticks << endl;
+  ticks = clock();
+  for(size_t j = 0; j < dstrings.size(); j++) {
+    ostringstream ss;
+    ss << j;
+    dstrings[j] = ss.str() + ": " + dstrings[j];
+  }
+  ticks = clock() - ticks;
+  cout << "Indexing deque: " << ticks << endl;
+  // Compare iteration
+  ofstream tmp1("tmp1.tmp"), tmp2("tmp2.tmp");
+  ticks = clock();
+  copy(vstrings.begin(), vstrings.end(),
+    ostream_iterator<string>(tmp1, "\n"));
+  ticks = clock() - ticks;
+  cout << "Iterating vector: " << ticks << endl;
+  ticks = clock();
+  copy(dstrings.begin(), dstrings.end(),
+    ostream_iterator<string>(tmp2, "\n"));
+  ticks = clock() - ticks;
+  cout << "Iterating deque: " << ticks << endl;
+} ///:~
+
+
+//: C07:UniqueList.cpp
+// Testing list's unique() function
+#include <iostream>
+#include <iterator>
+#include <list>
+using namespace std;
+
+int a[] = { 1, 3, 1, 4, 1, 5, 1, 6, 1 };
+const int asz = sizeof a / sizeof *a;
+
+int main() {
+  // For output:
+  ostream_iterator<int> out(cout, " ");
+  list<int> li(a, a + asz);
+  li.unique();
+  // Oops! No duplicates removed:
+  copy(li.begin(), li.end(), out);
+  cout << endl;
+  // Must sort it first:
+  li.sort();
+  copy(li.begin(), li.end(), out);
+  cout << endl;
+  // Now unique() will have an effect:
+  li.unique();
+  copy(li.begin(), li.end(), out);
+  cout << endl;
+} ///:~
+

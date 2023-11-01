@@ -1,0 +1,8 @@
+Bad links:
+2
+
+Only in in2.txt:
+in.l
+hello.txt
+cout.empry
+pusfjlk.yes

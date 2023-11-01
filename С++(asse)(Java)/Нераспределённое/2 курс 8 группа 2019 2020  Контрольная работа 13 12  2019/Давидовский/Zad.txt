@@ -1,0 +1,222 @@
+package com.company;
+import java.io.*;
+import java.util.Comparator;
+import java.util.*;
+
+public class Main {
+
+    public static int count = 1;
+
+    public static void main(String[] args) {
+
+        try {
+            FileInputStream in1 = new FileInputStream("input1.txt");
+            FileInputStream in2 = new FileInputStream("input2.txt");
+            PrintStream out1 = new PrintStream("output1.txt");
+            PrintStream out2 = new PrintStream("output2.txt");
+            PrintStream out3 = new PrintStream("output3.txt");
+            Scanner file1 = new Scanner(in1);
+            Scanner file2 = new Scanner(in2);
+            Scanner console = new Scanner(System.in);
+
+            String str, nameoffile="";
+            String[] strs;
+            int count=0, prove=0, repet2=0;
+
+            Strings strings=new Strings();
+            List<Integer> repet=new ArrayList<>();
+            List<String> strs2=new ArrayList<>();
+
+            while(file1.hasNext()){
+
+                str=file1.nextLine();
+
+                for(int i=0;i<str.length();i++) {
+
+                    if (count == 0 && str.charAt(i) == '<') {
+                        count++;
+                    }
+                    if (count == 1 && str.charAt(i) == 'a') {
+                        count++;
+                    }
+                    if (count == 2 && str.charAt(i) == ' ') {
+                        count++;
+                    }
+                    if (count == 3 && str.charAt(i) == 'h') {
+                        count++;
+                    }
+                    if (count == 4 && str.charAt(i) == 'r') {
+                        count++;
+                    }
+                    if (count == 5 && str.charAt(i) == 'e') {
+                        count++;
+                    }
+                    if (count == 6 && str.charAt(i) == 'f') {
+                        count++;
+                    }
+                    if (count == 7 && str.charAt(i) == '=') {
+                        count++;
+                    }
+                    if (count == 8 && str.charAt(i) == '\"') {
+                        prove = 1;
+                    }
+
+                    if (prove == 1 && (str.charAt(i) != '.' && str.charAt(i) != '>')) {
+
+                        if(str.charAt(i) != '\"')
+                        nameoffile += str.charAt(i);
+
+                    }else{
+                        if(str.charAt(i) == '.' || str.charAt(i) == '>'){
+                            prove=0;
+                            count=0;
+                        }
+                    }
+                }
+
+                nameoffile=nameoffile.toLowerCase();
+
+                count=strings.ProveString(nameoffile);
+                if(!nameoffile.equals("")) {
+                    if (count == -1) {
+                        strings.AddString(nameoffile);
+                        repet.add(1);
+                    } else {
+                        repet.set(count - 1, repet.get(count - 1) + 1);
+                    }
+                }
+
+                count=0;
+                prove=0;
+                nameoffile="";
+            }
+
+            for (int i = repet.size()-1; i >= 1; i--) {
+                for (int k = 0; k < i; k++) {
+                    if (repet.get(k) > repet.get(k+1)) {
+                        prove = repet.get(k);
+                        repet.set(k, repet.get(k+1));
+                        repet.set(k+1, prove);
+                        str = strings.GetString().get(k);
+                        strings.GetString().set(k, strings.GetString().get(k+1));
+                        strings.GetString().set(k+1, str);
+                    }
+                }
+            }
+
+            for (int i = 0; i <repet.size(); i++) {
+
+                for (int k = 0; k <repet.get(i); k++) {
+
+                    out1.println(strings.GetString().get(i));
+                }
+                repet.set(i,0);
+            }
+
+            Collections.sort(strings.GetString(), new Sort());
+
+            for (int i = 0; i <repet.size(); i++) {
+                out2.println(strings.GetString().get(i));
+            }
+
+            while(file2.hasNext()) {
+
+                str = file2.nextLine();
+                strs=str.split(";");
+
+                for (int i=0;i<strs.length;i++){
+
+                for(int k=0; k<strings.GetString().size();k++){
+
+                    str=strings.GetString().get(k);
+                    if(str.equals(strs[i].substring(0, strs[i].indexOf('.')))){
+                        repet.set(k,1);
+                        repet2=1;
+                    }
+                }
+
+                if(repet2==0){
+                    strs2.add(strs[i]);
+                }
+                repet2=0;
+                }
+            }
+
+            for (int i = 0; i <repet.size(); i++) {
+                if(repet.get(i)!=1){
+                    repet2++;
+                }
+            }
+
+            out3.println("Bad links:");
+            out3.println(repet2+"\n");
+            out3.println("Only in in2.txt:");
+            for (int i = 0; i <strs2.size(); i++) {
+                out3.println(strs2.get(i));
+            }
+
+            in1.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+
+    }
+}
+
+class Strings{
+
+    private List<String> strings;
+
+    public Strings(){
+        this.strings=new ArrayList<>();
+    }
+
+    public Strings(List<String> strings){
+        this.strings=strings;
+    }
+
+    public void SetStrings(List<String> strings) {
+        this.strings = strings;
+    }
+
+    public List<String> GetString() {
+        return this.strings;
+    }
+
+    public void CreateNew(){
+        this.strings=new ArrayList<>();
+    }
+
+    public List<String> AddString(String string){
+        strings.add(string);
+        return strings;
+    }
+
+    public List<String> DeleteString(int number){
+        strings.remove(number);
+        return strings;
+    }
+
+    public int ProveString(String string) {
+
+        int k=0;
+
+        for (String i : this.strings) {
+
+            k++;
+            if (i.equals(string)) {
+                return k;
+            }
+        }
+
+        return -1;
+    }
+}
+
+class Sort implements Comparator<String> {
+    @Override
+    public int compare(String string1, String string2) {
+        return string1.length()-string2.length();
+    }
+}

@@ -1,0 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+
+
+class myrecomp implements Comparator <Integer>
+{        
+    @Override
+    public int compare (Integer t11, Integer t22) 
+    {
+        int t1 = sum(t11);
+        int t2 = sum(t22);
+        if (t1==t2) return 0;
+        if (t1>t2) return -1;
+        return 1;
+    }
+    
+    public static int sum (int t)
+    {
+        int charSum = 0;
+        while (t>0)
+        {
+            charSum += t%10;
+            t=t/10;
+        }
+        return charSum;
+    }
+
+}
+
+public class Jap1
+{
+    public static void main(String[] args) 
+    {
+       // Integer arr1[] = {1,12,13,22,20};
+        Scanner sc = new Scanner(System.in);
+        System.out.println("введите размерность массива:");
+        int dlinArr = sc.nextInt();
+        Integer arr1[] = new Integer[dlinArr];
+        System.out.println("¬ведите массив через пробел:");
+        for(int i=0;i<arr1.length;i++)
+        {
+            arr1[i] = sc.nextInt();
+        }
+        Arrays.sort(arr1, new myrecomp());
+        System.out.println("arr :\n"+ Arrays.toString(arr1));
+    }
+    
+}

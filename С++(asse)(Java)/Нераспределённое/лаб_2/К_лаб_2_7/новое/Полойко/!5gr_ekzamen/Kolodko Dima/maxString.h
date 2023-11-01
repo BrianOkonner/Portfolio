@@ -1,0 +1,1 @@
+void poisk_inf(char* sl,int& kol_max, char& n_max,int& nom_max);

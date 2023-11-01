@@ -1,0 +1,350 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab5z2;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+/**
+ *
+ * @author Brian
+ */
+class cmpway implements Comparator<SectionX>
+{
+    @Override
+    public int compare(SectionX t1,SectionX t2)
+    {
+    	if(t1.length()==t2.length())
+    		return 0;
+    	if(t1.length()<t2.length())
+    		return -1;
+    	return 1;
+    }
+}
+class Non_Section extends Exception{}
+class Non_Add extends Exception{}
+class Non_Sub extends Exception{}
+class Non_Cross extends Exception{}
+class SectionX
+{
+    private int a;
+    private int b;
+
+    public SectionX()
+    {
+        this.a = 0;
+        this.b = 1;
+    }
+    public SectionX(int a, int b)throws Non_Section
+    {
+        if (a==b) throw new Non_Section();
+        this.a = a;
+        this.b = b;
+    }
+    public void setA(int a)
+    {
+        this.a = a;
+    }
+    public int getA()
+    {
+        return this.a;
+    }
+    public void setB(int b)
+    {
+        this.b = b;
+    }
+    public int getB() 
+    {
+        return this.b;
+    }
+    public int length() 
+    {
+        return Math.abs(this.b-this.a);
+    }
+    public SectionX simmetric()throws Non_Section
+    {
+        return new SectionX(-this.getB(), -this.getA());
+    }
+    public boolean equals(SectionX ox1) 
+    {
+        if ((this.a==ox1.a&&this.b==ox1.b)||(this.a==ox1.b&&this.b==ox1.a)) 
+            return true;
+        else return false;
+    }
+    public int compare(SectionX ox1)
+    {
+        if(this.equals(ox1))
+            return 4;
+        if(this.a==ox1.a)
+            if(this.b<this.a&&ox1.b>this.a)
+                return 2;
+            else
+                return 4;
+        if(this.a==ox1.b)
+            if(this.b<this.a&&ox1.a>this.a)
+                return 2;
+            else
+                return 4;
+        if(this.b==ox1.b)
+            if(this.a<this.b&&ox1.a>this.b)
+                return 2;
+            else
+                return 4;
+        if(this.a==ox1.b)
+            if(this.a<this.b&&ox1.a>this.a)
+                return 2;
+            else
+                return 4;
+        if(this.a<ox1.b&&this.a>ox1.a)
+        {
+            if(this.b<ox1.b&&this.a>ox1.a)
+                return 4;
+            else
+                return 3;
+        }
+        if(this.a<ox1.a&&this.a>ox1.b)
+            if(this.b<ox1.a&&this.a>ox1.b)
+                return 4;
+            else
+                return 3;
+        if(ox1.a<this.a&&ox1.a>this.b)
+            if(ox1.b<this.a&&ox1.b>this.b)
+                return 4;
+            else
+                return 3;
+        if(ox1.a<this.b&&ox1.a>this.a)
+            if(ox1.b<this.b&&ox1.b>this.a)
+                return 4;
+            else
+                return 3;
+        return 1;
+    }
+
+    public SectionX add(SectionX ox1)throws Non_Add 
+    {
+        if (this.compare(ox1)==2||this.compare(ox1)==3) 
+        {
+            SectionX ad=new SectionX();
+            if(ox1.a<ox1.b)
+            {
+                if(this.a<this.b)
+                    if(this.a<ox1.a)
+                    {
+                        ad.setA(this.a);
+                        if(this.b<ox1.b)
+                            ad.setB(ox1.b);
+                        if(this.b>ox1.b)
+                            ad.setB(this.b);
+                    }
+                    else
+                    {
+                        ad.setA(ox1.a);
+                        if(this.b<ox1.b)
+                            ad.setB(ox1.b);
+                        if(this.b>ox1.b)
+                            ad.setB(this.b);
+                    }
+                if(this.b<this.a)
+                    if(this.b<ox1.a)
+                    {
+                        ad.setA(this.b);
+                        if(this.a<ox1.b)
+                            ad.setB(ox1.b);
+                        if(this.a>ox1.b)
+                            ad.setB(this.a);
+                    }
+                    else
+                    {
+                        ad.setA(ox1.a);
+                        if(this.b<ox1.b)
+                            ad.setB(ox1.b);
+                        if(this.b>ox1.b)
+                            ad.setB(this.b);
+                    }
+            }
+            if(ox1.b<ox1.a)
+            {
+                if(this.a<this.b)
+                    if(this.a<ox1.b)
+                    {
+                        ad.setA(this.a);
+                        if(this.b<ox1.a)
+                            ad.setB(ox1.a);
+                        if(this.b>ox1.a)
+                            ad.setB(this.b);
+                    }
+                    else
+                    {
+                        ad.setA(ox1.b);
+                        if(this.b<ox1.a)
+                            ad.setB(ox1.a);
+                        if(this.b>ox1.a)
+                            ad.setB(this.b);
+                    }
+                if(this.b<this.a)
+                    if(this.b<ox1.b)
+                    {
+                        ad.setA(this.a);
+                        if(this.b<ox1.b)
+                            ad.setB(ox1.b);
+                        if(this.b>ox1.b)
+                            ad.setB(this.b);
+                    }
+                    else
+                    {
+                        ad.setA(ox1.a);
+                        if(this.b<ox1.b)
+                            ad.setB(ox1.b);
+                        if(this.b>ox1.b)
+                            ad.setB(this.b);
+                    }
+            }
+            return ad;
+        }
+        else throw new Non_Add();
+    }
+    public SectionX sub(SectionX ox1)throws Non_Sub 
+    {
+        if (this.compare(ox1)==2||this.compare(ox1)==3)
+        {
+            SectionX ad=new SectionX();
+            if(this.a<this.b)
+            {
+                ad.setA(this.a);
+                ad.setB(this.a-ox1.length());
+            }
+            else
+            {
+                ad.setA(this.b-ox1.length());
+                ad.setB(this.b-ox1.length());
+            }
+            return ad;
+        }
+        else throw new Non_Sub();
+    }
+    public SectionX cross(SectionX ox1)throws Non_Cross 
+    {
+        if (this.compare(ox1)==3) 
+        {
+            SectionX ad=new SectionX();
+            if(ox1.a<ox1.b)
+            {
+                if(this.a<this.b)
+                    if(this.a<ox1.a)
+                    {
+                        ad.setA(ox1.a);
+                        ad.setA(this.b);
+                    }
+                    else
+                    {
+                        ad.setA(this.a);
+                        ad.setA(ox1.b);
+                    }
+                if(this.b<this.a)
+                    if(this.b<ox1.a)
+                    {
+                        ad.setA(ox1.a);
+                        ad.setA(this.a);
+                    }
+                    else
+                    {
+                        ad.setA(this.b);
+                        ad.setA(ox1.b);
+                    }
+            }
+            if(ox1.b<ox1.a)
+            {
+                if(this.a<this.b)
+                    if(this.a<ox1.b)
+                    {
+                        ad.setA(ox1.b);
+                        ad.setA(this.b);
+                    }
+                    else
+                    {
+                        ad.setA(this.a);
+                        ad.setA(ox1.a);
+                    }
+                if(this.b<this.a)
+                    if(this.b<ox1.b)
+                    {
+                        ad.setA(ox1.b);
+                        ad.setA(this.a);
+                    }
+                    else
+                    {
+                        ad.setA(this.b);
+                        ad.setA(ox1.a);
+                    }
+            }
+            return ad;
+        }
+        else throw new Non_Cross();
+    }
+    public String toString() {
+        String inf;
+        inf="Начальная точка отрезка: "+this.a+" конечная точка отрезка: "+this.b;
+        return inf;
+    }
+}
+public class Program 
+{
+    public static void main(String[] args)
+    {
+        SectionX a,b,c;
+        try
+        {
+            a=new SectionX();
+            b=new SectionX(5,45);
+            c=new SectionX(4,6);
+            SectionX[] A={a,b,c};
+            System.out.println("Одинаковые?");
+            for(int i=0;i<3;i++)
+                for(int j=0;j<3;j++)
+                    System.out.println(A[i].equals(A[j]));
+            for(int i=0;i<3;i++)
+                for(int j=0;j<3;j++)
+                    System.out.println("Номера отрезков: "+i+" "+j+" Длина: "+(Math.abs(A[i].getA()-A[j].getA())));
+                      //в случае когда отр заданы от меньшего к большему
+               //в других надо писать if или это расстояния между начальными точками (можно также считать начальным условием) 
+            System.out.println("Новые");   
+            for(int i=0;i<3;i++)
+                System.out.println(A[i].simmetric());
+            System.out.println("Взаимное расположение");
+            for(int i=0;i<3;i++)
+                for(int j=0;j<3;j++)     
+                    System.out.println(A[i].compare(A[j]));
+            System.out.println("Сумма");
+            System.out.println(b.add(c));
+            System.out.println(c.add(b));
+            System.out.println("Разность");
+            System.out.println(c.sub(b));
+            System.out.println(b.sub(c));
+            System.out.println("Gересечение");
+            System.out.println(b.cross(c));
+            System.out.println(c.cross(b));
+            System.out.println("Отсортированныйе отрезки");
+            Arrays.sort(A, new cmpway());
+            for(int i=0;i<3;i++)
+                System.out.println(A[i]);
+        }
+        catch(Non_Section e)
+        {
+            System.out.println();
+        }
+        catch(Non_Cross g)
+        {
+            System.out.println();
+        }
+        catch(Non_Add r)
+        {
+            System.out.println();
+        }
+        catch(Non_Sub f)
+        {
+            System.out.println();
+        }
+    }   
+}

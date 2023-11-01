@@ -1,0 +1,185 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package kr3;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.*;
+import java.io.*;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+/**
+ *
+ * @author Maxim
+ */
+
+
+class Book
+{
+    private List<String> list;
+    private List<String> list1;
+    private ArrayList<String> list2;
+    private String[] masstr;
+     public Book()
+     {
+      this.list=new ArrayList<String>();
+       this.list1=new ArrayList<String>();
+       this.list2=new ArrayList<String>();
+        this.masstr=new String[2];
+     }
+     
+      public void readFile(String fileName)throws Exception
+      {
+          
+       FileInputStream fis=new FileInputStream(fileName);
+       Scanner sc=new Scanner(fis);
+       String s="";
+        while(sc.hasNext())
+       {
+         s=sc.nextLine();
+          for (String retval : s.split(" ")) 
+          {
+            System.out.print(retval+" ");
+            list1.add(retval);
+          }
+
+       }
+       fis.close();
+       }
+      
+
+    
+    
+public void SortWithName()
+    {
+        Collections.sort(list2, new Comparator<String>()
+        {
+            @Override
+            public int compare(String s1, String s2)
+            {
+                if(s1.length()==s2.length())
+                {
+                   return 0;
+                }
+                  if(s1.length()>s2.length())
+                {
+                   return 1;
+                }
+                  return -1;
+            }
+        });
+    }
+ 
+
+ 
+public void Out(String FileName)throws Exception
+{
+    PrintStream ps=new PrintStream(FileName);
+    Character result1;
+    Character result2;
+    Iterator<String> It=list1.iterator();
+    
+    while(It.hasNext())
+    {
+        String str=It.next();
+         result1=str.charAt(0);
+          result2=str.charAt(str.length()-1);
+          Character result3='<';
+          Character result4='>';
+          
+          if((result1==result3)&&(result2==result4))
+          {
+              str=str.substring(1,str.length()-1);
+              It.remove();
+              list2.add(str);
+          }
+    }
+    
+    int sum=0;
+    It=list1.iterator();
+    while(It.hasNext())
+    {
+         String str=It.next();
+         result1=str.charAt(0);
+          result2=str.charAt(str.length()-1);
+          Character result3='{';
+          Character result4='}';
+           if((result1==result3)&&(result2==result4))
+          {
+          if(str.charAt(1)=='1')
+          {
+             list1.set(sum,"the best");
+          }
+          if(str.charAt(1)=='2')
+          {
+              list1.set(sum,"student");
+          }
+          }
+           sum++;
+    }
+    
+    It=list1.iterator();
+    while(It.hasNext())
+    {
+         String str=It.next();
+         result1=str.charAt(0);
+          result2=str.charAt(str.length()-1);
+          Character result3='[';
+          Character result4=']';
+           if((result1==result3)&&(result2==result4))
+          {
+              It.remove();
+          }
+    }
+    for(String a:list1)
+    {
+    ps.print(a+" ");
+    }
+    ps.close();
+}
+
+
+
+public void outi(String FileName)throws Exception
+{
+     PrintStream ps=new PrintStream(FileName);
+     for(String a:list2)
+    {
+    ps.println(a);
+    }
+     ps.close();
+}
+
+}
+
+
+public class KR3 
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+         try
+        {
+        Book op=new Book();
+        op.readFile("Input.txt");
+        op.Out("output.txt");
+         op.SortWithName();
+        op.outi("output2.txt");
+       
+        }
+        catch(Exception e)
+        {
+          System.out.println("Не получается считать из файла");
+        }
+    }
+    
+}

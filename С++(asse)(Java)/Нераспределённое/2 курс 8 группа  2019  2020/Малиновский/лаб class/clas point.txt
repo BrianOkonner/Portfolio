@@ -1,0 +1,81 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package classpoint;
+
+/**
+ *
+ * @author lesha
+ */
+public class ClassPoint {
+
+    /**
+     * @param args the command line arguments
+     */
+    class Point
+    {
+        int x;
+        int y;
+        Point()
+        {
+            x =0;
+            y =0;
+        }
+        Point(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+        Point(int z)
+        {
+            x = z;
+            y = z;
+        }
+        int getX()
+        {
+            return x;
+        }
+        int getY()
+        {
+            return y;
+        }
+        void setX(int x)
+        {
+            this.x = x;
+        }
+        void setY(int y)
+        {
+            this.y = y;
+        }
+        double length()
+        {
+            return Math.sqrt(x*x + y*y);
+        }
+        double length_section(Point p)
+        {
+            int resX = p.x;
+            int resY = p.y;
+            if(p.x < x)
+                resX = x - p.x;
+            else
+                resX = p.x - x;
+            if(p.y < y)
+                resY = y - p.y;
+            else
+                resY = p.y - y;
+            return Math.sqrt(resX*resX + resY*resY);
+                
+        }
+        Point doub()
+        {
+            Point res = new Point(x*x, y*y);
+            return res;
+        }
+    }
+    public static void main(String[] args) {
+        // TODO code application logic here
+    }
+    
+}

@@ -1,0 +1,211 @@
+import java.util.*;
+
+public class PlaneCollections {
+    private String name;
+    private String address;
+    private ArrayList<Plane> planes;
+    private Set<String> hashSet;
+    private Set<String> treeSet;
+    private Set<Type> enumSet;
+
+    public PlaneCollections(String name, String address, ArrayList<Plane> planes) {
+        this.name = name;
+        this.address = address;
+        this.planes = planes;
+        hashSet = new HashSet<String>();
+        treeSet = new TreeSet<String>();
+        enumSet = EnumSet.allOf(Type.class);
+        for (Plane plane : planes) {
+            hashSet.add(plane.getModel());
+            treeSet.add(plane.getModel());
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public ArrayList<Plane> getPlanes() {
+        return planes;
+    }
+
+    public void setPlanes(ArrayList<Plane> planes) {
+        this.planes = planes;
+    }
+
+    public Set<String> getHashSet() {
+        return hashSet;
+    }
+
+    public Set<String> getTreeSet() {
+        return treeSet;
+    }
+
+    public Set<Type> getEnumSet() {
+        return enumSet;
+    }
+
+    public HashSet<String> addHashSets(Set<String> set1, Set<String> set2) {
+        HashSet<String> temp = new HashSet<>(set1);
+        temp.addAll(set2);
+        return temp;
+    }
+
+    public HashSet<String> subHashSets(Set<String> set1, Set<String> set2) {
+        HashSet<String> temp = new HashSet<>(set1);
+        for (String current : set2) {
+            if (temp.contains(current)) {
+                temp.remove(current);
+            }
+        }
+        return temp;
+    }
+
+    public HashSet<String> intersectHashSets(Set<String> set1, Set<String> set2) {
+        HashSet<String> temp = new HashSet<>(this.subHashSets(set1,
+                (this.subHashSets(this.addHashSets(set1, set2), set2))));
+        return temp;
+    }
+
+    public TreeSet<String> addTreeSets(Set<String> set1, Set<String> set2) {
+        TreeSet<String> temp = new TreeSet<>(set1);
+        temp.addAll(set2);
+        return temp;
+    }
+
+    public TreeSet<String> subTreeSets(Set<String> set1, Set<String> set2) {
+        TreeSet<String> temp = new TreeSet<>(set1);
+        for (String current : set2) {
+            if (temp.contains(current)) {
+                temp.remove(current);
+            }
+        }
+        return temp;
+    }
+
+    public TreeSet<String> intersectTreeSets(Set<String> set1, Set<String> set2) {
+        TreeSet<String> temp = new TreeSet<>(this.subTreeSets(set1,
+                (this.subTreeSets(this.addTreeSets(set1, set2), set2))));
+        temp.addAll(set2);
+        return temp;
+    }
+
+    public EnumSet<Type> addEnumSets(Set<Type> set1, Set<Type> set2) {
+        EnumSet<Type> temp = EnumSet.noneOf(Type.class);
+        temp.addAll(set1);
+        temp.addAll(set2);
+        return temp;
+    }
+
+    public EnumSet<Type> subEnumSets(Set<Type> set1, Set<Type> set2) {
+        EnumSet<Type> temp = EnumSet.noneOf(Type.class);
+        temp.addAll(set1);
+        for (Type current : set2) {
+            if (temp.contains(current)) {
+                temp.remove(current);
+            }
+        }
+        return temp;
+    }
+
+    public EnumSet<Type> intersectEnumSets(Set<Type> set1, Set<Type> set2) {
+        EnumSet<Type> temp = EnumSet.noneOf(Type.class);
+        temp = (this.subEnumSets(set1, (this.subEnumSets(this.addEnumSets(set1, set2), set2))));
+        temp.addAll(set2);
+        return temp;
+    }
+
+    public String getPlanesAsString(ArrayList<Plane> planes) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (Plane plane : planes) {
+            stringBuffer.append(plane + "\n");
+        }
+        return stringBuffer.toString();
+    }
+
+    public ArrayList<Plane> makeEmptyList() {
+        return new ArrayList<Plane>();
+    }
+
+    public ArrayList<Plane> addToList(Plane plane, ArrayList<Plane> planes) {
+        planes.add(plane);
+        return planes;
+    }
+
+    public ArrayList<Plane> deleteFromList(Plane plane, ArrayList<Plane> planes) {
+        planes.remove(plane);
+        return planes;
+    }
+
+    public ArrayList<Plane> changeTheElement(Plane oldPlane, Plane newPlane, ArrayList<Plane> planes) {
+        planes.set(planes.indexOf(oldPlane), newPlane);
+        return planes;
+    }
+
+    public ArrayList<Plane> filterListByRockets(ArrayList<Plane> planes, int rockets) {
+        ArrayList<Plane> temp = new ArrayList<Plane>();
+        for (Plane plane : planes) {
+            if (plane.isHasArmament()) {
+                if (plane.getRocket() == rockets) {
+                    temp.add(plane);
+                }
+            }
+        }
+        return temp;
+    }
+
+    public ArrayList<Plane> filterListByOrigin(ArrayList<Plane> planes, String origin) {
+        ArrayList<Plane> temp = new ArrayList<Plane>();
+        for (Plane plane : planes) {
+            if (plane.getOrigin().equals(origin)) {
+                temp.add(plane);
+            }
+        }
+        return temp;
+    }
+
+    public void sortByPrice(ArrayList<Plane> planes) {
+        planes.sort(new Comparator<Plane>() {
+            @Override
+            public int compare(Plane o1, Plane o2) {
+                if (o1.getPriceUSD() > o2.getPriceUSD()) {
+                    return 1;
+                } else if (o1.getPriceUSD() == o2.getPriceUSD()) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
+    }
+
+    public void sortByModel(ArrayList<Plane> planes) {
+        planes.sort(new Comparator<Plane>() {
+            @Override
+            public int compare(Plane o1, Plane o2) {
+                return o1.getModel().compareTo(o2.getModel());
+            }
+        });
+    }
+
+    public boolean isInList(Plane plane, ArrayList<Plane> planes) {
+        return planes.contains(plane);
+    }
+
+    @Override
+    public String toString() {
+        return name + ", address: " + address + ". \nPlanes:\n" + getPlanesAsString(planes);
+    }
+}

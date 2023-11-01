@@ -1,0 +1,61 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication6;
+
+/**
+ *
+ * @author lesha
+ */
+import java.util.Scanner;
+public class JavaApplication6 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+         int n =0;
+        Scanner Reader = new Scanner(System.in);
+        System.out.println("¬ведите количество элементов в массиве: ");
+        n = Reader.nextInt();
+        int arr[] = new int[n];
+        System.out.println("¬ведите "+ n+ " элементов массива");
+        for(int i =0; i< n; i++)
+        {
+            Scanner Reader1 = new Scanner(System.in);
+            arr[i] = Reader1.nextInt();
+        }
+        
+
+int left = 0;
+int right;
+for(int i =0; i< arr.length-1; i++)
+{
+    if(arr[i]> arr[i+1] || i == arr.length-2)
+    {
+        if(i == arr.length-2)
+            i++;
+        right = i;
+while (left < right) 
+            { 
+                int temp=arr[left]; 
+                arr[left]=arr[right]; 
+                arr[right]=temp; 
+                left+=1; 
+                right-=1; 
+            } 
+left = i + 1;
+    }
+}
+System.out.println("»зменЄнный массив:");
+        for(int i =0; i< arr.length; i++)
+        {
+          
+            System.out.println(arr[i]);
+        }
+    }
+   
+}

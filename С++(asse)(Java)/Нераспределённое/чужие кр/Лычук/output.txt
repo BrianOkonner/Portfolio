@@ -1,0 +1,9 @@
+Punct:a
+[1 Ivanov sobol 3 12 60000.0, 2 Petrov pesets 2 21 40000.0, 3 Druzhinin kunitsa 1 13 30000.0, 4 Denisov rosomaha 2 20 45000.0, 5 Belov sobol 2 15 50000.0]
+
+количество меха первого сорта больше заданной величины у:
+3 Druzhinin kunitsa 1 13 30000.0
+Отсортированый 
+Punct:a
+[2 Petrov pesets 2 21 40000.0, 4 Denisov rosomaha 2 20 45000.0, 5 Belov sobol 2 15 50000.0, 3 Druzhinin kunitsa 1 13 30000.0, 1 Ivanov sobol 3 12 60000.0]
+

@@ -1,0 +1,5 @@
+Ivanov sobol 3 12 60000
+Petrov pesets 2 21 40000
+Druzhinin kunitsa 1 13 30000
+Denisov rosomaha 2 20 45000
+Belov sobol 2 15 50000

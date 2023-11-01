@@ -1,0 +1,7 @@
+Name      Group     Grade    
+
+Dima      5         2        
+Kostya    1         2        
+Nikita    2         2        
+Maksim    1         2        
+Andrey    1         2        

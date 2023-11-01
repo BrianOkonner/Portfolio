@@ -1,0 +1,8 @@
+public class Main {
+public static void main (String[] args) {
+int i = 0; String s ="\t"; char c='\t';
+char cc= '/'; String str="";
+char ccc='*'; char cccc="";
+System.out.println("Hello,world!");
+}
+}

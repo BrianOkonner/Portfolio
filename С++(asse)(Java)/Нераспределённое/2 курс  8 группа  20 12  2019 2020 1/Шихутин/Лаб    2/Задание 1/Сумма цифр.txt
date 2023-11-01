@@ -1,0 +1,40 @@
+
+package javaapplication1;
+
+import java.util.Comparator;
+import java.util.Scanner;
+import java.util.Arrays;
+class revcomp implements Comparator<Integer>
+{
+    @Override
+    public int compare(Integer t11,Integer t22)
+    {
+        int t1=0;
+        int t2=0;
+        while(t11>0)
+        {
+            t1+=t11%10;
+        t11/=10;
+        }
+        while(t22>0)
+        {
+            t2+=t22%10;
+            t22/=10;
+        }
+        if (t1==t2)
+            return 0;
+        if(t1>t2)
+            return -1;
+        return 1;
+    }
+}
+public class SumCifr {
+
+    
+    public static void main(String[] args) {
+       Integer[]a={44,15,18,98,97};
+       Arrays.sort(a, new revcomp());
+       System.out.print(Arrays.toString(a));
+    }
+    
+}

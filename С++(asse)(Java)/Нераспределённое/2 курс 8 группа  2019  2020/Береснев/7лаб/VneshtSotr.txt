@@ -1,0 +1,39 @@
+package com.company;
+
+public class VneshtSotr extends SotrFirm {
+    double coeff; // часть от з\п
+    String mainJob;
+
+    public VneshtSotr(String fIO1, int yearOfBirth, Job jobOfSotr, double doubleOclad, String nameOfOtdel, double coeff, String mainJob) throws WrongYear, WrongOclad {
+        super(fIO1, yearOfBirth, jobOfSotr, doubleOclad, nameOfOtdel);
+
+        this.coeff = coeff;
+        this.mainJob = mainJob;
+    }
+
+    public VneshtSotr(VneshtSotr obj) throws WrongYear, WrongOclad {
+        super(obj.getfIO(), obj.getyearOfBirth(), obj.getJobOfSotr(), obj.getDoubleOclad(), obj.getNameOfOtdel());
+
+        this.coeff = obj.coeff;
+        this.mainJob = obj.mainJob;
+    }
+
+
+    @Override
+    public double getDoubleOclad() {
+        return super.getDoubleOclad()*coeff;
+    }
+
+    public double getCoeff() {
+        return coeff;
+    }
+
+    public String getMainJob() {
+        return mainJob;
+    }
+
+    @Override
+    public String toString() {
+        return "VNEshtatn: "+super.toString()+" "+coeff+" "+mainJob;
+    }
+}

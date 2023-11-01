@@ -1,0 +1,170 @@
+{\rtf1\ansi\ansicpg1251\deff0\deflang1049{\fonttbl{\f0\fswiss\fcharset0 Courier New;}{\f1\froman\fcharset0 Times New Roman;}{\f2\fswiss\fcharset0 Arial;}{\f3\fswiss\fcharset204{\*\fname Arial;}Arial CYR;}}
+{\colortbl ;\red0\green128\blue0;\red0\green0\blue0;\red255\green0\blue0;\red0\green0\blue255;\red0\green128\blue128;\red0\green0\blue128;\red128\green128\blue128;\red128\green0\blue128;}
+{\*\generator Msftedit 5.41.15.1515;}\viewkind4\uc1\pard\tx0\tx959\tx1918\tx2877\tx3836\tx4795\tx5754\tx6713\tx7672\tx8631\cf1\lang1033\f0\fs24 #pragma once\cf0\f1\par
+\cf1\f0 #include <string>\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf3\i\f0 /* \cf0\i0\f1\par
+\cf3\i\f0         \u1041?\u1080?\u1085?\u1072?\u1088?\u1085?\u1086?\u1077? \u1087?\u1086?\u1080?\u1089?\u1082?\u1086?\u1074?\u1086?\u1077? \u1076?\u1077?\u1088?\u1077?\u1074?\u1086?.\cf0\i0\f1\par
+\cf3\i\f0         \u1050?\u1083?\u1102?\u1095?\u1077?\u1074?\u1086?\u1077? \u1087?\u1086?\u1083?\u1077?: int\cf0\i0\f1\par
+\cf3\i\f0         \u1048?\u1085?\u1092?\u1086?\u1088?\u1084?\u1072?\u1094?\u1080?\u1086?\u1085?\u1085?\u1086?\u1077? \u1087?\u1086?\u1083?\u1077?: void*\cf0\i0\f1\par
+\cf3\i\f0         \u1044?\u1077?\u1088?\u1077?\u1074?\u1086? \u1084?\u1086?\u1078?\u1077?\u1090? \u1093?\u1088?\u1072?\u1085?\u1080?\u1090?\u1100? \u1076?\u1072?\u1085?\u1085?\u1099?\u1077? \u1083?\u1102?\u1073?\u1086?\u1075?\u1086? \u1090?\u1080?\u1087?\u1072? (\u1076?\u1072?\u1085?\u1085?\u1099?\u1077? \u1076?\u1086?\u1083?\u1078?\u1085?\u1099? \u1088?\u1072?\u1089?\u1087?\u1086?\u1083?\u1072?\u1075?\u1072?\u1090?\u1100?\u1089?\u1103? \u1074? \cf0\i0\f1\par
+\cf3\i\f0         \u1076?\u1080?\u1085?\u1072?\u1084?\u1080?\u1095?\u1077?\u1089?\u1082?\u1086?\u1081? \u1087?\u1072?\u1084?\u1103?\u1090?\u1080? - \u1088?\u1072?\u1089?\u1087?\u1088?\u1077?\u1076?\u1077?\u1083?\u1077?\u1085?\u1080?\u1077? \u1087?\u1072?\u1084?\u1103?\u1090?\u1080? \u1095?\u1077?\u1088?\u1077?\u1079? new/delete).\cf0\i0\f1\par
+\cf3\i\f0 */\cf0\i0\f1\par
+\cf4\f0 class\cf2\f1  Tree\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf4\f0 private\cf5\f1 :\cf0\par
+\cf2\f0         \cf4\f1 struct\cf2  TreeNode \cf1\{\cf0\par
+\cf2\f0                \cf4\f1 int\cf2  key;\cf0\par
+\cf2\f0                \cf4\f1 void\cf2  \cf6 *\cf2 data;\cf0\par
+\cf2\f0                TreeNode \cf6\f1 *\cf2 left, \cf6 *\cf2 right;\cf0\par
+\cf2\f0         \cf1\f1\}\cf2  \cf6 *\cf2 root;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         TreeNode\cf6\f1 *&\cf2  findNode\cf1 (\cf2 TreeNode\cf6 *&\cf2  node, \cf4 int\cf2  key\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  removeNode\cf1 (\cf2 TreeNode\cf6 *&\cf2  p\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  removeAllNodes\cf1 (\cf2 TreeNode\cf6 *&\cf2  node\cf1 )\cf2 ;                 \cf7 // \u1073?\u1099?\u1089?\u1090?\u1088?\u1086?\u1077? \u1088?\u1077?\u1082?\u1091?\u1088?\u1089?\u1080?\u1074?\u1085?\u1086?\u1077? \u1091?\u1076?\u1072?\u1083?\u1077?\u1085?\u1080?\u1077?\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  printNodes\cf1 (\cf2 TreeNode\cf6 *\cf2  node, \cf4 int\cf2  level\cf1 )\cf2 ;           \cf7 // \u1088?\u1077?\u1082?\u1091?\u1088?\u1089?\u1080?\u1074?\u1085?\u1072?\u1103? \u1087?\u1077?\u1095?\u1072?\u1090?\u1100?\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 public\cf5\f1 :\cf0\par
+\cf2\f0         Tree\cf1\f1 ()\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 virtual\cf2  ~Tree\cf1 ()\cf2 ;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         \cf7\f1 // \u1053?\u1072?\u1081?\u1090?\u1080? \u1085?\u1091?\u1078?\u1085?\u1091?\u1102? \u1080?\u1085?\u1092?\u1086?\u1088?\u1084?\u1072?\u1094?\u1080?\u1102? \u1074? \u1076?\u1077?\u1088?\u1077?\u1074?\u1077? (\u1087?\u1088?\u1080? \u1085?\u1077?\u1091?\u1076?\u1072?\u1095?\u1077? \u1074?\u1086?\u1079?\u1074?\u1088?\u1072?\u1097?\u1072?\u1077?\u1090? 0).\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  \cf6 *\cf2 find\cf1 (\cf4 int\cf2  key\cf1 )\cf2 ;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         \cf7\f1 // \u1053?\u1072?\u1081?\u1090?\u1080? \u1085?\u1091?\u1078?\u1085?\u1091?\u1102? \u1080?\u1085?\u1092?\u1086?\u1088?\u1084?\u1072?\u1094?\u1080?\u1102? \u1074? \u1076?\u1077?\u1088?\u1077?\u1074?\u1077? (\u1087?\u1088?\u1080? \u1085?\u1077?\u1091?\u1076?\u1072?\u1095?\u1077? \u1075?\u1077?\u1085?\u1077?\u1088?\u1080?\u1088?\u1091?\u1077?\u1090? \u1080?\u1089?\u1082?\u1083?\u1102?\u1095?\u1077?\u1085?\u1080?\u1077?).\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  \cf6 *\cf2 get\cf1 (\cf4 int\cf2  key\cf1 )\cf2 ;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         \cf7\f1 // \u1060?\u1091?\u1085?\u1082?\u1094?\u1080?\u1103? \u1074?\u1086?\u1079?\u1074?\u1088?\u1072?\u1097?\u1072?\u1077?\u1090? true, \u1077?\u1089?\u1083?\u1080? \u1085?\u1086?\u1074?\u1099?\u1081? \u1082?\u1083?\u1102?\u1095? \u1073?\u1099?\u1083? \u1091?\u1089?\u1087?\u1077?\u1096?\u1085?\u1086? \u1076?\u1086?\u1073?\u1072?\u1074?\u1083?\u1077?\u1085? \u1074? \u1076?\u1077?\u1088?\u1077?\u1074?\u1086?.\cf0\par
+\cf2\f0         \cf4\f1 bool\cf2  add\cf1 (\cf4 int\cf2  key, \cf4 void\cf2  \cf6 *\cf2 data\cf1 )\cf2 ;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         \cf7\f1 // \u1060?\u1091?\u1085?\u1082?\u1094?\u1080?\u1103? \u1074?\u1086?\u1079?\u1074?\u1088?\u1072?\u1097?\u1072?\u1077?\u1090? true, \u1077?\u1089?\u1083?\u1080? \u1082?\u1083?\u1102?\u1095? \u1073?\u1099?\u1083? \u1091?\u1089?\u1087?\u1077?\u1096?\u1085?\u1086? \u1091?\u1076?\u1072?\u1083?\u1077?\u1085? \u1080?\u1079? \u1076?\u1077?\u1088?\u1077?\u1074?\u1072?.\cf0\par
+\cf2\f0         \cf4\f1 bool\cf2  \cf4 remove\cf1 (\cf4 int\cf2  key\cf1 )\cf2 ;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         \cf7\f1 // \u1059?\u1076?\u1072?\u1083?\u1080?\u1090?\u1100? \u1074?\u1089?\u1077? \u1101?\u1083?\u1077?\u1084?\u1077?\u1085?\u1090?\u1099? \u1080?\u1079? \u1076?\u1077?\u1088?\u1077?\u1074?\u1072?\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  removeAll\cf1 ()\cf2 ; \cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0         \cf7\f1 // \u1055?\u1077?\u1095?\u1072?\u1090?\u1100? \u1076?\u1077?\u1088?\u1077?\u1074?\u1072? (\u1076?\u1083?\u1103? \u1086?\u1090?\u1083?\u1072?\u1076?\u1082?\u1080?).\cf0\par
+\cf2\f0         \cf4\f1 void\cf2  print\cf1 ()\cf2 ;\cf0\par
+\cf1\f0\}\cf2\f1 ;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf3\i\f0 /*\cf0\i0\f1\par
+\cf3\i\f0         \u1050?\u1083?\u1072?\u1089?\u1089? \u1080?\u1089?\u1082?\u1083?\u1102?\u1095?\u1077?\u1085?\u1080?\u1081? \u1076?\u1083?\u1103? \u1073?\u1080?\u1085?\u1072?\u1088?\u1085?\u1086?\u1075?\u1086? \u1087?\u1086?\u1080?\u1089?\u1082?\u1086?\u1074?\u1086?\u1075?\u1086? \u1076?\u1077?\u1088?\u1077?\u1074?\u1072?.\cf0\i0\f1\par
+\cf3\i\f0 */\cf0\i0\f1\par
+\cf4\f0 class\cf2\f1  TreeException\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf4\f0 private\cf5\f1 :\cf0\par
+\cf2\f0         std\cf5\f1 ::string\cf2  message;\cf0\par
+\cf4\f0 public\cf5\f1 :\cf0\par
+\cf2\f0         TreeException\cf1\f1 (\cf4 const\cf2  std\cf5 ::string\cf2  \cf6 &\cf2 msg\cf1 )\cf2  \cf1\{\cf2  message \cf6 =\cf2  msg; \cf1\}\cf0\par
+\cf2\f0         \cf4\f1 virtual\cf2  std\cf5 ::string\cf2  getMessage\cf1 ()\cf2  \cf4 const\cf2  \cf1\{\cf2  \cf4 return\cf2  message; \cf1\}\cf0\par
+\cf2\f0         \cf4\f1 virtual\cf2  \cf4 void\cf2  setMessage\cf1 (\cf2 std\cf5 ::string\cf2  newMessage\cf1 )\cf2  \cf1\{\cf2  message \cf6 =\cf2  newMessage; \cf1\}\cf0\par
+\cf1\f0\}\cf2\f1 ;\cf0\par
+\pard\f2 _________________________________\f1\par
+\pard\tx0\tx959\tx1918\tx2877\tx3836\tx4795\tx5754\tx6713\tx7672\tx8631\cf1\f0 #include "Tree.h"\cf0\f1\par
+\cf1\f0 #include <iostream>\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 using\cf2\f1  \cf4 namespace\cf2  std;\cf0\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0 Tree\cf5\f1 ::TreeNode\cf6 *&\cf2  Tree\cf5 ::findNode\cf1 (\cf2 TreeNode\cf6 *&\cf2  node, \cf4 int\cf2  key\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf6 !\cf2 node\cf1 )\cf2  \cf7 // node == 0, \u1090?.\u1077?. node == NULL\cf0\par
+\cf2\f0                \cf4\f1 return\cf2  node;\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf2 node\cf6 ->\cf2 key \cf6 ==\cf2  key\cf1 )\cf2  \cf0\par
+\cf2\f0                \cf4\f1 return\cf2  node;\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf2 node\cf6 ->\cf2 key \cf6 <\cf2  key\cf1 )\cf0\par
+\cf2\f0                \cf4\f1 return\cf2  findNode\cf1 (\cf2 node\cf6 ->\cf2 right, key\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 else\cf0\par
+\cf2\f0                \cf4\f1 return\cf2  findNode\cf1 (\cf2 node\cf6 ->\cf2 left, key\cf1 )\cf2 ;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  Tree\cf5 ::removeNode\cf1 (\cf2 TreeNode\cf6 *&\cf2  p\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf6 !\cf2 p\cf6 ->\cf2 left || \cf6 !\cf2 p\cf6 ->\cf2 right\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0                TreeNode\cf6\f1 *\cf2  sav \cf6 =\cf2  p;\cf0\par
+\cf2\f0                p \cf6\f1 =\cf2  \cf1 (\cf2 p\cf6 ->\cf2 left\cf1 )\cf2  \cf5 ?\cf2  p\cf6 ->\cf2 left \cf5 :\cf2  p\cf6 ->\cf2 right;\cf0\par
+\cf2\f0                \cf4\f1 if\cf2  \cf1 (\cf2 sav\cf6 ->\cf2 data\cf1 )\cf2  \cf4 delete\cf2  sav\cf6 ->\cf2 data;\cf0\par
+\cf2\f0                \cf4\f1 delete\cf2  sav;\cf0\par
+\cf2\f0         \cf1\f1\}\cf0\par
+\cf2\f0         \cf4\f1 else\cf2  \cf1\{\cf0\par
+\cf2\f0                TreeNode\cf6\f1 **\cf2  p2 \cf6 =\cf2  \cf6 &\cf2 p\cf6 ->\cf2 right;\cf0\par
+\cf2\f0                \cf4\f1 while\cf2  \cf1 ((\cf6 *\cf2 p2\cf1 )\cf6 ->\cf2 left\cf1 )\cf2  p2 \cf6 =\cf2  \cf6 &\cf1 ((\cf6 *\cf2 p2\cf1 )\cf6 ->\cf2 left\cf1 )\cf2 ;\cf0\par
+\cf2\f0                p\cf6\f1 ->\cf2 key \cf6 =\cf2  \cf1 (\cf6 *\cf2 p2\cf1 )\cf6 ->\cf2 key;\cf0\par
+\cf2\f0                removeNode\cf1\f1 (\cf6 *\cf2 p2\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf1\f1\}\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  Tree\cf5 ::removeAllNodes\cf1 (\cf2 TreeNode\cf6 *&\cf2  node\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf2 node\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0                removeAllNodes\cf1\f1 (\cf2 node\cf6 ->\cf2 left\cf1 )\cf2 ;\cf0\par
+\cf2\f0                removeAllNodes\cf1\f1 (\cf2 node\cf6 ->\cf2 right\cf1 )\cf2 ;\cf0\par
+\cf2\f0                \cf4\f1 if\cf2  \cf1 (\cf2 node\cf6 ->\cf2 data\cf1 )\cf2  \cf4 delete\cf2  node\cf6 ->\cf2 data;\cf0\par
+\cf2\f0                \cf4\f1 delete\cf2  node;\cf0\par
+\cf2\f0                node \cf6\f1 =\cf2  \cf8 0\cf2 ;\cf0\par
+\cf2\f0         \cf1\f1\}\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  Tree\cf5 ::printNodes\cf1 (\cf2 TreeNode\cf6 *\cf2  node, \cf4 int\cf2  level\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf2 node\cf1 )\cf2  \cf1\{\cf0\par
+\cf2\f0                printNodes\cf1\f1 (\cf2 node\cf6 ->\cf2 left, level\cf6 +\cf4 1\cf1 )\cf2 ;\cf0\par
+\cf2\f0                \cf4\f1 cout\cf2  \cf6 <<\cf2  node\cf6 ->\cf2 key \cf6 <<\cf2  \cf3 "\\t["\cf2  \cf6 <<\cf2  level \cf6 <<\cf2  \cf3 "]"\cf2  \cf6 <<\cf2  endl;\cf0\par
+\cf2\f0                printNodes\cf1\f1 (\cf2 node\cf6 ->\cf2 right, level\cf6 +\cf4 1\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf1\f1\}\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0 Tree\cf5\f1 ::Tree\cf1 (\cf4 void\cf1 )\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         root \cf6\f1 =\cf2  \cf8 0\cf2 ;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf2\f0 Tree\cf5\f1 ::\cf2 ~Tree\cf1 (\cf4 void\cf1 )\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         removeAll\cf1\f1 ()\cf2 ;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  \cf6 *\cf2 Tree\cf5 ::find\cf1 (\cf4 int\cf2  key\cf1 )\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         TreeNode \cf6\f1 *\cf2 res \cf6 =\cf2  findNode\cf1 (\cf2 root, key\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 return\cf2  res\cf6 ==\cf8 0\cf2  \cf5 ?\cf2  \cf8 0\cf2  \cf5 :\cf2  res\cf6 ->\cf2 data;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  \cf6 *\cf2 Tree\cf5 ::get\cf1 (\cf4 int\cf2  key\cf1 )\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         \cf4\f1 void\cf2  \cf6 *\cf2 data \cf6 =\cf2  find\cf1 (\cf2 key\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf6 !\cf2 data\cf1 )\cf2  \cf4 throw\cf2  TreeException\cf1 (\cf3 "Tree::get(): \u1091?\u1079?\u1077?\u1083? \u1086?\u1090?\u1089?\u1091?\u1090?\u1089?\u1090?\u1074?\u1091?\u1077?\u1090? \u1074? \u1076?\u1077?\u1088?\u1077?\u1074?\u1077?"\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 return\cf2  data;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 bool\cf2\f1  Tree\cf5 ::add\cf1 (\cf4 int\cf2  key, \cf4 void\cf2  \cf6 *\cf2 data\cf1 )\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         TreeNode\cf6\f1 *&\cf2  p \cf6 =\cf2  findNode\cf1 (\cf2 root, key\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf2 p\cf1 )\cf0\par
+\cf2\f0                \cf4\f1 return\cf2  \cf4 false\cf2 ; \cf7 // \u1082?\u1083?\u1102?\u1095? \u1091?\u1078?\u1077? \u1077?\u1089?\u1090?\u1100? \u1074? \u1076?\u1077?\u1088?\u1077?\u1074?\u1077?\cf0\par
+\cf2\f0         \cf4\f1 else\cf2  \cf1\{\cf0\par
+\cf2\f0                p \cf6\f1 =\cf2  \cf4 new\cf2  TreeNode;\cf0\par
+\cf2\f0                p\cf6\f1 ->\cf2 key \cf6 =\cf2  key;\cf0\par
+\cf2\f0                p\cf6\f1 ->\cf2 data \cf6 =\cf2  data;\cf0\par
+\cf2\f0                p\cf6\f1 ->\cf2 left \cf6 =\cf2  \cf8 0\cf2 ;\cf0\par
+\cf2\f0                p\cf6\f1 ->\cf2 right \cf6 =\cf2  \cf8 0\cf2 ;\cf0\par
+\cf2\f0                \cf4\f1 return\cf2  \cf4 true\cf2 ;\cf0\par
+\cf2\f0         \cf1\f1\}\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 bool\cf2\f1  Tree\cf5 ::\cf4 remove\cf1 (\cf4 int\cf2  key\cf1 )\cf2  \cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         TreeNode\cf6\f1 *&\cf2  p \cf6 =\cf2  findNode\cf1 (\cf2 root, key\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 if\cf2  \cf1 (\cf6 !\cf2 p\cf1 )\cf2  \cf4 return\cf2  \cf4 false\cf2 ;\cf0\par
+\cf2\f0         removeNode\cf1\f1 (\cf2 p\cf1 )\cf2 ;\cf0\par
+\cf2\f0         \cf4\f1 return\cf2  \cf4 true\cf2 ;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  Tree\cf5 ::removeAll\cf1 ()\cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         removeAllNodes\cf1\f1 (\cf2 root\cf1 )\cf2 ;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\cf2\f0  \cf0\f1\par
+\cf4\f0 void\cf2\f1  Tree\cf5 ::print\cf1 ()\cf2  \cf0\par
+\cf1\f0\{\cf0\f1\par
+\cf2\f0         printNodes\cf1\f1 (\cf2 root, \cf8 0\cf1 )\cf2 ;\cf0\par
+\cf1\f0\}\cf0\f1\par
+\pard\lang1049\f3\par
+}
+ 

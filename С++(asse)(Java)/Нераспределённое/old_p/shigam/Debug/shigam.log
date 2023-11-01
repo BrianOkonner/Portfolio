@@ -1,0 +1,23 @@
+﻿Построение начато 13.02.2018 19:36:30.
+     1>Проект "D:\Программирование\Проекты c++\shigam\shigam\shigam.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\shigam.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "Лаб 2.1.cpp"
+         Лаб 2.1.cpp
+     1>Лаб 2.1.cpp(56): warning C4101: o: неиспользованная локальная переменная
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Программирование\Проекты c++\shigam\Debug\shigam.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\shigam.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Программирование\Проекты c++\shigam\Debug\shigam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Программирование\Проекты c++\shigam\Debug\shigam.lib" /MACHINE:X86 Debug\fun.obj
+         "Debug\Лаб 2.1.obj"
+         LINK : не найден или не выполнена сборка D:\Программирование\Проекты c++\shigam\Debug\shigam.exe при последней инкрементной компоновке; выполняется полная компоновка
+         shigam.vcxproj -> D:\Программирование\Проекты c++\shigam\Debug\shigam.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Программирование\Проекты c++\shigam\Debug\shigam.exe;#1" /manifest Debug\shigam.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Debug\shigam.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\shigam.lastbuildstate".
+     1>Построение проекта "D:\Программирование\Проекты c++\shigam\shigam\shigam.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:01.60

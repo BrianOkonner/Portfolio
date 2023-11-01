@@ -1,0 +1,141 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+class RadiusException extends Exception {
+    @Override
+    public String toString() {
+        return "Invalid radius";
+    }
+}
+
+interface IFigure {
+    abstract public double perimeter();
+
+    abstract public double geomCenterX();
+
+    abstract public double geomCenterY();
+}
+
+class CompPerimeter implements Comparator<IFigure> {
+    @Override
+    public int compare(IFigure o1, IFigure o2) {
+        if (o1.perimeter() == o2.perimeter()) {
+            return 0;
+        } else {
+            if (o1.perimeter() > o2.perimeter()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
+}
+
+class Circle implements IFigure {
+    private double x;
+    private double y;
+    private double radius;
+
+    public Circle(double x, double y, double radius) {
+        try {
+            if (radius <= 0) {
+                throw new RadiusException();
+            }
+        } catch (RadiusException exception) {
+            exception.getMessage();
+        }
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
+
+    @Override
+    public double perimeter() {
+        return 2 * 3.14 * radius;
+    }
+
+    @Override
+    public double geomCenterX() {
+        return x;
+    }
+
+    @Override
+    public double geomCenterY() {
+        return y;
+    }
+
+    @Override
+    public String toString() {
+        return "circle: x = " + x + ", y = " + y + ", r = " + radius;
+    }
+
+}
+
+class Triangle implements IFigure {
+    private double x1, x2, x3;
+    private double y1, y2, y3;
+
+    public Triangle(double x1, double x2, double x3, double y1, double y2, double y3) {
+        double a1 = Math.ceil(Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)));
+        double a2 = Math.ceil(Math.sqrt((y3 - y1) * (y3 - y1) + (x3 - x1) * (x3 - x1)));
+        double a3 = Math.ceil(Math.sqrt((y3 - y2) * (y3 - y2) + (x3 - x2) * (x3 - x2)));
+        if ((a1 == a2) && (a2 == a3)) {
+            this.x1 = x1;
+            this.x2 = x2;
+            this.x3 = x3;
+            this.y1 = y1;
+            this.y2 = y2;
+            this.y3 = y3;
+        }
+    }
+
+    @Override
+    public double perimeter() {
+        return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1)) * 3;
+    }
+
+    @Override
+    public double geomCenterX() {
+        return (x1 + x2 + x3) / 3;
+    }
+
+    @Override
+    public double geomCenterY() {
+        return (y1 + y2 + y3) / 3;
+    }
+
+    @Override
+    public String toString() {
+        return "triangle: : x1 = " + x1 + ", y1 = " + y1 +
+                ", x2 = " + x2 + ", y2 = " + y2 +
+                ", x3 = " + x3 + ", y3 = " + y3;
+    }
+}
+
+public class InterfaceProgram {
+    public static void main(String[] args) {
+        Circle circle = new Circle(0, 0, 5);
+        Triangle triangle = new Triangle(-1, 1, 0, 0, 0, Math.sqrt(3));
+        System.out.println("Perimeter = " + circle.perimeter());
+        System.out.println("Coordinates: x = " + circle.geomCenterX() + ", y = " + circle.geomCenterY());
+        System.out.println("Perimeter = " + triangle.perimeter());
+        System.out.println("Coordinates: x = " + triangle.geomCenterX() + ", y = " + triangle.geomCenterY());
+        IFigure[] iFigures = new IFigure[4];
+        iFigures[0] = circle;
+        iFigures[1] = triangle;
+        iFigures[2] = new Circle(2, 2, 3);
+        iFigures[3] = new Triangle(3, 5.5, 8, 3, 2.5 * Math.sqrt(3), 3);
+        System.out.println();
+        for (IFigure figure : iFigures) {
+            System.out.println(figure);
+            System.out.println("Perimeter = " + figure.perimeter());
+            System.out.println("Coordinates: x = " + figure.geomCenterX() + ", y = " + figure.geomCenterY());
+        }
+        Arrays.sort(iFigures, new CompPerimeter());
+        System.out.println("\nSorted: ");
+        for (IFigure figure : iFigures) {
+            System.out.println(figure);
+            System.out.println("Perimeter = " + figure.perimeter());
+        }
+    }
+}

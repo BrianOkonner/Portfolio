@@ -1,0 +1,5 @@
+30
+Petrova             2       6.9
+Sidorova			1		7.1				
+Kostukovich			2		5.4				
+Sidorov				1		9.1

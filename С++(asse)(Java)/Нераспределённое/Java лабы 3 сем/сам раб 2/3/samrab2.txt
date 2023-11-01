@@ -1,0 +1,301 @@
+package samrab23;
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import java.io.PrintStream; 
+import java.math.BigDecimal; 
+import java.math.RoundingMode; 
+import java.text.DecimalFormat; 
+import java.util.Arrays; 
+import java.util.Scanner;
+import java.util.Comparator;
+import java.io.*;
+class Compare implements Comparator<TripWay>
+{
+    @Override
+    public int compare(TripWay A,TripWay B)
+    {
+        if(A.NameOfDriver.equals(B.NameOfDriver))
+        {
+            if (A.Way==B.Way)
+                return 0;
+            if(A.Way>B.Way)
+                return -1;
+            return 1;
+        }
+        return 0;
+    }
+}
+enum TypeOfBus
+{
+    neoplan,setra,mercedes,ankai;
+}
+class WrongWay extends Exception{};
+class TripWay
+{
+    protected   int id;
+    protected  String  NameOfTrip;
+    protected String TripBeginDay;
+    protected   TypeOfBus Type;
+    protected String NumberOfBus;
+    protected String NameOfDriver;
+    protected static int Count=0;
+    protected double Way;
+    public TripWay(String  NameOfTrip,TypeOfBus Type,String TripBeginDay,String NumberOfBus,String NameOfDriver,double Way)throws WrongWay    
+    {    
+        if(Way<0)
+            throw new WrongWay();
+        Count++;
+        this.id=Count*123;
+        this.NameOfTrip=NameOfTrip;
+        this.TripBeginDay=TripBeginDay;
+        this.NameOfDriver=NameOfDriver;
+        this.NumberOfBus=NumberOfBus;
+        this.Type=Type;
+        this.Way=Way;
+    }
+    public int getid()
+    {
+        return this.id;
+    }
+    public String toString()
+    {
+        return "Id= "+this.id+" Название маршрута: "+this.NameOfTrip+" Дата начала поездки: "
+                +this.TripBeginDay+" Вид автобуса: "+this.Type+" Номер автобуса: "+this.NumberOfBus+
+                " Фамилия водителя: "+this.NameOfDriver+" Километраж: "+this.Way;
+    }
+    public String getNameOfDriver()
+    {
+        return this.NameOfDriver;
+    }
+    public String getTripBeginDay()
+    {
+        return this.TripBeginDay;
+    }
+    public String getNumberOfBus()
+    {
+        return this.NumberOfBus;
+    }
+    public double getWay()
+    {
+        return this.Way;
+    }
+    public String getNameOfTrip()
+    {
+        return this.NameOfTrip;
+    }
+}
+class  TravelAgency
+{
+    protected TripWay[] A;
+    public TravelAgency(TripWay[] A)
+    {
+        this.A=A;
+    }
+    @Override
+    public String toString()
+    {
+        StringBuffer str=new StringBuffer();
+        for(int i=0;i<A.length;i++)
+            str.append(A[i].toString()+"\n");
+        return str.toString();
+    }
+    public String WayParamTrips(double S)
+    {       
+        StringBuffer str=new StringBuffer();
+        for(int i=0;i<A.length;i++)
+            if(A[i].Way>S)
+            {
+               str.append(A[i].toString()+"\n");
+            }
+        return str.toString();
+    }
+    public String WayPerBus()
+    {
+        Double[] B=new Double[A.length];
+        StringBuffer[] str=new StringBuffer[A.length];
+        for(int i=0;i<A.length;i++)
+        {
+            StringBuffer str2=new StringBuffer();
+            str[i]=str2;
+            B[i]=new Double(0);
+        }
+        StringBuffer str1=new StringBuffer();
+        int flag=0,m=0;
+        for(int i=0;i<A.length;i++)
+        {
+            for(int j=0;j<A.length;j++)
+            {
+                if(A[i].NumberOfBus.equals(str[j].toString()))
+                    flag=1;
+            }
+            if(flag==0)
+                str[m].append(A[i].NumberOfBus);
+            m++;
+            flag=0;
+        }
+        for(int i=0;i<A.length;i++)
+        {
+            for(int j=0;j<A.length;j++)
+                if(A[i].NumberOfBus.equals(str[j].toString()))
+                    B[j]+=A[i].Way;
+        }
+        for(int i=0;i<m;i++)
+        {
+            str1.append(str[i].toString()+"  "+B[i].toString()+"\n");
+        }
+        return str1.toString();
+    }
+    public String MaxWayBus()
+    {
+        Double[] B=new Double[A.length];
+        StringBuffer[] str=new StringBuffer[A.length];
+        for(int i=0;i<A.length;i++)
+        {
+            StringBuffer str2=new StringBuffer();
+            str[i]=str2;
+            B[i]=new Double(0);
+        }
+        StringBuffer str1=new StringBuffer();
+        int flag=0,m=0,indmax=0;
+        Double max=0.;
+        for(int i=0;i<A.length;i++)
+        {
+            for(int j=0;j<A.length;j++)
+            {
+                if(A[i].NumberOfBus.equals(str[j].toString()))
+                    flag=1;
+            }
+            if(flag==0)
+                str[m].append(A[i].NumberOfBus);
+            m++;
+            flag=0;
+        }
+        for(int i=0;i<A.length;i++)
+        {
+            for(int j=0;j<A.length;j++)
+                if(A[i].NumberOfBus.equals(str[j].toString()))
+                    B[j]+=A[i].Way;
+        }
+        for(int i=0;i<m;i++)
+        {
+            if(max<B[i])
+            {
+                max=B[i];
+                indmax=i;
+            }
+        }
+        str1.append(A[indmax].NumberOfBus+":\n");
+        for(int i=0;i<A.length;i++)
+        {
+            if(A[indmax].NumberOfBus==A[i].NumberOfBus)
+            {
+                str1.append(A[i].NameOfTrip+" "+A[i].TripBeginDay+" "+A[i].NameOfDriver+"\n");
+            }
+        }
+        return str1.toString();
+    }
+    public String WayBusMark()
+    {
+        StringBuffer str=new StringBuffer();
+        Double[] B=new Double[4];
+        TypeOfBus[] T=new TypeOfBus[4];
+        for(int i=0;i<4;i++)
+        {            
+            B[i]=new Double(0);
+        }
+        T[0]=A[0].Type;
+        int flag=0,m=0;
+        for(int i=0;i<A.length;i++)
+        {
+            for(int j=0;j<4;j++)
+            {
+                if((!(A[i].Type==T[j])))
+                {
+                    flag+=1;
+                }
+                else
+                {
+                    B[j]+=A[i].Way;
+                }
+                if((T[j]==null))
+                {
+                    flag=0;
+                    break;
+                }
+                if(flag>m)
+                {
+                    m=flag;
+                    T[m]=A[i].Type;
+                    flag=0;
+                }
+            }                       
+        }
+        for(int j=0;j<4;j++)
+            str.append(T[j].toString()+" "+B[j].toString()+"\n");
+        return str.toString();
+    }
+    
+}
+public class Program 
+{
+    public static void main(String[] args) 
+    {
+        try
+        {
+            FileInputStream pv=new FileInputStream("input.txt");
+            Scanner sc=new Scanner(pv);
+            int o=sc.nextInt();
+            TripWay[] tr=new TripWay[o];
+            sc.nextLine();
+            Integer k=0,m=4;
+            StringBuffer[] str1=new StringBuffer[o];
+            for(int i=0;i<str1.length;i++)
+            {
+                StringBuffer buff4=new StringBuffer();
+                str1[i]=buff4;
+            }
+            str1[0].append("02.12.2019");
+            for(int i=1;i<o;i++)
+            {
+                str1[i].append("04.12.2019");
+                StringBuffer str=new StringBuffer();
+                str.append(m.toString());
+                char a='0';
+                if(str.length()==1)
+                {
+                    str.append(a);
+                    str.reverse();
+                }
+                str1[i].replace(0,2,str.toString());
+                m+=2;
+            }
+            while(sc.hasNext())
+            {
+                String str=sc.nextLine();
+                String[] arr=str.split(" ");
+                tr[k]=new TripWay(arr[0],TypeOfBus.valueOf(arr[1]),str1[k].toString(),arr[2],arr[3],Double.parseDouble(arr[4]));
+                k++;
+            }
+            TravelAgency MIR=new TravelAgency(tr);
+            System.out.println(MIR);
+            Scanner sc1=new Scanner(System.in);
+            System.out.println(MIR.WayPerBus());
+            System.out.println(MIR.MaxWayBus());
+            System.out.println(MIR.WayBusMark());
+            Double s=new Double(400);
+            System.out.println("Введите желаемую гранчную величину пути: "+s);
+            System.out.println(MIR.WayParamTrips(s));
+            Arrays.sort(MIR.A,new Compare());
+            System.out.println("Отсортированный");
+            System.out.println(MIR);
+        }
+        catch(IOException e)
+        {
+           System.out.println("Ошибка");
+        }
+        catch(WrongWay e)
+        {
+            System.out.println("Error");
+        }
+    }
+}

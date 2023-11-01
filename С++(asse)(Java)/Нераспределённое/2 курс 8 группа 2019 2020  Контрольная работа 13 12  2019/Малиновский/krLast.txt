@@ -1,0 +1,185 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package krlast;
+
+import java.io.FileInputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+import java.util.*;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.HashSet;
+
+/**
+ *
+ * @author lesha
+ */
+class Comparer_size implements Comparator<String> {
+
+    public int compare(String a, String b) {
+                if(a.length() == b.length())
+            return 0;
+        if(a.length() < b.length())
+            return -1;
+        return 1;
+    }
+}
+
+public class KrLast {
+
+  static class A {
+      ArrayList<String>  a;
+      ArrayList<String>  b;
+      ArrayList<String>  c;
+     
+      int k;
+
+        public  A(String infile, String outfile2) throws IOException  {
+            FileInputStream ifr = new FileInputStream(infile);
+        System.setProperty("console.encoding", "Cp1251");
+        Scanner sr = new Scanner(ifr, "Cp1251");
+//String name, String origin, Soil soil, String color_stem, String color_leaves, int size, int tempriture, Light light, int watering, Multiplying multiplying
+        PrintStream pw = new PrintStream(outfile2);
+          a= new ArrayList<String>(); 
+          b= new ArrayList<String>();
+           c= new ArrayList<String>();
+            
+        k =0;
+        while (sr.hasNext()) {
+            String str = sr.nextLine();
+            if(str.startsWith("/"))
+            {
+                b.add(str);
+                k++;
+                a.add(" ");
+                String c[] = str.split(";");
+                for(int i =0;i<c.length;i++)
+                {
+                    
+                    if( i ==0)
+                    {
+                        c[i] = c[i].replace("/", "");
+                        
+                    }
+             
+                    String b[] = c[i].split(" ");
+                    int y = Integer.valueOf(b[1]);
+                    if(b[0].equals("R"))
+                    {
+                        
+                        a.set(Integer.valueOf(b[1]) , rev(a.get(Integer.valueOf(b[1])),Integer.valueOf(b[2]),Integer.valueOf(b[3])));
+                    }
+                    if(b[0].equals("S"))
+                    {
+                        a.set((Integer.valueOf(b[1])) , alph(a.get(Integer.valueOf(b[1])),Integer.valueOf(b[2]),Integer.valueOf(b[3])));
+                    }
+                }
+                
+                continue;
+            }
+            a.add(str);
+            c.add(str);
+            k++;        
+       
+            
+        }
+        
+        for(int i =0;i< k;i++)
+        {
+            if(!a.get(i).equals(" "))
+        pw.println(a.get(i));
+        }
+
+        }
+        public void sortbysize(String outfile1) throws IOException
+              {
+                  ArrayList<String>  z = c;
+                  for(int i =0;i<z.size();i++ )
+                  {
+                  z.remove(" ");
+                  }
+                  Collections.sort(z, new Comparer_size());
+                  PrintStream pw = new PrintStream(outfile1);
+             for(int i =0;i< z.size();i++)
+        {
+       
+        
+        pw.println(z.get(i));
+     
+              }
+
+    }
+             public void sortbysize3(String outfile3) throws IOException
+              {
+                 
+                
+                  Collections.sort(b, new Comparer_size());
+                  PrintStream pw = new PrintStream(outfile3);
+             for(int i =0;i< b.size();i++)
+        {
+       
+        
+        pw.println(b.get(i));
+     
+              }
+
+    }
+  }
+  public static String rev(String x, int x1, int x2)
+{
+String res = "";
+String sub = x.substring(x1, x2 + 1);
+String subrev = "";
+        for(int i =sub.length()-1; i>= 0; i--)
+        {
+            subrev = subrev + sub.charAt(i);
+        }
+        res = x.replace(sub, subrev);
+        return res;
+}
+    public static String alph(String x, int x1, int x2)
+{
+String res = "";
+String sub = x.substring(x1, x2 + 1);
+char[] chars = sub.toCharArray();
+Arrays.sort(chars);
+String subsort = new String(chars);
+        res = x.replace(sub, subsort);
+        return res;
+}
+    public static void main(String[] args) throws IOException {
+
+        // TODO code application logic here
+//        FileInputStream ifr = new FileInputStream("input.txt");
+//        System.setProperty("console.encoding", "Cp1251");
+//        Scanner sr = new Scanner(ifr, "Cp1251");
+////String name, String origin, Soil soil, String color_stem, String color_leaves, int size, int tempriture, Light light, int watering, Multiplying multiplying
+//        PrintStream pw = new PrintStream("output.txt");
+//        String []a = new String[100];
+//        int k =0;
+//        while (sr.hasNext()) {
+//            String str = sr.nextLine();
+//            if(str.startsWith("/"))
+//                continue;
+//            a[k] = str;
+//            k++;
+//            
+//            
+//            
+//        }
+//        System.out.println(Arrays.toString(a));
+A a = new A("input.txt", "output2.txt");
+a.sortbysize("output1.txt");
+a.sortbysize3("output3.txt");
+    }
+    
+  
+
+}

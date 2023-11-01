@@ -1,0 +1,212 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+
+enum  Genre{a,b,c}
+class Mp{
+    protected final Integer id;
+    protected String Name;
+    protected Genre gen;
+    protected int len;
+    protected static int count=0;
+    protected int code;
+    protected String artist;
+
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Genre getGen() {
+        return gen;
+    }
+
+    public int getLen() {
+        return len;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setGen(Genre gen) {
+        this.gen = gen;
+    }
+
+    public void setLen(int len) {
+        this.len = len;
+    }
+    public Mp(String name,Genre g,int le,int code,String artist){
+        id=count;
+        count ++;
+        Name=name;
+        len=le;
+        gen=g;
+        this.code=code;
+        this.artist=artist;
+    }
+    public String getName() {
+        return Name;
+    }
+    public void setName(String name) {
+        Name = name;
+    }
+    @Override
+    public String toString() {
+        return Name+" "+id.toString();
+    }
+}
+
+class Sal{
+    private ArrayList<Mp> arr;
+    private TreeMap<Integer,ArrayList<Mp>> allMC;
+    private TreeMap<String,ArrayList<Mp>> allAC;
+
+    public Sal()throws IOException {
+
+        FileInputStream InputF = new FileInputStream("in.txt");
+        Scanner Fsc = new Scanner(InputF);
+        String[] words;
+        allAC=new TreeMap<>();
+        allMC=new TreeMap<>();
+
+        this.arr=new ArrayList<Mp>();
+        while (Fsc.hasNext()){
+            String temp=Fsc.nextLine();
+            words=temp.split(" ");
+            Genre tmp=Genre.a;
+            if(words[1].equalsIgnoreCase("a")){
+                tmp=Genre.a;
+            }
+            if(words[1].equalsIgnoreCase("b")){
+                tmp=Genre.b;
+            }
+            if(words[1].equalsIgnoreCase("c")){
+                tmp=Genre.c;
+            }
+            int cd=Integer.parseInt(words[2]);
+            String art=words[3];
+            assert allMC != null;
+            assert allAC != null;
+            if(allAC.containsKey(art)){
+                ArrayList<Mp> tp=allAC.get(art);
+                tp.add(new Mp(words[0],tmp,Integer.parseInt(words[4]),cd,words[3]));
+                allAC.put(art,tp);
+            }
+            else{
+                ArrayList<Mp> tp=new ArrayList<>();
+                tp.add(new Mp(words[0],tmp,Integer.parseInt(words[4]),cd,words[3]));
+                allAC.put(art,tp);
+            }
+            if(allMC.containsKey(cd)){
+                ArrayList<Mp> tp=allMC.get(cd);
+                tp.add(new Mp(words[0],tmp,Integer.parseInt(words[4]),cd,words[3]));
+                allMC.put(cd,tp);
+            }
+            else{
+                ArrayList<Mp> tp=new ArrayList<>();
+                tp.add(new Mp(words[0],tmp,Integer.parseInt(words[4]),cd,words[3]));
+                allMC.put(cd,tp);
+            }
+
+            arr.add(new Mp(words[0],tmp,Integer.parseInt(words[4]),cd,words[3]));
+
+        }
+
+    }
+    public void Out(){
+        System.out.println("All:");
+        arr.forEach(System.out::println);
+    }
+    public void OutLen(int l){
+        System.out.println("Len less than "+l);
+        arr.forEach((n)->{if(n.getLen()<l){
+            System.out.println(n);}});
+    }public void mediumLen(){
+        System.out.println("Medium len");
+        for (Map.Entry<Integer,ArrayList<Mp>> entry : allMC.entrySet()) {
+            System.out.println("cd #"+entry.getKey().toString());
+            int res=0;
+            int q=0;
+            for (Mp ent:entry.getValue()) {
+                res+=ent.getLen();
+                q++;
+            }
+            System.out.println(res/q);
+        }
+    }
+
+    public void mostPop(){
+        System.out.println("Most popular");
+        int max=0;
+        String ma=allAC.firstKey();
+        for (Map.Entry<String,ArrayList<Mp>> entry : allAC.entrySet()) {
+            if(entry.getValue().size()>max){
+                ma=entry.getKey();
+                max=entry.getValue().size();
+            }
+        }
+        System.out.println(allAC.get(ma).toString());
+    }
+    public void sumByG(){
+        int a=0;
+        int b=0;
+        int c=0;
+
+        for (Mp entry:arr) {
+            switch (entry.getGen()){
+                case a:a+=entry.getLen();break;
+                case b:b+=entry.getLen();break;
+                case c:c+=entry.getLen();break;
+            }
+        }
+        System.out.println("Genres: a "+a+" b "+b+" c "+c);
+    }
+    class Comparer1 implements Comparator<Mp> {
+        @Override
+        public int compare(Mp a,Mp b){
+            return  a.getName().compareTo(b.getName());
+        }
+    }
+    class Comparer2 implements Comparator<Mp> {
+        @Override
+        public int compare(Mp a,Mp b){
+            return  b.getLen()-a.getLen();
+        }
+    }
+    public void sortT(){
+      Collections.sort(arr,new Comparer1());
+      Collections.sort(arr,new Comparer2());
+        System.out.println(arr.toString());
+
+    }
+
+
+}
+public class Main {
+
+    public static void main(String[] args)throws IOException {
+	Sal s=new Sal();
+	s.Out();
+	s.OutLen(9);
+	s.mediumLen();
+	s.mostPop();
+	s.sumByG();
+	s.sortT();
+
+    }
+}

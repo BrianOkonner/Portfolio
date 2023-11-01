@@ -1,0 +1,224 @@
+package com.company;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Scanner;
+
+class MyException extends Exception{
+
+    public MyException(String str){
+        System.out.println(str);
+    }
+}
+
+public class Main {
+
+    public static int count = 1;
+
+    public static void main(String[] args) {
+
+        Scanner console=new Scanner(System.in);
+
+        int count=4;
+
+        EvenNum evennum= new EvenNum();
+        PrimeNum primenum=new PrimeNum();
+        Num[] nums=new Num[count];
+
+        try {
+        System.out.println(" Сумма чисел:");
+        System.out.println(evennum.Sum(console.nextInt(), console.nextInt()));
+        System.out.println(" Число Близнец:");
+        System.out.println(primenum.Twins(console.nextInt()));
+
+        for (int i=0;i<count/2;i++){
+            nums[i]=new EvenNum();
+        }
+        for (int i=count/2;i<count;i++){
+            nums[i]=new PrimeNum();
+        }
+
+        for (int i=0;i<count/2;i++){
+            System.out.println(" Следующее число:");
+            System.out.println(nums[i].NextNum(console.nextInt()));
+            System.out.println(" Предыдущее число:");
+            System.out.println(nums[i].PrevNum(console.nextInt()));
+        }
+
+        for (int i=count/2;i<count;i++) {
+            System.out.println(" Следующее число:");
+            System.out.println(nums[i].NextNum(console.nextInt()));
+            System.out.println(" Предыдущее число:");
+            System.out.println(nums[i].PrevNum(console.nextInt()));
+        }
+        Arrays.sort(nums, new Sort());
+        
+        }catch(MyException e){ }
+
+    }
+}
+
+abstract class Num{
+
+    abstract public int PrevNum(int num) throws MyException;
+    abstract public int NextNum(int num) throws MyException;
+    abstract public String toString(int num) throws MyException;
+}
+
+class PrimeNum extends Num {
+    @Override
+    public int PrevNum(int num) throws MyException{
+
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                throw new MyException("You must type prime number");
+            }
+        }
+
+        int prove = 0;
+
+        while (prove != 1) {
+
+            num--;
+            prove = 1;
+            for (int i = 2; i < num; i++) {
+                if (num % i == 0) {
+                    prove = 0;
+                    break;
+                }
+            }
+
+        }
+
+        return num;
+    }
+
+    @Override
+    public int NextNum(int num) throws MyException{
+
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                throw new MyException("You must type prime number");
+            }
+        }
+
+        int prove = 0;
+
+        while (prove != 1) {
+
+            num++;
+            prove = 1;
+            for (int i = 2; i < num; i++) {
+                if (num % i == 0) {
+                    prove = 0;
+                    break;
+                }
+            }
+
+        }
+
+        return num;
+    }
+
+    @Override
+    public String toString(int num) throws MyException{
+
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                throw new MyException("You must type prime number");
+            }
+        }
+
+        return "" + num;
+    }
+
+    public int Twins(int num) throws MyException{
+
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0) {
+                throw new MyException("You must type prime number");
+            }
+        }
+
+        int prove1 = 1, prove2 = 1;
+
+        for (int i = 2; i < num + 2; i++) {
+            if ((num + 2) % i == 0) {
+                prove1 = 0;
+            }
+
+            if(i!=num-2) {
+                if ((num - 2) % i == 0) {
+                    prove2 = 0;
+                }
+            }
+        }
+
+        if (prove1 == 1) {
+            return num + 2;
+        }
+        if (prove2 == 1) {
+            return num - 2;
+        }
+
+        return 0;
+    }
+}
+
+class EvenNum extends Num {
+    @Override
+    public int PrevNum(int num) throws MyException{
+
+        if (num % 2 != 0) {
+            throw new MyException("You must type even number");
+        }
+
+        return num - 2;
+    }
+
+    @Override
+    public int NextNum(int num) throws MyException{
+
+        if (num % 2 != 0) {
+            throw new MyException("You must type even number");
+        }
+
+        return num + 2;
+    }
+
+    @Override
+    public String toString(int num) throws MyException{
+
+        if (num % 2 != 0) {
+            throw new MyException("You must type even number");
+        }
+
+        return "" + num;
+    }
+
+    public int Sum(int num1, int num2) throws MyException{
+
+            if (num1 % 2 != 0 || num2 % 2 != 0) {
+                throw new MyException("You must type even number");
+            }
+
+        return num1 + num2;
+    }
+}
+
+
+class Sort implements Comparator<Num> {
+
+    @Override
+    public int compare(Num num1, Num num2) {
+
+        Scanner console=new Scanner(System.in);
+
+        System.out.println(" Следующее число1 и число2:");
+
+        try {
+            return num1.NextNum(console.nextInt()) - num2.NextNum(console.nextInt());
+        }catch(MyException e){ }
+
+        return 0;
+    }
+}

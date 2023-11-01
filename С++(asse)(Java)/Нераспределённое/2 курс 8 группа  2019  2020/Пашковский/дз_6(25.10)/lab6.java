@@ -1,0 +1,145 @@
+package app;
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+
+class wrongYear extends Exception{}
+class wrongNumber extends Exception{}
+
+class runcmp implements Comparator<bus>
+{
+	@Override
+	public int compare(bus b1,bus b2)
+	{
+		if(b1.getrun()==b2.getrun())
+			return 0;
+		if(b1.getrun()>b2.getrun())
+			return -1;
+		return 1;
+	}
+}
+
+class fiocmp implements Comparator<bus>
+{
+	@Override
+	public int compare(bus b1,bus b2)
+	{
+		return b1.getdriver().compareTo(b2.getdriver());
+	}
+}
+enum busType{city,intercity,international}
+class bus
+{
+	private static int count=0;
+	private int id;
+	private String driver;
+	private int number;
+	private busType type;
+	private double mileage;
+	private final String brand;
+	private final int firstRace;
+	bus(int id1,String driver1,int num,busType type1,String brand,int firstRun, double path)
+	throws wrongYear,wrongNumber
+	{
+		if(firstRun>2019 || firstRun<1945)
+			throw new wrongYear();
+		if(num<=0)
+			throw new wrongNumber();
+		id=id1;
+		driver=driver1;
+		number=num;
+		type=type1;
+		this.brand=brand;
+		firstRace=firstRun;
+		mileage=path;
+		count++;
+	}
+	public busType getType()
+	{
+		return type;
+	}
+	public int getid()
+	{
+		return id;
+	}
+	public int getnum()
+	{
+		return number;
+	}
+	public double getrun()
+	{
+		return mileage;
+	}
+	public int getyear()
+	{
+		return firstRace;
+	}
+	public String getdriver()
+	{
+		return driver;
+	}
+	public String getbrand()
+	{
+		return brand;
+	}
+	public int getcount()
+	{
+		return count;
+	}
+	public String toString()
+	{
+		return "id="+id+"\nМарка: "+brand+"\nВодитель: "+driver+"\nНомер: "+number+
+				"\nТип: "+type+"\nПервый рейс: "+firstRace+"\nПробег: "+mileage+"\n";
+	}
+}
+public class lab6 {
+
+	public static void main(String[] args) throws FileNotFoundException, wrongYear, wrongNumber {
+		PrintStream printFile=new PrintStream("output.txt");
+		Scanner sc=new Scanner(System.in);
+		bus []mas= {
+			new bus(111,"Karpovich A V",7,busType.city,"maz",1998,324047),
+			new bus(212,"Shienok P E",1,busType.city,"PA",2016,14255),
+			new bus(713,"Kotov M P",144,busType.international,"Setra",2006,115692),
+			new bus(142,"Alexeev A V",1,busType.city,"maz",2000,244044),
+			new bus(619,"Kamysh V A",43,busType.intercity,"ikarus",1989,501923),
+			new bus(195,"Novikov S M",1,busType.city,"PA",2008,54255),
+			new bus(555,"Lobach V I",34,busType.intercity,"maz",2010,43570)
+		};
+		for(bus a:mas)
+			printFile.println(a+"\n");
+		printFile.println(mas[2].getcount());
+		System.out.println("Введите тип маршрута:");
+		String in=sc.next();
+		printFile.println("Тип маршрута:"+in+"//////////////////////////////");
+		busType t=busType.valueOf(in);
+		for(bus a:mas)
+			if(a.getType()==t)
+				printFile.println(a.toString());
+		
+		System.out.println("Введите марку автобуса:");
+		String in2=sc.next();
+		printFile.println("Марка:"+in2+" и пробег >10 лет //////////////////////////////");
+		for(bus a:mas)
+			if(a.getbrand().equals(in2) && (2019-a.getyear())>10)
+				printFile.println(a.toString());
+		printFile.println("Пробег более 100000 км: //////////////////////////////");
+		for(bus a:mas)
+			if(a.getrun()>100000)
+				printFile.println(a.toString());
+		printFile.println("Сортировка по пробегу: //////////////////////////////");
+		Arrays.sort(mas,new runcmp());
+		for(bus a:mas)
+			printFile.println(a+"\n");
+		printFile.println("Сортировка в алфавитном порядке: //////////////////////////////");
+		Arrays.sort(mas,new fiocmp());
+		for(bus a:mas)
+			printFile.println(a+"\n");
+		System.out.println("Результат работы программы можно увидеть в файле output.txt:");
+		sc.close();
+		printFile.close();
+	}
+
+}

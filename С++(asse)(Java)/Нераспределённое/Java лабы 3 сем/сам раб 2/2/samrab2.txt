@@ -1,0 +1,124 @@
+package samrab2;
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import java.io.PrintStream; 
+import java.math.BigDecimal; 
+import java.math.RoundingMode; 
+import java.text.DecimalFormat; 
+import java.util.Arrays; 
+import java.util.Scanner;
+import java.util.Comparator;
+class CompareSlSq implements Comparator<GeomObjects>
+{
+    @Override
+    public int compare(GeomObjects A,GeomObjects B)
+    {
+         if(A.SliceSquare()==B.SliceSquare())
+            return 0;
+        if(A.SliceSquare()>B.SliceSquare())
+            return -1;
+        return 1;
+    }
+}
+interface GeomObjects
+{
+    public abstract double[] Middle();
+    public abstract double SliceSquare();
+}
+class Ball implements GeomObjects
+{
+    private final double[] Middle;
+    private final double Radius;
+    public Ball(double[] Middle,double Radius)
+    {
+        this.Radius=Radius;
+        this.Middle=Middle;
+    }
+    @Override
+    public double SliceSquare()
+    {
+        return this.Radius*this.Radius*Math.PI;
+    }
+    @Override
+    public double[] Middle()
+    {
+        return this.Middle;
+    }
+    public double[] GetMiddle()
+    {
+        return this.Middle;
+    }
+    public double GetRadius()
+    {
+        return this.Radius;
+    }
+    public String toString()
+    {
+        return "Ball: \nMiddle: "+Arrays.toString(this.Middle)+" Radius= "+this.Radius;
+    }
+}
+class Cylinder implements GeomObjects
+{
+    private double[] Middle;
+    private double Radius;
+    private double Hight;
+    public Cylinder(double[] Middle,double Radius,double Hight)
+    {
+        this.Radius=Radius;
+        this.Middle=Middle;
+        this.Hight=Hight;
+    }
+    @Override
+    public double SliceSquare()
+    {
+        return this.Radius*this.Radius*Math.PI;
+    }
+    @Override
+    public double[] Middle()
+    {
+        return this.Middle;
+    }
+    public double[] GetMiddle()
+    {
+        return this.Middle;
+    }
+    public double GetRadius()
+    {
+        return this.Radius;
+    }
+    public double GetHight()
+    {
+        return this.Hight;
+    }
+    @Override
+    public String toString()
+    {
+        return "Cylinder: \nMiddle: "+Arrays.toString(this.Middle)+" Radius= "+this.Radius
+            +" Hight: "+this.Hight;
+    }
+}
+public class Program
+{
+    public static void main(String[] args)
+    {
+        double[] m1={3,4,1},m2={9,4,2},m3={3,7,1},m4={9,0,1};
+        GeomObjects[] P={new Ball(m1,5),new Cylinder(m2,3,6),new Cylinder(m4,2,8),new Ball(m3,20)};
+        System.out.println("Центры тяжести:");
+        for(int i=0;i<P.length;++i)
+            System.out.println(Arrays.toString(P[i].Middle()));
+        System.out.println("Площади сечений: ");
+        for(int i=0;i<P.length;++i)
+            System.out.println(P[i].SliceSquare());
+        Arrays.sort(P,new CompareSlSq());
+        System.out.println("С сортировкой");
+        for(int i=0;i<P.length;++i)
+            System.out.println(P[i]);
+        Ball[] b={new Ball(m2,5),new Ball(m4,9)};
+        Cylinder[] с={new Cylinder(m1,7,7),new Cylinder(m3,4,3)};
+        System.out.println("Радиус первого шара: "+b[0].GetRadius());
+        System.out.println("Центр второго шара: "+Arrays.toString(b[1].GetMiddle()));
+        System.out.println("Радиус первого цилиндра: "+с[0].GetRadius());
+        System.out.println("Цетр второго цилиндра: "+Arrays.toString(с[1].GetMiddle()));
+        System.out.println("Высота второго цилиндра: "+с[1].GetHight());
+    } 
+}

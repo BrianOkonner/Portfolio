@@ -1,0 +1,82 @@
+﻿Build started 03.08.2022 22:32:30.
+     1>Project "D:\Учеба\Программирование\УП 1 курс моё\№10\ashita\ashita\ashita.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\ashita.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\ashita.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt stdafx.cpp /clr:nostdlib 
+         stdafx.cpp
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\ashita.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt MyForm.cpp AssemblyInfo.cpp /clr:nostdlib 
+         MyForm.cpp
+     1>d:\учеба\программирование\уп 1 курс моё\№10\ashita\ashita\Form1.h(24): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>d:\учеба\программирование\уп 1 курс моё\№10\ashita\ashita\Form1.h(365): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
+     1>d:\учеба\программирование\уп 1 курс моё\№10\ashita\ashita\Form1.h(372): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
+     1>d:\учеба\программирование\уп 1 курс моё\№10\ashita\ashita\Form1.h(376): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
+     1>d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\xmemory(208): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+                 d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\xmemory(280) : see reference to function template instantiation 'void std::allocator<_Ty>::construct<double>(int *,_Other &&)' being compiled
+                 with
+                 [
+                     _Ty=int,
+                     _Other=double
+                 ]
+                 d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\xtree(592) : see reference to function template instantiation 'void std::_Cons_val<std::allocator<_Ty>,_Ty,double>(_Alloc &,_Ty1 *,_Ty2 &&)' being compiled
+                 with
+                 [
+                     _Ty=int,
+                     _Alloc=std::allocator<int>,
+                     _Ty1=int,
+                     _Ty2=double
+                 ]
+                 d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\xtree(755) : see reference to function template instantiation 'std::_Tree_nod<_Traits>::_Node *std::_Tree_val<_Traits>::_Buynode<_Ty>(_Valty &&)' being compiled
+                 with
+                 [
+                     _Traits=std::_Tset_traits<int,std::less<int>,std::allocator<int>,true>,
+                     _Ty=double,
+                     _Valty=double
+                 ]
+                 d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\set(292) : see reference to function template instantiation 'std::pair<_Ty1,_Ty2> std::_Tree<_Traits>::insert<_Ty>(_Valty &&)' being compiled
+                 with
+                 [
+                     _Ty1=std::_Tree_const_iterator<std::_Tree_val<std::_Tset_traits<int,std::less<int>,std::allocator<int>,true>>>,
+                     _Ty2=bool,
+                     _Traits=std::_Tset_traits<int,std::less<int>,std::allocator<int>,true>,
+                     _Ty=double,
+                     _Valty=double
+                 ]
+                 d:\учеба\программирование\уп 1 курс моё\№10\ashita\ashita\Form1.h(361) : see reference to function template instantiation 'std::_Tree_const_iterator<_Mytree> std::multiset<_Kty>::insert<double>(_Valty &&)' being compiled
+                 with
+                 [
+                     _Mytree=std::_Tree_val<std::_Tset_traits<int,std::less<int>,std::allocator<int>,true>>,
+                     _Kty=int,
+                     _Valty=double
+                 ]
+         AssemblyInfo.cpp
+         Generating Code...
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /analyze- /errorReport:prompt "d:\Program Files\apache-maven-3.8.1\bin\.NETFramework,Version=v4.0.AssemblyAttributes.cpp"
+         .NETFramework,Version=v4.0.AssemblyAttributes.cpp
+       ManagedIncrementalBuildPostProcessDependencyGraph:
+         To improve incremental build performance for managed components, please make sure that the 'VC++ Directories->Reference Directories' points to all the paths which contain the referenced managed assemblies.
+         Could not load file or assembly 'file:///D:\PROGRAM FILES\MICROSOFT VISUAL STUDIO 10.0\VC\BIN\1049\CLUI.DLL' or one of its dependencies. Не удается найти указанный файл.
+         To improve incremental build performance for managed components, please make sure that the 'VC++ Directories->Reference Directories' points to all the paths which contain the referenced managed assemblies.
+         Could not load file or assembly 'file:///D:\PROGRAM FILES\MICROSOFT VISUAL STUDIO 10.0\COMMON7\IDE\MSPDBSRV.EXE' or one of its dependencies. Не удается найти указанный файл.
+       CoreResGen:
+         "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\NETFX 4.0 Tools\resgen.exe" /useSourcePath /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /compile Form1.resX,Debug\ashita.Form1.resources
+         Processing resource file "Form1.resX" into "Debug\ashita.Form1.resources".
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\app.res" app.rc 
+       Link:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\УП 1 курс моё\№10\ashita\Debug\ashita.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\ashita.Form1.resources /MANIFEST /ManifestFile:"Debug\ashita.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\УП 1 курс моё\№10\ashita\Debug\ashita.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\app.res
+         Debug\MyForm.obj
+         Debug\AssemblyInfo.obj
+         Debug\stdafx.obj
+         "Debug\.NETFramework,Version=v4.0.AssemblyAttributes.obj"
+         ashita.vcxproj -> D:\Учеба\Программирование\УП 1 курс моё\№10\ashita\Debug\ashita.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\УП 1 курс моё\№10\ashita\Debug\ashita.exe;#1" /manifest Debug\ashita.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\ashita.unsuccessfulbuild".
+         Touching "Debug\ashita.lastbuildstate".
+     1>Done Building Project "D:\Учеба\Программирование\УП 1 курс моё\№10\ashita\ashita\ashita.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.40

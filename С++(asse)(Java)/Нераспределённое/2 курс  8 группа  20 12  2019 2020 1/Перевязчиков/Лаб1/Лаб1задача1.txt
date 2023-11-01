@@ -1,0 +1,63 @@
+package lab1z1;
+import java.util.Scanner;
+/**
+ *
+ * @author fpm.perevyaz
+ */
+public class Program 
+{
+
+    public static boolean palindrom(int n)
+    {
+        int razr=1;
+        int ten=10;
+        int j=0;
+        int m=1;
+        int half=0,pred=0, posl=0;
+        if(n<10)
+            return true;
+        for(int i=1;i<=n;i=i*ten)
+                j++;
+        half=j/2;
+        for(int i=half;i>=1;i--)
+        {
+            for(int k=1;k<=i;k++)
+                razr*=ten;
+            pred+=((n%razr)/(razr/ten))*m;
+            m*=ten;
+            razr=1;
+        }
+        if(j%2==1)
+        {
+            for(int k=1;k<=half;k++)
+                razr*=ten;
+            razr=razr*ten;
+            posl=n/razr;
+        }
+        else
+            for(int k=1;k<=half;k++)
+                razr*=ten;
+            posl=n/razr;
+        if(posl==pred)
+            return true;
+        else
+            return false;
+    }
+    public static void main(String[] args) 
+    {
+        Scanner sc=new Scanner(System.in);
+        int n;
+        System.out.println("Введите число");
+        n=sc.nextInt();
+        if(palindrom(n))
+            System.out.println("Число "+n+" - падинром");
+        else
+            System.out.println("Число "+n+" - не падинром");
+        int n2=n*n;
+        if(palindrom(n2))
+            System.out.println("Число "+n+" - двойной падинром");
+        else
+            System.out.println("Число "+n+" - не двойной падинром");
+    }
+    
+}

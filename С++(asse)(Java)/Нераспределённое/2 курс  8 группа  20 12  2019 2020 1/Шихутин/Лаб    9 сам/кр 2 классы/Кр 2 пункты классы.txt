@@ -1,0 +1,327 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package кр2.пункт.классы;
+
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import java.io.PrintStream; 
+import java.math.BigDecimal; 
+import java.math.RoundingMode; 
+import java.text.DecimalFormat; 
+import java.util.Arrays; 
+import java.util.Scanner;
+import java.util.Comparator;
+import java.io.*;
+class ComparePer implements Comparator<Pause>
+{
+@Override
+public int compare(Pause A,Pause B){
+
+return A.NameOfProgramm.compareTo(B.NameOfProgramm);
+}
+}
+class CompareTIme implements Comparator<Pause>
+{
+@Override
+public int compare(Pause A,Pause B){
+    if(A.NameOfProgramm.equals(B.NameOfProgramm)){
+    if (A.Time==B.Time)
+        return 0;
+    if(A.Time>B.Time)
+        return -1;
+    return 1;}
+    return 0;
+}
+}
+enum TypeOfProduct
+{
+    toys,drinks,hotels,electronics;
+}
+class WrongTime extends Exception{};
+class Pause{
+ protected   int id;
+    protected  String  Product;
+     protected   TypeOfProduct Type;
+      protected String NameOfCompany;
+ protected String NameOfProgramm;
+ protected static int Count=0;
+ protected double Time;
+ public Pause(String  Product,TypeOfProduct Type,String NameOfCompany,String NameOfProgramm,double Time)throws WrongTime 
+      
+ {
+    
+      if(Time<0 || Time>20)
+          throw new WrongTime();
+      Count++;
+     this.id=Count;
+      this.Product=Product;
+      this.NameOfProgramm=NameOfProgramm;
+      this.NameOfCompany=NameOfCompany;
+      this.Type=Type;
+      this.Time=Time;
+}
+  public int getid()
+  {
+      return this.id;
+  }
+  public String toString()
+  {
+      return "Id= "+this.id+" Товар:"+this.Product+" Вид товара:"+this.Type+" Название фирмы: "+this.NameOfCompany+" Название передачи:"+this.NameOfProgramm+" Время передачи:"+this.Time;
+
+  }
+    public String getNameOfProgramm(){
+      return this.NameOfProgramm;
+    }
+     public String getNameOfCompany()
+  {
+      return this.NameOfCompany;
+  }
+     public double getTime()
+     {
+         return this.Time;
+     }
+     public String getProduct()
+     {
+         return this.Product;
+     }
+  
+     public void setTime(double Time)
+     {
+        this.Time=Time;
+     }
+    
+}
+
+class AdsWork 
+{
+    protected String Name;
+    protected String Adress;
+    protected Pause[] A;
+    public AdsWork(String Name,String Adress,Pause[] A)
+    {
+        this.Name=Name;
+        this.Adress=Adress;
+        this.A=A;
+    }
+    public String getName()
+    {
+        return this.Name;
+    }
+    public String getAdress()
+    {
+        return this.Adress;
+    }
+    @Override
+    public String toString()
+    {
+        StringBuffer str=new StringBuffer();
+        for(int i=0;i<A.length;i++)
+            str.append(A[i].toString()+"\n");
+       
+        return "AdsWork: "+this.Name+" || Street: "+this.Adress+"\n"+str.toString();
+    
+    }
+    public String Dlitelb(double S)
+    {
+       
+        StringBuffer str=new StringBuffer();
+        for(int i=0;i<A.length;i++)
+            if(A[i].Time>S)
+            {
+               str.append(A[i].toString()+"\n");
+            }
+        return str.toString();
+    }
+    public String SumPerTime()
+    {
+       int[] B=new int[A.length];
+       StringBuffer[] str=new StringBuffer[A.length];
+       for(int i=0;i<str.length;i++)
+           str[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<A.length;++i)
+       {
+           str[m].append(" "+this.A[i].NameOfProgramm);
+           
+         for(int k=0;k<m;k++)
+             if(str[m].toString().endsWith(str[k].toString()))
+                 prov=1;
+         if(prov!=1){       
+           B[m]+=A[i].Time;
+           for(int j=i+1;j<A.length;++j)
+           {
+               if(str[m].toString().endsWith(A[j].NameOfProgramm))
+               {
+                   B[m]+=A[j].Time;
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else{
+             str[m].delete(0, str[m].length());
+             prov=0;}
+         
+       }
+       StringBuilder str1=new StringBuilder();
+       str1.append("Время на передачи:\n");
+       for(int i=0;i<m;++i)
+       {
+           str1.append(str[i]).append(" = ").append(B[i]).append("\n");
+       }
+       return str1.toString();
+    }
+    public String NaibReklam()
+    {
+        int max=0;
+        int max1;
+        StringBuffer str=new StringBuffer();
+         StringBuffer str1=new StringBuffer();
+         str1.append(" ");
+        for(int j=0;j<A.length;++j)
+        {
+            max1=0;
+            str.append(A[j].Product);
+        for(int i=0;i<A.length;++i)
+        {
+            if(str.toString().endsWith(A[i].Product))
+                max1++;
+        }
+        if(max1>=max){
+            str1.delete(0,str1.length());
+            max=max1;
+        str1.append(A[j].Product);}
+        str.delete(0,str.length());
+        
+        }
+        int[] B=new int[A.length];
+       StringBuffer[] str2=new StringBuffer[A.length];
+       for(int i=0;i<str2.length;i++)
+           str2[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<A.length;++i)
+       {
+           if(A[i].Product.endsWith(str1.toString())){
+           str2[m].append(" "+this.A[i].NameOfProgramm);
+           
+         for(int k=0;k<m;k++)
+             if(str2[m].toString().endsWith(str2[k].toString()))
+                 prov=1;
+         if(prov!=1){       
+           B[m]+=A[i].Time;
+           for(int j=i+1;j<A.length;++j)
+           {
+               if(str2[m].toString().endsWith(A[j].NameOfProgramm) && A[j].Product.endsWith(str1.toString()))
+               {
+                   B[m]+=A[j].Time;
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else{
+             str2[m].delete(0, str2[m].length());
+             prov=0;}
+           }
+         
+       }
+       StringBuffer str3=new StringBuffer();
+       for(int i=0;i<m;++i)
+       {
+      
+           str3.append(str2[i]).append(" = ").append(B[i]).append("\n");
+       }
+        return "The most Popular Product: "+str1.toString()+"\n"+str3;
+    }
+    public String SumPerType()
+    {
+       int[] B=new int[A.length];
+       StringBuffer[] str=new StringBuffer[A.length];
+       for(int i=0;i<str.length;i++)
+           str[i]=new StringBuffer();
+       int m=0;
+       int prov=0;
+       for(int i=0;i<A.length;++i)
+       {
+           str[m].append(" "+this.A[i].Type.toString());
+           
+         for(int k=0;k<m;k++)
+             if(str[m].toString().endsWith(str[k].toString()))
+                 prov=1;
+         if(prov!=1){       
+           B[m]+=A[i].Time;
+           for(int j=i+1;j<A.length;++j)
+           {
+               if(str[m].toString().endsWith(A[j].Type.toString()))
+               {
+                   B[m]+=A[j].Time;
+               }
+           }
+           m++;
+           prov=0;
+           }
+         else{
+             str[m].delete(0, str[m].length());
+             prov=0;}
+         
+       }
+       StringBuilder str1=new StringBuilder();
+       str1.append("Время на вид товара:\n");
+       for(int i=0;i<m;++i)
+       {
+           str1.append(str[i]).append(" = ").append(B[i]).append("\n");
+       }
+       return str1.toString();
+    }
+}
+public class КР2ПунктКлассы {
+
+    
+    public static void main(String[] args) {
+      try{
+           FileInputStream pv=new FileInputStream("input.txt");
+           Scanner sc=new Scanner(pv);
+           PrintStream pv1=new PrintStream("output.txt");
+      Pause[] ultra=new Pause[sc.nextInt()];
+      sc.nextLine();
+      int k=0;
+      while(sc.hasNext())
+      {
+          String str=sc.nextLine();
+          String[] arr=str.split(" ");
+
+          ultra[k++]=new Pause(arr[0],TypeOfProduct.valueOf(arr[1]),arr[2],arr[3],Double.parseDouble(arr[4]));}
+    AdsWork MIR=new AdsWork("REKLAM","Nezalezhnaya",ultra);
+   pv1.println(MIR);
+    Scanner sc1=new Scanner(System.in);
+   pv1.println(MIR.SumPerTime());
+      pv1.println(MIR.SumPerType());
+     pv1.println(MIR.NaibReklam());
+     pv1.println("Введите желаемую гранчную величину времени(Для примера 5): ");
+   double s;
+//    s=sc1.nextDouble();
+    s=5;
+    pv1.println(MIR.Dlitelb(s));
+    Arrays.sort(MIR.A,new ComparePer());
+    pv1.println("Отсортированный по именам: ");
+         pv1.println(MIR);
+           Arrays.sort(MIR.A,new CompareTIme());
+    pv1.println("Отсортированный по времени: ");
+         pv1.println(MIR);
+         System.out.println("В файле");
+      }
+     catch(IOException e)
+       {
+           System.out.println("Ошибка");
+       }
+        catch(WrongTime e)
+                {
+                System.out.println("Error Money");
+                }
+      }
+}

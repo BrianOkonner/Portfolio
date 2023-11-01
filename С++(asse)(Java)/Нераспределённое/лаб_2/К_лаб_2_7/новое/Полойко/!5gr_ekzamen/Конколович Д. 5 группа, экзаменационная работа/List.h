@@ -1,0 +1,1 @@
+void find_max_char_in_list(listWithWords *list);

@@ -1,0 +1,36 @@
+
+1-Все композиции
+[ Id= 1 Flow: rosa Name_of_composition: Dolina kol: 21 cost: 3.0
+,  Id= 2 Flow: gerbera Name_of_composition: Flow kol: 1 cost: 4.0
+,  Id= 3 Flow: gerbera Name_of_composition: Dolina kol: 21 cost: 2.0
+,  Id= 4 Flow: lilia Name_of_composition: Test kol: 21 cost: 34.0
+,  Id= 5 Flow: lilia Name_of_composition: Flow kol: 34 cost: 3.0
+,  Id= 6 Flow: lilia Name_of_composition: Build kol: 56 cost: 45.0
+]
+Суммарное количество цветов входящих в композицию:
+ Dolina = 42
+ Flow = 35
+ Test = 21
+ Build = 56
+
+Композиции в которых есть цветы одного вида более 22
+ Flow = 34
+ Build = 56
+
+По самой дорогой композиции информация о количестве и стоимости входящих в нее цветов:
+lilia 56 45.0 
+Вся цена потраченная на цветы в композиции :
+ Dolina = 105
+ Flow = 106
+ Test = 714
+ Build = 2520
+
+
+3-Сортировка по названиям
+[ Id= 6 Flow: lilia Name_of_composition: Build kol: 56 cost: 45.0
+,  Id= 1 Flow: rosa Name_of_composition: Dolina kol: 21 cost: 3.0
+,  Id= 3 Flow: gerbera Name_of_composition: Dolina kol: 21 cost: 2.0
+,  Id= 2 Flow: gerbera Name_of_composition: Flow kol: 1 cost: 4.0
+,  Id= 5 Flow: lilia Name_of_composition: Flow kol: 34 cost: 3.0
+,  Id= 4 Flow: lilia Name_of_composition: Test kol: 21 cost: 34.0
+]

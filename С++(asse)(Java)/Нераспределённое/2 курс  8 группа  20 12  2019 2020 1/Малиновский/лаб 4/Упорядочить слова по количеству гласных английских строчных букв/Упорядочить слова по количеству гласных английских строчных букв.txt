@@ -1,0 +1,93 @@
+//Упорядочить слова по количеству гласных английских строчных букв
+package javaapplication9;
+
+/**
+ *
+ * @author lesha
+ */
+import java.io.*;
+import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+public class JavaApplication9 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+BufferedReader reader;
+
+    
+try {
+reader = new BufferedReader(new FileReader("myfile.txt"));
+BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+String vo = reader.readLine();
+while(vo != null)
+{
+String[] str = new String[numOfWords(vo)];
+int j =0;
+int p=0;
+for(int i =0; i< vo.length(); i++)
+{
+    if(vo.charAt(i) == ' ')
+    {
+        str[j] = vo.substring(p,i);
+        p = i+1;
+        j++;
+    }
+}
+str[j] = vo.substring(p,vo.length());
+ Arrays.sort(str, new Comparator<String>() {
+        public int compare(String t1, String t2)
+        {
+           return numVowels(t2) - numVowels(t1) ;
+        }
+
+    });
+for(int i =0; i< str.length; i++)
+{
+writer.write(str[i]+ " ");
+}
+writer.newLine();
+
+
+  vo = reader.readLine();
+}
+writer.close();
+}catch (IOException e) {
+			System.out.println("error");
+		}
+
+    }
+   static private int numVowels(String vowels) 
+{
+    int vowelCount = 0;
+
+    for(int i = 0; i < vowels.length(); i++)
+    {
+        if((vowels.charAt(i) == 'y') || (vowels.charAt(i) == 'a') || (vowels.charAt(i) == 'e')  || (vowels.charAt(i) == 'i') || (vowels.charAt(i) == 'o') || (vowels.charAt(i) == 'u'))
+        {
+            vowelCount++; 
+        }
+    }
+    return vowelCount;
+}
+   static private int numOfWords(String str) 
+{
+    int count =1;
+    for(int i =0; i< str.length(); i++)
+    {
+   
+        if(str.charAt(i) == ' ')
+        {
+            count++;
+        }
+       
+    }
+    return count;
+}
+}

@@ -1,0 +1,46 @@
+Ўаблоны класса можно настроить дл€ определенных типов или значений аргументов шаблона. —пециализаци€ позвол€ет выполн€ть настройку кода шаблона дл€ конкретного типа аргумента или значени€. Ѕез специализации один и тот же код создаетс€ дл€ всех типов, используемых в создании экземпл€ра шаблона. ¬ специализации, когда используютс€ определенные типы, вместо исходного определени€ шаблона используетс€ определение дл€ специализации. —пециализаци€ имеет то же им€, что и шаблон, который она специализирует. ќднако специализаци€ шаблона может по многим параметрам отличатьс€ от исходного шаблона. Ќапример, она может иметь разные члены данных и функции-члены.
+»спользуйте специализацию дл€ настройки шаблона дл€ конкретного типа или значени€. »спользуйте частичную специализацию, если шаблон содержит несколько аргументов, а требуетс€ специализировать только один из них, либо если нужно специализировать поведение дл€ всего набора типов, например всех типов указателей, ссылочных типов или типов массивов. ƒополнительные сведени€ см. в разделе „астична€ специализаци€ шаблонов классов.
+ѕример
+ // explicit_specialization1.cpp
+// compile with: /EHsc
+#include <iostream>
+using namespace std;
+
+// Template class declaration and definition
+template <class T> class Formatter
+{
+   T* m_t;
+public:
+   Formatter(T* t) : m_t(t) { }
+   void print()
+   {
+      cout << *m_t << endl;
+   }
+};
+
+// Specialization of template class for type char*
+template<> class Formatter<char*>
+{
+   char** m_t;
+public:
+   Formatter(char** t) : m_t(t) { }
+   void print()
+   {
+      cout << "Char value: " << **m_t << endl;
+   }
+};
+
+int main()
+{
+   int i = 157;
+   // Use the generic template with int as the argument.
+   Formatter<int>* formatter1 = new Formatter<int>(&i);
+
+   char str[10] = "string1";
+   char* str1 = str;
+   // Use the specialized template.
+   Formatter<char*>* formatter2 = new Formatter<char*>(&str1);
+
+   formatter1->print();
+   formatter2->print();
+}

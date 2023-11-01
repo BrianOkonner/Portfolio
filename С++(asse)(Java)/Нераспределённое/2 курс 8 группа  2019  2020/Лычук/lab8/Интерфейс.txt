@@ -1,0 +1,244 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Comparator;
+  class cmp_square  implements Comparator<PlaneFigure> {
+
+    @Override
+    public int compare(PlaneFigure t1, PlaneFigure t2) {
+        if(t1.square() == t2.square())
+            return 0;
+        else
+        if(t1.square() >t2.square())
+            return 1;
+        else
+            return -1;
+    }
+}
+interface PlaneFigure {
+    abstract public double perimetr();
+    abstract public double square();
+}
+interface  Location{
+    abstract  public  int location(Object obj);
+}
+
+class Circle implements PlaneFigure, Location{
+    private int x;
+    private int y;
+    private double radius;
+
+    Circle(int x, int y, double radius){
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    @Override
+    public String toString() {
+        return "Circle: x="+this.x+", y="+this.y+", raduis:"+this.getRadius();
+    }
+
+     @Override
+    public double perimetr() {
+        return 2*this.getRadius()*3.14;
+    }
+
+    @Override
+    public double square() {
+        return this.getRadius()*this.getRadius()*3.14;
+    }
+
+   @Override
+    public int location(Object o) {
+        if (!(o instanceof Circle))
+            return 0;
+        Circle t = (Circle)o;
+        double dis = Math.sqrt((this.x -t.getX())) * (this.x - t.getX()) +(this.y - t.getY()) *(this.x -t.getY());
+        if(dis > this.radius +t.getRadius())
+            return 1;
+        if (dis == this.radius +t.getRadius())
+            return 2;
+        return 3;
+    }
+}
+
+class Rectangle implements PlaneFigure, Location{
+    private int x1,y1;
+    private int x2,y2;
+    Rectangle(int x1,int y1,int x2,int y2){
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y2;
+        this.y2 = y2;
+    }
+     @Override
+    public double perimetr() {
+      //  return Math.abs(y2-y1)*4;
+        return (double) (2*((x2-x1)+(y2-y1)));
+    }
+
+     @Override
+    public double square() {
+      //  return Math.abs(y2-y1)*Math.abs(y2-y1);
+        return (double) ((y2-y1)*(y2-y1));
+    }
+    public int getX1() {
+        return this.x1;
+    }
+
+    public int getX2() {
+        return this.x2;
+    }
+
+    public int getY1() {
+        return this.y1;
+    }
+
+    public int getY2() {
+        return this.y2;
+    }
+
+    @Override
+    public int location(Object o) {
+        if (!(o instanceof Rectangle))
+            return 0;
+        Rectangle t = (Rectangle) o;
+        int X[] = new int [4];
+        X[0] = this.x1; X[1] = this.x1; X[2] = this.x2; X[3] = this.x2;
+        int Y[] = new int [4];
+        Y[0] =  this.y1; Y[1] = this.y2;  Y[2] = this.y1;  Y[3] = this.y2;
+        int A[] = new int [4];
+        A[0] = t.getX1(); A[1] = t.getX1();  A[2] = t.getX2();  A[3] = t.getX2();
+        int B[] = new int [4];
+        B[0] = t.getY1(); B[1] = t.getY2(); B[2] = t.getY1();  B[3] = t.getY2();
+
+        int k=0;
+        for(int i=0;i<4;i++)
+            for(int j =0;j<4;j++)
+                if (X[j] == A[i])
+                    if(Y[j] == B[i])
+                        k++;
+        if (k==2) return 2;
+        k=0;
+        int t1 =1;
+        for(int i=0;i<4;i+=2){
+            for(int j =0;j<4;j++)
+                if (X[i] == A[j] && X[i+1]> A[j]){
+                    if(t1==3){
+                        if(Y[t1]> B[i] && Y[t1+1] < B[i])
+                            k++;
+                        break;
+                    }
+                    if (Y[t1] > B[i] && Y[t1+1] > B[i])
+                        k++;
+                }
+            t1=t1+2;
+        }
+        if(k== 2) return 3;
+        if(k!=1 || k!=3 ) return 0;
+        if (k==4) return 3;
+        else return 1;
+
+    }
+
+     @Override
+    public String toString() {
+        return "Rectangl: x1= "+x1+" y1= "+y1+" x2= "+x2 +" y2= "+ y2;
+    }
+}
+
+class Triangle implements PlaneFigure{
+    private double a;
+    private double b;
+    private double c;
+
+    Triangle(double a, double b, double c){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    @Override
+    public double perimetr() {
+        return a+b+c;
+    }
+
+    @Override
+    public double square() {
+        double p = (this.perimetr()/2);
+        return Math.sqrt(p*(p-a)*(p-b)*(p-c));
+    }
+    @Override
+    public String toString() {
+        return "Triangle: a="+this.a+",b="+this.b+":c"+this.c;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        Circle c1 = new Circle(2, 2, 3);
+        System.out.println(c1.toString());
+        Rectangle r1 = new Rectangle(1, 1, 5, 4);
+        System.out.println(r1.toString());
+        Triangle t1 = new Triangle(3, 4, 5);
+        System.out.println(t1.toString());
+
+        System.out.println("\nArray1:");
+        PlaneFigure F1[] = new PlaneFigure[3];
+        F1[0] = c1;
+        F1[1] = r1;
+        F1[2] = t1;
+        for (PlaneFigure p : F1) {
+            System.out.println(p);
+            System.out.println("perimetr = " + p.perimetr());
+            System.out.println("square = " + p.square());
+        }
+
+        System.out.println("\nSort Array1:");
+        Arrays.sort(F1, new cmp_square());
+        System.out.println(Arrays.toString(F1));
+
+        System.out.println("\nSort Array1:");
+        for (PlaneFigure p : F1) {
+            System.out.print(p);
+            System.out.println(" square = " + p.square());
+
+        }
+
+        System.out.println("\nArray2:");
+        Circle c2 = new Circle(8, 2, 2);
+        System.out.println(c2);
+        Rectangle r2 = new Rectangle(1, 1, 5, 4);
+        System.out.println(r2);
+        Location L1[] = new Location[2];
+        L1[0] = c2;
+        L1[1] = r2;
+
+        System.out.println("\nArray2 Location:");
+        for (Location p : L1) {
+            System.out.println("who: " + p);
+            System.out.println("with: " + c2);
+            System.out.println(p.location(c2));
+
+
+        }
+    }
+}
+
+
+
+
+
+

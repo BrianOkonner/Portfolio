@@ -1,0 +1,106 @@
+package com.company;
+import java.util.Arrays;
+class Matrix{
+    private int size;
+    private int[]Matr;
+    Matrix(){
+        size=0;
+        Matr=new int[1];
+        Matr[0]=0;
+    }
+    Matrix(int size){
+        this.size=size;
+        Matr=new int[size];
+        for (int i = 0; i < size; i++) {
+            Matr[i]=0;
+        }
+    }
+    Matrix(int[]M){
+        size=M.length;
+        Matr=new int[size];
+        for (int i = 0; i <size ; i++) {
+            Matr[i]=M[i];
+        }
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int[] getMatr() {
+        return Matr;
+    }
+
+    public Matrix Add(Matrix M){
+        int[] Res=new int[size];
+       int[] Mmatr=M.getMatr();
+        for (int i = 0; i <size ; i++) {
+            Res[i]=this.Matr[i]+Mmatr[i];
+
+        }
+        return new Matrix(Res);
+    }
+    public Matrix Mult(int k){
+        int[] Res=new int[size];
+        for (int i = 0; i <size ; i++) {
+            Res[i]=this.Matr[i]*k;
+
+        }
+        return new Matrix(Res);
+    }
+    public int Trace(){
+        int trace=0;
+        int k=0;
+        for (int i = 0; i < size; i=i+k) {
+            trace=trace+Matr[i];
+            k=size-k;
+            k++;
+        }
+        return trace;
+    }
+
+    @Override
+    public String toString() {
+        int dim=0;
+        int sizeT=size;
+        while(sizeT>0){
+            dim++;
+            sizeT=sizeT-dim;
+        }
+        int[][] temp=new int[dim][dim];
+        int count=0;
+        for (int i=0;i<dim; i++){
+            for (int j = i; j < dim; j++) {
+                temp[i][j]=Matr[count];
+                temp[j][i]=Matr[count];
+                count++;
+            }
+        }
+        StringBuilder out=new StringBuilder();
+        for (int i=0; i<dim; i++) {
+            for (int j=0; j<dim; j++) {
+                out.append(temp[i][j] + " ");
+            }
+            out.append("\n");
+        }
+
+
+        return out.toString();
+
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+        int []i={0,1,2,3,4,5};
+        int []k={0,2,4,6,8,10};
+	    Matrix m=new Matrix(i);
+	    Matrix n=new Matrix(k);
+	    Matrix []MArr={m,n};
+	    m=m.Add(m);
+        n=n.Mult(5);
+        System.out.println(n.toString());
+        System.out.println(m.toString());
+
+    }
+}

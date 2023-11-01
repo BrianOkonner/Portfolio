@@ -1,0 +1,292 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.Scanner;
+
+class DurationException extends Exception {
+    @Override
+    public String toString() {
+        return "Invalid duration";
+    }
+}
+
+class DateException extends Exception {
+    @Override
+    public String toString() {
+        return "Invalid date";
+    }
+}
+
+enum Mark {
+    MI6("MI-6"),
+    KT76("KT-76"),
+    S70("S-70"),
+    EC135("EC135"),
+    BELL407("Bell 407");
+
+    private String name;
+
+    Mark(String name) {
+        this.name = name;
+    }
+}
+
+class HelicopterFlight {
+    private static int counter = 1;
+    private int id;
+    private int number;
+    private Mark mark;
+    private String date;
+    private String pilotSurname;
+    private int duration;
+
+    public HelicopterFlight(int number, Mark mark, String date, String pilotSurname, int duration) {
+        try {
+            if (!(date.matches("\\d{2}.\\d{2}.\\d{4}"))) {
+                throw new DateException();
+            }
+            if (duration <= 0) {
+                throw new DurationException();
+            }
+        } catch (DateException | DurationException exception) {
+            System.out.println(exception.getMessage());
+        }
+        this.id = counter;
+        counter++;
+        this.number = number;
+        this.mark = mark;
+        this.date = date;
+        this.pilotSurname = pilotSurname;
+        this.duration = duration;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public Mark getMark() {
+        return mark;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getPilotSurname() {
+        return pilotSurname;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDate(String date) {
+        try {
+            if (!(date.matches("\\d{2}.\\d{2}.\\d{4}"))) {
+                throw new DateException();
+            }
+        } catch (DateException exception) {
+            System.out.println(exception.getMessage());
+        }
+        this.date = date;
+    }
+
+    public void setPilotSurname(String pilotSurname) {
+        this.pilotSurname = pilotSurname;
+    }
+
+    @Override
+    public String toString() {
+        return "HelicopterFlight{" +
+                "id=" + id +
+                ", number=" + number +
+                ", mark='" + mark.name() + '\'' +
+                ", date='" + date + '\'' +
+                ", pilot surname='" + pilotSurname + '\'' +
+                ", duration='" + duration + '\'' +
+                '}';
+    }
+
+    public static int getCount() {
+        return counter;
+    }
+}
+
+class AviationGroup {
+    private String name;
+    private String address;
+    private HelicopterFlight[] flights;
+
+    public AviationGroup(String name, String address, HelicopterFlight[] flights) {
+        this.name = name;
+        this.address = address;
+        this.flights = flights;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public HelicopterFlight[] getFlights() {
+        return flights;
+    }
+
+    public void setFlights(HelicopterFlight[] flights) {
+        this.flights = flights;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (HelicopterFlight flight : flights) {
+            stringBuffer.append("\n" + flight);
+        }
+        return "AviationGroup{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                "\nFlights:" + stringBuffer.toString() +
+                '}';
+    }
+
+    public String getAllInfo() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Mark[] marks = Mark.values();
+        for (Mark mark : marks) {
+            stringBuilder.append(mark.name() + ": " + this.getMarksFlightCount(mark.name()) + " flights, ");
+            stringBuilder.append("\n");
+            stringBuilder.append("\nPilots: ");
+            for (HelicopterFlight flight : flights) {
+                if (flight.getMark() == mark) {
+                    stringBuilder.append(flight.getPilotSurname() + " ");
+                }
+            }
+            stringBuilder.append(";\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getInfoAboutPilotsWithDurationMoreThanGiven(int duration) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (HelicopterFlight flight : flights) {
+            if (flight.getDuration() > duration) {
+                stringBuffer.append(flight.getPilotSurname() + " ");
+            }
+        }
+        return stringBuffer.toString();
+    }
+
+    public String getAverageDuration(String mark) {
+        StringBuffer stringBuffer = new StringBuffer();
+        double average = 0;
+        int count = 0;
+        for (HelicopterFlight flight : flights) {
+            if (flight.getMark().name() == mark) {
+                count++;
+                average = average + flight.getDuration();
+            }
+        }
+        average = average / count;
+        stringBuffer.append("Average duration of " + mark + ": " + average);
+        return stringBuffer.toString();
+    }
+
+    public int getMarksFlightCount(String mark) {
+        int count = 0;
+        for (HelicopterFlight flight : flights) {
+            if (flight.getMark().name() == mark) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public String getDatesAndPilotsForMaxFlightHelicopter() {
+        int max = 0;
+        Mark temp = Mark.MI6;
+        Mark[] marks = Mark.values();
+        for (Mark mark : marks) {
+            if (this.getMarksFlightCount(mark.name()) > max) {
+                max = this.getMarksFlightCount(mark.name());
+                temp = mark;
+            }
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Helicopter with max flights: " + temp.name());
+        for (HelicopterFlight flight : flights) {
+            if (flight.getMark() == temp) {
+                stringBuffer.append(flight.getPilotSurname() + ", date " + flight.getDate() + "\n");
+            }
+        }
+        return stringBuffer.toString();
+    }
+
+    public String getSumDuration() {
+        StringBuffer stringBuffer = new StringBuffer();
+        Mark[] marks = Mark.values();
+        int temp = 0;
+        for (Mark mark : marks) {
+            for (HelicopterFlight flight : flights) {
+                if (flight.getMark() == mark) {
+                    temp = temp + flight.getDuration();
+                }
+            }
+            stringBuffer.append(mark.name() + ": " + temp + "; ");
+            temp = 0;
+        }
+        return stringBuffer.toString();
+    }
+}
+
+public class ClassesProgram {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader1 = new BufferedReader(new InputStreamReader(
+                new FileInputStream("input1.txt")));
+        FileOutputStream outputFile = new FileOutputStream("output.txt");
+
+        Scanner scanner = new Scanner(System.in);
+        Scanner scanner1 = new Scanner(System.in);
+        HelicopterFlight helicopterFlights[] = new HelicopterFlight[8];
+        int count = 0;
+        PrintStream printStream = new PrintStream(outputFile);
+
+        String line;
+        while ((line = bufferedReader1.readLine()) != null) {
+            String[] arr = line.split(",");
+            int number = Integer.valueOf(arr[0]);
+            Mark mark = Mark.valueOf(arr[1]);
+            String date = arr[2];
+            String surname = arr[3];
+            int duration = Integer.valueOf(arr[4]);
+            helicopterFlights[count] = new HelicopterFlight(number, mark, date, surname, duration);
+            count++;
+        }
+        bufferedReader1.close();
+
+        AviationGroup aviationGroup = new AviationGroup("AG", "Wall str, 35", helicopterFlights);
+        printStream.println("All helicopters: " + aviationGroup.getAllInfo());
+        printStream.println("All pilots, duration > 100: " + aviationGroup.getInfoAboutPilotsWithDurationMoreThanGiven(100));
+        printStream.println("All helicopters, average duration: ");
+        printStream.println(aviationGroup.getAverageDuration("MI6"));
+        printStream.println(aviationGroup.getAverageDuration("KT76"));
+        printStream.println(aviationGroup.getAverageDuration("S70"));
+        printStream.println(aviationGroup.getAverageDuration("EC135"));
+        printStream.println(aviationGroup.getAverageDuration("BELL407"));
+        printStream.println("Helicopter, max flights, info about flights and surnames: ");
+        printStream.println(aviationGroup.getDatesAndPilotsForMaxFlightHelicopter());
+        printStream.println("Sum duration of flights for each mark: ");
+        printStream.println(aviationGroup.getSumDuration());
+        outputFile.close();
+        System.out.println("Count: " + HelicopterFlight.getCount());
+    }
+}

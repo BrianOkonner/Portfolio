@@ -1,0 +1,89 @@
+class Mp{
+    protected final Integer id;
+    protected String Name;
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        Mp.count = count;
+    }
+
+    public Genre getGen() {
+        return gen;
+    }
+
+    public int getLen() {
+        return len;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setGen(Genre gen) {
+        this.gen = gen;
+    }
+
+    public void setLen(int len) {
+        this.len = len;
+    }
+
+
+
+    enum  Genre{a,b,c}
+    protected Genre gen;
+    protected int len;
+    protected static int count=0;
+    public Mp(String name,Genre g,int le){
+        id=count;
+        count ++;
+        Name=name;
+        len=le;
+        gen=g;
+    }
+    public String getName() {
+        return Name;
+    }
+    public void setName(String name) {
+        Name = name;
+    }
+    @Override
+    public String toString() {
+        return Name+" "+id.toString();
+    }
+
+
+
+    class Sal{
+        private String Name;
+        private Mp[] arr;
+        public Sal(String name,Mp[]arr){
+            Name=name;
+            this.arr=new Mp[arr.length];
+            System.arraycopy(arr,0,this.arr,0,arr.length);
+        }
+        @Override
+        public String toString() {
+            return "Club: "+name+"\n"+arr.toString();
+        }
+        public String Out(){
+            System.out.println("All:");
+            StringBuilder s=new StringBuilder();
+            for (int i = 0; i <arr.length ; i++) {
+                s.append(arr[i]+"\n");
+            }
+            return s.toString();
+    }
+    public String onlyLen(int l){
+        StringBuilder s=new StringBuilder();
+        for (int i = 0; i <arr.length ; i++) {
+            if(arr[i].getLen()<l)
+            s.append(arr[i]+"\n");
+        }
+        return s.toString();
+        }
+        
+    }
+}

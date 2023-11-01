@@ -1,0 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+/**
+ *
+ *
+    В матрице найти наибольшее количество рядомстоящих одинаковых элементов
+ */
+public class Jap1 
+{
+
+    public static void main(String[] args) 
+    {
+        try
+        {
+            FileInputStream InputF=new FileInputStream("Input.txt");
+            Scanner sc=new Scanner(InputF);
+            int a=sc.nextInt();
+            int b=sc.nextInt();
+            int[][]Mas=new int[a][b];
+            for(int i=0;i<a;i++)
+            {
+                for(int j=0;j<b;j++)
+                {
+                    Mas[i][j]=sc.nextInt();
+                }
+            }
+            
+            int sum=1;
+            int max=0;
+            int maxStrok=0;
+            int indStrok=0;
+            for(int i=0;i<a;i++)
+            {
+                int j=0;
+                while(j!=b-1)
+                {
+                    if(Mas[i][j]==Mas[i][j+1])
+                    {
+                        sum++; 
+                        j++;
+                    }
+                    else
+                    {
+                        max=sum;
+                        j++;
+                        sum=1;
+                    }
+                    
+                     if(max>maxStrok)
+                    {
+                        maxStrok=max;
+                        indStrok=i;
+                    }
+                }
+                
+               
+            }
+            
+            System.out.println("Номер строки :"+indStrok);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Файл не найден");
+        }
+    }
+    
+}

@@ -1,0 +1,277 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+
+class exception1 extends  Exception{}
+class exception2 extends  Exception{}
+class Gun{
+    private final int id;
+    private String model;
+    private boolean handy;//true-one false two
+    private String origin;
+    private String material;
+    private int aimDistance;
+    private boolean clip;
+    private boolean optic;
+    private static int count=0;
+    public Gun(String model,boolean handy,String origin,String material,int aimDistance,
+               boolean clip,boolean optic) throws exception1, exception2 {
+        this.aimDistance=aimDistance;
+        this.clip=clip;
+        this.handy=handy;
+        this.id=count;
+        count++;
+        this.material=material;
+        this.model=model;
+        this.optic=optic;
+        this.origin=origin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        /*String s=new String();
+        s="Model: "+model+ " Origin: "+origin+" Material: "+material+" Aim distance: "+aimDistance;*/
+        return "Model: "+model+ " Origin: "+origin+" Material: "+material+" Aim distance: "+aimDistance;
+    }
+
+    public boolean isClip() {
+        return clip;
+    }
+
+    public boolean isHandy() {
+        return handy;
+    }
+
+    public boolean isOptic() {
+        return optic;
+    }
+
+    public int getAimDistance() {
+        return aimDistance;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setAimDistance(int aimDistance) {
+        this.aimDistance = aimDistance;
+    }
+
+    public void setClip(boolean clip) {
+        this.clip = clip;
+    }
+
+    public void setHandy(boolean handy) {
+        this.handy = handy;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setOptic(boolean optic) {
+        this.optic = optic;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+}
+
+class Firearm{
+    private String name;
+    private ArrayList<Gun> arr;
+    public Firearm(String name,int n)throws exception2, exception1 {
+        if (n<=0)
+            throw new exception1();
+        arr=new ArrayList<Gun>();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Gun> getArr() {
+        return arr;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setArr(ArrayList<Gun> arr) {
+        this.arr = arr;
+    }
+
+    @Override
+    public String toString() {
+        String s=new String();
+        for(Gun g: arr){
+            s+=g.toString()+"\n";
+        }
+        return s;
+    }
+    public ArrayList<Gun> empty(){
+        return new ArrayList<Gun>();
+    }
+    public  ArrayList<Gun> add(Gun g){
+        arr.add(g);
+        return arr;
+    }
+    public ArrayList<Gun> del(Gun g){
+        arr.remove(g);
+        return arr;
+    }
+    public ArrayList<Gun> change(Gun tochange,Gun newg){
+        arr.set(arr.indexOf(tochange),newg);
+        return  arr;
+    }
+    public boolean isIn(Gun g){
+        return arr.contains(g);
+    }
+    public ArrayList<Gun> onlyAimDistance(int ad){
+        ArrayList<Gun> n=new ArrayList<Gun>();
+        for(Gun g: arr){
+           if(g.getAimDistance()==ad)
+             n.add(g)  ;
+        }
+        return  n;
+    }
+    public ArrayList<Gun> onlyMaterial(String ad){
+        ArrayList<Gun> n=new ArrayList<Gun>();
+        for(Gun g: arr){
+            if(g.getMaterial().equals(ad))
+                n.add(g)  ;
+        }
+        return  n;
+    }
+    public static Comparator<Gun> num=new Comparator<Gun>() {
+        @Override
+        public int compare(Gun gun, Gun t1) {
+            return gun.getAimDistance()-t1.getAimDistance();
+        }
+    };
+    public ArrayList<Gun> sortN(){
+        Collections.sort(arr,Firearm.num);
+        return arr;
+    }
+    public static Comparator<Gun> str=new Comparator<Gun>() {
+        @Override
+        public int compare(Gun gun, Gun t1) {
+            return gun.getMaterial().compareTo(t1.getMaterial());
+        }
+    };
+    public ArrayList<Gun> sortS(){
+        Collections.sort(arr,Firearm.str);
+        return arr;
+    }
+
+    public Set<String> getOrigin1()
+    {
+        Set<String> Origins=new HashSet<String>();
+        for(Gun s:arr)
+            Origins.add(s.getMaterial());
+        return Origins;
+    }
+    public Set<String> getOrigin2()
+    {
+        Set<String> Origins=new TreeSet<String>();
+        for(Gun s:arr)
+            Origins.add(s.getMaterial());
+        return Origins;
+    }
+    public static Set<String> Union(Set<String> A,Set<String> B)
+    {
+        Set<String> C=new HashSet<String>();
+        for(String str1:A)
+            C.add(str1);
+        C.addAll(B);
+        return C;
+    }
+    public static Set<String> Substraction(Set<String> A,Set<String> B)
+    {
+        Set<String> C=new HashSet<String>();
+        Set<String> D=new HashSet<String>();
+        for(String st1:A)
+            D.add(st1);
+        D.removeAll(B);
+        for(String st2:D)
+            C.add(st2);
+        return C;
+    }
+    public static Set<String> Overlapping(Set<String> A,Set<String> B)
+    {
+        Set<String> C=new HashSet<String>();
+        Set<String> D=new HashSet<String>();
+        for(String st1:A)
+            D.add(st1);
+        C=Substraction(D,Substraction(Union(D,B),B));
+        return C;
+    }
+
+}
+public class Main {
+
+    public static void main(String[] args)throws exception1,exception2, IOException {
+	int res=0;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Menu is made like that (1)");
+	while (res!=-1){
+        System.out.println(" enter num (-1 exit)");
+        res=sc.nextInt();
+        Firearm obj;
+        switch (res){
+            case 1:
+                obj=new Firearm("Noth",1);
+                ArrayList<Gun> a=new ArrayList<>();
+                a.add(new Gun("rttr",true,"tkk","tmrethn", 500, true,true));
+                a.add(new Gun("iugpup",true,"ikvilugfpk","kklhvpik", 600, false,true));
+                a.add(new Gun("rtthw4h2tr",false,"tkk","kk", 500, true,true));
+                a.add(new Gun("rfgttr",true,"tkgk","kk", 9000, true,true));
+                Gun gtod=new Gun("rttr",true,"tkk","kkhtrh", 500, true,true);
+                a.add(gtod);
+                obj.setArr(a);
+                System.out.println(obj.toString());
+                obj.del(gtod);
+                System.out.println(obj.toString());
+                a.add(gtod);
+                System.out.println(obj.toString());
+                Gun gtoc=new Gun("rttrgq3h35h246h24t5h423ghqr",true,"tkk","kk", 500, true,true);
+                obj.change(gtod,gtoc);
+                System.out.println(obj.toString());
+                System.out.println(obj.isIn(gtoc));
+                obj.sortN();
+                System.out.println(obj.toString());
+                obj.sortS();
+                System.out.println(obj.toString());
+                ArrayList<Gun> a2=obj.onlyAimDistance(600);
+                ArrayList<Gun> a3=obj.onlyMaterial("kk");
+
+                break;
+            case -1: break;
+                }
+
+
+        }
+
+    }}
+

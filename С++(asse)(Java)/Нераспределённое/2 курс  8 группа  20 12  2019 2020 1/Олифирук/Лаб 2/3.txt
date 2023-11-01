@@ -1,0 +1,61 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication1;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+/**
+ *
+ * @author fpm.olifirukMV
+ */
+
+public class JavaApplication1 {
+
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        int[] mas; // объявление массива
+        mas = new int[10]; 
+        Scanner sc=new Scanner(System.in);
+        int a;
+        System.out.println("Введите число");
+        a=sc.nextInt();
+        while(a!=0)
+        {
+            mas[a%10]++;
+            a=a/10;
+        }
+        
+        int l=0;
+        int m=0;
+        int sum=0;
+        for(int i=0;i<10;i++)
+        {
+            if((mas[i]%2)!=0)
+            {
+                sum++;
+                l=i;
+            }
+        }
+        
+          if(sum<=1)
+          {
+               System.out.println("Можно составить палиндром");
+          }
+   
+         
+          else
+          {
+              System.out.println("Нельзя составить палиндром");
+              
+          }
+        
+    }
+    
+}

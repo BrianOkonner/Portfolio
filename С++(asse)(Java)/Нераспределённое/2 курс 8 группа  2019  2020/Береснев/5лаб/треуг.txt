@@ -1,0 +1,209 @@
+package com.company;
+
+import java.util.Comparator;
+import java.util.Arrays;
+
+
+class WrongTriangle extends Exception{};
+
+class cmpDlinTreug implements Comparator <Triangle>{
+    @Override
+    public int compare(Triangle t1, Triangle t2) {
+        double sr1 = t1.getAEdge()+t1.getBEdge()+t1.getCEdge()/2;
+        double sr2 = t2.getAEdge()+t2.getBEdge()+t2.getCEdge()/2;
+        if (sr1 == sr2)
+            return 0;
+        if(sr1>sr2)
+            return 1;
+        return -1;
+    }
+}
+
+
+class Triangle{
+    private final double aEdge;
+    private final double bEdge;
+    private final double cEdge;
+
+    //единичн  a+b>c, a+c>b, b+c>a, (a>0, b>0, c>0),
+    Triangle(){
+        this.aEdge = 1;
+        this.bEdge = 1;
+        this.cEdge = 1;
+    }
+
+    //произв
+    Triangle(double aEdge, double bEdge, double cEdge)throws WrongTriangle {
+        if ((aEdge+bEdge>cEdge)|| (aEdge+cEdge>bEdge)|| (bEdge+cEdge>aEdge) || (aEdge>0) ||(bEdge>0)||(cEdge>0)){
+            this.aEdge = aEdge;
+            this.bEdge = bEdge;
+            this.cEdge = cEdge;
+        }
+            else
+                throw new WrongTriangle();
+
+    }
+
+    //прямоуг
+    Triangle(double aEdge, double bEdge)throws WrongTriangle {
+        if ((aEdge>0) ||(bEdge>0)){
+            this.aEdge = aEdge;
+            this.bEdge = bEdge;
+            this.cEdge = Math.sqrt(aEdge*aEdge + bEdge*bEdge);
+        }
+        else
+            throw new WrongTriangle();
+
+    }
+
+    //равност
+    Triangle(double aEdge)throws WrongTriangle {
+        if (aEdge>0){
+            this.aEdge = aEdge;
+            this.bEdge = aEdge;
+            this.cEdge = aEdge;
+        }
+        else
+            throw new WrongTriangle();
+
+    }
+
+    //копия с удвоен
+    Triangle(Triangle obj){
+        this.aEdge = (obj.getAEdge()*2);
+        this.bEdge = (obj.getBEdge()*2);
+        this.cEdge = (obj.getCEdge()*2);
+    }
+
+    public double getAEdge() {
+        return aEdge;
+    }
+
+    public double getBEdge() {
+        return bEdge;
+    }
+
+    public double getCEdge() {
+        return cEdge;
+    }
+
+    //SET-комманды. не понадоюятся, т.к поля final
+    /*
+
+    public void setAEdge(double newAEdge) throws WrongTriangle{
+        if ((aEdge+bEdge>cEdge)|| (aEdge+cEdge>bEdge)|| (bEdge+cEdge>aEdge) || (aEdge>0) ||(bEdge>0)||(cEdge>0)){
+            this.aEdge = newAEdge;
+        }
+        else
+            throw new WrongTriangle();
+
+
+    }
+    public void setBEdge(double newBEdge)throws WrongTriangle{
+        if ((aEdge+newBEdge>cEdge)|| (aEdge+cEdge>newBEdge)|| (newBEdge+cEdge>aEdge) ||(newBEdge>0)){
+            this.bEdge = newBEdge;
+        }
+        else
+            throw new WrongTriangle();
+
+
+    }
+    public void setBEdge(double newCEdge)throws WrongTriangle{
+        if ((aEdge+bEdge>newCEdge)|| (aEdge+newCEdge>bEdge)|| (bEdge+newCEdge>aEdge) || (newCEdge>0)){
+            this.cEdge = newCEdge;
+        }
+        else
+            throw new WrongTriangle();
+    }*/
+
+    public double perimert(){
+        return this.aEdge+this.bEdge+this.cEdge;
+    }
+
+    public double ploshchad(){
+        double poluPl = this.perimert()/2;
+        double result = Math.sqrt(poluPl*(poluPl- this.aEdge)*(poluPl - this.bEdge)*(poluPl - this.cEdge));
+        return result;
+
+    }
+
+    public int typeOfTriangle(){
+        if((this.aEdge == this.bEdge) && (this.bEdge == this.cEdge))
+            return 1;
+
+        if(((this.aEdge == this.bEdge) && (this.aEdge != this.cEdge)) ||
+                ((this.aEdge == this.cEdge) && (this.aEdge != this.bEdge)) ||
+                ((this.bEdge == this.cEdge) && (this.bEdge != this.aEdge)))
+            return 2;
+
+        if((this.aEdge == Math.sqrt(this.cEdge*this.cEdge + this.bEdge*this.bEdge)) ||
+                (this.bEdge == Math.sqrt(this.cEdge*this.cEdge + this.aEdge*this.aEdge)) ||
+                (this.cEdge == Math.sqrt(this.aEdge*this.aEdge + this.bEdge*this.bEdge)))
+            return 3;
+
+        return 4;
+    }
+
+    public boolean equals(Triangle obj) {
+        boolean result = false;
+        if ((this.aEdge == obj.getAEdge()) && (this.bEdge == obj.getBEdge()) && (this.cEdge == obj.getCEdge()))
+            result = true;
+        return result;
+    }
+
+    public String toString() {
+        return "Triangle: a= "+this.aEdge+" b= "+this.bEdge+" c= "+ this.cEdge;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) throws WrongTriangle {
+	    Triangle arrTr[] = new  Triangle[3];
+	    for (int i=0;i<arrTr.length;i++)
+	        arrTr[i] = new Triangle(1+Math.random()*20,1+Math.random()*20,1+Math.random()*20);
+
+	    for (Triangle i:arrTr)
+	        System.out.println(i.toString());
+
+        for (Triangle i:arrTr)
+            System.out.println(i.typeOfTriangle());
+
+        Triangle newArrTr[] = new  Triangle[3];
+        for (int i=0;i<newArrTr.length;i++)
+            newArrTr[i] = new Triangle(arrTr[i]);
+
+        for (Triangle i:newArrTr)
+            System.out.println(i.toString());
+
+        double max =newArrTr[0].ploshchad();
+        double min = max;
+
+        for(int i=1;i<newArrTr.length;i++)
+        {
+            double tmp = newArrTr[i].ploshchad();
+            if(max < tmp){
+                max = tmp;
+            }
+            else{
+                if (tmp < min)
+                    min = tmp;
+            }
+        }
+        System.out.println("max= "+max+" min= "+min);
+
+        for (int i=0;i<newArrTr.length;i++){
+            for (int j=i;j<newArrTr.length;j++)
+                System.out.print(newArrTr[i].equals(newArrTr[j])+ " ");
+            System.out.println();
+        }
+
+
+    Arrays.sort(newArrTr, new cmpDlinTreug());
+    for (Triangle i:newArrTr)
+        System.out.println(i.toString());
+
+
+
+    }
+}

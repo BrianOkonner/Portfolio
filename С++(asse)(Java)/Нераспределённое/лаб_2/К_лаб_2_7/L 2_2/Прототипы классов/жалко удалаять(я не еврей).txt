@@ -1,0 +1,33 @@
+/*bool Mstack::push(void *el)//Можно добавлять классы которые мы хотим использовать добавляя в иф новый класс
+{
+	if (head==0)
+	{
+		if (typeid(el).name()=="int")
+		{
+			stack=new int [number];
+			t=1;
+		}
+		else
+			if (typeid(el).name()=="char")
+			{
+				stack.b=new char [number];
+				t=2;
+			}
+			else
+				if (typeid(el).name()=="bool")
+				{
+					stack.c=new bool [number]; 
+					t=3;
+				}
+	}
+	else
+		if(t==1)
+			stack.a[head++]=*(int *)el;
+		else
+			if(t==2)
+				stack.b[head++]=*(char *)el;
+			else
+				if(t==3)
+					stack.c[head++]=*(bool *)el;
+	return 0;
+}*/

@@ -1,0 +1,86 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+class priceComp implements Comparator<Book> {
+    @Override
+    public int compare(Book book1, Book book2) {
+        if (book1.getPrice() > book2.getPrice()) return 1;
+        if (book1.getPrice() < book2.getPrice()) return -1;
+        return 0;
+    }
+}
+
+class authorsComp implements Comparator<Book> {
+    @Override
+    public int compare(Book book1, Book book2) {
+        if (book1.getAuthorsNames()[0].charAt(0) > book2.getAuthorsNames()[0].charAt(0)) return 1;
+        if (book1.getAuthorsNames()[0].charAt(0) < book2.getAuthorsNames()[0].charAt(0)) return -1;
+        return 0;
+    }
+}
+
+public class Library<T extends Book> {
+    private T[] books;
+
+    public Library() {
+    }
+
+    public Library(T[] books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(books);
+    }
+
+    public String getAllBooks() {
+        StringBuffer buffer = new StringBuffer();
+        for (T book : this.books) {
+            buffer.append(book + "\n");
+        }
+        return buffer.toString();
+    }
+
+    public String getAllBooksByAuthor(String author) {
+        StringBuffer buffer = new StringBuffer();
+        for (T book : this.books) {
+            for (String authors : book.getAuthorsNames()) {
+                if (authors.equals(author)) {
+                    buffer.append(book + "\n");
+                }
+            }
+        }
+        return buffer.toString();
+    }
+
+    public String getAllBooksByPublisherAndBound(Bound bound, String publisher) {
+        StringBuffer buffer = new StringBuffer();
+        for (T book : this.books) {
+            if ((book.getBookBinding().equals(bound)) && (book.getPublisher().equals(publisher))) {
+                buffer.append(book + "\n");
+            }
+        }
+        return buffer.toString();
+    }
+
+    public String getAllBooksAfterCertainYear(int year) {
+        StringBuffer buffer = new StringBuffer();
+        for (T book : this.books) {
+            if (book.getYearOfPublication() >= year) {
+                buffer.append(book + "\n");
+            }
+        }
+        return buffer.toString();
+    }
+
+    public String getAllBooksSortByPrice() {
+        Arrays.sort(this.books, new priceComp());
+        return this.getAllBooks();
+    }
+
+    public String getAllBooksSortByAuthors() {
+        Arrays.sort(this.books, new authorsComp());
+        return this.getAllBooks();
+    }
+}

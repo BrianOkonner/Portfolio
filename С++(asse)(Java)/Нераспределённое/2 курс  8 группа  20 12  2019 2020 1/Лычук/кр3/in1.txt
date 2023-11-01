@@ -1,0 +1,9 @@
+public class Main {
+    public static void main(String[] args) {
+int i=2; String s="\t"; byte c=-5
+int cc=15; string str="";
+double ccc=0.5E+1; int i=3;
+double cccc=5.0; int ca=5;
+System.out.println("Hello, world!");
+}
+}

@@ -1,0 +1,215 @@
+
+package javaapplication4;
+//Шихутин Влад
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.Scanner;
+class SectionsSort implements Comparator<SectionX>
+ {
+     @Override
+     public int compare(SectionX A,SectionX B)
+     {
+      
+         if (A.length()==B.length())
+             return 0;
+         if (A.length()<B.length())
+             return -1;
+         return 1;
+     }
+ }
+class SectionX{
+ private int Start,End;
+
+ public SectionX(){
+     this.Start=0;
+     this.End=-1;
+ }
+ public SectionX(int xstart,int xend){
+     this.End=xend;
+     this.Start=xstart;
+ }
+     public int getStart()
+     {
+         return this.Start;
+     }
+    public int getEnd()
+    {
+        return this.End;
+    }
+    public void setStart(int S)
+    {
+        this.Start=S;
+    }
+    public void setEnd(int E)
+    {
+        this.End=E;
+    }
+    public double length()
+    {
+        return Math.sqrt(this.Start*this.Start+this.End*this.End);
+    }
+    public SectionX simmetric()
+    {
+        return new SectionX(-this.Start,-this.End);
+    }
+    public boolean equals(SectionX A)
+    {
+        if(this==A) return true;
+        return this.Start==A.Start&&this.End==A.End ? true:false;
+    }
+    public int LenSections(SectionX A)
+    {
+        if(this.raspoloj(A)==1)
+        {
+            if(this.End<A.Start)
+                return Math.abs(A.Start-this.End);
+            return Math.abs(this.Start-A.End);
+        }
+        return 0;
+    }
+    public int raspoloj(SectionX A)
+    {
+        if((this.End<A.Start)||(this.Start>A.End))
+            return 1;
+        if((this.equals(A))||((this.Start<A.Start)&&(this.End>A.Start)&&(this.End<A.End))||((A.Start<this.Start)&&(A.End>this.Start)&&(A.End<this.End)))
+            return 3;
+        if((this.End==A.Start)||(this.Start==A.End))
+            return 2;
+        if(((this.Start>=A.Start)&&(this.End<=A.End)) || ((this.Start<=A.Start)&&(this.End>=A.End)))
+        {
+            return 4;
+        }
+        return 0;
+    }
+    public SectionX U(SectionX A)
+    {
+        if(this.raspoloj(A)==2)
+        {
+            if(this.End==A.Start)
+            {
+
+                return new SectionX(this.Start,A.End);
+            }
+            if(this.Start==A.End)
+            {
+                this.Start=A.Start;
+                return new SectionX(A.Start,this.End);
+            }
+        }
+        if(this.raspoloj(A)==4) {
+            if (this.length() < A.length()) {
+                return new SectionX(A.Start,A.End);
+            }
+            return new SectionX(this.Start,this.End);
+        }
+        if(this.raspoloj(A)==3)
+        {
+            if(this.Start<A.Start)
+                return new SectionX(this.Start,A.End);
+            else
+                return new SectionX(A.Start,this.End);
+        }
+        return new SectionX(0,0);
+    }
+    public SectionX peresech(SectionX A)
+    {
+        if(this.raspoloj(A)==4)
+        {
+            if (this.length() > A.length()) {
+
+                return new SectionX(A.Start,A.End);
+            }
+            return new SectionX(this.Start,this.End);
+        }
+        if(this.raspoloj(A)==3)
+        {
+            if(this.Start<A.Start)
+                return new SectionX(A.Start,this.End);
+            return new SectionX(this.Start,A.End);
+        }
+        if(this.raspoloj(A)==2)
+        {
+            if(this.End==A.Start)
+            {
+                return new SectionX(this.End,this.End);
+            }
+            return new SectionX(this.Start,this.Start);
+        }
+        return new SectionX(0,0);
+    }
+    public SectionX vich(SectionX A)
+    {
+        if(this.raspoloj(A)==4)
+        {
+            if (this.length() > A.length()) {
+
+                return new SectionX(A.End,this.End);
+            }
+            return new SectionX(this.End,A.End);
+        }
+        return new SectionX(0,0);
+    }
+    
+    public String toString()
+    {
+        return "SectionX : "+this.Start+" , "+this.End;
+    }
+}
+
+public class JavaApplication4 {
+
+ public static void main(String[] args) {   
+              SectionX A = new SectionX();
+        SectionX B = new SectionX(3, 7);
+        SectionX C = new SectionX(2, 4);
+        SectionX[] mas = new SectionX[3];
+        mas[0] = A;
+        mas[1] = B;
+        mas[2] = C;
+        System.out.println("Наш массив: ");
+        for(SectionX R:mas)
+        {
+            System.out.println(R);
+        }
+        int prov=0;
+        for (int i = 0; i < 3; i++){
+            for (int j = i + 1; j < 3; j++) {
+                if (mas[i].equals(mas[j]))
+                {
+                    System.out.println(i + " and " + j + " - совпадают");
+                    prov=1;
+                }
+            }
+        
+    }     
+      if(prov==0)
+            System.out.println("Совпадающих отрезков нет!");
+        int max=0;
+        int x1=0,x2=0;
+        for(int i=0;i<3;i++)
+        {
+            for(int j=i+1;j<3;j++)
+            {
+                if(mas[i].LenSections(mas[j])>=max){
+                    max=mas[i].LenSections(mas[j]);
+                    x1=i;
+                    x2=j;}
+            }
+        }
+        System.out.println("Самое большое расстояние между: "+x1+" and "+x2+"\nэто расстояние: "+max);
+        System.out.println("Сведение о вновь сформированных симметрических");
+        for(SectionX F:mas){
+          System.out.println(F.simmetric());
+        }
+    Arrays.sort(mas,new SectionsSort());
+    System.out.println("Взаимное расположение между B и С: "+B.raspoloj(C));
+   
+    System.out.println("Операции: U(B,C)= "+B.U(C)+" Пересечение(B,C)= "+B.peresech(C)+" Разность(B,C)= "+B.vich(C));
+         System.out.println("Отсортированный массив: ");
+    for(SectionX R:mas)
+    {
+         System.out.println(R);
+    }
+    }
+    
+}

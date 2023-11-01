@@ -1,0 +1,16 @@
+!MS$FREEFORM
+! Microsoft Developer Studio generated include file.
+! Used by MFCfirststeps.rc
+!
+      integer, parameter :: IDM_ABOUTBOX                    = 16
+      integer, parameter :: IDD_ABOUTBOX                    = 100
+      integer, parameter :: IDS_ABOUTBOX                    = 101
+      integer, parameter :: IDD_MFCFIRSTSTEPS_DIALOG        = 102
+      integer, parameter :: IDR_MAINFRAME                   = 128
+      integer, parameter :: IDR_MENU1                       = 129
+      integer, parameter :: IDD_CUSTOM_DIALOG               = 131
+      integer, parameter :: IDC_BUTTON1                     = 1000
+      integer, parameter :: ID_PAINT_0                      = 32774
+      integer, parameter :: ID_MENU_DIALOG                  = 32776
+      integer, parameter :: ID_MENU_EXIT                    = 32777
+      integer, parameter :: ID_PAINT_1                      = 32778

@@ -1,0 +1,77 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+class priceComp implements Comparator<Book> {
+    @Override
+    public int compare(Book book1, Book book2) {
+        return book1.getAuthorsNames()[0].compareTo(book2.getAuthorsNames()[0]);
+    }
+}
+
+class authorsComp implements Comparator<Book> {
+    @Override
+    public int compare(Book book1, Book book2) {
+        if (book1.getAuthorsNames()[0].charAt(0) > book2.getAuthorsNames()[0].charAt(0)) return 1;
+        if (book1.getAuthorsNames()[0].charAt(0) < book2.getAuthorsNames()[0].charAt(0)) return -1;
+        return 0;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Book book1 = new Book(111, "Изучаем Java", new String[]{"Берт Бейтс", "Кэти Сьерра"},
+                2015, "Эксмо", Bound.HARDCOVER, 47.69);
+        Book book2 = new Book(112, "Java. Методы программирования",
+                new String[]{"Игорь Блинов", "Валерий Романчик"}, 2017, "Litres",
+                Bound.EBOOK, 8.13);
+        Book book3 = new Book(113, "Java в облаке", new String[]{"Кеннет Бастане", "Джош Лонг"},
+                2019, "Питер", Bound.LIMP, 66.90);
+        Book book4 = new Book(114, "Чистая архитектура", new String[]{"Роберт Мартин"},
+                2019, "Питер", Bound.LIMP, 35.85);
+        Book book5 = new Book(115, "Философия Java", new String[]{"Брюс Эккель"}, 2019,
+                "Питер", Bound.HARDCOVER, 79.65);
+        Book book6 = new Book(116, "Идеальный программист", new String[]{"Роберт Мартин"},
+                2019, "Питер", Bound.LIMP, 26.36);
+
+        System.out.println("Все книги: ");
+        Book books[] = {book1, book2, book3, book4, book5, book6};
+        for (Book book : books) {
+            System.out.println(book);
+        }
+
+        System.out.println("\nВсе книги Роберт Мартина: ");
+        for (Book book : books) {
+            for (String author : book.getAuthorsNames()) {
+                if (author.equals("Роберт Мартин")) {
+                    System.out.println(book);
+                }
+            }
+        }
+
+        System.out.println("\nВсе книги издательства \"Питер\" в мягком переплёте: ");
+        for (Book book : books) {
+            if ((book.getBookBinding().equals(Bound.LIMP)) && (book.getPublisher().equals("Питер"))) {
+                System.out.println(book);
+            }
+        }
+
+        System.out.println("\nВсе книги, изданные после 2018 года: ");
+        for (Book book : books) {
+            if (book.getYearOfPublication() >= 2018) {
+                System.out.println(book);
+            }
+        }
+
+        Arrays.sort(books, new priceComp());
+        System.out.println("\nОтсортированные по убыванию цены:");
+        for (Book book : books) {
+            System.out.println(book);
+        }
+
+        Arrays.sort(books, new authorsComp());
+        System.out.println("\nОтсортированные по первому автору по алфавиту:");
+        for (Book book : books) {
+            System.out.println(book);
+        }
+    }
+}

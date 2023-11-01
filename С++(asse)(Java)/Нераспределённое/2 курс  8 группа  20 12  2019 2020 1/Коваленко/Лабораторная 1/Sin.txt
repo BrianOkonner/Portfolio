@@ -1,0 +1,38 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    static double sinX(double x,double n)
+    {
+        x = x * (Math.PI / 180.0);
+        double res = x;
+        double sign = 1;
+        double fact = 1;
+        double pow = x;
+	double temp=res;
+
+        for (int i = 1; temp>n ; i++)
+        {
+            sign = sign * -1;
+            fact = fact*(2*i+1)*(2 * i);
+            pow = pow * x * x;
+	    temp=sign * pow / fact;
+            res = res +temp;
+        }
+
+        return res;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+         System.out.println("Input eps in number of digits after the dot");
+        double eps=sc.nextInt();
+ 	eps=Math.pow(10,((-1)*eps));
+        System.out.println("Input x in sin(x)");
+        double x=sc.nextDouble();
+        double nx=x*Math.PI/180.0;
+        System.out.printf("My value=%.6f \nPreset value=%.10f\n", sinX(x,eps), Math.sin(nx));
+        System.out.println();
+    }
+}

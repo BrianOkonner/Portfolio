@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/eslintrc",
+  "root": true,
+  "extends": ["react-app", "react-app/jest", "plugin:jest-dom/recommended", "prettier"],
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "styled-components",
+            "message": "Please import from styled-components/macro."
+          }
+        ],
+        "patterns": ["!styled-components/macro"]
+      }
+    ]
+  }
+}

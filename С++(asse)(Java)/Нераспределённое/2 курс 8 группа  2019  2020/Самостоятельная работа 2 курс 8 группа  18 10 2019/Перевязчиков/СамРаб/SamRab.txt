@@ -1,0 +1,115 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package samrab;
+import java.io.FileInputStream;
+import java.util.Arrays;
+import java.io.*;
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.Scanner;
+/**
+ *
+ * @author Brian
+ */
+class Matr3
+{
+    private int m[][];
+    public Matr3()
+    {
+        this.m=new int[3][3];
+        for(int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                this.m[i][j]=0;
+    }
+    public Matr3(int k)
+    {
+        this.m=new int[3][3];
+        for(int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                this.m[i][j]=k;
+    }
+    public Matr3(int mas[])
+    {
+        this.m=new int[3][3];
+        int k=0;
+        for(int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                this.m[i][j]=mas[k++];
+    }
+    public int det()
+    {
+        int dt=0;
+        dt=this.m[0][0]*this.m[1][1]*this.m[2][2]
+        +this.m[1][0]*this.m[2][1]*this.m[0][2]
+        +this.m[0][1]*this.m[1][2]*this.m[2][0]
+        -this.m[0][2]*this.m[1][1]*this.m[2][0]
+        -this.m[0][1]*this.m[1][0]*this.m[2][2]
+        -this.m[2][1]*this.m[1][2]*this.m[0][0];
+        return dt;
+    }
+    public int sled()
+    {
+        int sld=0;
+        sld=this.m[0][0]+this.m[1][1]+this.m[2][2];
+        return sld;
+    }
+    public Matr3 matrxmatr(Matr3 l)
+    {
+        Matr3 o=new Matr3(0);
+        for(int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                for(int k=0;k<3;k++)
+                    o.m[i][j]+=this.m[i][k]*l.m[k][j];
+        return o;
+    }
+    public String toString()
+    {
+        StringBuffer buff=new StringBuffer();
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
+                buff.append((String)(this.m[i][j]+" "));
+        buff.append("\n");
+        }   
+        return buff.toString();
+    }
+}
+public class Program {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        int mas[]={9,1,9,3,9,5,8,2,6,5,7,3};
+        Matr3 M=new Matr3(mas);
+        Matr3 M1=new Matr3(3);
+        Matr3 M2=new Matr3();
+        Matr3 VV=new Matr3();
+        Matr3 Mas[]={M,M1,M2};
+        System.out.println("Матрицы :");
+        System.out.println(Mas[0].toString());
+        System.out.println(Mas[1].toString());
+        System.out.println(Mas[2].toString());
+        System.out.println("Определитель и след одной и определитель второй :");
+        System.out.println(Mas[0].det());
+        System.out.println(Mas[0].sled());
+        System.out.println(Mas[1].det());
+        System.out.println("Перемножения матриц :");
+        VV=Mas[0].matrxmatr(Mas[1]);
+        System.out.println(VV.toString());
+        VV=Mas[0].matrxmatr(Mas[2]);
+        System.out.println(VV.toString());
+        VV=Mas[1].matrxmatr(Mas[2]);
+        System.out.println(VV.toString());
+        VV=Mas[2].matrxmatr(Mas[1]);
+        System.out.println(VV.toString());
+        VV=Mas[1].matrxmatr(Mas[0]);
+        System.out.println(VV.toString());
+        // TODO code application logic here
+    }
+    
+}

@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1583924813 source:d:\Учеба\Программирование\Проекты c++\asd\asd\1.cpp
+	<fstream>
+	<cstdlib>
+

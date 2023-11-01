@@ -1,0 +1,44 @@
+package com.company;
+import java.util.Arrays;
+
+public class Firma {
+    String nameOfFirm;
+    SotrFirm arrSotrFirm[];
+
+    public Firma(){
+        this.nameOfFirm = null;
+        SotrFirm[] arrSotrFirm = null;
+
+    }
+
+    public Firma(String lname, SotrFirm[] larrSotr)throws WrongOclad,WrongYear{
+        this.nameOfFirm = lname;
+        arrSotrFirm = new SotrFirm[larrSotr.length];
+        for (int i=0;i< arrSotrFirm.length; i++){
+            arrSotrFirm[i] = larrSotr[i];
+        }
+
+    }
+
+    public SotrFirm[] getArrSotrFirm() {
+        return arrSotrFirm;
+    }
+
+    public String getNameOfFirm() {
+        return nameOfFirm;
+    }
+
+    public void setNameOfFirm(String nameOfFirm) {
+        this.nameOfFirm = nameOfFirm;
+    }
+
+    public void setArrSotrFirm(SotrFirm[] arrSotrFirmp) {
+        this.arrSotrFirm = arrSotrFirmp;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Firm:"+this.nameOfFirm+","+ Arrays.toString(this.arrSotrFirm);
+    }
+}

@@ -1,0 +1,51 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static final <T> void swap (T[] a, int i, int j) {
+        T t = a[i];
+        a[i] = a[j];
+        a[j] = t;
+    }
+
+    private static boolean isOnlyDigits(String str) {
+        return str.matches("-?[\\d]+");
+    }
+
+    public static void main(String[] args) throws IOException {
+        FileInputStream file = new FileInputStream("Input");
+        Scanner sc = new Scanner(file);
+        PrintStream printfile = new PrintStream("Output.txt");
+        StringBuffer buf = new StringBuffer();
+        while (sc.hasNext()) {
+        String str = sc.nextLine();//считали строку
+        String[] arr = str.split(" ");
+int n=0; int m=0;
+
+        if(arr.length%2==0)   {n=(arr.length-1)/2;  m= n+1;}
+        else{n=(arr.length-1)/2-1;  m= n+2;}
+
+                do  {
+             if( (isOnlyDigits(arr[n]))&&(isOnlyDigits(arr[m])))
+                 { swap(arr,n,m);}
+               m+=1;n-=1;
+        }while(n>=0);
+           // System.out.println(Arrays.toString(arr));
+
+            for (String r : arr) {    //r-счетчик: каждое слово
+                buf.append(r + " ");}
+
+        System.out.println(buf);
+        printfile.println(buf);
+        buf.setLength(0);     //очищаем буфер чтобы снова закидвать туда слова следующей строки
+        }
+        printfile.close();
+        file.close();
+
+   }}

@@ -1,0 +1,270 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package classworkotrezock;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.util.Arrays;
+
+/**
+ *
+ * @author fpm.olifirukMV
+ */
+class SectionX
+{
+    private int a;  
+    private int b;
+    public SectionX()
+    {
+        this.a=0;
+        this.b=1;
+    }
+    
+    public SectionX(int a,int b)
+    {
+        this.a=a;
+        this.b=b;
+    }
+    
+    public void seta(int a)
+    {
+        this.a=a;
+    }
+    
+    public void setb(int b)
+    {
+        this.b=b;
+    }
+    
+    public int geta()
+    {
+        return this.a;
+    }
+    
+    public int getb()
+    {
+        return this.b;
+    }
+    
+    public double length()
+    {
+        return Math.abs(this.a-this.b);
+    }
+    
+    public SectionX simetric()
+    {
+        return new SectionX(-this.a,-this.b);
+    }
+    
+    public boolean equals(SectionX A)
+    {
+        if(this==A)
+        {
+            return true;
+        }
+        return this.a==A.a && this.b==A.b ? true:false;
+    }
+    
+    public int rasp(SectionX A,SectionX B)
+    {
+        int x=0;
+        if((A.b<B.a)||(B.b<A.a))
+        {
+         x=1;
+        }  
+        if((A.b==B.a)||(A.a==B.b))
+        {
+            x=2;
+        }
+        if(((A.a<B.a)&&(B.a<A.b)&&(A.b<B.b))||((B.a<A.a)&&(A.a<B.b)&&(B.b<A.b)))
+        {
+            x=3;
+        }
+        if(((A.a<B.a)&&(B.b<A.b))||((B.a<A.a)&&(A.b<B.b)))
+        {
+            x=4;
+        }
+        return x;
+    }
+    
+    public SectionX Obod(SectionX A,SectionX B)
+    {
+        if(rasp(A,B)!=1)
+        {
+            if(A.b<B.b)
+            {
+                this.a=A.a;
+                this.b=B.b;
+            }
+            else
+            {
+                this.a=B.a;
+                this.b=A.b;
+            }
+      
+        }
+        else
+        {
+            System.out.println("Отрезки объединить нельзя");
+        }
+       return new SectionX(this.a,this.b);
+    }
+    
+    public void vuchit(SectionX A,SectionX B)
+    {
+        if(rasp(A,B)==4)
+        {
+            if((A.a==B.a)&&(A.b<B.b))
+            {
+                this.a=A.b;
+                this.b=B.b;
+            }
+            
+            if((A.a==B.a)&&(A.b>B.b))
+            {
+                this.a=B.b;
+                this.b=A.b;
+            }
+            
+            if((A.b==B.b)&&(A.a<B.a))
+            {
+                this.a=A.a;
+                this.b=B.a;
+            }
+            
+            if((A.b==B.b)&&(A.a>B.a))
+            {
+                this.a=B.a;
+                this.b=A.a;
+            }
+        }
+        else
+        {
+            System.out.println("Отрезки пересечь нельзя");
+        }
+    }
+    
+    public void peresech(SectionX A,SectionX B)
+    {
+        if(rasp(A,B)==2)
+        {
+            if(A.a<B.b)
+            {
+                this.a=A.b;
+                this.b=A.b;
+            }
+            else
+            {
+                this.a=A.a;
+                this.b=A.a;
+            }
+        }
+        
+        if(rasp(A,B)==3)
+        {
+            if(A.a<B.b)
+            {
+                this.a=B.a;
+                this.b=A.b;
+            }
+            else
+            {
+                this.a=A.a;
+                this.b=B.b;
+            }
+        }
+        else
+        {
+            System.out.println("Нельзя вычесть");
+        }
+    }   
+    
+    public String ToString()
+    {
+        return "SectionX: "+"a="+this.a+" "+"b="+this.b;
+    }
+}
+
+class revcomp implements Comparator <SectionX>
+{
+    @Override
+    public int compare(SectionX P1,SectionX P2)
+    {
+      if(P1.length()==P2.length())
+      { 
+       return 0;
+      }          
+      if(P1.length()<P2.length())
+      {
+       return -1;
+      }
+     return 1;
+    }
+}
+
+public class ClassWorkOtrezock {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+       SectionX A=new SectionX(2,4);
+       SectionX B=new SectionX(3,5);
+       SectionX C=new SectionX(1,9);
+       SectionX D=new SectionX();
+       SectionX E=new SectionX();
+       System.out.println(A.length());
+        System.out.println(B.length());
+         System.out.println(C.length());
+         
+         
+         System.out.println(A.equals(B));
+         
+         D.Obod(A,B);
+         System.out.println(D.ToString());
+         
+         D.peresech(A,B);
+         System.out.println(D.ToString());
+         
+        SectionX Mas[]=new SectionX[3];
+        Mas[0]=A;
+        Mas[1]=B;
+        Mas[2]=C;
+        
+        for(SectionX r:Mas)
+        {
+            System.out.println(r.ToString());
+        }
+        
+        for(int i=0;i<3;i++)
+        {
+            if(Mas[i].rasp(A,B)==1)
+            {
+                System.out.println("Не пересекаются и не касаются");
+            }
+            if(Mas[i].rasp(A,B)==2)
+            {
+                System.out.println("Соприкасаются");
+            }
+            if(Mas[i].rasp(A,B)==3)
+            {
+                System.out.println("Пересекаются");
+            }
+            if(Mas[i].rasp(A,B)==4)
+            {
+                System.out.println("Один содержится внутри другого");
+            }
+        }
+        
+        Arrays.sort(Mas, new revcomp());
+        
+        for(SectionX r:Mas)
+        {
+            System.out.println(r.length());
+        }
+    }
+    
+}

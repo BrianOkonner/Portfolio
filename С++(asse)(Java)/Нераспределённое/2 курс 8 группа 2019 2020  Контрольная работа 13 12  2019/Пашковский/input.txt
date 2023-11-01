@@ -1,0 +1,7 @@
+byte a[1];
+int c[100][100];
+short d[2][2][2];
+long b[177];
+float jmih27[13][12];
+char spisok8grupy[24];
+double prices[2][3][4];

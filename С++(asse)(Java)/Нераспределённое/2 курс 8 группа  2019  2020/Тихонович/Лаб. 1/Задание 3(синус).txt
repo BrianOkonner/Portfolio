@@ -1,0 +1,47 @@
+package com.metahit;
+import java.util.Scanner;
+public class Main {
+    public static double roundAvoid(double value,int places)
+    {
+        double scale = Math.pow(10,places);
+        return Math.round(value*scale)/scale;
+    }
+    public static double sinus(double x,int e)
+    {
+        double sin=0;
+        double sl=x;
+        int n=3;
+        double min = 1;
+        for(int i = 0;i<e;i++)
+        {
+            min/=10;
+        }
+       while(Math.abs(sl)>=min)
+        {
+            sin=sin+sl;
+            sl=sl*(-1)*x*x/((n)*(n-1));
+            n=n+2;
+        }
+
+        return sin;
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        double x;
+        int e;
+        System.out.println("Input x(from sin(x))");
+        x=sc.nextDouble();
+        System.out.println("Input number of digits:");
+        do
+        {
+            e=sc.nextInt();
+            if(e<=0)
+            {
+                System.out.println("Wrong number of digits.Try again:");
+            }
+        }while(e<=0);
+        System.out.println("Sin("+x+")="+roundAvoid(sinus(x,e),e));
+    }
+}

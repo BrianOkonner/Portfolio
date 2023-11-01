@@ -1,0 +1,8 @@
+Результат выполнения
+dlina= 5 posicia- 3 simvol- 5
+dlina= 2 posicia- 2 simvol- 4
+dlina= 7 posicia- 5 simvol- 7
+dlina= 3 posicia- 4 simvol- A
+dlina= 2 posicia- 3 simvol- F
+dlina= 11 posicia- 2 simvol- 9
+dlina= 3 posicia- 1 simvol- O

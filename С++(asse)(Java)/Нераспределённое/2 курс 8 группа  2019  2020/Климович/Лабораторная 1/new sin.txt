@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.pow;
+
+public class app4 {
+    public static void main(String[] args) {
+        System.out.println("Enter the variable: ");
+        Scanner scanner = new Scanner(System.in);
+        int x = scanner.nextInt();
+
+        double sin = (double) x;
+        int odd = 3;
+        double current = (double) x;
+
+        for (int n = 0; n < 5; n++) {
+            current = current * x * x / odd;
+            if (n % 2 == 0) {
+                current = -current;
+            }
+            sin = sin + current;
+            odd = odd + 2;
+        }
+        System.out.println(abs(sin));
+    }
+}

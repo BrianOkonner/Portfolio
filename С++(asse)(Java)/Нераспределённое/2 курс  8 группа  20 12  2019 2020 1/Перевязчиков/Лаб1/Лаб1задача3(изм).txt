@@ -1,0 +1,57 @@
+package lab1z3;
+
+/**
+ *
+ * @author Brian
+ */
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Scanner;
+public class Program 
+{
+    public static double step(double n,int s)
+    {
+        double m=1;
+        for(int i=1;i<=s;i++)
+            m=m*n;
+        return m;
+    }
+    public static double facial(int s)
+    {
+        double m=1;
+        for(int i=1;i<=s;i++)
+            m=m*i;
+        return m;
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader reader=new BufferedReader(new InputStreamReader(System.in)); 
+        Scanner in= new Scanner(System.in);
+        System.out.print("Введите точность: ");
+        double k= in.nextDouble();
+        if(k<=0||k>step(2*Math.PI,5)/facial(5))
+            System.out.println("Неверная точность");
+        else
+        {
+            System.out.print("Введите x: ");
+            double x= in.nextDouble();
+            x=x%(2*Math.PI);
+            int i=2;
+            double sum=x, sl=x,facial=1,x2;
+            x2=x*x;
+            while(Math.abs(sl)>k)
+            {
+                facial+=2;
+                sl=(-1)*(sl*x2)/(facial*(facial-1));
+                sum=sum+sl;
+                i++;
+            }
+            System.out.println("sin(x) ="+sum);
+            System.out.println("sin(x) через Math ="+Math.sin(x));
+        }
+    }
+}

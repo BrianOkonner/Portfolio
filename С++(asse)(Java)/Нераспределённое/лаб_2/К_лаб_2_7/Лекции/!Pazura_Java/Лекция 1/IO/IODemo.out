@@ -1,0 +1,108 @@
+1: //: c11:IOStreamDemo.java
+2: // Типичные конфигурации потоков ввода/вывода.
+3: import java.io.*;
+4: 
+5: public class IO {
+6:   // Выбрасывание исключения на консоль:
+7:   public static void main(String[] args) 
+8:   throws IOException {
+9:     // 1. Чтение ввода по строкам:
+10:     BufferedReader in =
+11:       new BufferedReader(
+12:         new FileReader("IO.java"));
+13:     String s, s2 = new String();
+14:     while((s = in.readLine())!= null)
+15:       s2 += s + "\n";
+16:     in.close();
+17: 
+18:     // 1b. Чтение стандартного ввода:
+19:     BufferedReader stdin =
+20:       new BufferedReader(
+21:         new InputStreamReader(System.in));      
+22:     System.out.print("Enter a line:");
+23:     System.out.println(stdin.readLine());
+24: 
+25:     // 2. Ввод из памяти
+26:     StringReader in2 = new StringReader(s2);
+27:     int c;
+28:     while((c = in2.read()) != -1)
+29:       System.out.print((char)c);
+30: 
+31:     // 3. Форматированный ввод из памяти
+32:     try {
+33:       DataInputStream in3 =
+34:         new DataInputStream(
+35:           new ByteArrayInputStream(s2.getBytes()));
+36:       while(true)
+37:         System.out.print((char)in3.readByte());
+38:     } catch(EOFException e) {
+39:       System.err.println("End of stream");
+40:     }
+41: 
+42:     // 4. Вывод в файл
+43:     try {
+44:       BufferedReader in4 =
+45:         new BufferedReader(
+46:           new StringReader(s2));
+47:       PrintWriter out1 =
+48:         new PrintWriter(
+49:           new BufferedWriter(
+50:             new FileWriter("IODemo.out")));
+51:       int lineCount = 1;
+52:       while((s = in4.readLine()) != null )
+53:         out1.println(lineCount++ + ": " + s);
+54:       out1.close();
+55:     } catch(EOFException e) {
+56:       System.err.println("End of stream");
+57:     }
+58: 
+59:     // 5. Хранение и перекрытие данных
+60:     try {
+61:       DataOutputStream out2 =
+62:         new DataOutputStream(
+63:           new BufferedOutputStream(
+64:             new FileOutputStream("Data.txt")));
+65:       out2.writeDouble(3.14159);
+66:       out2.writeChars("That was pi\n");
+67:       out2.writeBytes("That was pi\n");
+68:       out2.close();
+69:       DataInputStream in5 =
+70:         new DataInputStream(
+71:           new BufferedInputStream(
+72:             new FileInputStream("Data.txt")));
+73:       BufferedReader in5br =
+74:         new BufferedReader(
+75:           new InputStreamReader(in5));
+76:       // Необходимо использовать DataInputStream для данных:
+77:       System.out.println(in5.readDouble());
+78:       // Теперь можно использовать "правильный" readLine():
+79:       System.out.println(in5br.readLine());
+80:       // Но выводимая строка забавна.
+81:       // Строка, созданная с помощью writeBytes, в порядке:
+82:       System.out.println(in5br.readLine());
+83:     } catch(EOFException e) {
+84:       System.err.println("End of stream");
+85:     }
+86: 
+87:     // 6. Чтение/запись файлов в произвольном порядке
+88:     RandomAccessFile rf =
+89:       new RandomAccessFile("rtest.dat", "rw");
+90:     for(int i = 0; i < 10; i++)
+91:       rf.writeDouble(i*1.414);
+92:     rf.close();
+93: 
+94:     rf =
+95:       new RandomAccessFile("rtest.dat", "rw");
+96:     rf.seek(5*8);
+97:     rf.writeDouble(47.0001);
+98:     rf.close();
+99: 
+100:     rf =
+101:       new RandomAccessFile("rtest.dat", "r");
+102:     for(int i = 0; i < 10; i++)
+103:       System.out.println(
+104:         "Value " + i + ": " +
+105:         rf.readDouble());
+106:     rf.close();
+107:   }
+108: } 

@@ -1,0 +1,58 @@
+//Симметричные слова числа поменять местами
+
+package javaapplication3;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
+
+public class JavaApplication3 {
+  
+  public static boolean test(String word)
+    {
+        String str="1234567890";
+       
+        for(int i=0;i<word.length();i++)
+        {   
+            if(str.indexOf(word.charAt(i))==-1)
+                 return false;
+        }
+        return true;
+    }
+  public static void perevertish(String[] str)
+  {
+      for (int i=0;i<str.length/2;i++)
+      {
+          if((test(str[i])==true)&&(test(str[str.length-i-1])==true))
+          {
+           StringBuffer buf1=new StringBuffer();
+      StringBuffer buf3=new StringBuffer();
+      buf1.append(str[str.length-i-1]);
+      buf3.append(str[i]);
+      str[i]=new String(buf1.toString());
+      str[str.length-i-1]=new String(buf3.toString());            
+          }
+      }
+  } 
+    public static void main(String[] args) {
+        try{ 
+           FileInputStream pv=new FileInputStream("Input.txt");
+           Scanner sc=new Scanner(pv);
+           PrintStream pv1=new PrintStream("output.txt");
+            while(sc.hasNext())
+           {              
+              String str=sc.nextLine();
+                String []arr=str.split(" ");
+              perevertish(arr);
+               pv1.println(Arrays.toString(arr));
+           }
+            pv.close();
+            pv1.close();
+        }
+        
+        catch(IOException e)
+        {
+            System.out.println("Ошибка");
+     }
+    }
+    
+}

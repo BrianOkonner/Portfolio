@@ -1,0 +1,125 @@
+package com.company;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
+
+abstract class WholeVector{
+    protected int x;
+    protected int y;
+    public WholeVector(int x,int y){
+        this.x=x;
+        this.y=y;
+    }
+    public WholeVector(){
+        this.x=0;
+        this.y=0;
+    }
+    abstract public double len();
+
+    @Override
+    public String toString() {
+        return x+" "+y+";";
+    }
+}
+class Comparer implements Comparator <WholeVector>{
+    @Override
+    public int compare(WholeVector a,WholeVector b){
+        if(a.len()==b.len())
+            return 0;
+        else if( a.len()>b.len())
+            return -1;
+        else return  1;
+    }
+}
+class NotBool extends Exception{}
+class Alg extends WholeVector{
+    public Alg(int x,int y){
+        super(x,y);
+    }
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+
+    public void add(Alg k){
+        x=x+k.getX();
+        y=y+k.getY();
+    }
+    public int sMult(Alg k){
+        return x*k.getX()+y*k.getY();
+    }
+    public double len(){
+       int i=x*x+y*y;
+        return Math.sqrt((double)i);
+    }
+}
+class Boo extends WholeVector {
+    public Boo(){
+        super();
+    }
+    public Boo(int x,int y) throws NotBool{
+        if((x==0||x==1)&&(y==0||y==1)){
+            this.x=x;
+            this.y=y;
+    }else throw new NotBool();
+    }
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+    public Boo add(Boo k) throws NotBool{
+        int tmp=x+k.getX();
+        int tmp2=y+k.getY();
+        if(tmp==2)
+            tmp=1;
+        if (tmp2==2)
+            tmp2=1;
+        return new Boo(tmp,tmp2);
+    }
+    public double len(){
+        if(x==y)
+            if(x==0)
+                return 0.;
+            else
+                return 2.;
+         else return 1.;
+    }
+    public void inv(){
+        if(x==0)
+            x=1;
+        else x=0;
+        if(y==0)
+            y=1;
+        else y=0;
+
+    }
+    public Boo mult(Boo k)throws NotBool{
+       return new Boo(x*k.getX(),y*k.getY());
+    }
+}
+public class Main {
+
+    public static void main(String[] args) throws NotBool{
+        Boo b1=new Boo();
+        Boo b2=new Boo(1,1);
+        b1=b1.add(b2);
+        System.out.println(b1);
+        WholeVector[] arr=new WholeVector[4];
+        arr[0]=b1;
+        arr[1]=b2;
+        arr[3]=new Alg(2,3);
+        arr[2]=new Alg(5,3);
+        System.out.println(arr[2]);
+        Arrays.sort(arr,new Comparer());
+        for (WholeVector v:arr) {
+            System.out.println(v);
+        }
+        
+
+    }
+}

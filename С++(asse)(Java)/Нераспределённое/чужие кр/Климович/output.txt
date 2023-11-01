@@ -1,0 +1,29 @@
+All helicopters: MI6: 1 flights, 
+
+Pilots: White ;
+KT76: 1 flights, 
+
+Pilots: Ross ;
+S70: 2 flights, 
+
+Pilots: Smith Smith ;
+EC135: 2 flights, 
+
+Pilots: Black White ;
+BELL407: 2 flights, 
+
+Pilots: Black Ross ;
+
+All pilots, duration > 100: Smith White Black Ross Smith Ross 
+All helicopters, average duration: 
+Average duration of MI6: 140.0
+Average duration of KT76: 130.0
+Average duration of S70: 195.0
+Average duration of EC135: 95.0
+Average duration of BELL407: 190.0
+Helicopter, max flights, info about flights and surnames: 
+Helicopter with max flights: S70Smith, date 11.02.2013
+Smith, date 22.12.2016
+
+Sum duration of flights for each mark: 
+MI6: 140; KT76: 130; S70: 390; EC135: 190; BELL407: 380; 

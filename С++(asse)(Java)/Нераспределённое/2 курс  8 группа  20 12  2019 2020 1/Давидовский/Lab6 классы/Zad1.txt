@@ -1,0 +1,299 @@
+package com.company;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static int count = 1;
+
+    public enum places {
+        гимназия,
+        лицей,
+        школа
+    }
+
+    public static void main(String[] args) {
+
+        Scanner console = new Scanner(System.in);
+        Matriculant[] matriculants = new Matriculant[5];
+        String str;
+        char sym;
+        int counter1 = 0, counter2 = 0, counter3 = 1, avemark;
+
+        try {
+            FileInputStream in = new FileInputStream("Input.txt");
+            Scanner file = new Scanner(in);
+
+            for (int i = 0; i < 5; i++) {
+                str = file.nextLine();
+
+                matriculants[i] = new Matriculant();
+                matriculants[i].SetId(count);
+                count++;
+                while (counter1 < str.length()) {
+
+                    if ((str.charAt(counter1) == ',') && (counter3 == 1)) {
+                        matriculants[i].SetHolename(str.substring(counter2, counter1));
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    } else if ((str.charAt(counter1) == ',') && (counter3 == 2)) {
+                        matriculants[i].SetBirthyear(Integer.parseInt(str.substring(counter2, counter1)));
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    } else if ((str.charAt(counter1) == ',') && (counter3 == 3)) {
+                        matriculants[i].SetPlaceofliving(str.substring(counter2, counter1));
+
+                        if (matriculants[i].GetPlaceofliving().equals("town")) {
+                            matriculants[i].SetPlaceofliving("город");
+                        } else {
+                            matriculants[i].SetPlaceofliving("село");
+                        }
+
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    } else if ((str.charAt(counter1) == ',') && (counter3 == 4)) {
+
+                        if (str.substring(counter2, counter1).equals("gymnasium")) {
+                            matriculants[i].SetPlaceofstudying(places.гимназия);
+                        }
+                        if (str.substring(counter2, counter1).equals("lyceum")) {
+                            matriculants[i].SetPlaceofstudying(places.лицей);
+                        }
+                        if (str.substring(counter2, counter1).equals("school")) {
+                            matriculants[i].SetPlaceofstudying(places.школа);
+                        }
+
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    } else if ((str.charAt(counter1) == ',') && (counter3 == 5)) {
+                        matriculants[i].SetMath(Integer.parseInt(str.substring(counter2, counter1)));
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    } else if ((str.charAt(counter1) == ',') && (counter3 == 6)) {
+                        matriculants[i].SetPhysics(Integer.parseInt(str.substring(counter2, counter1)));
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    } else if ((str.charAt(counter1) == ' ') && (counter3 == 7) && (str.charAt(counter1 - 1) != ',')) {
+                        matriculants[i].SetRussian(Integer.parseInt(str.substring(counter2, counter1)));
+                        counter2 = counter1 + 2;
+                        counter3++;
+                    }
+
+                    counter1++;
+                }
+
+                counter2 = 0;
+                counter1 = 0;
+                counter3 = 1;
+                System.out.println(matriculants[i].toString());
+            }
+
+            System.out.println("   Студенты ,проживающие в сельской местности:\n");
+            for (int i = 0; i < 5; i++) {
+                if (matriculants[i].GetPlaceofliving().equals("село")) {
+                    System.out.println(matriculants[i].toString());
+                }
+            }
+
+            System.out.println(" Введите средний балл:");
+            avemark = console.nextInt();
+
+            System.out.println("\n   Студенты ,у которых средний балл выше введенного:\n");
+            for (int i = 0; i < 5; i++) {
+                if (matriculants[i].Average() > avemark) {
+                    System.out.println(matriculants[i].toString());
+                }
+            }
+
+            System.out.println(" Введите учреждение образования:");
+            str = console.next();
+
+            System.out.println("\n   Студенты ,которые учатся в указанном учреждении образования:\n");
+            for (int i = 0; i < 5; i++) {
+                if (matriculants[i].GetPlaceofstudying() == places.гимназия) {
+                    if (str.equals("гимназия")) {
+                        System.out.println(matriculants[i].toString());
+                    }
+                }
+                if (matriculants[i].GetPlaceofstudying() == places.школа) {
+                    if (str.equals("школа")) {
+                        System.out.println(matriculants[i].toString());
+                    }
+                }
+                if (matriculants[i].GetPlaceofstudying() == places.лицей) {
+                    if (str.equals("лицей")) {
+                        System.out.println(matriculants[i].toString());
+                    }
+                }
+            }
+
+            System.out.println("   Сортировка по баллу: \n");
+            Arrays.sort(matriculants, 0, 5, new Sort());
+
+            for (int i = 0; i < 5; i++) {
+                System.out.println(matriculants[i].toString());
+            }
+
+            System.out.println("   Сортировка по учреждению образования: \n");
+            Arrays.sort(matriculants, 0, 5, new SSort());
+
+            for (int i = 0; i < 5; i++) {
+                System.out.println(matriculants[i].toString());
+            }
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+    }
+}
+
+class Matriculant {
+
+    private int id;
+    private String holename;
+    private int birthyear;
+    private String placeofliving;
+    private Main.places placeofstudying;
+    private int math;
+    private int physics;
+    private int russian;
+
+    public Matriculant() {
+        this.id = 0;
+        this.holename = "";
+        this.birthyear = 1;
+        this.placeofliving = "";
+        this.placeofstudying = Main.places.школа;
+        this.math = 0;
+        this.physics = 0;
+        this.russian = 0;
+    }
+
+    public Matriculant(int id, String holename, int birthyear, String placeofliving, Main.places placeofstudying, int math, int physics, int russian) {
+
+        try {
+            this.id = id;
+            this.holename = holename;
+            this.birthyear = birthyear;
+            this.placeofliving = placeofliving;
+            this.placeofstudying = placeofstudying;
+            this.math = math;
+            this.physics = physics;
+            this.russian = russian;
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка преобразования формата.");
+        }
+    }
+
+    public void SetId(int id) {
+        this.id = id;
+    }
+
+    public int GetId() {
+        return id;
+    }
+
+    public void SetHolename(String holename) {
+        this.holename = holename;
+    }
+
+    public String GetHolename() {
+        return holename;
+    }
+
+    public void SetBirthyear(int birthyear) {
+        this.birthyear = birthyear;
+    }
+
+    public int GetBirthyear() {
+        return birthyear;
+    }
+
+    public void SetPlaceofliving(String placeofliving) {
+        this.placeofliving = placeofliving;
+    }
+
+    public String GetPlaceofliving() {
+        return placeofliving;
+    }
+
+    public void SetPlaceofstudying(Main.places placeofstudying) {
+        this.placeofstudying = placeofstudying;
+    }
+
+    public Main.places GetPlaceofstudying() {
+        return placeofstudying;
+    }
+
+    public void SetMath(int math) {
+        this.math = math;
+    }
+
+    public int GetMath() {
+        return math;
+    }
+
+    public void SetPhysics(int physics) {
+        this.physics = physics;
+    }
+
+    public int GetPhysics() {
+        return physics;
+    }
+
+    public void SetRussian(int russian) {
+        this.russian = russian;
+    }
+
+    public int GetRussian() {
+        return russian;
+    }
+
+    public int Average() {
+        int average;
+
+        average = (this.math + this.physics + this.russian) / 3;
+
+        return average;
+    }
+
+    public String toString() {
+        String str;
+
+        str = "Абитуриент номер " + this.id + ". ФИО: " + this.holename + ".\nГод рождения: " + this.birthyear + ". Место проживания: " + this.placeofliving + ".\nМесто учебы: "
+                + this.placeofstudying + ". Оценка по математике: " + this.math + ".\nОценка по физике: " + this.physics + ". Оценка по русскому: " + this.russian + ".\n";
+
+        return str;
+    }
+
+    public int GetCount() {
+        return Main.count;
+    }
+}
+
+class Sort implements Comparator<Matriculant> {
+    @Override
+    public int compare(Matriculant matriculant1, Matriculant matriculant2) {
+
+        if (matriculant1.Average() == matriculant2.Average()) {
+            return 0;
+        }
+
+        if (matriculant1.Average() > matriculant2.Average()) {
+            return -1;
+        }
+
+        return 1;
+    }
+}
+
+class SSort implements Comparator<Matriculant> {
+    @Override
+    public int compare(Matriculant matriculant1, Matriculant matriculant2) {
+        return matriculant1.GetPlaceofstudying().compareTo(matriculant2.GetPlaceofstudying());
+    }
+}

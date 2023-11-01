@@ -1,0 +1,121 @@
+//: C07:StreamIt.cpp
+// Iterators for istreams and ostreams
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <vector>
+#include "../require.h"
+using namespace std;
+
+int main() {
+  ifstream in("StreamIt.cpp");
+  assure(in, "StreamIt.cpp");
+  istream_iterator<string> begin(in), end;
+  ostream_iterator<string> out(cout, "\n");
+  vector<string> vs;
+  copy(begin, end, back_inserter(vs));
+  copy(vs.begin(), vs.end(), out);
+  *out++ = vs[0];
+  *out++ = "That's all, folks!";
+} ///:~
+
+//: C07:WordList2.cpp
+// Illustrates istreambuf_iterator and insert iterators
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <set>
+#include <string>
+#include "../require.h"
+using namespace std;
+
+int main(int argc, char* argv[]) {
+  char* fname = "WordList2.cpp";
+  if(argc > 1) fname = argv[1];
+  ifstream in(fname);
+  assure(in, fname);
+  istreambuf_iterator<char> p(in), end;
+  set<string> wordlist;
+  while (p != end) {
+    string word;
+    insert_iterator<string>
+      ii(word, word.begin());
+    // Find the first alpha character:
+    while(!isalpha(*p) && p != end)
+      p++;
+    // Copy until the first non-alpha character:
+    while (isalpha(*p) && p != end)
+      *ii++ = *p++;
+    if (word.size() != 0)
+      wordlist.insert(word);
+  }
+  // Output results:
+  copy(wordlist.begin(), wordlist.end(),
+    ostream_iterator<string>(cout, "\n"));
+} ///:~
+//: C07:WordList2.cpp
+// Illustrates istreambuf_iterator and insert iterators
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <set>
+#include <string>
+#include "../require.h"
+using namespace std;
+
+int main(int argc, char* argv[]) {
+  char* fname = "WordList2.cpp";
+  if(argc > 1) fname = argv[1];
+  ifstream in(fname);
+  assure(in, fname);
+  istreambuf_iterator<char> p(in), end;
+  set<string> wordlist;
+  while (p != end) {
+    string word;
+    insert_iterator<string>
+      ii(word, word.begin());
+    // Find the first alpha character:
+    while(!isalpha(*p) && p != end)
+      p++;
+    // Copy until the first non-alpha character:
+    while (isalpha(*p) && p != end)
+      *ii++ = *p++;
+    if (word.size() != 0)
+      wordlist.insert(word);
+  }
+  // Output results:
+  copy(wordlist.begin(), wordlist.end(),
+    ostream_iterator<string>(cout, "\n"));
+} ///:~
+//: C07:WordSet.cpp
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <set>
+#include <string>
+#include "../require.h"
+using namespace std;
+
+void wordSet(char* fileName) {
+  ifstream source(fileName);
+  assure(source, fileName);
+  string word;
+  set<string> words;
+  while(source >> word)
+    words.insert(word);
+  copy(words.begin(), words.end(),
+    ostream_iterator<string>(cout, "\n"));
+  cout << "Number of unique words:"
+    << words.size() << endl;
+}
+
+int main(int argc, char* argv[]) {
+  if(argc > 1)
+    wordSet(argv[1]);
+  else
+    wordSet("WordSet.cpp");
+} ///:~
+

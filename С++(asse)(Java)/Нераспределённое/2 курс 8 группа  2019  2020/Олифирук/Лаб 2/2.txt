@@ -1,0 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab2ex2;
+import java.util.Arrays;
+/**
+ *
+ * @author Maxim
+ */
+
+public class Lab2Ex2 
+{
+    
+    public static int otrez(int a1[],int el)
+    {
+        int m=a1.length;
+        int end=0;
+        
+        while(a1[el+1]>a1[el])
+        {
+                 el++;
+                 if(el==m-1)
+                 {
+                     break;
+                 }
+        }
+            end=el;
+        return end;
+    }
+    
+    public static void peres(int a,int b,int a1[])
+    {
+        int k;
+        for(int i=0;i<=(b-a)/2;i++)
+        {
+            k=a1[a];
+            a1[a]=a1[b];
+            a1[b]=k;
+            a++;
+            b--;
+        }
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+       int[]mas={1,2,5,4,3,7,6,8}; 
+       int k=mas.length;
+      
+       int nach=0;
+       int kon=0;
+       while(k!=0)
+       {     
+          kon=otrez(mas,nach);
+          peres(nach,kon,mas);
+          k=k-(kon-nach)-1;
+          nach=kon+1;
+         
+       }
+        System.out.println("GOOD");
+        String masString = Arrays.toString(mas);
+        System.out.println(masString);
+        // TODO code application logic here
+    }
+    
+    
+}

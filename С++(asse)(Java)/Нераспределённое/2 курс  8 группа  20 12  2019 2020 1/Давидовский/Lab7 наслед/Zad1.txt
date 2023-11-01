@@ -1,0 +1,407 @@
+package com.company;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static int count1 = 1;
+
+    public enum places {
+        гимназия,
+        лицей,
+        школа
+    }
+
+    public static void main(String[] args) {
+
+        Scanner console = new Scanner(System.in);
+        Matriculant[] matriculants = new Matriculant[6];
+        String str;
+        char sym;
+        int counter1 = 0, counter2 = 0, counter3 = 1, avemark, decision;
+
+        try {
+            FileInputStream in = new FileInputStream("Input.txt");
+            Scanner file = new Scanner(in);
+
+            for (int i = 0; i < 5; i++) {
+
+                matriculants[i] = new Matriculant(count1,file.next(),file.nextInt(),file.next(),places.гимназия,file.nextInt(),file.nextInt(),file.nextInt());
+
+                str=file.next();
+                if (str.equals("gymnasium")) {
+                    matriculants[i].SetPlaceofstudying(places.гимназия);
+                }
+                if (str.substring(counter2, counter1).equals("lyceum")) {
+                    matriculants[i].SetPlaceofstudying(places.лицей);
+                }
+                if (str.substring(counter2, counter1).equals("school")) {
+                    matriculants[i].SetPlaceofstudying(places.школа);
+                }
+
+                count1++;
+            }
+
+            for (int i = count1-1; i < 6; i++) {
+
+                matriculants[i] = new Beneficiary(count1,file.next(),file.nextInt(),file.next(),places.гимназия,file.nextInt(),file.nextInt(),file.nextInt(), file.next(), file.nextInt());
+
+                str=file.next();
+                if (str.equals("gymnasium")) {
+                    matriculants[i].SetPlaceofstudying(places.гимназия);
+                }
+                if (str.substring(counter2, counter1).equals("lyceum")) {
+                    matriculants[i].SetPlaceofstudying(places.лицей);
+                }
+                if (str.substring(counter2, counter1).equals("school")) {
+                    matriculants[i].SetPlaceofstudying(places.школа);
+                }
+
+                count1++;
+            }
+
+            Objects objects = new Objects(6, matriculants);
+            System.out.println(" Выберите ,что вы хотите сделать:");
+            System.out.println("1. Вывести все");
+            System.out.println("2. Вывести список всех студентов ,проживающих в сельской местности");
+            System.out.println("3. Вывести список всех студентов ,у которых средний балл выше заданного");
+            System.out.println("4. Вывести список всех студентов ,которые обучаются в указанном учреждении");
+            System.out.println("5. Отсортировать список всех студентов по среднему баллу");
+            System.out.println("6. Отсортировать список всех студентов по учреждению образования");
+            System.out.println("(Если хотите выйти ,то введите любое другое число)\n");
+            decision = console.nextInt();
+
+            while (decision > 0 && decision < 7) {
+
+                switch (decision) {
+                    case 1:
+                        System.out.println(objects.toString());
+                        break;
+                    case 2:
+                        System.out.println(objects.CountrySide());
+                        break;
+                    case 3:
+                        System.out.println(" Введите средний балл:");
+                        counter1 = console.nextInt();
+
+                        System.out.println(objects.Average(counter1));
+                        break;
+                    case 4:
+                        System.out.println(" Введите учреждение образования:");
+                        str = console.next();
+
+                        System.out.println(objects.PlaceOfStudying(str));
+                        break;
+                    case 5:
+                        objects.MarkSort();
+                        break;
+                    case 6:
+                        objects.StudyingSort();
+                        break;
+                    default:
+                        System.out.println(" Вы ввели выбор ,которого нет.");
+                        break;
+                }
+
+                System.out.println(" Выберите ,что вы хотите сделать:");
+                System.out.println("1. Вывести все");
+                System.out.println("2. Вывести список всех студентов ,проживающих в сельской местности");
+                System.out.println("3. Вывести список всех студентов ,у которых средний балл выше заданного");
+                System.out.println("4. Вывести список всех студентов ,которые обучаются в указанном учреждении");
+                System.out.println("5. Отсортировать список всех студентов по среднему баллу");
+                System.out.println("6. Отсортировать список всех студентов по учреждению образования");
+                decision = console.nextInt();
+            }
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+    }
+}
+
+class Matriculant {
+
+    protected int id;
+    protected String holename;
+    protected int birthyear;
+    protected String placeofliving;
+    protected Main.places placeofstudying;
+    protected int math;
+    protected int physics;
+    protected int russian;
+
+    public Matriculant() {
+        this.id = 0;
+        this.holename = "";
+        this.birthyear = 1;
+        this.placeofliving = "";
+        this.placeofstudying = Main.places.школа;
+        this.math = 0;
+        this.physics = 0;
+        this.russian = 0;
+    }
+
+    public Matriculant(int id, String holename, int birthyear, String placeofliving, Main.places placeofstudying, int math, int physics, int russian) {
+
+        try {
+            this.id = id;
+            this.holename = holename;
+            this.birthyear = birthyear;
+            this.placeofliving = placeofliving;
+            this.placeofstudying = placeofstudying;
+            this.math = math;
+            this.physics = physics;
+            this.russian = russian;
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка преобразования формата.");
+        }
+    }
+
+    public void SetId(int id) {
+        this.id = id;
+    }
+
+    public int GetId() {
+        return id;
+    }
+
+    public void SetHolename(String holename) {
+        this.holename = holename;
+    }
+
+    public String GetHolename() {
+        return holename;
+    }
+
+    public void SetBirthyear(int birthyear) {
+        this.birthyear = birthyear;
+    }
+
+    public int GetBirthyear() {
+        return birthyear;
+    }
+
+    public void SetPlaceofliving(String placeofliving) {
+        this.placeofliving = placeofliving;
+    }
+
+    public String GetPlaceofliving() {
+        return placeofliving;
+    }
+
+    public void SetPlaceofstudying(Main.places placeofstudying) {
+        this.placeofstudying = placeofstudying;
+    }
+
+    public Main.places GetPlaceofstudying() {
+        return placeofstudying;
+    }
+
+    public void SetMath(int math) {
+        this.math = math;
+    }
+
+    public int GetMath() {
+        return math;
+    }
+
+    public void SetPhysics(int physics) {
+        this.physics = physics;
+    }
+
+    public int GetPhysics() {
+        return physics;
+    }
+
+    public void SetRussian(int russian) {
+        this.russian = russian;
+    }
+
+    public int GetRussian() {
+        return russian;
+    }
+
+    @Override
+    public String toString() {
+        return "Абитуриент номер " + this.id + ". ФИО: " + this.holename + ".\n" +
+                "Год рождения: " + this.birthyear + ". Место проживания: " + this.placeofliving + ".\n" +
+                "Место учебы: " + this.placeofstudying + ". Оценка по математике: " + this.math + ".\n" +
+                "Оценка по физике: " + this.physics + ". Оценка по русскому: " + this.russian + ".\n";
+    }
+
+    public int Average() {
+        return (this.math + this.physics + this.russian) / 3;
+    }
+
+    public int GetCount() {
+        return Main.count1;
+    }
+}
+
+class Beneficiary extends Matriculant {
+
+    protected String category;
+    protected double coefficient;
+
+    public Beneficiary() {
+        super(0, "", 1, "", Main.places.школа, 0, 0, 0);
+        this.category = "обычная";
+        this.coefficient = 1.0;
+    }
+
+    public Beneficiary(int id, String holename, int birthyear, String placeofliving, Main.places placeofstudying, int math, int physics, int russian, String category, double coefficient) {
+        super(id, holename, birthyear, placeofliving, placeofstudying, math, physics, russian);
+
+        try {
+            this.category = category;
+            this.coefficient = coefficient;
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка преобразования формата.");
+        }
+    }
+
+    public void SetCategory(String category) {
+        this.category = category;
+    }
+
+    public String GetCategory() {
+        return category;
+    }
+
+    public void SetCoefficient(double coefficient) {
+        this.coefficient = coefficient;
+    }
+
+    public double getCoefficient() {
+        return coefficient;
+    }
+
+    @Override
+    public String toString() {
+        return "Абитуриент номер " + this.id + ". ФИО: " + this.holename + ".\n" +
+                "Год рождения: " + this.birthyear + ". Место проживания: " + this.placeofliving + ".\n" +
+                "Место учебы: " + this.placeofstudying + ". Оценка по математике: " + this.math + ".\n" +
+                "Оценка по физике: " + this.physics + ". Оценка по русскому: " + this.russian + ".\n" +
+                "Категория: " + this.category + ". Коэффициент: " + this.coefficient + ".\n";
+    }
+
+    public int Average() {
+        return (int) this.coefficient * (this.math + this.physics + this.russian) / 3;
+    }
+
+    public int GetCount() {
+        return Main.count1;
+    }
+}
+
+class Objects {
+    private Matriculant[] matriculants;
+    private int quan;
+
+    public Objects() {
+        this.quan = 1;
+        this.matriculants = new Matriculant[this.quan];
+        this.matriculants[0] = new Beneficiary();
+    }
+
+    public Objects(int quan, Matriculant[] matriculants) {
+        this.quan = quan;
+        this.matriculants = matriculants;
+    }
+
+    public String toString() {
+
+        String str = "";
+
+        for (int i = 0; i < this.quan; i++) {
+            str = str + "\n" + matriculants[i].toString();
+        }
+
+        return str;
+    }
+
+    public String CountrySide() {
+
+        String str = "";
+
+        for (int i = 0; i < this.quan; i++) {
+            if (matriculants[i].GetPlaceofliving().equals("село")) {
+                str = str + "\n" + matriculants[i].toString();
+            }
+        }
+
+        return str;
+    }
+
+    public String Average(int avemark) {
+
+        String str = "";
+
+        for (int i = 0; i < this.quan; i++) {
+            if (matriculants[i].Average() > avemark) {
+                str = str + "\n" + matriculants[i].toString();
+            }
+        }
+
+        return str;
+    }
+
+    public String PlaceOfStudying(String str) {
+
+        String sumstr = "";
+
+        for (int i = 0; i < this.quan; i++) {
+            if (str.equals("гимназия")) {
+                if (matriculants[i].GetPlaceofstudying() == Main.places.гимназия) {
+                    sumstr = sumstr + "\n" + matriculants[i].toString();
+                }
+            }
+            if (str.equals("лицей")) {
+                if (matriculants[i].GetPlaceofstudying() == Main.places.лицей) {
+                    sumstr = sumstr + "\n" + matriculants[i].toString();
+                }
+            }
+            if (str.equals("школа")) {
+                if (matriculants[i].GetPlaceofstudying() == Main.places.школа) {
+                    sumstr = sumstr + "\n" + matriculants[i].toString();
+                }
+            }
+        }
+
+        return sumstr;
+    }
+
+    public void MarkSort() {
+        Arrays.sort(matriculants, new Sort());
+    }
+
+    public void StudyingSort() {
+        Arrays.sort(matriculants, new SSort());
+    }
+}
+
+class Sort implements Comparator<Matriculant> {
+    @Override
+    public int compare(Matriculant matriculant1, Matriculant matriculant2) {
+
+        if (matriculant1.Average() == matriculant2.Average()) {
+            return 0;
+        }
+
+        if (matriculant1.Average() > matriculant2.Average()) {
+            return -1;
+        }
+
+        return 1;
+    }
+}
+
+class SSort implements Comparator<Matriculant> {
+    @Override
+    public int compare(Matriculant matriculant1, Matriculant matriculant2) {
+        return matriculant1.GetPlaceofstudying().compareTo(matriculant2.GetPlaceofstudying());
+    }
+}

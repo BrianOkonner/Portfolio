@@ -1,0 +1,176 @@
+package kr2;
+
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class cmpSold implements Comparator<sold>
+{
+	@Override
+	
+	public int compare(sold b1,sold b2)
+	{
+		if(b1.getVendor()==b2.getVendor()) {
+			
+		if(b1.getAmSold()==b2.getAmSold())
+			return 0;
+		if(b1.getAmSold()>b2.getAmSold())
+			return -1;
+		return 1;
+		}
+		else 
+			return 0;
+	}
+}
+class cmpFirm implements Comparator<sold>
+{
+	@Override
+	public int compare(sold b1,sold b2)
+	{
+		return (b1.getVendor().compareTo(b2.getVendor()));
+	}
+}
+
+class wrongSold extends Exception{}
+class wrongNumber extends Exception{}
+enum Type{духи,пудра,гель}
+
+class sold
+{
+	protected static int count=0;
+	protected int id;
+	protected String name;
+	protected final Type type;
+	protected int amSold;
+	protected String vendor;
+	protected String makler;
+	sold(String name,Type type, int amSold, String vendor,String makler) throws wrongSold
+	{
+		if(amSold<0)
+			throw new wrongSold();
+		count++;
+		id=count;
+		this.type=type;
+		this.name=name;
+		this.amSold=amSold;
+		this.vendor=vendor;
+		this.makler=makler;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public Type getType()
+	{
+		return type;
+	}
+	public int getAmSold()
+	{
+		return amSold;
+	}
+	public String getVendor()
+	{
+		return vendor;
+	}
+	public String getMakler()
+	{
+		return makler;
+	}
+	public void setAmSold(int n)
+	{
+		this.amSold=n;
+	}
+	public int getcount()
+	{
+		return count;
+	}
+	public String toString()
+	{
+		return "id="+id+"\nНазвание: "+name+"\nТип: "+type+"\nКоличество проданного: "+amSold+
+				"\nПоставщик: "+vendor+"\nМаклер: "+makler+"\n";
+	}
+}
+class market extends sold
+{
+	market(String name,Type type, int amSold, String vendor,String makler) throws wrongSold
+	{
+		super(name,type,amSold,vendor,makler);
+	}
+	
+}
+public class kr2_3 {
+
+	public static void main(String[] args) throws FileNotFoundException,wrongSold {
+		PrintStream printFile=new PrintStream("output.txt");
+		Scanner sc=new Scanner(System.in);
+		sold []komarovka=new sold[] {
+				new market("Old Spice",Type.духи,12,"ООО Духи","Сдельный А А"),
+				new market("Axe",Type.духи,7,"ЗАО Парфюмм","Король Д В"),
+				new market("Max Factor",Type.пудра,15,"ОАО Вдыхай","Шишкина Т А"),
+				new market("Faberlic",Type.духи,21,"ООО Духи","Угрюмов С С"),
+				new market("Faberlic",Type.духи,18,"ЗАО Парфюмм","Король Д В"),
+				new market("Max Factor",Type.гель,6,"ООО Духи","Сдельный А А"),
+				new market("Faberlic",Type.пудра,15,"ОАО Вдыхай","Шишкина Т А"),
+		};
+		for(sold t:komarovka)
+		{
+			printFile.println(t);
+		}
+		
+		System.out.println("Введите нужное число товара:");
+		int n=sc.nextInt();
+		printFile.println("\nMakler info:\nFor ammount bigger or equal to: "+n);
+		for(sold t:komarovka)
+		{
+			if(n<=t.getAmSold())
+				printFile.println(t);
+		}
+		int number=0;
+		int min=255;
+		for(int i=0;i<komarovka.length;i++)
+		{
+			
+			if(komarovka[i].getAmSold()<min)
+				{
+					min=komarovka[i].getAmSold();
+					number=i;
+				}
+		}
+		printFile.println("\nMinimum sold:\n"+komarovka[number]);
+		int max=0;
+		for(int i=0;i<komarovka.length;i++)
+		{
+			
+			if(max<komarovka[i].getAmSold())
+				{
+					max=komarovka[i].getAmSold();
+					number=i;
+				}
+		}
+		printFile.println("\nMax deals:\n"+komarovka[number]);
+		int duhi=0;
+		int gel=0;
+		int pudra=0;
+		for(int i=0;i<komarovka.length;i++)
+		{
+			if(komarovka[i].getType()==Type.гель)
+				gel+=komarovka[i].getAmSold();
+			if(komarovka[i].getType()==Type.пудра)
+				pudra+=komarovka[i].getAmSold();
+			if(komarovka[i].getType()==Type.духи)
+				duhi+=komarovka[i].getAmSold();
+		}
+		printFile.print("\nДухи: "+duhi+" шт.\nПудра: "+pudra+" шт.\nГель: "+gel+" шт.\nОтсортированный массив:\n");
+		Arrays.sort(komarovka,new cmpFirm());
+		Arrays.sort(komarovka,new cmpSold());
+		for(sold t:komarovka)
+		{
+			printFile.println(t);
+		}
+		sc.close();
+		printFile.close();
+	}
+
+}

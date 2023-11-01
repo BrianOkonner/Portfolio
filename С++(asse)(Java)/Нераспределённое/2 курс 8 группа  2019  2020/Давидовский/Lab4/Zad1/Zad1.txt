@@ -1,0 +1,128 @@
+/*программа ,сортирующая слова в строке по количеству гласных*/
+package com.company;
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int quan = 0, len, num = 0, i = 0, k = 0, i2 = 0, i3 = 0;
+        int[][] vow;
+        String str, let, finalstr = "";
+
+        try {
+            FileInputStream in = new FileInputStream("Input.txt");
+            Scanner sc2 = new Scanner(in);
+
+            while (sc2.hasNext()) {
+                str = sc2.nextLine();
+
+                len = str.length();
+                i++;
+                while (i < len) {
+
+                    if ((String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) && (String.valueOf(str.charAt(i - 1)).matches("^(?i:[ ,.?!:;]).*") == false)) {
+                        num++;
+                    }
+                    i++;
+                }
+                if (String.valueOf(str.charAt(len - 1)).matches("^(?i:[ ,.?!:;]).*") == false) {
+                    num++;
+                }
+                i = 0;
+
+                vow = new int[2][num];
+
+                while (i < len) {
+
+                    let = String.valueOf(str.charAt(i));
+                    if (let.matches("^(?i:[aeyuio]).*") == true) {
+                        quan = 1;
+                    }
+
+                    if (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) {
+
+                        if (i != 0) {
+                            vow[0][k] = quan;
+                            vow[1][k] = i2;
+                            i2 = i;
+                            k++;
+                            quan = 0;
+                        }
+
+                        while (i < len) {
+
+                            if (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) {
+                                i++;
+                            } else {
+                                break;
+                            }
+                        }
+                        i--;
+                    }
+                    i++;
+                }
+
+                if (String.valueOf(str.charAt(len - 1)).matches("^(?i:[ ,.?!:;]).*") == false) {
+                    vow[0][k] = quan;
+                    vow[1][k] = i2;
+                    i2 = i;
+                    k++;
+                }
+
+                for (int out = num - 1; out >= 1; out--) {
+                    for (int in2 = 0; in2 < out; in2++) {
+                        if (vow[0][in2] > vow[0][in2 + 1]) {
+                            i = vow[0][in2];
+                            vow[0][in2] = vow[0][in2 + 1];
+                            vow[0][in2 + 1] = i;
+                            i = vow[1][in2];
+                            vow[1][in2] = vow[1][in2 + 1];
+                            vow[1][in2 + 1] = i;
+                        }
+                    }
+                }
+
+                for (k = 0; k < num; k++) {
+                    i = vow[1][k];
+
+                    while (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) {
+                        i++;
+                    }
+
+                    while (i < len) {
+
+                        if (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == false) {
+                            finalstr = finalstr + String.valueOf(str.charAt(i));
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                    finalstr = finalstr + " ";
+
+                    if (String.valueOf(str.charAt(i - 1)).matches("^(?i:[ ,.?!:;]).*") == true) {
+                        finalstr = finalstr + " ";
+                    }
+                }
+
+                System.out.println(finalstr);
+                finalstr = "";
+                num = 0;
+                i = 0;
+                quan = 0;
+                i2 = 0;
+                k = 0;
+                i3++;
+            }
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+
+    }
+}
+}

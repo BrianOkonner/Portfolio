@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+//поменять местами симметричные слова, состоящие из одних цифр
+
+public class AppString2 {
+    public static void main(String[] args) throws IOException {
+        FileInputStream inputFile = new FileInputStream("input2.txt");
+        FileOutputStream outputFile = new FileOutputStream("output2.txt");
+        Scanner scanner = new Scanner(inputFile);
+        PrintStream printStream = new PrintStream(outputFile);
+        String numbers = "0123456789";
+        while (scanner.hasNext()) {
+            String str = scanner.nextLine();
+            String[] arr = str.split(" ");
+
+            for (int i = 0; i <= arr.length % 2; i++) {
+                for (int j = 0; j < arr[i].length(); j++) {
+                    int count = 0;
+                    for (int k = 0; k < numbers.length(); k++) {
+                        if (arr[i].charAt(j) == numbers.charAt(i)) {
+                            count++;
+                        }
+                    }
+
+                    if (count == arr[i].length()) {
+                        String temp = arr[i];
+                        arr[i] = arr[arr.length - 1 - i];
+                        arr[arr.length - 1 - i] = temp;
+                    }
+                }
+            }
+
+            StringBuffer buffer = new StringBuffer();
+            for (String r : arr) {
+                buffer.append(r + " ");
+            }
+            printStream.println(buffer);
+            buffer.delete(0, buffer.length() - 1);
+        }
+
+        inputFile.close();
+        outputFile.close();
+    }
+}

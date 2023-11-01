@@ -1,0 +1,77 @@
+package com.company;
+
+enum Job{Portrait, Landscape, Nature }
+
+
+class WrongYear extends Exception{}
+class WrongOclad extends Exception{}
+
+public class SotrFirm{
+    private final int id;
+    private final String fIO;
+    private final int yearOfBirth;
+    private final Job jobOfSotr;
+    private double doubleOclad;
+    private final String nameOfOtdel;
+    private static int count = 0;
+
+    SotrFirm(String fIO1, int yearOfBirth, Job jobOfSotr, double doubleOclad, String nameOfOtdel)throws WrongYear,WrongOclad{
+
+
+        if((yearOfBirth>2019)||(yearOfBirth<=0))
+            throw new WrongYear();
+        if(doubleOclad<=0)
+            throw new WrongOclad();
+
+        count++;
+        this.id = count;
+        this.fIO = fIO1;
+        this.yearOfBirth = yearOfBirth;
+        this.jobOfSotr = jobOfSotr;
+        this.doubleOclad = doubleOclad;
+        this.nameOfOtdel = nameOfOtdel;
+
+
+    }
+
+    public void setDoubleOclad(double doubleOclad) {
+        this.doubleOclad = doubleOclad;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getfIO() {
+        return fIO;
+    }
+
+    public double getDoubleOclad() {
+        return doubleOclad;
+    }
+
+    public Job getJobOfSotr() {
+        return jobOfSotr;
+    }
+
+    public int getyearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public int getYearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public String getNameOfOtdel() {
+        return nameOfOtdel;
+    }
+
+    public  int getCount() {
+        return count;
+    }
+
+
+    public String toString(){
+        return "SOTR:"+this.id+","+ this.fIO+","+ this.yearOfBirth+","+ this.jobOfSotr+","+ this.doubleOclad+","+ this.nameOfOtdel;
+    }
+}

@@ -1,0 +1,25 @@
+﻿Построение начато 26.02.2020 20:45:35.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\аисдбп\аисдбп\аисдбп.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Обращение к "Release\аисдбп.unsuccessfulbuild".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt 1.cpp
+         1.cpp
+     1>1.cpp(54): warning C4101: l: неиспользованная локальная переменная
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\аисдбп\Release\аисдбп.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\аисдбп.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\аисдбп\Release\аисдбп.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\аисдбп\Release\аисдбп.lib" /MACHINE:X86 Release\1.obj
+         Создание кода
+     1>d:\учеба\программирование\проекты c++\аисдбп\аисдбп\1.cpp(65): warning C4700: использована неинициализированная локальная переменная "c"
+     1>d:\учеба\программирование\проекты c++\аисдбп\аисдбп\1.cpp(19): warning C4700: использована неинициализированная локальная переменная "tree"
+         Создание кода завершено
+         аисдбп.vcxproj -> D:\Учеба\Программирование\Проекты c++\аисдбп\Release\аисдбп.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\аисдбп\Release\аисдбп.exe;#1" /manifest "Release\аисдбп.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Файл "Release\аисдбп.unsuccessfulbuild" удаляется.
+         Обращение к "Release\аисдбп.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\аисдбп\аисдбп\аисдбп.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.77

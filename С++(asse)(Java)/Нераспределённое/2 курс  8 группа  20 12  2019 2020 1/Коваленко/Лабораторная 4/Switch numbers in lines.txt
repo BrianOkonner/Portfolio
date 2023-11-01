@@ -1,0 +1,46 @@
+package com.company;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+
+import java.util.Arrays;
+
+public class Main {
+    public static boolean isNumeric(String strNum) {
+        return strNum.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    public static void main(String[] args) {
+        try{
+        FileInputStream file=new FileInputStream("in.txt");
+        Scanner scf=new Scanner(file);
+        String line;
+        String tmp;
+        PrintStream out=new PrintStream("out.txt");
+        while(scf.hasNext()){
+	    line=scf.nextLine();
+            String[] words = line.split(" ");
+            for (int i = 0; i <words.length/2 ; i++) {
+                if(isNumeric(words[i])&&isNumeric(words[words.length-i-1])){
+                    tmp=words[i];
+                    words[i]=words[words.length-i-1];
+                    words[words.length-i-1]=tmp;
+
+                }
+
+            }
+
+            String joinedString = String.join(" ", words);
+            out.println(joinedString);
+
+    }
+            System.out.println("Done!");
+        }
+
+        catch (IOException e){
+            System.out.println("404 :( ");
+        }
+    }
+}

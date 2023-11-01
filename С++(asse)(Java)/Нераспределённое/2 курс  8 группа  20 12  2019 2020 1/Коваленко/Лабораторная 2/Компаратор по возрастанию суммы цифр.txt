@@ -1,0 +1,43 @@
+package com.company;
+
+import java.util.Scanner;
+import java.util.Comparator;
+import java.util.Arrays;
+class Mycomp implements Comparator <Integer>{
+    @Override
+    public int compare(Integer t1, Integer t2){
+        int sum1=0;
+        while(t1>9){
+            sum1= sum1+ t1%10;
+            t1=t1/10;
+        }
+        sum1=sum1+t1;
+        int sum2=0;
+        while(t2>9){
+            sum2= sum2+ t2%10;
+            t2=t2/10;
+        }
+        sum2=sum2+t2;
+        if(sum1==sum2)
+            return 0;
+        else if(sum1>sum2)
+            return 1;
+        else return -1;
+    }
+
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+         System.out.println("Input array size");
+         int size= sc.nextInt();
+         Integer Arr[]=new Integer[size];
+        System.out.println("Input array");
+        for(int i=0;i<size;i++){
+            Arr[i]=sc.nextInt();
+        }
+        Arrays.sort(Arr, new Mycomp());
+        System.out.println("Arr Sorted"+ Arrays.toString(Arr));
+    }
+}

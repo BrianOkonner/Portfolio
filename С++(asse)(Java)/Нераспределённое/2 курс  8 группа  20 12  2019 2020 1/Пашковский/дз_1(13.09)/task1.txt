@@ -1,0 +1,52 @@
+package packAge;
+
+import java.util.Scanner;
+
+public class Proh1 {
+	public static boolean poly(int a)
+	{
+		int n=a;
+		int res=0;
+		while(n>=1)
+		{
+			res*=10;
+			res+=n%10;
+			n/=10;
+		}
+		if(res==a)
+			return true;
+		else
+			return false;
+
+	}
+	public static void main(String[] args) {
+	int a=0;
+	int b=0;
+	Scanner sc=new Scanner(System.in);
+	while(a<1 | b<1)
+	{
+		
+		System.out.println("Введите 2 числа:");
+		
+		a=sc.nextInt();
+		b=sc.nextInt();
+		if(a<1 | b<1)
+			System.out.println("Ошибка ввода");
+	}
+	
+	if(a<b)
+	{
+		int c=b;
+		b=a;
+		a=c;
+	}//a>b always
+	for(int i=b;i<=a;i++)
+		{
+			if(poly(i)& poly(i*i))
+				System.out.println("Число "+i+" двойной палиндром");
+						
+		}
+	
+	}
+
+}

@@ -1,0 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication2;
+import java.util.Scanner;
+ 
+public class sinus {
+    
+    static double SIN(double e,double n)
+    {
+        int k=1;
+        double S=n;
+        double SIN=n;
+        while(S>e)
+        {
+           S*=n*n*(-1)/((k+1)*(k+2));
+           SIN+=S;
+        }
+        return SIN;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Введите число: ");
+        double n=sc.nextDouble();
+        System.out.println("Введите точность: ");
+           double e=sc.nextDouble();
+            
+        System.out.println("Получившийся ответ: ");
+        System.out.println(SIN(e,n));
+        System.out.println("Ответ из библиотеки: ");
+        System.out.println(Math.sin(n));
+    }
+}

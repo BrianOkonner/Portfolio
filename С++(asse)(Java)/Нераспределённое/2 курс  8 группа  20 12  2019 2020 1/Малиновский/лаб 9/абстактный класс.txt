@@ -1,0 +1,223 @@
+*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package kp2.pkg3;
+
+import java.util.*;
+import java.io.*;
+
+/**
+ *
+ * @author lesha
+ */
+class wrongBool extends Exception {
+}
+class wrongLength extends Exception {
+}
+class  Comparer implements Comparator <Mas>
+{
+    public int compare(Mas a, Mas b)
+    {
+        if(a.num() == b.num())
+            return 0;
+        else
+        {
+            if(a.num()> b.num())
+                return 1;
+            else
+                return -1;
+        }
+    }
+}
+abstract class Mas {
+
+    protected int n;
+    protected int[] mas;
+
+    public Mas(int n) {
+        this.n = n;
+        mas = new int[n];
+    }
+
+    public abstract int[] sum(int mas2[]) throws wrongBool, wrongLength;
+
+    public abstract int num();
+
+}
+
+class IntMas extends Mas {
+
+    public IntMas(int n, int[] mas) throws wrongLength {
+        super(n);
+        if(mas.length != n)
+            throw new wrongLength();
+       System.arraycopy(mas, 0, this.mas, 0, mas.length);
+    }
+
+    @Override
+    public int[] sum(int mas2[]) throws wrongLength {
+         if(mas.length != n)
+            throw new wrongLength();
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = mas[i] + mas2[i];
+        }
+        return res;
+
+    }
+
+    public int max() {
+        int max = mas[0];
+        for (int i = 1; i < n; i++) {
+            if (max < mas[i]) {
+                max = mas[i];
+            }
+        }
+        return max;
+    }
+
+    @Override
+    public int num() {
+        int k = 0;
+        for (int a : mas) {
+            if (a == 1) {
+                k++;
+            }
+        }
+        return k;
+
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(mas);
+    }
+
+}
+
+class BoolMas extends Mas  {
+
+    public BoolMas(int n, int[] mas) throws wrongBool, wrongLength {
+        super(n);
+         if(mas.length != n)
+            throw new wrongLength();
+        for(int a: mas)
+        {
+            if(a !=0 && a!= 1)
+                throw new wrongBool();
+        }
+        System.arraycopy(mas, 0, this.mas, 0, mas.length);
+        
+        
+    }
+
+    @Override
+    public int[] sum(int mas2[]) throws wrongBool, wrongLength {
+         if(mas2.length != n)
+            throw new wrongLength();
+          for(int a: mas2)
+        {
+            if(a !=0 && a!= 1)
+                throw new wrongBool();
+        }
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (mas[i] == 1 && mas[i] == 1) {
+                res[i] = 1;
+            } else {
+                res[i] = mas[i] + mas2[i];
+            }
+        }
+        return res;
+
+    }
+
+    public int[] mul(int mas2[]) throws wrongLength {
+         if(mas2.length != n)
+            throw new wrongLength();
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = mas[i] * mas2[i];
+        }
+        return res;
+
+    }
+
+    public void rev() {
+        int t;
+        for (int i = 0; i < n / 2; i++) {
+            t = mas[i];
+            mas[i] = mas[n - i - 1];
+            mas[n - i - 1] = t;
+        }
+    }
+
+    @Override
+    public int num() {
+        int k = 0;
+        for (int a : mas) {
+            if (a == 1) {
+                k++;
+            }
+
+        }
+        return k;
+
+    }
+
+    public int num0() {
+        int k = 0;
+        for (int a : mas) {
+            if (a == 0) {
+                k++;
+            }
+
+        }
+        return k;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(mas);
+    }
+
+}
+
+public class KP23 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws wrongBool, wrongLength {
+        // TODO code application logic here
+        int j[]={23,1,5,6,100};
+        int y[]= {0,0,1,1,0};
+        int k[] = {5,6,7,8,9};
+        int y1[] = {0,0,0,1,0};
+        IntMas mas1 = new IntMas(5, j);
+        BoolMas mas2 = new BoolMas(5, y);
+         System.out.println("Количество нулей: " + mas2.num0());
+        System.out.println("Умножение: " + Arrays.toString(mas2.mul(y1)));
+        mas2.rev();
+        System.out.println("В обратную строну: " + mas2.toString());
+        System.out.println("Максимальное: " + mas1.max());
+        Mas []mas = new Mas[4];
+         mas[1] = new IntMas(k.length, k);
+        mas[0] = new IntMas(j.length, j);
+        mas[2] = new BoolMas(y.length, y);
+        mas[3] = new BoolMas(y1.length, y1);
+               for(int i =0; i< 4; i++)
+             System.out.println(i + ": " + mas[i].toString());
+        System.out.println("Сумма и количество единиц абстрактного класса: ");
+        for(int i =0; i< 4; i++)
+            System.out.println(i + ": " + "Сумма: " + Arrays.toString(mas[i].sum(y)) + " Количсетво единиц: " + mas[i].num());
+        Arrays.sort(mas, new Comparer());
+                System.out.println("Отсортированный по единичкам: ");
+        for(int i =0; i< 4; i++)
+             System.out.println(i + ": " + mas[i].toString());
+
+    }
+
+}

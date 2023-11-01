@@ -1,0 +1,153 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Mp{
+    protected final Integer id;
+    protected String Name;
+    enum  Genre{a,b,c}
+    protected Genre gen;
+    protected int len;
+    protected static int count=0;
+    protected int code;
+    protected String artist;
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Genre getGen() {
+        return gen;
+    }
+
+    public int getLen() {
+        return len;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setGen(Genre gen) {
+        this.gen = gen;
+    }
+
+    public void setLen(int len) {
+        this.len = len;
+    }
+    public Mp(String name,Genre g,int le){
+        id=count;
+        count ++;
+        Name=name;
+        len=le;
+        gen=g;
+    }
+    public String getName() {
+        return Name;
+    }
+    public void setName(String name) {
+        Name = name;
+    }
+    @Override
+    public String toString() {
+        return Name+" "+id.toString();
+    }
+
+
+
+    class Sal{
+        private String Name;
+        private Mp[] arr;
+        public Sal(String name,Mp[]arr){
+            Name=name;
+            this.arr=new Mp[arr.length];
+            System.arraycopy(arr,0,this.arr,0,arr.length);
+        }
+        public Sal(String name)throws IOException {
+            Name=name;
+            FileInputStream InputF = new FileInputStream("in.txt");
+            Scanner Fsc = new Scanner(InputF);
+            String[] words;
+            int n=Fsc.nextInt();
+            arr=new Mp[n];
+            while (Fsc.hasNext()){
+                String temp=Fsc.nextLine();
+                words=temp.split(" ");
+                // В массиве хранятся все данные, их просто кинуть в конструктор в правильном формате жанр выбрать через if
+            }
+
+        }
+        @Override
+        public String toString() {
+            return "Club: "+Name+"\n"+arr.toString();
+        }
+        public String Out(){
+            System.out.println("All:");
+            StringBuilder s=new StringBuilder();
+            for (int i = 0; i <arr.length ; i++) {
+                s.append(arr[i]+"\n");
+            }
+            return s.toString();
+    }
+    public String onlyLen(int l){
+        StringBuilder s=new StringBuilder();
+        for (int i = 0; i <arr.length ; i++) {
+            if(arr[i].getLen()<l)
+            s.append(arr[i]+"\n");
+        }
+        return s.toString();
+        }
+        public double MedianLen(){
+            // тк в задании не определено,что такое "компакт" среднее значение будет считаться по всему массиву в этом классе
+            double res=0;
+            for (int i = 0; i <arr.length ; i++) {
+                res=+arr[i].getLen();
+            }
+
+            return res/arr.length;
+        }
+        public int SumByGenreA(){
+            int res=0;
+            for (int i = 0; i <arr.length ; i++) {
+                if(arr[i].getGen()==Genre.a)
+                    res=+arr[i].getLen();
+
+            }
+            return  res;
+        }
+        class Comparer implements Comparator<Mp> {
+            @Override
+            public int compare(Mp a,Mp b){
+                return  a.getName().compareTo(b.getName());
+            }
+        }
+        public void sort(){
+            // в такой постановке задания одна сортировка противоречит другой, ведь всего 2 класса реализуем первую сортировку
+            Arrays.sort(arr,new Comparer());
+
+        }
+        public void Popular(){
+            // тк в задании не определен термин "популярный исполнитель" функция не может быть реализована
+        }
+
+
+    }
+
+
+    }

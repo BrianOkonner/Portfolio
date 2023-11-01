@@ -1,0 +1,121 @@
+
+package кр.интерфейсы;
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import java.io.PrintStream; 
+import java.math.BigDecimal; 
+import java.math.RoundingMode; 
+import java.text.DecimalFormat; 
+import java.util.Arrays; 
+import java.util.Scanner;
+import java.util.Comparator;
+
+class CompareSum implements Comparator<progress>
+{
+    @Override
+    public int compare(progress A,progress B)
+    {
+         if(A.Sum(4)==B.Sum(4))
+            return 0;
+        if(A.Sum(4)>B.Sum(4))
+            return -1;
+        return 1;
+    }
+    public int compare(progress A,progress B,int n)
+    {
+        if(A.Sum(n)==B.Sum(n))
+            return 0;
+        if(A.Sum(n)>B.Sum(n))
+            return -1;
+        return 1;
+    }
+}
+interface progress{
+    public abstract double Sum(int nomer);
+   public abstract double Getn(int nomer);
+}
+class ArrProgg implements progress{
+    private final double First;
+    private final double Coeff;
+    public ArrProgg(double First,double Coeff)
+    {
+        this.Coeff=Coeff;
+        this.First=First;
+    }
+    @Override
+    public double Getn(int nomer)
+    {
+        return this.First+this.Coeff*(nomer-1);
+    }
+    @Override
+    public double Sum(int nomer)
+    {
+        return (this.First+this.Getn(nomer))*nomer/2;
+    }
+    public double GetFirst()
+    {
+        return this.First;
+    }
+    public double GetCoeff()
+    {
+        return this.Coeff;
+    }
+    public String toString()
+    {
+        return "First: "+this.First+" Coeff= "+this.Coeff;
+    }
+}
+class GeoProgg implements progress{
+    private double First;
+    private double Coeff;
+    public GeoProgg(double First,double Coeff)
+    {
+        this.Coeff=Coeff;
+        this.First=First;
+    }
+    public double Getn(int nomer)
+    {
+        return this.First*Math.pow(this.Coeff,nomer-1);
+    }
+    @Override
+    public double Sum(int nomer)
+    {
+        return this.First*(1-Math.pow(this.Coeff, nomer))/(this.Coeff-1)*(-1);
+    }
+    public double GetFirst()
+    {
+        return this.First;
+    }
+    public double GetCoeff()
+    {
+        return this.Coeff;
+    }
+    @Override
+    public String toString()
+    {
+        return "First: "+this.First+" Coeff= "+this.Coeff;
+    }
+}
+public class КрИнтерфейсы {
+
+
+
+    public static void main(String[] args) {
+      progress[] P={new ArrProgg(1,5),new GeoProgg(2,3)};
+      for(int i=0;i<P.length;++i)
+      System.out.println(P[i].Sum(5));
+       for(int i=0;i<P.length;++i)
+      System.out.println(P[i]);
+      Arrays.sort(P,new CompareSum());
+      System.out.println("Отсортированный");
+       for(int i=0;i<P.length;++i)
+      System.out.println(P[i]);
+       ArrProgg A=new ArrProgg(13,20);
+       System.out.println("Creation Ar progress= "+A);
+       System.out.println("Sum of 10 Elements "+A.Sum(10)+"\nTake First, then elment with number 120: "+A.GetFirst()+" "+A.Getn(120));
+        GeoProgg B=new GeoProgg(3,2);
+       System.out.println("\n\nCreation Ar progress= "+B);
+       System.out.println("Sum of 10 Elements "+B.Sum(10)+"\nTake First, then elment with number 13: "+A.GetFirst()+" "+A.Getn(13));
+    }
+    
+}

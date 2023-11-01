@@ -1,0 +1,35 @@
+﻿Build started 01.03.2023 19:35:52.
+     1>Project "D:\Учеба\Программирование\Проекты c++\as\as\as.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\as.unsuccessfulbuild".
+       ClCompile:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt as.cpp
+         as.cpp
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(46): error C2146: syntax error : missing ';' before identifier 'HDWP'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(46): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(46): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(47): error C2146: syntax error : missing ';' before identifier 'MENUTEMPLATEA'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(52): error C2146: syntax error : missing ';' before identifier 'MENUTEMPLATE'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(52): error C2378: 'MENUTEMPLATEA' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(47) : see declaration of 'MENUTEMPLATEA'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(54): error C2146: syntax error : missing ';' before identifier 'LPMENUTEMPLATEA'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(54): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(59): error C2146: syntax error : missing ';' before identifier 'LPMENUTEMPLATE'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(59): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(59): error C2378: 'LPMENUTEMPLATEA' : redefinition; symbol cannot be overloaded with a typedef
+                 c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(54) : see declaration of 'LPMENUTEMPLATEA'
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(59): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(62): error C2065: 'CALLBACK' : undeclared identifier
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(62): error C2065: 'WNDPROC' : undeclared identifier
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(62): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+     1>c:\program files (x86)\microsoft sdks\windows\v7.0a\include\winuser.h(62): fatal error C1903: unable to recover from previous error(s); stopping compilation
+     1>Done Building Project "D:\Учеба\Программирование\Проекты c++\as\as\as.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.35

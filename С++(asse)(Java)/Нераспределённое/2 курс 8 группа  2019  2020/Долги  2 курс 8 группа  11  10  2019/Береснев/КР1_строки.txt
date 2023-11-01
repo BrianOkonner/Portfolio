@@ -1,0 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.io.*;
+import java.util.Scanner;
+
+public class Jap1{
+
+    public static void main(String[] args) 
+    {
+        try
+        {
+          FileInputStream inf= new FileInputStream("in.txt");
+          Scanner sc=new Scanner(inf);
+          PrintStream outf= new PrintStream("out.txt");
+          
+          
+          String str1 = sc.nextLine();
+          String result = "";
+          String words[] = str1.split(" ");
+          boolean doubles[] = new boolean[words.length];
+            for (int i =0 ;i<words.length;i++){
+                if (doubles[i] == false){
+                    result = result.concat(" ").concat(words[i]);
+                
+            }
+            else
+                break;
+            for(int j = i+1;j<words.length;j++)
+                if(words[i].equals(words[j])){
+                    doubles[j] = true;
+                }
+            }
+            System.out.println(result);
+              
+              
+              outf.println(result);
+              
+  
+          
+          
+             inf.close();
+             outf.close();
+        }
+        
+        catch(IOException e)
+        {
+         System.out.println("Файл не найден");    
+        }
+        
+    }
+    
+}

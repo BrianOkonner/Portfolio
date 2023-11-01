@@ -1,0 +1,31 @@
+.carrots {
+  display: flex;
+  flex-flow: row wrap;
+  width: 800px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+@media screen and (max-width: 800px) {
+  .carrots {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 605px) {
+  .carrots {
+    width: 450px;
+  }
+}
+
+@media screen and (max-width: 465px) {
+  .carrots {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 405px) {
+  .carrots {
+    width: 300px;
+  }
+}

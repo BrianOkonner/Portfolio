@@ -1,0 +1,363 @@
+
+package коллекция;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.*;
+import java.io.*;
+
+
+
+class wrongDlina extends Exception{};
+class wrongShirina extends Exception{};
+class Knife implements Serializable {
+    private String Type;
+    private String Handly;
+    private String Origin;
+    private boolean value;
+    private double  Dlina;
+     private double  shirina;
+      private boolean krovostok;
+      private String Material;
+      private String Material_of_rukoyatb;
+   public Knife(String Type, String Handly, String Origin,
+  boolean value, double  Dlina,
+  double  shirina,boolean krovostok,String Material,String Material_of_rukoyatb)
+           throws wrongDlina,wrongShirina
+   {
+       if(Dlina<=0)
+           throw new wrongDlina();
+       if(shirina<=0)
+           throw new wrongShirina();
+       
+       this.Dlina=Dlina;
+       this.Handly=Handly;
+       this.Material=Material;
+       this.Material_of_rukoyatb=Material_of_rukoyatb;
+       this.Origin=Origin;
+       this.Type=Type;
+       this.krovostok=krovostok;
+       this.shirina=shirina;
+       this.value=value;
+   }
+    @Override
+    public String toString()
+    {
+        return "Тип: "+this.Type+", "+" Страна производитель: "+this.Origin+", "+
+                " Одноручный/Двуручный: "+this.Handly+", "+" Коллекционный: "+
+                this.getValue()+"\n"+
+                "Visual:\n Длина: "+this.Dlina+" см, "+" Ширина: "+this.shirina+" мм, "+
+                " Material: "+
+                this.Material+", "+"Материал рукоятки: "+this.Material_of_rukoyatb+", "+
+                " Кровосток: "+this.getKrovostok();
+    }
+
+    public String getType() {
+        return this.Type;
+    }
+    public String getOrigin()
+    {
+        return this.Origin;
+    }
+    public String getHandly()
+    {
+       
+        return this.Handly;
+    }
+      public String getValue()
+    {
+        if(this.value==true)
+        return "Yes";
+        else
+        return "No";
+    }
+        public Double getDlina()
+    {
+        return this.Dlina;
+    }
+          public Double getShirina()
+    {
+        return this.shirina;
+    }
+            public String getKrovostok()
+    {
+        if(this.krovostok==true)
+        return "Есть кровосток";
+        else 
+            return "Нет кровостока";
+    }
+              public String getMaterial()
+    {
+        return this.Material;
+    }
+                public String getMaterialOF()
+    {
+        return this.Material_of_rukoyatb;
+    }
+           public void setDlina(double dlina)
+    {
+        this.Dlina=dlina;
+    }
+          public void setShirina(double shirina)
+    {
+        this.shirina=shirina;
+    }         
+       public void setKrovostok(boolean s)
+    {
+        if(s==true)
+            this.krovostok=true;
+        else
+            this.krovostok=false;
+        
+    }
+}
+
+class ColdWeapons implements Serializable{
+    private String name;
+    private String address;
+    private List<Knife> Base;
+    public ColdWeapons(String Name,String Address){
+        name=Name;
+        address=Address;
+        Base=new ArrayList<>();
+    }
+    public ColdWeapons AddKnife(Knife A){
+        Base.add(A);
+        return this;
+    }
+     public ColdWeapons DeleteKnife(Knife A){
+        Base.remove(A);
+        return this;
+    }
+      public ColdWeapons ChangeKnife(Knife A,int index){
+        Base.remove(index);
+        Base.add(index, A);
+        return this;
+    }
+      public String toString()
+      {
+          StringBuffer sf=new StringBuffer();
+          for(Knife r: Base)
+              sf.append(r+"\n");
+          return this.name+" "+this.address+"\n"+sf.toString();
+      }
+      public String HaveObject(Knife A)
+      {
+          for(Knife r:Base)
+              if(r.equals(A))
+          return "Есть данный объект";
+          return "Нет такого объекта";
+      }
+    public ColdWeapons FromFile(String NameFile) throws Exception{
+        FileInputStream pv=new FileInputStream(NameFile);
+        Knife A;
+        Scanner sc=new Scanner(pv);
+        while(sc.hasNext()){
+            A=new Knife(sc.next(),sc.next(),sc.next(),sc.nextBoolean(),sc.nextDouble(),sc.nextDouble(),sc.nextBoolean(),sc.next(),sc.next());
+            Base.add(A);
+            }
+        pv.close();
+        sc.close();
+        return this;
+    }
+    public ColdWeapons NewCollectionWithDlina(double Dlina)
+    {
+        ColdWeapons A=new ColdWeapons(this.name,this.address);
+        for(Knife r: Base)
+        {
+            if(r.getDlina()==Dlina)
+                A.AddKnife(r);
+        }
+        return A;
+    }
+    public ColdWeapons NewCollectionWithOrigin(String Origin)
+    {
+        ColdWeapons A=new ColdWeapons(this.name,this.address);
+        for(Knife r: Base)
+        {
+            if(r.getOrigin().equals(Origin))
+                A.AddKnife(r);
+        }
+        return A;
+    }
+    public void SafeToFile(String NameFile) throws Exception
+    {
+        PrintStream pv=new PrintStream(NameFile);
+        pv.println(this.name+" "+this.address);
+        for(Knife r:Base){
+            pv.println(r);
+           
+        }
+         pv.close();
+    }
+    public void reversePrint(PrintStream pr)
+    {
+        ListIterator<Knife> it=Base.listIterator(Base.size());
+        while(it.hasPrevious()){
+            pr.println(it.previous());
+        }
+    }
+    public void SortKnifesWithOrigin()
+    {
+        Collections.sort(Base, new Comparator<Knife>() {
+            @Override
+            public int compare(Knife s1, Knife s2) {
+                return s1.getOrigin().compareTo(s2.getOrigin());
+            }
+        });
+    }
+     public void SortKnifesWithVisualDlina()
+    {
+        Collections.sort(Base, new Comparator<Knife>() {
+            @Override
+            public int compare(Knife s1, Knife s2) {
+               if(s1.getDlina()==s2.getDlina())
+                   return 0;
+               if(s1.getDlina()<s2.getDlina())
+                   return -1;
+               return 1;
+            }
+        });
+    }
+      public void SortKnifesWithVisualShitina()
+    {
+        Collections.sort(Base, new Comparator<Knife>() {
+            @Override
+            public int compare(Knife s1, Knife s2) {
+               if(s1.getShirina()==s2.getShirina())
+                   return 0;
+               if(s1.getShirina()<s2.getShirina())
+                   return -1;
+               return 1;
+            }
+        });
+    }
+   
+    public List BackList(String Country)
+    {
+        List A=new ArrayList();
+        for(Knife s:Base)
+        {
+            if(Country.equals(Country))
+                A.add(s);
+        }
+        return A;
+    }
+    public Set<String> getOrigin1()
+    {
+        Set<String> Origins=new HashSet<String>();
+        for(Knife s:Base)
+            Origins.add(s.getMaterialOF());
+        return Origins;
+    }
+     public Set<String> getOrigin2()
+    {
+        Set<String> Origins=new TreeSet<String>();
+        for(Knife s:Base)
+            Origins.add(s.getMaterialOF());
+        return Origins;
+    }
+//    public EnumSet<> getAllTypes()
+//    {
+//        EnumSet<VergeType> eSet=EnumSet.noneOf(VergeType.class);
+//    }
+    
+}
+
+public class Коллекция {
+
+   public static Set<String> U(Set<String> A,Set<String> B)
+    {
+         Set<String> C=new HashSet<String>();
+       for(String str1:A)
+           C.add(str1);
+      C.addAll(B);
+        return C;
+    }
+       public static Set<String> Raznica(Set<String> A,Set<String> B)
+    {
+         Set<String> C=new HashSet<String>();
+         Set<String> D=new HashSet<String>();
+       for(String st1:A)
+           D.add(st1);      
+  D.removeAll(B);
+  for(String st2:D)
+      C.add(st2);
+  return C;
+    }
+     public static Set<String> Peresechenie(Set<String> A,Set<String> B)
+    {
+    Set<String> C=new HashSet<String>();
+         Set<String> D=new HashSet<String>();
+       for(String st1:A)
+           D.add(st1);      
+       C=Raznica(D,Raznica(U(D,B),B));
+        return C;
+    }
+    public static void main(String[] args){
+        try{
+      ColdWeapons A=new ColdWeapons("Zimurka","issulbskaya");
+     Knife[] B=new Knife[8];
+        B[0]=new Knife("Шпага","Одноручное","Франция",false,80,10,false,"Сталь","Осина");
+        B[1]=new Knife("Катана","Двуручное","Япония",true,90,20,true,"Сталь","Бамбука");
+        B[2]=new Knife("Сабля","Одноручное","Франция",false,80,30,false,"Медь","Дуб");
+        B[3]=new Knife("Дубина","Одноручное","Россия",false,60,30,false,"Металл","Нет");
+        B[4]=new Knife("Кинжал","Одноручное","Индия",true,30,10,true,"Железо","Бук");
+        B[5]=new Knife("Нож","Одноручное","Америка",false,25,8,false,"Железо","Осина");
+        B[6]=new Knife("Сай","Двуручное","Япония",true,40,15,false,"Чугун","Рябина");
+        B[7]=new Knife("Топор","Двуручное","Скандинавия",true,30,25,false,"Сталь","Дуб");
+               
+   for(Knife r:B)
+       A.AddKnife(r);
+    A.SafeToFile("Output.txt");
+    System.out.println(A);
+    Knife C=new Knife("Катана","Двуручное","Китай",true,120,30,true,"Адамантий","Бук");
+    System.out.println("Добавление новой катаны: ");
+    A.AddKnife(C);
+    System.out.println(A);
+     System.out.println("Удаление новой катаны: ");
+    A.DeleteKnife(C);
+    System.out.println(A);
+     System.out.println("Замена старой катаны новой катаной: ");
+    A.ChangeKnife(C, 1);
+    System.out.println(A);
+     System.out.println("Проверка наличия катаны: ");
+  System.out.println(A.HaveObject(C));
+  System.out.println();
+   System.out.println("Новоя коллекция с клинками по 80 см: ");
+    System.out.println(A.NewCollectionWithDlina(80));
+    System.out.println("Новоя коллекция с оружием произведённым Францией: ");
+    System.out.println(A.NewCollectionWithOrigin("Франция"));
+    System.out.println("Сортировка по странам: ");
+A.SortKnifesWithOrigin();
+    System.out.println(A);
+      System.out.println("Сортировка по Длине клинков: ");
+A.SortKnifesWithVisualDlina();
+    System.out.println(A);
+    
+    System.out.println("Разборки с Set");
+    Set<String> K1=new HashSet(A.getOrigin1());
+    Set<String> K2=new TreeSet(A.getOrigin2());
+    K2.remove("Нет");
+     K2.remove("Бук");
+     K1.remove("Осина");
+     Set<String> K3=new HashSet(A.getOrigin1());
+    Set<String> K4=new TreeSet(A.getOrigin2());
+    K4.remove("Нет");
+     K4.remove("Бук");
+     K3.remove("Осина");
+     System.out.println("2 сета:");
+     System.out.println(K1);
+     System.out.println(K2);
+     System.out.println("Их объединение: \n"+U(K1,K2));
+      System.out.println("Их разность: \n"+Raznica(K1,K2));
+      System.out.println("Их пересечение: \n"+Peresechenie(K1,K2));
+        }
+        catch(Exception e)
+        {
+            System.out.println(" Oshibka ");
+        }
+    }
+    
+}

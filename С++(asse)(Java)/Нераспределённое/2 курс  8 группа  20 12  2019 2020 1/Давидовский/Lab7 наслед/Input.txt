@@ -1,0 +1,6 @@
+DavidovskiNikitaSergeevich 2001 town 9 8 8 gymnasium 
+RagulyaNikitaAntonovich 2000 town 7 6 6 gymnasium 
+TurutoAlekseyPetrovich 2001 town 9 8 8 gymnasium 
+CheliadinskiyIvanJmyhovich 2000 town 8 8 7 lyceum 
+JmyhovValeraPetrovich 1999 countryside 10 10 10 school
+LukashenkoNikolayAleksandrovich 2003 countryside 0 0 0 premium 10 school

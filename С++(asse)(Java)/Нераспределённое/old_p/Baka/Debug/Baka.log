@@ -1,0 +1,17 @@
+﻿Построение начато 21.12.2017 14:35:50.
+     1>Проект "D:\Программирование\Проекты c++\baka\Baka\Baka.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\Baka.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt L8.cpp
+         L8.cpp
+     1>d:\программирование\проекты c++\baka\baka\l8.cpp(20): warning C4409: недопустимый размер инструкции
+     1>d:\программирование\проекты c++\baka\baka\l8.cpp(21): error C2443: конфликт размеров операндов
+     1>d:\программирование\проекты c++\baka\baka\l8.cpp(22): warning C4409: недопустимый размер инструкции
+     1>d:\программирование\проекты c++\baka\baka\l8.cpp(23): error C2443: конфликт размеров операндов
+     1>d:\программирование\проекты c++\baka\baka\l8.cpp(24): error C2443: конфликт размеров операндов
+     1>Построение проекта "D:\Программирование\Проекты c++\baka\Baka\Baka.vcxproj" завершено (целевые объекты build) с ошибкой.
+
+СБОЙ построения.
+
+Затраченное время: 00:00:01.39

@@ -1,0 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+import java.util.Comparator;
+
+
+class revcomp implements Comparator <String>
+{
+    @Override
+    public int compare(String a,String b)
+    {
+        int t1=sum(a);
+        int t2=sum(b);
+        if(t1==t2)
+            return 0;
+        if(t1<t2)
+            return -1;
+        return 1;
+    }
+        
+        public static int sum(String a)
+        {
+            int k=0;
+            String str="aieuyo";
+            for(int i=0;i<a.length()-1;i++)
+            {
+                for(int j=0;j<6;j++)
+                {
+                   if(a.charAt(i)==str.charAt(j))
+                   {
+                       k++;
+                   }
+                }
+            }
+            return k;
+     }
+}
+
+
+
+public class Jap1 
+{
+    public static void main(String[] args) 
+    {
+        try
+        {
+          FileInputStream file=new FileInputStream("Input.txt");
+          Scanner sc=new Scanner(file);
+          PrintStream printfile=new PrintStream("output.txt");
+          StringBuffer buf=new StringBuffer();
+          
+          while(sc.hasNext())
+          {
+			  
+              String str=sc.nextLine();
+              String[]arr=str.split(" ");
+              Arrays.sort(arr,new revcomp());
+              for(String r:arr)
+              {
+                   buf.append(r+" ");
+              }
+             printfile.println(buf);
+             buf.delete(0,buf.length());
+          }
+		  
+		  
+		  
+             file.close();
+             printfile.close();
+        }
+        
+        catch(IOException e)
+        {
+         System.out.println("”איכא םוע");    
+        }
+    }
+    
+}

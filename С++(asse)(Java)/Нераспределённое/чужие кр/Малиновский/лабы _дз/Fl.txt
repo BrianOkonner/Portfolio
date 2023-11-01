@@ -1,0 +1,121 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fl;
+
+/**
+ *
+ * @author lesha
+ */
+interface Location
+    {
+        abstract public int location(Object o);
+    }
+    class Circle implements Location
+    {
+        private int x;
+        private int y;
+        private double radius;
+        Circle(int x, int y, double radius)
+        {
+            this.x = x;
+            this.y =y;
+            this.radius = radius;
+        }
+        public int getX()
+        {
+            return this.x;
+        }
+          public int getY()
+        {
+            return this.y;
+        }
+               public double getR()
+        {
+            return this.radius;
+        }
+               public int location(Object o)
+               {
+                   if(! (o instanceof Circle))
+                       return 0;
+                   Circle t = (Circle)o;
+                   double dis = Math.sqrt((this.x - t.getX()) * (this.x -t.getX()) + (this.y - t.getY()) * (this.x - t.getY()));
+                   if(dis > this.radius + t.getR())
+                       return 1;
+                   if(dis == this.radius + t.getR())
+                       return 2;
+                   return 3;
+                   
+               }
+          
+        
+    }
+    class Rectangle implements Location
+    {
+        private int x1, y1;
+        private int x2, y2;
+        Rectangle(int x1, int y1, int x2, int y2)
+        {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+              public int getX1()
+        {
+            return this.x1;
+        }
+          public int getY1()
+        {
+            return this.y1;
+        }
+                public int getX2()
+        {
+            return this.x2;
+        }
+          public int getY2()
+        {
+            return this.y2;
+        }
+          public int location (Object o)
+          {
+              if(!(o instanceof Rectangle))
+                  return 0;
+              Rectangle t = (Rectangle) o;
+              if(y1<t.getY1() && y2>t.getY1() || y1<t.getY2() && y2>t.getY2())
+                  return 3;
+              if(y1 == t.getY1() && y2 == t.getY2() && y2 == t.getY1() && y1 == t.getY2())
+                  return 2;
+              return 1;
+          }
+    }
+public class Fl {
+    
+
+
+    /**
+     * @param args the command line arguments
+     */
+          
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Circle c1 = new Circle(5,6,4);
+        Circle c2 = new Circle(5,6,8);
+        Rectangle r1 = new Rectangle(2,3,5,6);
+        Rectangle r2 = new Rectangle(4,7,8,9);
+        Location l[] = new Location[2];
+        l[0]=c1;
+        l[1] = r1;
+        for(Location p: l)
+        
+        System.out.println(p.location(c2));
+                
+        
+    }
+    
+}
+    
+    

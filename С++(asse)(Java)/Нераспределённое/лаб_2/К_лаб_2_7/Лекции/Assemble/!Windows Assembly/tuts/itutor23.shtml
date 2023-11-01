@@ -1,0 +1,473 @@
+<html>
+<!-- Creation date: 21.03.01 -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>WASM E-Mag #1</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="programming, asm, assembler, windows, программирование, ассемблер, C, C++, soft, tutor, пособие, source, исходник, код">
+<meta name="Author" content="Aquila">
+<meta name="Generator" content="AceHTML 4 Pro">
+</head>
+<body marginheight="0" marginwidth="0" rightmargin="0" topmargin="0" leftmargin="0" bottommargin="0">
+
+<table border="0" cellspacing="0">
+  <tr>
+    <td width="150" align="center" bgcolor="#6837CF" valign="top">
+	        <a href="http://www.b-i-g.zite.ru"><img width="109" height="110" src="../images/globe.gif" border="0" alt="Headquaters"><br>
+          <a href="../index.shtml"><img width="120" height="30" src="../images/siteinfo.gif" border="0" alt="Site Info"></a><br>
+          <a href="../tutors.shtml"><img width="120" height="30" src="../images/tutors.gif" border="0" alt="Tutors"></a><br>
+          <a href="../links.shtml"><img width="120" height="30" src="../images/links.gif" border="0" alt="Links"></a><br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+
+	</td>
+	<td valign="top">
+	  <table cellspacing="0" cellpadding="8">
+	    <tr>
+		  <td align="center"><img width=400 height=40 src="../images/itutor23t.gif" alt="Урок 23: Иконка в system tray"></td>
+		</tr>
+		<tr>
+		  <td bgcolor="#FFFFFF">
+<p>
+   На этом уроке мы узнаем, как помещать иконки в system tray и как создавать/использовать всплывающее меню.
+<p>
+   Пример можете скачать здесь.
+<p>
+   <b>Теория:</b>
+<p>
+   System tray - это прямоугольная область панели задач, в которой располагаются несколько иконок.
+   Скорее всего, вы обнаружите там как минимум цифровые часы. Вы можете самостоятельно помещать иконки в
+   system tray. Далее приводятся шаги, которые нужно для этого выполнить:
+   <ul type="disc">
+       <li>Заполните структуру NOTIFYICONDATA, содержащую следующие поля:
+         <ul type="disc">
+          <li>cbSize - pазмер данной структуры.
+
+          <li>hwnd - хэндл окна, которое будет получать уведомление, когда
+           над иконкой в tray'e произойдёт событие мыши.
+
+          <li>uID - константа, используемая в качестве индентификатора иконки. Вы сами выбираете
+           значение этой константе. В случае, если вы поместили в system tray несколько иконок, вы сможете узнать,
+           над какой именно из них произошло событие мыши.
+
+          <li>uFlags - указывает, какие поля данной структуры заполнены
+            <ul type="disc">
+              <li>NIF_ICON    Поле hIcon заполнено.
+
+              <li>NIF_MESSAGE Поле uCallbackMessage заполнено.
+
+              <li>NIF_TIP     Поле szTip заполнено.
+            </ul>
+          <li>uCallbackMessage - пользовательское сообщение, которое Windows отошлёт указанному в
+           поле hwnd окну, в случае, когда над иконкой произойдёт событие мыши. Сообщение вы создаете сами.
+
+          <li>hIcon - хэндл иконки, которую вы хотите поместить в system tray.
+
+          <li>szTip - 64-байтовый массив, содержащий строку для использования в качестве всплывающей подсказки
+          к иконке.
+        </ul>
+       <li>Вызовите Shell_NotifyIcon, определённую в shell32.inc. Данная функция имеет следующий прототип:
+       <code><pre>
+                   Shell_NotifyIcon PROTO dwMessage:DWORD, pnid:DWORD</pre>
+       </code>
+         <ul type="disc">
+           <li>dwMessage - это тип сообщения, которое нужно отправить оболочке.
+            <ul type="disc">
+             <li>NIM_ADD Добавляет иконку в system tray.
+             <li>NIM_DELETE Удаляет иконку из system tray.
+             <li>NIM_MODIFY Изменяет иконку в system tray.
+            </ul>
+           <li>pnid - это указатель на корректно заполненную структуру NOTIFYICONDATA.
+         </ul>
+       <li>Если вы хотите добавить иконку в system tray, используйте сообщение NIM_ADD, если хотите удалить иконку,
+       применяйте NIM_DELETE.
+     </ul>
+<p>
+   Вот, собственно, и всё. Но чаще всего просто поместить иконку в system tray недостаточно. Вам нужно как-то
+   реагировать на событий мыши, происходящие над этой иконкой. Это можно сделать, обрабатывая сообщение, указанное
+   в поле uCallbackMessage структуры NOTIFYICONDATA. Это сообщение содержит следующие значения в wParam и lParam
+   (отдельное спасибо s__d за эту информацию):
+   <ul type="disc">
+       <li>wParam содержит ID иконки. Это то же самое значение, что вы поместили в поле uID структуры NOTIFYICONDATA.
+
+       <li>lParam  Младшее слово содержит сообщение мыши. Например, если пользователь сделал правый щелчок по иконке,
+       то lParam будет содержать WM_RBUTTONDOWN.
+   </ul>
+<p>
+   Обычно иконка в system tray показывает всплывающее меню при правом щелчке по ней. Этого можно добиться, если сначала
+   создать само всплывающее меню, а затем вызывать TrackPopupMenu для его отображения. Шаги приведены ниже:
+   <ul type="disc">
+       <li>Создайте всплывающее меню, вызвав CreatePopupMenu. Эта функция создаёт пустое меню, и при успешном создании
+       возвращает его хэндл в eax.
+
+       <li>Добавьте пункты в меню с помощью AppendMenu, InsertMenu или InsertMenuItem.
+
+       <li>Когда вам будет нужно отобразить всплывающее меню на месте курсора мыши, вызовите GetCursorPos, чтобы
+       узнать текущие координаты курсора, а затем вызовите TrackPopupMenu, чтобы вывести меню на экран.
+
+       <li>Когда пользователь щёлкнет на одном из пунктов меню, Windows отправит сообщение WM_COMMAND вашей оконной процедуре,
+       точно так же, как и при работе с обычным меню.
+   </ul>
+<p>
+   Внимание: остерегайтесь следующих проблем, часто возникающих при работе со всплывающими меню.
+   <ul type="disc">
+       <li>Когда меню отображено на экране, щелчок вне меню не приводит к его немедленному исчезновению.
+       Это происходит потому, что окно, которое будет получать уведомления от меню, ДОЛЖНО быть на переднем плане.
+       Просто вызовите SetForegroundWindow, чтобы исправить эту проблему.
+
+       <li>После вызова SetForegroundWindow вы обнаружите, что в первый раз всплывающее меню сработает нормально, но при
+       последующем появлении оно будет отображаться, а затем тут же исчезать. Как написано в MSDN, это сделано "намеренно".
+       Необходимо переключить задачу на программу, являющуюся владельцем иконки в system tray. Этого можно добиться,
+       отправив любое сообщение окну вашей программы. Но только используйте PostMessage, а не SendMessage!
+   </ul>
+<p>
+   <b>Пример:</b>
+<p><code><pre>
+   .386
+   .model flat,stdcall
+   option casemap:none
+
+   include \masm32\include\windows.inc
+   include \masm32\include\user32.inc
+   include \masm32\include\kernel32.inc
+   include \masm32\include\shell32.inc
+
+   includelib \masm32\lib\user32.lib
+   includelib \masm32\lib\kernel32.lib
+   includelib \masm32\lib\shell32.lib
+
+
+   WM_SHELLNOTIFY equ WM_USER+5
+   IDI_TRAY equ 0
+   IDM_RESTORE equ 1000
+
+   IDM_EXIT equ 1010
+   WinMain PROTO :DWORD,:DWORD,:DWORD,:DWORD
+
+
+   .data
+   ClassName  db "TrayIconWinClass",0
+   AppName    db "TrayIcon Demo",0
+   RestoreString db "&Restore",0
+
+   ExitString   db "E&xit Program",0
+
+   .data?
+
+   hInstance dd ?
+   note NOTIFYICONDATA <>
+   hPopupMenu dd ?
+
+
+   .code
+   start:
+       invoke GetModuleHandle, NULL
+
+       mov    hInstance,eax
+       invoke WinMain, hInstance,NULL,NULL, SW_SHOWDEFAULT
+       invoke ExitProcess,eax
+
+
+   WinMain proc
+   hInst:HINSTANCE,hPrevInst:HINSTANCE,CmdLine:LPSTR,CmdShow:DWORD
+       LOCAL wc:WNDCLASSEX
+
+       LOCAL msg:MSG
+       LOCAL hwnd:HWND
+       mov   wc.cbSize,SIZEOF WNDCLASSEX
+       mov   wc.style, CS_HREDRAW or CS_VREDRAW or CS_DBLCLKS
+
+       mov   wc.lpfnWndProc, OFFSET WndProc
+       mov   wc.cbClsExtra,NULL
+       mov   wc.cbWndExtra,NULL
+       push  hInst
+
+       pop   wc.hInstance
+       mov   wc.hbrBackground,COLOR_APPWORKSPACE
+       mov   wc.lpszMenuName,NULL
+       mov   wc.lpszClassName,OFFSET ClassName
+
+       invoke LoadIcon,NULL,IDI_APPLICATION
+       mov*  wc.hIcon,eax
+       mov*  wc.hIconSm,eax
+       invoke LoadCursor,NULL,IDC_ARROW
+
+       mov*  wc.hCursor,eax
+       invoke RegisterClassEx, addr wc
+       invoke CreateWindowEx,WS_EX_CLIENTEDGE,ADDR ClassName,ADDR AppName,\
+              WS_OVERLAPPED+WS_CAPTION+WS_SYSMENU+WS_MINIMIZEBOX+WS_MAXIMIZEBOX+WS_VISIBLE,\
+              CW_USEDEFAULT,350,200,NULL,NULL,\
+              hInst,NULL
+
+       mov   hwnd,eax
+       .while TRUE
+
+           invoke GetMessage, ADDR msg,NULL,0,0
+           .BREAK .IF (!eax)
+           invoke TranslateMessage, ADDR msg
+           invoke DispatchMessage, ADDR msg
+
+       .endw
+       mov eax,msg.wParam
+       ret
+   WinMain endp
+
+
+   WndProc proc hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
+       LOCAL pt:POINT
+
+       .if uMsg==WM_CREATE
+           invoke CreatePopupMenu
+           mov hPopupMenu,eax
+           invoke AppendMenu,hPopupMenu,MF_STRING,IDM_RESTORE,addr RestoreString
+           invoke AppendMenu,hPopupMenu,MF_STRING,IDM_EXIT,addr ExitString
+       .elseif uMsg==WM_DESTROY
+           invoke DestroyMenu,hPopupMenu
+           invoke PostQuitMessage,NULL
+       .elseif uMsg==WM_SIZE
+           .if wParam==SIZE_MINIMIZED
+               mov note.cbSize,sizeof NOTIFYICONDATA
+
+               push hWnd
+               pop note.hwnd
+               mov note.uID,IDI_TRAY
+               mov note.uFlags,NIF_ICON+NIF_MESSAGE+NIF_TIP
+
+               mov note.uCallbackMessage,WM_SHELLNOTIFY
+               invoke LoadIcon,NULL,IDI_WINLOGO
+               mov note.hIcon,eax
+               invoke lstrcpy,addr note.szTip,addr AppName
+
+               invoke ShowWindow,hWnd,SW_HIDE
+               invoke Shell_NotifyIcon,NIM_ADD,addr note
+           .endif
+       .elseif uMsg==WM_COMMAND
+
+           .if lParam==0
+               invoke Shell_NotifyIcon,NIM_DELETE,addr note
+               mov eax,wParam
+               .if ax==IDM_RESTORE
+
+                   invoke ShowWindow,hWnd,SW_RESTORE
+               .else
+                   invoke DestroyWindow,hWnd
+               .endif
+
+           .endif
+       .elseif uMsg==WM_SHELLNOTIFY
+           .if wParam==IDI_TRAY
+               .if lParam==WM_RBUTTONDOWN
+
+                   invoke GetCursorPos,addr pt
+                   invoke SetForegroundWindow,hWnd
+                   invoke TrackPopupMenu,hPopupMenu,TPM_RIGHTALIGN,pt.x,pt.y,NULL,hWnd,NULL
+
+                   invoke PostMessage,hWnd,WM_NULL,0,0
+               .elseif lParam==WM_LBUTTONDBLCLK
+                   invoke SendMessage,hWnd,WM_COMMAND,IDM_RESTORE,0
+               .endif
+
+           .endif
+       .else
+           invoke DefWindowProc,hWnd,uMsg,wParam,lParam
+           ret
+
+       .endif
+       xor eax,eax
+       ret
+   WndProc endp
+
+   end start</pre>
+</code><p>
+   <b>Анализ:</b>
+<p>
+   Программа отобразит на экране обычное окно. По нажатию кнопки "Свернуть" оно свернётся до иконки в system tray
+   По двойному щелчку по иконке программа восстановит своё окно и удалит иконку из system tray. По правому щелчку
+   будет выведено всплывающее меню, из которого можно восстановить программу или выйти из неё.
+<p><code><pre>
+      .if uMsg==WM_CREATE
+           invoke CreatePopupMenu
+           mov hPopupMenu,eax
+
+           invoke AppendMenu,hPopupMenu,MF_STRING,IDM_RESTORE,addr RestoreString
+           invoke AppendMenu,hPopupMenu,MF_STRING,IDM_EXIT,addr ExitString</pre>
+</code><p>
+   Когда будет создано главное окно, также создастся всплывающее меню, к которому затем будут добавлены два пункта. Функция
+   AppendMenu имеет следующий синтаксис:
+   <p><code><pre>
+       AppendMenu PROTO hMenu:DWORD, uFlags:DWORD, uIDNewItem:DWORD, lpNewItem:DWORD</pre>
+   </code>
+       <ul type="disc">
+           <li>hMenu это хэндл меню, к которому вы хотите добавить пункт
+
+           <li>uFlags информирует Windows о добавляемом пункте меню - изображение ли это, строка или отрисовываемый владельцем
+           объект; включен ли он, неопределён или отключен, и т.д. Полный список есть в win32 api reference. В
+           нашем случае мы используем флаг MF_STRING, который означает, что пункт меню - это строка.
+
+           <li>uIDNewItem это ID пункта меню. Это значение определяется пользователем, и используется для обращения к
+           пункту меню.
+
+           <li>lpNewItem хранит содержание пункта меню, в зависимости от значения поля uFlags. Так как мы указали MF_STRING в
+           поле uFlags, то lpNewItem должен содержать указатель на строку для отображения в пункте меню.
+       </ul>
+<p>
+   После того, как всплывающее меню создано, главное окно будет терпеливо ждать до тех пор, пока пользователь не нажмёт
+   на кнопку "Свернуть".
+<p>
+   Когда окно сворачивается, оно получает сообщение WM_SIZE со значением SIZE_MINIMIZED в wParam.
+<p><code><pre>
+       .elseif uMsg==WM_SIZE
+
+           .if wParam==SIZE_MINIMIZED
+               mov note.cbSize,sizeof NOTIFYICONDATA
+               push hWnd
+               pop note.hwnd
+
+               mov note.uID,IDI_TRAY
+               mov note.uFlags,NIF_ICON+NIF_MESSAGE+NIF_TIP
+               mov note.uCallbackMessage,WM_SHELLNOTIFY
+               invoke LoadIcon,NULL,IDI_WINLOGO
+
+               mov note.hIcon,eax
+               invoke lstrcpy,addr note.szTip,addr AppName
+               invoke ShowWindow,hWnd,SW_HIDE
+               invoke Shell_NotifyIcon,NIM_ADD,addr note
+
+           .endif</pre>
+</code><p>
+   Мы используем этот момент, чтобы заполнить структуру NOTIFYICONDATA. IDI_TRAY это просто константа,
+   определённая в начале исходного кода. Ей можно задать любое значение. Это не очень важно, так как у нас только
+   одна иконка в system tray. Но если вы захотите поместить туда сразу несколько иконок, то вам потребуется задать
+   уникальный ID для каждой из них. Мы выставляем сразу все флаги в поле uFlags, так как мы указываем иконку (NIF_ICON),
+   мы указываем пользовательское сообщение (NIF_MESSAGE), а также текст всплывающей подсказки (NIF_TIP). WM_SHELLNOTIFY это
+   просто пользовательское сообщение, определённое как WM_USER+5. Само значение не так важно, пока оно сохраняет
+   свою уникальность. Я использовал логотип Windows в качестве иконки для этой программы, но вы можете использовать и любую
+   другую иконку ;) Просто загрузите её из файла ресурсов вызовом LoadIcon и сохраните возвращаемое значение в поле hIcon.
+   После всего этого поместим в поле szTip текст, который мы хотим видеть в качестве всплывающей подсказки
+   к иконке.
+<p>
+   Мы скрываем главное окно, чтобы создать эффект "сворачивания в иконку".
+   Затем мы вызываем Shell_NotifyIcon с сообщением NIM_ADD, чтобы добавить иконку в system tray.
+<p>
+   Теперь наше главное окно скрыто, а иконка успешно помещена в system tray. Если вы наведёте на неё курсор, то
+   увидите подсказку с текстом, который вы поместили в поле szTip. Далее, если вы дважды щелкните по иконке, восстановится
+   главное окно, а сама иконка исчезнет.
+<p><code><pre>
+       .elseif uMsg==WM_SHELLNOTIFY
+
+           .if wParam==IDI_TRAY
+               .if lParam==WM_RBUTTONDOWN
+                   invoke GetCursorPos,addr pt
+                   invoke SetForegroundWindow,hWnd
+
+                   invoke TrackPopupMenu,hPopupMenu,TPM_RIGHTALIGN,pt.x,pt.y,NULL,hWnd,NULL
+                   invoke PostMessage,hWnd,WM_NULL,0,0
+               .elseif lParam==WM_LBUTTONDBLCLK
+                   invoke SendMessage,hWnd,WM_COMMAND,IDM_RESTORE,0
+               .endif
+           .endif</pre>
+</code><p>
+   Когда над иконкой происходит событие мыши, ваше окно получает сообщение
+   WM_SHELLNOTIFY, то есть пользовательское сообщение, указанное в поле uCallbackMessage.
+   Напомню, что по приёму этого сообщения wParam содержит ID иконки, а lParam содержит событие мыши.
+   В вышеприведенном коде сначала проверяется, пришло ли сообщение от интересующей нас иконки. Если да, то тогда
+   мы смотрим на событие мыши. Так как нам нужны только правый щелчок и левый двойной щелчок, то мы обрабатываем
+   лишь сообщения WM_RBUTTONDOWN и WM_LBUTTONDBLCLK.
+<p>
+   Если сообщение от мыши это WM_RBUTTONDOWN, мы вызываем GetCursorPos, чтобы узнать текущие координаты курсора
+   мыши. После возврата из функции, структура POINT содержит абсолютные координаты курсора. Под абсолютными координатами
+   я подразумеваю координаты, привязанные ко всему экрану, не берущие во внимание границы окна. Например,
+   если разрешение экрана 640*480, то правый нижний угол это x==639, y==479. Если вы желаете перевести абсолютные
+   координаты в оконные, используйте функцию ScreenToClient.
+<p>
+   Однако мы хотим отобразить всплывающее меню в точке, где сейчас расположен курсор мыши, с помощью функции TrackPopupMenu,
+   которой требуются именно абсолютные координаты. Поэтому мы просто используем координаты, полученные от GetCursorPos.
+<p>
+   TrackPopupMenu имеет следующий синтаксис:
+
+       TrackPopupMenu PROTO hMenu:DWORD, uFlags:DWORD,  x:DWORD,  y:DWORD, nReserved:DWORD, hWnd:DWORD, prcRect:DWORD
+
+   <ul type="disc">
+      <li>hMenu это хэндл всплывающего меню, которое нужно отобразить.
+
+      <li>uFlags указывает опции отображения. Например, как располагать меню относительно указанных ниже
+      координат, и какая из кнопок мыши используется для отслеживания меню. В нашем примере мы используем
+      флаг TPM_RIGHTALIGN, чтобы разместить меню слева от указанной точки.
+
+      <li>x и y указывают местоположение меню в абсолютных координатах.
+
+      <li>nReserved должно содержать NULL.
+
+      <li>hWnd это хэндл окна, которое будет получать сообщения от меню.
+
+      <li>prcRect это прямоугольная область экрана, щелчки в пределах которой НЕ будут приводить к исчезновению меню.
+      Обычно сюда помещается NULL, чтобы меню исчезало при любом щелчке вне его.
+   </ul>
+<p>
+   Когда пользователь дважды щелкнёт по иконке, мы отправим нашему окну сообщение WM_COMMAND с указанием IDM_RESTORE,
+   чтобы создать иллюзию выбора пользователем пункта "Восстановить" в меню, и таким образом восстановить окно, а также
+   удалить иконку из system tray. Чтобы иметь возможность получать сообщения двойного щелчка, главное окно должно иметь
+   стиль CS_DBLCLKS.
+<p><code><pre>
+               invoke Shell_NotifyIcon,NIM_DELETE,addr note
+               mov eax,wParam
+               .if ax==IDM_RESTORE
+                   invoke ShowWindow,hWnd,SW_RESTORE
+               .else
+                   invoke DestroyWindow,hWnd
+               .endif</pre>
+</code><p>
+   Когда пользователь выберет пункт "Восстановить" в меню, мы удаляем иконку повторным вызовом
+   Shell_NotifyIcon, только на этот раз указывая NIM_DELETE в качестве сообщения. Затем мы возвращаем
+   первозданный вид главному окну. Если пользователь выберет пункт "Закрыть", мы тоже удаляем
+   иконку из system tray и уничтожаем главное окно вызовом DestroyWindow.
+   <p>
+   <address>
+     Iczelion (Перевод: WD-40, 15.08.2001)
+   </address>
+			<p align="center">
+<i>WASM E-mag (c) Aquila (<a href="mailto:aquila@zite.ru">aquila@zite.ru</a>), 2000-2002</i>
+<p align="center">
+
+		  </td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

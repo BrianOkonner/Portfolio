@@ -1,0 +1,164 @@
+package com.company;
+import java.util.Arrays;
+import java.util.Comparator;
+
+class SectionX{
+    private int x;
+    private int y;
+
+    public SectionX(){
+        this.x = 0;
+        this.y = 1;
+    }
+    public SectionX(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    public int getY() {
+        return this.y;
+    }
+    public int getX() {
+        return this.x;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+    public int length(){
+        return Math.abs(this.y-this.x);
+    }
+
+    public SectionX simmetric(){
+        return new SectionX(-this.x, -this.y);
+    }
+
+    public boolean equals( SectionX A){
+        if(this==A) return true;
+        return this.x==A.x && this.y==A.y ? true: false;
+    }
+
+    public String ToString()
+    {
+        return " ("+this.x+";"+this.y+")";
+    }
+    public int location(SectionX B){
+
+    if((this.x==B.y)||(this.y==B.x)) return 2;
+        if((this.x>B.y)||(this.y<B.x)) return 1;
+        if(((B.x<this.x)&&(B.y>this.x)&& (B.y <this.y))||((B.y>this.y)&&(B.x <this.y)&&(B.x>this.x))) return 3;
+        if((B.y<=this.y && B.x>=this.x) ||(B.y>=this.y && B.x<=this.x)) return 4;
+        return 0;
+    }
+    public SectionX Union(SectionX B)
+    {
+        if(this.location(B)!=1)
+        {
+            SectionX un = new SectionX();
+            if(this.y<B.y)
+            {
+                un.x=this.x;
+                un.y=B.y;
+            }
+            else
+            {
+                un.x=B.x;
+                un.y=this.y;
+            }
+            return un;
+        }
+        else
+        {
+            System.out.println("Отрезки объединить нельзя");
+        }
+        return this;
+    }
+
+    public SectionX vychitanie(SectionX A) {
+          if (this.location(A) == 4) {
+            if (this.length() > A.length()) {
+                return new SectionX(A.y, this.y);
+            }
+            return new SectionX(this.y, A.y);
+        }
+        return new SectionX(0, 0);
+    }
+
+    public SectionX cross(SectionX A) {
+
+
+        if (this.location(A) == 3) {
+            if (this.x < A.x)
+                return new SectionX(A.x, this.y);
+            return new SectionX(this.x, A.y);
+        }
+        if (this.location(A) == 2) {
+            if (this.y == A.x) {
+                return new SectionX(this.y, this.y);
+            }
+            return new SectionX(this.x, this.x);
+        }
+        return new SectionX(0, 0);
+    }
+}
+    class SectionXSort implements Comparator<SectionX> {
+        @Override
+        public int compare(SectionX t1, SectionX t2) {
+
+            if (t1.length() > t2.length()) return 1;
+            if (t1.length() < t2.length()) return -1;
+            return 0;
+        }
+
+    }
+ public class Main {
+
+    public static void main(String[] args) {
+        SectionX A= new SectionX();
+        SectionX B= new SectionX(3,7);
+        SectionX C= new SectionX(7,9);
+        System.out.println(A.equals(B));
+
+        SectionX mas[]=new SectionX[3];
+        mas[0]=A;mas[1]=B;mas[2]=C;
+
+        for(SectionX r:mas)
+        {
+            System.out.println(r.ToString());
+        }
+
+        for(int i=0;i<3;i++)
+        {
+            System.out.print("Отрезки "+mas[i].ToString()+" и "+A.ToString()+" ");
+            if(mas[i].location(A)==1)
+            {
+                System.out.println("Не пересекаются и не касаются");
+            }
+            if(mas[i].location(A)==2)
+            {
+                System.out.println("Соприкасаются");
+            }
+            if(mas[i].location(A)==3)
+            {
+                System.out.println("Пересекаются");
+            }
+            if(mas[i].location(A)==4)
+            {
+                System.out.println("Один содержится внутри другого");
+            }
+        }
+
+        System.out.println("Объединение (B,C)="+B.Union(C).ToString()+"  Пересечение(B,C)="+B.cross(C).ToString()+
+                "  Разность(B,C)="+B.vychitanie(C).ToString());
+
+
+        Arrays.sort(mas, new SectionXSort());
+        System.out.println("Отсортированный массив: ");
+        for(SectionX r:mas)
+     {
+         System.out.println(r.ToString());
+     }
+    }
+}
+

@@ -1,0 +1,27 @@
+package com.company;
+//Заданном массиве нат чисел заменить за 1 просмотр все возвр группы чисел на ту же группу чисел записанных в обр порядке
+import java.util.Arrays;
+import java.util.Comparator;
+class revComp implements Comparator<Integer> {
+    @Override
+    public int compare(Integer t1, Integer t2) {
+        if (t1 > t2) return -1;
+        if (t1 < t2) return 1;
+        return 0;
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+        Integer[] a = {1, 3, 5, 4, 8, 1, 2, 3, 1};
+        int p = 0;
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] < a[i - 1]) {
+                Arrays.sort(a, p, i, new revComp());
+                p = i;
+            }
+        }
+        System.out.println(Arrays.toString(a));
+    }
+}
+

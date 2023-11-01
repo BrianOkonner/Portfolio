@@ -1,0 +1,24 @@
+﻿Построение начато 20.02.2020 17:38:19.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\1234\1234\1234.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Release\1234.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "п.cpp"
+         п.cpp
+     1>п.cpp(80): warning C4345: изменение поведения: для объекта типа POD, созданного с помощью инициализатора вида (), будет выполнена инициализация по умолчанию
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\1234\Release\1234.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\1234.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\1234\Release\1234.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\1234\Release\1234.lib" /MACHINE:X86 "Release\п.obj"
+            Создается библиотека D:\Учеба\Программирование\Проекты c++\1234\Release\1234.lib и объект D:\Учеба\Программирование\Проекты c++\1234\Release\1234.exp
+         Создание кода
+         Создание кода завершено
+         1234.vcxproj -> D:\Учеба\Программирование\Проекты c++\1234\Release\1234.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\1234\Release\1234.exe;#1" /manifest Release\1234.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Release\1234.unsuccessfulbuild" удаляется.
+         Обращение к "Release\1234.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\1234\1234\1234.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.93

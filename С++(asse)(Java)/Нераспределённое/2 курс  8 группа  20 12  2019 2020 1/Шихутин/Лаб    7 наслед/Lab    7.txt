@@ -1,0 +1,219 @@
+package project;
+//Шихутин Влад 11 номер
+
+import java.io.FileInputStream; 
+import java.io.FileNotFoundException; 
+import java.io.PrintStream; 
+import java.math.BigDecimal; 
+import java.math.RoundingMode; 
+import java.text.DecimalFormat; 
+import java.util.Arrays; 
+import java.util.Scanner;
+import java.util.Comparator;
+import java.io.*;
+
+class CompareMoney implements Comparator<Account>
+{
+@Override
+public int compare(Account A,Account B){
+if(A.getMoneyOnAccount()==B.getMoneyOnAccount())
+    return 0;
+if(A.getMoneyOnAccount()>B.getMoneyOnAccount())
+        return -1;
+return 1;}
+}
+class CompareNames implements Comparator<Account>
+{
+@Override
+public int compare(Account A,Account B){
+return A.getName().compareTo(B.getName());}
+}
+enum TypeOfOperation
+        {
+    Add, close, open,transfer, pay_for_tax;
+}
+class WrongMoney extends Exception{};
+class Account{
+    protected   int id;
+    protected final String  SirNameOfOwner;
+  protected   double SumOnAccount;
+ protected   final String Date;
+ protected   TypeOfOperation Type;
+  protected  double MoneyOnType;
+ protected static int Count=0;
+  public Account(String  SirNameOfOwner,double SumOnAccount, String Date, TypeOfOperation Type, double MoneyOnType)
+      throws WrongMoney{
+      if(SumOnAccount<0 || MoneyOnType<0)
+          throw new WrongMoney();
+      Count++;
+     this.id=Count;
+      this.Date=Date;
+      this.SirNameOfOwner=SirNameOfOwner;
+      this.SumOnAccount=SumOnAccount;
+      this.Type=Type;
+      this.MoneyOnType=MoneyOnType;
+}
+  public int getid()
+  {
+      return this.id;
+  }
+  public String toString()
+  {
+      return "Id= "+this.id+" Фамилия:"+this.SirNameOfOwner+" Деньги на счёте:"+this.SumOnAccount+" Дата последней операции:"+this.Date+" Вид операции:"+this.Type+" Деньги в операции:"+this.MoneyOnType;
+  }
+  public String getName(){
+      return this.SirNameOfOwner;
+    
+}
+  public String getDate()
+  {
+      return this.Date;
+  }
+  public Double getMoneyOnAccount()
+  {
+      return this.SumOnAccount;
+  }
+   public TypeOfOperation GetType(){
+       return this.Type;
+   }
+   public void SetMoney(double Money)
+   {
+       this.SumOnAccount=Money;}
+}
+class Deposite extends Account
+{
+private   String DateOfClosing;
+private double coef;
+public Deposite(String  SirNameOfOwner,double SumOnAccount, String Date,
+        TypeOfOperation Type, double MoneyOnType,String DateOfClosing,double coef)
+        throws WrongMoney
+{
+    super(SirNameOfOwner,SumOnAccount, Date,
+       Type, MoneyOnType);
+    this.DateOfClosing=DateOfClosing;
+    this.coef=coef;
+}
+public String GetDateOfClosing()
+{
+    return this.DateOfClosing;
+}
+ public Double getMoneyOnAccount()
+  {
+      return SumOnAccount/100*this.coef+SumOnAccount;
+  }
+ public String toString()
+ {
+     return super.toString()+" Money Deposite: "+this.getMoneyOnAccount()+" Date of closing: "+this.DateOfClosing;
+ }
+}
+class Bank
+{
+    private String NameOfBank;
+    private String Adress;
+    private Account[] account;
+    public Bank(String nameOfBank,String Adress,Account[] account)
+    {
+        this.Adress=Adress;
+        this.NameOfBank=nameOfBank;
+
+        this.account=new Account[account.length];
+        System.arraycopy(account, 0, this.account, 0, account.length);
+    }
+    public String toString()
+    {
+        StringBuffer str=new StringBuffer();
+        for(int i=0;i<account.length;i++)
+        {
+            str.append(account[i].toString()+"\n");
+        }
+        return "Bank: "+this.NameOfBank+" || Street: "+this.Adress+"\n"+str.toString();
+    }
+    public String GetaccountOfName(String name)
+    {
+        StringBuffer str=new StringBuffer();
+        str.append("Accounts with name "+name+"\n");
+        for(Account prim:this.account)
+        {
+            if(prim.getName().equals(name))
+                str.append(prim+"\n");
+        }
+        return str.toString();
+    }
+     public String GetaccountOfDays(int Day)
+     {
+         StringBuffer str=new StringBuffer();
+         str.append("Accounts with Day "+Day+"\n");
+          for(Account prim:this.account)
+        {
+            String[] arr=prim.getDate().split("_");
+            if(arr[0].equals(Integer.toString(Day)))
+                str.append(prim+"\n");
+        }
+        return str.toString();
+     }
+      public String GetaccountOfOperation(TypeOfOperation Type)
+     {
+         StringBuffer str=new StringBuffer();
+         str.append("Accounts with Operation "+Type+"\n");
+          for(Account prim:this.account)
+        {
+           
+            if(prim.GetType()==Type)
+                str.append(prim+"\n");
+        }
+        return str.toString();
+     }
+      public void sortSumms()
+      {
+          Arrays.sort(this.account,new CompareMoney());
+      }
+      public void sortNames(){
+          Arrays.sort(this.account,new CompareNames());
+      }
+}
+public class Project {
+ 
+    public static void main(String[] args) {
+       try{
+           FileInputStream pv=new FileInputStream("Input.txt");
+           Scanner sc=new Scanner(pv);
+           PrintStream pv1=new PrintStream("output.txt");
+      Account[] account=new Account[sc.nextInt()];
+      sc.nextLine();
+      int k=0;
+      while(sc.hasNext())
+      {
+          String str=sc.nextLine();
+          String[] arr=str.split(" ");
+             if(arr.length<=5)
+             {
+          account[k++]=new Account(arr[0],Double.parseDouble(arr[1]),arr[2],TypeOfOperation.valueOf(arr[3]),Double.parseDouble(arr[4]));}
+             else{
+                 account[k++]=new Deposite(arr[0],Double.parseDouble(arr[1]),arr[2],TypeOfOperation.valueOf(arr[3]),Double.parseDouble(arr[4]),arr[5],Double.parseDouble(arr[6]));
+             }
+       
+      }
+     Scanner sc1=new Scanner(System.in);
+     Bank Lebovski=new Bank("Lebovsky","Minskaya",account);
+     pv1.println(Lebovski);
+     pv1.println(Lebovski.GetaccountOfName("Lizovec"));
+     pv1.println(Lebovski.GetaccountOfDays(15));
+     pv1.println(Lebovski.GetaccountOfOperation(TypeOfOperation.transfer));
+     pv1.println("Отсортированные счета по убыванию сумм: ");
+     Lebovski.sortSumms();
+     pv1.println(Lebovski);
+      pv1.println("Отсортированные счета по именам: ");
+     Lebovski.sortNames();
+     pv1.println(Lebovski);
+       }
+     catch(IOException e)
+       {
+           System.out.println("Ошибка");
+       }
+        catch(WrongMoney e)
+                {
+                System.out.println("Error Money");
+                }
+    }
+    
+}

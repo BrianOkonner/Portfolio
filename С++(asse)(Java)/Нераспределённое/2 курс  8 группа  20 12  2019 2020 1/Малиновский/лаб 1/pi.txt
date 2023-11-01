@@ -1,0 +1,40 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package javaapplication1;
+
+/**
+ *
+ * @author lesha
+ */
+import java.util.Scanner;
+public class JavaApplication1 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner Reader = new Scanner(System.in);
+        double input = 1.0;
+        double output = 0.0;
+        boolean positiv = true;
+        input = Reader.nextInt();
+        for(int i =0; i< input; i++)
+        {
+            double contribution = 1.0/(2.0*((double)i) + 1.0);
+            if(positiv)
+            output += contribution;
+            else
+                output -= contribution;
+            positiv = !positiv; 
+                
+            
+        }
+        System.out.println(output*4.0);
+        // TODO code application logic here
+    }
+    
+}

@@ -1,0 +1,133 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.lang.reflect.Array;
+import java.util.*;
+
+class Prog{
+    int active;
+    ArrayList<String> allProg;
+    ArrayList<String> allTabs;
+    public Prog(String file)throws IOException{
+        FileInputStream InputF = new FileInputStream(file);
+        Scanner Fsc = new Scanner(InputF);
+        String[] words;
+        allProg=new ArrayList<>();
+        allTabs= new ArrayList<>();
+        while (Fsc.hasNext()){
+            String temp=Fsc.nextLine();
+            words=temp.split(" ");
+            if(words[0].equalsIgnoreCase("Run")){
+                StringBuilder s=new StringBuilder();
+                for (int i = 1; i <words.length ; i++) {
+                    s.append(words[i]);
+                    s.append(" ");
+                }
+                allProg.add(s.toString());
+            }
+            else {
+                allTabs.add(words[0]);
+            }
+
+        }
+
+    }
+    public void sortAlphab(String out)throws IOException{
+        PrintStream windows1=new PrintStream(out);
+        Object[] a1=allProg.stream().sorted().toArray();
+        for (Object o : a1) {
+            windows1.println(o.toString());
+        }
+
+    }
+
+    class pair{
+        public String s;
+        public int i;
+        public pair(String st,Integer in){
+            s=st;
+            i=in;
+        }
+    }
+    public void SortTabs(String out)throws IOException{
+        PrintStream windows2=new PrintStream(out);
+        ArrayList<pair> arr=new ArrayList<>();
+        Map<String,Integer> frequencymap = new TreeMap<>();
+        for(String a: allTabs) {
+            if(frequencymap.containsKey(a)) {
+                frequencymap.put(a, frequencymap.get(a)+1);
+            }
+            else{ frequencymap.put(a, 1); }
+        }
+        for(Map.Entry<String,Integer> entry : frequencymap.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            arr.add(new pair(key,value));
+        }
+        arr.sort(new Comparator<pair>() {
+            @Override
+            public int compare(pair pair, pair t1) {
+                return t1.i-pair.i;
+            }
+        });
+        for(pair p:arr){
+            for (int i = 0; i <p.i ; i++) {
+                windows2.println(p.s);
+            }
+
+        }
+    }
+public void win3(String out,String file)throws IOException{
+    PrintStream windows3=new PrintStream(out);
+    FileInputStream InputF = new FileInputStream(file);
+    Scanner Fsc = new Scanner(InputF);
+    String[] words;
+    int cur=0;
+    ArrayList<String>active=new ArrayList<>();
+    while (Fsc.hasNext()){
+        String temp=Fsc.nextLine();
+        words=temp.split(" ");
+
+        if(words[0].equalsIgnoreCase("Run")){
+            StringBuilder s=new StringBuilder();
+            for (int i = 1; i <words.length ; i++) {
+                s.append(words[i]);
+                s.append(" ");
+            }
+            cur=allProg.indexOf(s.toString());
+            active.add(0,s.toString());
+            windows3.println(s.toString());
+        }
+        else {
+
+
+            int amTab =(words[0].length()-3)/4;
+
+            cur=cur+amTab;cur++;
+            while(cur>active.size()-1){
+                cur=cur-active.size();
+            }
+            active.add(0,active.get(cur));
+            active.remove(cur+1);
+            String s=active.get(0);
+            windows3.println(s);
+        }
+
+    }
+
+
+
+}
+
+}
+public class Main {
+
+    public static void main(String[] args)throws IOException {
+	Prog A=new Prog("windows.in");
+	A.sortAlphab("windows1.out");
+	A.SortTabs("windows2.out");
+	A.win3("windows3.out","windows.in");
+    }
+}

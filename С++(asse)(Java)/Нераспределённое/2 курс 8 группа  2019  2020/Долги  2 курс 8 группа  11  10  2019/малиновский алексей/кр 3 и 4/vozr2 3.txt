@@ -1,0 +1,90 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package vozr2;
+
+/**
+ *
+ * @author lesha
+ */
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+public class Vozr2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+         Scanner Reader = new Scanner(System.in);
+        int x;
+        int o;
+        System.out.println("¬ведите число элементов в массиве");
+        x = Reader.nextInt();
+        Integer a[] = new Integer[x];
+        System.out.println("¬ведите элементы:");
+        for(int i =0; i< x; i++)
+        {
+            o = Reader.nextInt();
+            a[i] = o;
+        }
+        Integer b[] = new Integer[100];
+        int number =0;
+            for(int j =0; j<a.length-1; j++ )
+            {
+                if(a[j]<a[j+1])
+                {
+                    int index =0;
+                    int left = j;
+                    int p = left;
+                    int right = j+1;
+                    if(right !=a.length-1)
+                    {
+                    while(a[p]< a[right])
+                    {
+                        right++;
+                        p++;
+                    }
+                    right--;
+                    }
+                    for(int k =left; k<=right; k++)
+                    {
+                        if(a[k] == 2)
+                            index++;
+                    }
+                    if(index == 1)
+                    {
+                        for(int k =left; k<=right; k++)
+                    {
+                        b[number] = a[k];
+                        number ++;
+                    }
+                    }
+                    j = right;
+                    
+                }
+            }
+Integer c[] = new Integer[number];
+for(int i =0; i< number; i++)
+{
+    c[i] = b[i];
+}
+Arrays.sort(c, new Comparator<Integer>() {
+        public int compare(Integer t1, Integer t2)
+        {
+           return MaxNum(t2) - MaxNum(t1) ;
+        }
+});
+        
+        System.out.print(Arrays.toString(c));
+    }
+    static int MaxNum(int n) 
+    { 
+        return n==0 ? 0 : Math.max(n%10, MaxNum(n/10));
+    } 
+    
+    
+}

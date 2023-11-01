@@ -1,0 +1,1 @@
+int findnum(char*st);

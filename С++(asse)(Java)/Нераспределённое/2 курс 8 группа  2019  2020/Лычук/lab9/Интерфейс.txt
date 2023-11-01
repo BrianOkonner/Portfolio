@@ -1,0 +1,122 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+class wrongquad extends Exception{}
+
+class Comparer_perimetr implements Comparator<Geometric>
+{
+    @Override
+    public int compare(Geometric t1,Geometric t2)
+    {
+        if(t1.perimetr()==t2.perimetr())
+            return 0;
+        else
+        if(t1.perimetr()>t2.perimetr())
+            return 1;
+        else
+            return -1;
+    }
+}
+
+interface Geometric
+{
+    abstract public double perimetr();
+    abstract public String centre();
+}
+
+class Romb implements Geometric
+{
+    private double x1;
+    private double y1;
+    private double x2;
+    private double y2;
+
+    Romb(double x1,double y1,double x2,double y2)
+    {
+
+        this.x1=x1;
+        this.y1=y1;
+        this.x2=x2;
+        this.y2=y2;
+    }
+
+    public double perimetr()
+    {
+        return (2*(this.x2-this.x1)+2*(this.y2-this.y1));
+    }
+
+    public String centre()
+    {
+        return  "Center: ("+(this.x1+this.x2)/2+","+(this.y1+this.y2)/2+")";
+    }
+
+@Override
+    public String toString()
+    {
+        return "Romb:  ("+x1+"," +y1+"), ("+x2+","+y2+")";
+    }
+}
+
+class Quadrate implements Geometric
+{
+    private double x1;
+    private double y1;
+    private double x2;
+    private double y2;
+
+    Quadrate (double x1,double y1,double x2,double y2) throws wrongquad
+    {
+        if((x2-x1)!=(y2-y1))
+            throw new wrongquad();
+        this.x1=x1;
+        this.y1=y1;
+        this.x2=x2;
+        this.y2=y2;
+    }
+ 
+    public double perimetr()
+    {
+        return 4*(this.x2-this.x1);
+    }
+
+    public String centre()
+    {
+        return "Center: ("+(this.x1+this.x2)/2+","+(this.y1+this.y2)/2+")";
+    }
+
+@Override
+    public String toString()
+    {
+        return "Quadrate: ("+x1+"," +y1+"), ("+x2+","+y2+")";
+    }
+}
+
+public class Main {
+    public static void main(String[] args)
+    {
+        try
+        {
+           Romb r=new Romb(1,2,3,4);
+            System.out.println(r);
+            System.out.println("Perimeter: "+r.perimetr());
+            System.out.println(r.centre());
+
+            Quadrate q=new Quadrate(1,1,2,2);
+            System.out.println(q);
+            System.out.println("Perimeter: "+q.perimetr());
+            System.out.println(q.centre());
+
+            Geometric G[]=new Geometric[2];
+            G[0]=r;G[1]=q;
+            Arrays.sort(G,new Comparer_perimetr());
+            System.out.println("Sorted:"+Arrays.toString(G));
+        }
+        catch(wrongquad e)
+        {
+            System.out.println("not quadrate");
+        }
+    }
+
+}

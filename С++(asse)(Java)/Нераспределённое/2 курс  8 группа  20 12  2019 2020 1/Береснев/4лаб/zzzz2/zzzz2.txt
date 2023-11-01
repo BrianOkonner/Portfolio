@@ -1,0 +1,81 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jap1;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+import java.util.Comparator;
+/**
+ *  слова из чисел
+ * 
+ */
+public class Jap1 {
+
+    public static boolean myChislo(String a)
+    {
+        String str="1234567890";
+        
+          for(int i=0;i<a.length();i++)
+            {
+                for(int j=0;j<10;j++)
+                {
+                   if(a.charAt(i)==str.charAt(j))
+                   {
+                       return true;
+                   }
+                }
+            }
+          
+          return false;
+    }
+    
+    
+    public static void main(String[] args) 
+    {
+        try
+        {
+          FileInputStream file=new FileInputStream("Input.txt");
+          Scanner sc=new Scanner(file);
+          PrintStream printfile=new PrintStream("output.txt");
+          StringBuffer buf=new StringBuffer();
+          
+           while(sc.hasNext())
+          {
+              String str=sc.nextLine();
+              String[]arr1=str.split(" ");
+              int size=arr1.length;
+              String temp="";
+              
+              for(int i=0;i<size/2;i++)
+              {
+                  if((myChislo(arr1[i]))&&(myChislo(arr1[size-i-1])))
+                  {
+                      temp=arr1[i];
+                      arr1[i]=arr1[size-i-1];
+                      arr1[size-i-1]=temp;
+                  }
+              }
+              
+              for(String r:arr1)
+              {
+                   buf.append(r+" ");
+              }
+              printfile.println(buf);
+              buf.delete(0,buf.length());
+  
+          }
+          
+             file.close();
+             printfile.close();
+        }
+        
+        catch(IOException e)
+        {
+         System.out.println("Файл не найден");    
+        }
+    }
+    
+}

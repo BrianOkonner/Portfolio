@@ -1,0 +1,47 @@
+package javaapplication1;
+import java.util.Scanner;
+/**
+ *
+ * @author T'emli
+ */
+public class JavaApplication1 {
+public static boolean polin(int n)
+{
+    if ((n<=9)&&(n>=0))
+        return true;
+    int k;
+    k=n;
+    int b;
+    
+    b=n%10;
+    n/=10;
+    while(n!=0)
+    {
+        b*=10;
+        b+=n%10;
+        n/=10;
+    }
+    if (b==k)
+        return true;
+    else 
+        return false;
+}
+   
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+       System.out.println("¬ведите начало отрезка, затем конец");
+       int nachalo=sc.nextInt();
+       int konec=sc.nextInt();
+       if((nachalo>konec)||(nachalo<1))
+           System.out.println("¬ведены неверные значени€");
+           else
+       {
+       for (int i=nachalo;i<=konec;i++)
+       {
+           if ((polin(i)==true) && (polin(i*i)==true))
+               System.out.println("число "+i+" двойной полином");
+       }
+               }
+    }
+    
+}

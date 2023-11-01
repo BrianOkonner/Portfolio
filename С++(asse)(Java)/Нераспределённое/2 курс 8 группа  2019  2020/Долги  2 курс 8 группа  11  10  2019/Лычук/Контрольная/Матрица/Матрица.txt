@@ -1,0 +1,60 @@
+package com.company;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) throws FileNotFoundException {
+      FileInputStream Input = new FileInputStream("Input");
+        PrintStream printfile = new PrintStream("Output.txt");
+        Scanner sc = new Scanner(Input);
+        Scanner in = new Scanner(System.in);
+        int n =sc.nextInt();
+        int m = sc.nextInt();
+        int[][] M = new int[n][m];
+
+        while (sc.hasNext()) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    M[i][j] = sc.nextInt();
+                }
+            }
+        }
+
+        Integer[]mas=new Integer[m];
+        for(int j=0;j<m;j++)
+        {
+          for(int i=0;i<n;i++)
+            {
+                mas[i]=M[i][j];
+            }
+            Arrays.sort(mas);
+            for(int i=0;i<n;i++)
+            {
+                M[i][j]=mas[i];
+            }
+        }
+
+    int pair=0;int k=1;
+        for(int j=0;j<m;j++) {
+            while(k!=m-j)
+            {
+                for(int i=0;i<n;i++)
+                {
+                    if(M[i][j]!=M[i][j+k])
+                    {
+                        pair++;
+                        System.out.print(j+" ");printfile.print(j+" ");
+                        System.out.println(j+k);printfile.println(j+k);
+                        i=n;
+                    }}
+                k++;
+            }
+               k=1;
+        }
+        System.out.println ("Количество пар="+ pair);
+        printfile.println("Количество пар="+pair);
+
+    }
+}

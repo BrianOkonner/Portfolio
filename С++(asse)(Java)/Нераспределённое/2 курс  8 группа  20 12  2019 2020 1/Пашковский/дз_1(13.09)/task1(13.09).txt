@@ -1,0 +1,71 @@
+﻿--------------------=====================TASK1==========================--------------------------------
+
+package packAge;
+
+import java.util.Scanner;
+
+public class Proh1 {
+	public static int razmer(int a)
+	{
+		int i=0;
+		while(a>0)
+		{
+			a/=10;
+			i++;
+		}
+		return i;
+	}
+	public static int num(int a, int pos)
+	{
+		if(razmer(a)>=pos)
+			return (int)Math.floor((a/Math.pow(10, razmer(a)-pos))%10);
+		else
+		{
+			System.out.println("Ошибка параметров!");
+			return -1;
+		}
+	}
+	public static boolean poly(int a)
+	{
+		int n=0;
+		for(int i=0;i<razmer(a); i++)
+		{
+			n+=num(a,razmer(a)-i)*Math.pow(10,razmer(a)-i-1);
+		}
+		if(n==a)
+			return true;
+		else
+			return false;
+
+	}
+	public static void main(String[] args) {
+	int a=0;
+	int b=0;
+	Scanner sc=new Scanner(System.in);
+	while(a<1 | b<1)
+	{
+		
+		System.out.println("Введите 2 числа:");
+		
+		a=sc.nextInt();
+		b=sc.nextInt();
+		if(a<1 | b<1)
+			System.out.println("Ошибка ввода");
+	}
+	
+	if(a<b)
+	{
+		int c=b;
+		b=a;
+		a=c;
+	}//a>b always
+	for(int i=b;i<=a;i++)
+		{
+			if(poly(i) & poly(i*i))
+				System.out.println("Число "+i+" двойной палиндром");
+						
+		}
+	
+	}
+
+}

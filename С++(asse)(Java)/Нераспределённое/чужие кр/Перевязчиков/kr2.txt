@@ -1,0 +1,216 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package kr2;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.io.*;
+/**
+ *
+ * @author Brian
+ */
+abstract class Matr
+{
+    int matr[][];
+    public int[][] getMatr()
+    {
+        return matr;  
+    }
+    public void setMatr(int[][] matr2)
+    {
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                matr[i][j]=matr2[i][j];
+    }
+    public abstract Matr add(Matr b);
+    public abstract Matr sub(Matr b);
+    public abstract int norm2();
+    public String toString()
+    {
+        String s="Матрица :\n";
+        for(int i=0;i<matr.length;i++)
+        {
+            for(int j=0;j<matr[i].length;j++)
+                s+=matr[i][j]+" ";
+            s+="\n";
+        }
+        return s;
+    } 
+}
+class MatrP extends Matr
+{
+    public MatrP(int n,int m)
+    {
+        
+        matr=new int[n][m]; 
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                matr[i][j]=0;
+    }
+    public MatrP(int[][] matr2)
+    {
+        
+        matr=new int[matr2.length][matr2[0].length]; 
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                matr[i][j]=matr2[i][j];
+    }
+    @Override
+    public MatrP add(Matr matr2)
+    {
+        MatrP a=new MatrP(matr2.matr.length,matr2.matr[0].length);
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                a.matr[i][j]=matr[i][j]+matr2.matr[i][j];
+        return a;
+    }
+    @Override
+    public MatrP sub(Matr matr2)
+    {
+        MatrP a=new MatrP(matr.length,matr2.matr[0].length);
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr2.matr[i].length;j++)
+                for(int k=0;k<matr[i].length;k++)
+                    a.matr[i][j]+=matr[i][k]*matr2.matr[k][j];
+        return a;
+    }
+    @Override
+    public int norm2()
+    {
+        int[] nor=new int[matr.length];
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                nor[i]+=matr[i][j];
+        Arrays.sort(nor);
+        return nor[matr.length-1];
+    }
+    public int norm1()
+    {
+        int[] nor=new int[matr[0].length];
+        for(int i=0;i<matr[0].length;i++)
+            for(int j=0;j<matr.length;j++)
+                nor[i]+=matr[j][i];
+        Arrays.sort(nor);
+        return nor[nor.length-1];
+    }
+}
+class MatrK extends Matr
+{
+    public MatrK(int n)
+    {
+        
+        matr=new int[n][n]; 
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                matr[i][j]=0;
+    }
+    public MatrK(int[][] matr2)
+    {
+        
+        matr=new int[matr2.length][matr2[0].length]; 
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                matr[i][j]=matr2[i][j];
+    }
+    @Override
+    public MatrK add(Matr matr2)
+    {
+        MatrK a=new MatrK(matr2.matr.length);
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                a.matr[i][j]=matr[i][j]+matr2.matr[i][j];
+        return a;
+    }
+    @Override
+    public MatrK sub(Matr matr2)
+    {
+        MatrK a=new MatrK(matr.length);
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr2.matr[i].length;j++)
+                for(int k=0;k<matr[i].length;k++)
+                    a.matr[i][j]+=matr[i][k]*matr2.matr[k][j];
+        return a;
+    }
+    public MatrK kv()
+    {
+        MatrK a=new MatrK(matr.length);
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                for(int k=0;k<matr[i].length;k++)
+                    a.matr[i][j]+=matr[i][k]*matr[k][j];
+        return a;
+    }
+    @Override
+    public int norm2()
+    {
+        int[] nor=new int[matr.length];
+        for(int i=0;i<matr.length;i++)
+            for(int j=0;j<matr[i].length;j++)
+                nor[i]+=matr[i][j];
+        Arrays.sort(nor);
+        return nor[matr.length-1];
+    }
+}
+public class Program
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args)
+    {
+        try
+        {
+            FileOutputStream out = new FileOutputStream("Output.txt");
+            FileInputStream InputF=new FileInputStream("Input.txt");
+            Scanner sc=new Scanner(InputF);
+            int[][] a,b,c;
+            int h=sc.nextInt();
+            int l=sc.nextInt();            
+            a=new int[h][l];
+            for(int i=0;i<h;i++)
+                for(int j=0;j<l;j++)
+                    a[i][j]=sc.nextInt();
+            h=sc.nextInt();
+            l=sc.nextInt();
+            b=new int[h][l];
+            for(int i=0;i<h;i++)
+                for(int j=0;j<l;j++)
+                    b[i][j]=sc.nextInt();
+            h=sc.nextInt();
+            l=sc.nextInt();
+            c=new int[h][l];
+            for(int i=0;i<h;i++)
+                for(int j=0;j<l;j++)
+                    c[i][j]=sc.nextInt();
+            MatrP m1=new MatrP(a);
+            MatrK m2=new MatrK(b);
+            MatrP m3=new MatrP(c);
+            Matr m[]={m1,m2,m3};
+            System.out.println(m[0]);
+            System.out.println(m[1]);
+            System.out.println(m[2]);
+            System.out.println("Нормы");
+            System.out.println(m[0].norm2()+" -  вторая(первой матрицы)");
+            System.out.println(m1.norm1()+" -  первая(первой матрицы)");
+            System.out.println(m[1].norm2()+" -  вторая(второй матрицы)");
+            System.out.println("Суммы");
+            System.out.println(m[0].add(m[0]));
+            System.out.println(m[1].add(m[1]));
+            System.out.println(m[2].add(m[2]));
+            System.out.println("Перемножения");
+            System.out.println(m[1].sub(m[1]));
+            System.out.println(m[0].sub(m[2]));
+            System.out.println("Квадрат");
+            System.out.println(m2.kv());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Ошибка");
+        }
+    }
+    
+}

@@ -1,0 +1,237 @@
+package com.company;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class YearOutofBounds extends Exception{}
+class NegativePrice extends Exception{}
+class CompRamDec implements Comparator<pc>{
+    @Override
+    public int compare(pc a,pc b){
+        if(a.getRam()==b.getRam())
+            return 0;
+        else if(a.getRam()>b.getRam())
+            return 1;
+        else return -1;
+    }
+}
+class CompProd implements Comparator<pc>{
+    @Override
+    public int compare(pc a,pc b){
+        return a.getProducer().compareTo(b.getProducer());
+    }
+}
+class pc{
+protected final Integer id;
+protected final String producer;
+protected int memory;
+protected final int productionYear;
+protected int ram;
+protected double price;
+protected static int count=0;
+enum  cpuType{single,dual, quad,octa}
+protected cpuType cpuT;
+public pc(String producer,int memory,int productionYear,int ram,double price,cpuType cpu) throws YearOutofBounds,NegativePrice{
+    if(productionYear>2019||productionYear<1900)
+        throw new YearOutofBounds();
+    if(price<0)
+        throw new NegativePrice();
+    this.producer=producer;
+    this.memory=memory;
+    this.productionYear=productionYear;
+    this.ram=ram;
+    this.price=price;
+    this.cpuT=cpu;
+    count++;
+    this.id=count;
+}
+
+    public cpuType getCpuT() {
+        return cpuT;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getMemory() {
+        return memory;
+    }
+
+    public int getProductionYear() {
+        return productionYear;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setCpuT(cpuType cpuT) {
+        this.cpuT = cpuT;
+    }
+
+    public void setMemory(int memory) {
+        this.memory = memory;
+    }
+
+    public int getRam() {
+        return ram;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setRam(int ram) {
+        this.ram = ram;
+    }
+
+
+    public boolean equals(pc obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        return this.id==obj.getId();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s=new StringBuilder();
+        s.append("ID: "+id+" Producer: "+producer+" Year: "+productionYear);
+        return s.toString();
+    }
+}
+class Laptop extends pc{
+    enum BatteryType{Mounted, Modular,None }
+    private BatteryType batteryType;
+    private double batteryLife;
+    private double coefficient;
+    public Laptop(String producer,int memory,int productionYear,int ram,double price,
+                  cpuType cpu,BatteryType batteryType,double batteryLife,double coeficient) throws YearOutofBounds,NegativePrice{
+        super( producer, memory, productionYear, ram, price, cpu);
+        this.coefficient =coeficient;
+        this.batteryLife=batteryLife;
+        this.batteryType=batteryType;
+
+    }
+    public Laptop(pc obj)throws YearOutofBounds,NegativePrice{
+        super( obj.getProducer(),obj.getMemory(), obj.getProductionYear(), obj.getRam(), obj.getPrice(), obj.getCpuT());
+        this.coefficient =1;
+        this.batteryLife=0;
+        this.batteryType=BatteryType.None;
+    }
+    @Override
+    public double getPrice() {
+        return super.getPrice()* coefficient;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+"Laptop coefficient: "+coefficient;
+    }
+
+    public double getCoefficient() {
+        return coefficient;
+    }
+
+    public double getBatteryLife() {
+        return batteryLife;
+    }
+
+    public void setCoefficient(double coefficient) {
+        this.coefficient = coefficient;
+    }
+
+    public void setBatteryLife(double batteryLife) {
+        this.batteryLife = batteryLife;
+    }
+
+    public BatteryType getBatteryType() {
+        return batteryType;
+    }
+
+    public void setBatteryType(BatteryType batteryType) {
+        this.batteryType = batteryType;
+    }
+}
+class GameClub{
+    private String name;
+    private pc[] arr;
+    public GameClub(String name,pc[]arr){
+        this.name=name;
+        this.arr=new pc[arr.length];
+        System.arraycopy(arr,0,this.arr,0,arr.length);
+    }
+
+    @Override
+    public String toString() {
+        return "Club: "+name+"\n"+arr.toString();
+    }
+
+    public pc[] getArr() {
+        return arr;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public String Out(){
+        System.out.println("All:");
+        StringBuilder s=new StringBuilder();
+        for (int i = 0; i <arr.length ; i++) {
+            s.append(arr[i]+"\n");
+        }
+        return s.toString();
+    }
+    public String OnlyCPUType(pc.cpuType type){
+        System.out.println("Specific CPU:");
+        StringBuilder s=new StringBuilder();
+        for (int i = 0; i <arr.length ; i++) {
+            if(arr[i].getCpuT()== type)
+                s.append(arr[i]+"\n");
+        }
+        return s.toString();
+    }
+    public String OnlyMemorySize(int a,int a1){
+        StringBuilder s=new StringBuilder();
+        for (int i = 0; i <arr.length ; i++) {
+            if(arr[i].getMemory()>a&&arr[i].getMemory()<a1)
+                s.append(arr[i]+"\n");
+        }
+        return s.toString();
+    }
+    public String OnlyProducer(String prod){
+        StringBuilder s=new StringBuilder();
+        for (int i = 0; i <arr.length ; i++) {
+            if(arr[i].getProducer()==prod)
+                s.append(arr[i]+"\n");
+        }
+        return s.toString();
+    }
+    public String SortedByRam(){
+        System.out.println("Sorted by ram");
+        Arrays.sort(arr,new CompRamDec());
+        return arr.toString();
+    }
+    public String SortedByProd(){
+        System.out.println("Sorted by ram");
+        Arrays.sort(arr,new CompProd());
+        return arr.toString();
+    }
+}

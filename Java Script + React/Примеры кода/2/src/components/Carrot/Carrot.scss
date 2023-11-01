@@ -1,0 +1,46 @@
+.carrot-cell {
+  position: relative;
+  background-color: gray;
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  margin: 10px 30px;
+
+  .carrot {
+    position: absolute;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 30%;
+  }
+
+  .carrot.hidden {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .carrot-cell {
+    width: 80px;
+    height: 80px;
+    margin: 10px 20px;
+  }
+}
+
+@media screen and (max-width: 605px) {
+  .carrot-cell {
+    width: 70px;
+    height: 70px;
+    margin: 7px 10px;
+  }
+}
+
+@media screen and (max-width: 405px) {
+  .carrot-cell {
+    width: 50px;
+    height: 50px;
+    margin: 7px 7px;
+  }
+}

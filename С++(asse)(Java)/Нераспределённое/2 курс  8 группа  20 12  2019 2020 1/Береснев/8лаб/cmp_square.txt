@@ -1,0 +1,18 @@
+package com.company;
+
+import java.util.Comparator;
+
+public class cmp_square  implements Comparator <PlaneFigure>{
+
+    @Override
+    public int compare(PlaneFigure t1, PlaneFigure t2) {
+        if(t1.square() == t2.square())
+            return 0;
+        else
+            if(t1.square() >t2.square())
+                return 1;
+            else
+                return -1;
+    }
+}
+

@@ -1,0 +1,478 @@
+package com.company;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.*;
+
+class MyException extends Exception{}
+
+public class Main {
+
+    public static int count = 1;
+
+    public static void main(String[] args) {
+
+        try {
+            FileInputStream in = new FileInputStream("input.txt");
+            PrintStream out = new PrintStream("output.txt");
+            Scanner file = new Scanner(in);
+            Scanner console = new Scanner(System.in);
+
+            Device[] devices = new Device[8];
+            Device device = new Device();
+            Computer computer = new Computer();
+
+            computer.SetName(file.next());
+            computer.SetLocation(file.next());
+            computer.CreateNew();
+
+            String str = "", var1;
+            int number, var2, choose;
+            double var3;
+
+            for (int i = 0; i < devices.length; i++) {
+                devices[i] = new Device(count, file.next(), file.next(), file.nextDouble(), file.next(), file.nextInt(), file.next(), file.next());
+                computer.AddDevice(devices[i]);
+                System.out.println(computer.GetDevices().get(i).toString());
+                count++;
+            }
+            System.out.println("");
+
+            System.out.println("Что вы хотите сделать?");
+            System.out.println("1. Добавить элемент");
+            System.out.println("2. Удалить элемент");
+            System.out.println("3. Заменить элемент");
+            System.out.println("4. Найти элемент");
+            System.out.println("5. Сделать новую коллекцию по числовому признаку");
+            System.out.println("6. Сделать новую коллекцию по строковому признаку");
+            System.out.println("7. Отсортировать коллекцию по числовому признаку");
+            System.out.println("8. Отсортировать коллекцию по строковому признаку");
+            System.out.println("9. Вывести все");
+            System.out.println("(Введите любое другое число ,чтобы выйти)");
+
+            choose = console.nextInt();
+            System.out.println("");
+            while ((choose > 0) && (choose < 10)) {
+
+                switch (choose) {
+                    case 1:
+                        device.SetNumber(count);
+                        count++;
+                        System.out.println("Введите название устройства");
+                        device.SetName(console.next());
+                        System.out.println("Введите страну производства устройства");
+                        device.SetOrigin(console.next());
+                        System.out.println("Введите цену устройства");
+                        device.SetPrice(console.nextDouble());
+                        System.out.println("Введите 'peripheral' или 'notperipheral' для вашего устройства");
+                        device.SetPeripheral(console.next());
+                        System.out.println("Введите количество энергопотребления вашим устройством");
+                        device.SetPowerusage(console.nextInt());
+                        System.out.println("Введите 'inside' или 'outside' для вашего устройства");
+                        device.SetType(console.next());
+                        System.out.println("Введите 'critical' или 'notcritical' для вашего устройства");
+                        device.SetCritical(console.next());
+
+                        computer.AddDevice(device);
+
+                        System.out.println("Ваше устройство:");
+                        System.out.println(computer.GetDevices().get(computer.GetDevices().size()-1).toString());
+                        System.out.println("");
+                        break;
+
+                    case 2:
+                        System.out.println("Введите номер устройства ,который вы хотите удалить");
+                        number = console.nextInt();
+
+                        System.out.println("Устройство ,которое вы удалили:");
+                        System.out.println(computer.GetDevices().get(number-1).toString());
+
+                        computer.DeleteDevice(number-1);
+                        System.out.println("");
+                        break;
+
+                    case 3:
+                        System.out.println("Введите номер устройства ,который вы хотите заменить");
+                        number = console.nextInt();
+
+                        device.SetNumber(computer.GetDevices().get(number-1).GetNumber());
+                        System.out.println("Введите название устройства");
+                        device.SetName(console.next());
+                        System.out.println("Введите страну производства устройства");
+                        device.SetOrigin(console.next());
+                        System.out.println("Введите цену устройства");
+                        device.SetPrice(console.nextDouble());
+                        System.out.println("Введите 'peripheral' или 'notperipheral' для вашего устройства");
+                        device.SetPeripheral(console.next());
+                        System.out.println("Введите количество энергопотребления вашим устройством");
+                        device.SetPowerusage(console.nextInt());
+                        System.out.println("Введите 'inside' или 'outside' для вашего устройства");
+                        device.SetType(console.next());
+                        System.out.println("Введите 'critical' или 'notcritical' для вашего устройства");
+                        device.SetCritical(console.next());
+
+                        System.out.println("Устройство ,которое вы заменили:");
+                        System.out.println(computer.GetDevices().get(number-1).toString());
+
+                        computer.ChangeDevice(device, number-1);
+
+                        System.out.println("Ваше устройство:");
+                        System.out.println(computer.GetDevices().get(number-1).toString());
+                        System.out.println("");
+                        break;
+
+                    case 4:
+                        System.out.println("Введите уникальный числовой индефикатор устройства");
+                        device.SetNumber(console.nextInt());
+                        System.out.println("Введите название устройства");
+                        device.SetName(console.next());
+                        System.out.println("Введите страну производства устройства");
+                        device.SetOrigin(console.next());
+                        System.out.println("Введите цену устройства");
+                        device.SetPrice(console.nextDouble());
+                        System.out.println("Введите 'peripheral' или 'notperipheral' для вашего устройства");
+                        device.SetPeripheral(console.next());
+                        System.out.println("Введите количество энергопотребления вашим устройством");
+                        device.SetPowerusage(console.nextInt());
+                        System.out.println("Введите 'inside' или 'outside' для вашего устройства");
+                        device.SetType(console.next());
+                        System.out.println("Введите 'critical' или 'notcritical' для вашего устройства");
+                        device.SetCritical(console.next());
+                        System.out.println("");
+
+                        number = computer.ProveDevice(device);
+                        if (number == 0) {
+                            System.out.println("Такого устройства нет в коллекции");
+                        } else {
+                            System.out.println("Позиция устройства коллекции: " + number);
+                        }
+                        System.out.println("");
+                        break;
+
+                    case 5:
+                        System.out.println("Введите цену ,по которой вы хотите сделать новую коллекцию");
+                        System.out.println(" ВНИМАНИЕ исходная коллекция будет заменена новой ВНИМАНИЕ");
+                        var3 = console.nextDouble();
+
+                        computer.SetDevices(computer.NewDevices(var3));
+
+                        System.out.println("Новая коллекция:");
+                        for (int i = 0; i < computer.GetDevices().size(); i++) {
+                            System.out.println(computer.GetDevices().get(i).toString());
+                        }
+                        System.out.println("");
+                        break;
+
+                    case 6:
+                        System.out.println("Введите название ,по которому вы хотите сделать новую коллекцию");
+                        System.out.println(" ВНИМАНИЕ исходная коллекция будет заменена новой ВНИМАНИЕ");
+                        var1 = console.next();
+
+                        computer.SetDevices(computer.NewDevices(var1));
+
+                        System.out.println("Новая коллекция:");
+                        for (int i = 0; i < computer.GetDevices().size(); i++) {
+                            System.out.println(computer.GetDevices().get(i).toString());
+                        }
+                        System.out.println("");
+                        break;
+
+                    case 7:
+
+                        computer.SortbyPrice();
+
+                        System.out.println("Отсортированная коллекция:");
+                        for (int i = 0; i < computer.GetDevices().size(); i++) {
+                            System.out.println(computer.GetDevices().get(i).toString());
+                        }
+
+                        System.out.println("");
+                        break;
+
+                    case 8:
+
+                        computer.SortbyString();
+
+                        System.out.println("Отсортированная коллекция:");
+                        for (int i = 0; i < computer.GetDevices().size(); i++) {
+                            System.out.println(computer.GetDevices().get(i).toString());
+                        }
+
+                        System.out.println("");
+                        break;
+
+                    case 9:
+
+                        for (int i = 0; i < computer.GetDevices().size(); i++) {
+                            System.out.println(computer.GetDevices().get(i).toString());
+                        }
+
+                        System.out.println("");
+                        break;
+
+                    default:break;
+                }
+
+                System.out.println("Что вы хотите сделать?");
+                System.out.println("1. Добавить элемент");
+                System.out.println("2. Удалить элемент");
+                System.out.println("3. Заменить элемент");
+                System.out.println("4. Найти элемент");
+                System.out.println("5. Сделать новую коллекцию по числовому признаку");
+                System.out.println("6. Сделать новую коллекцию по строковому признаку");
+                System.out.println("7. Отсортировать коллекцию по числовому признаку");
+                System.out.println("8. Отсортировать коллекцию по строковому признаку");
+                System.out.println("9. Вывести все");
+                System.out.println("(Введите любое другое число ,чтобы выйти)");
+
+                choose = console.nextInt();
+                System.out.println("");
+            }
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+
+    }
+}
+
+class Device{
+
+    private int number;
+    private String name;
+    private String origin;
+    private double price;
+    private String peripheral;
+    private int powerusage;
+    private String type;
+    private String critical;
+
+    public Device(){
+        this.number=0;
+        this.name="";
+        this.origin="";
+        this.price=0;
+        this.peripheral="";
+        this.powerusage=0;
+        this.type="";
+        this.critical="";
+    }
+
+    public Device(int number, String name, String origin, double price, String peripheral, int powerusage, String type, String critical){
+        this.number=number;
+        this.name=name;
+        this.origin=origin;
+        this.price=price;
+        this.peripheral=peripheral;
+        this.powerusage=powerusage;
+        this.type=type;
+        this.critical=critical;
+    }
+
+    public void SetNumber(int number) {
+        this.number = number;
+    }
+
+    public void SetName(String name) {
+        this.name = name;
+    }
+
+    public void SetOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public void SetPrice(double price) {
+        this.price = price;
+    }
+
+    public void SetPeripheral(String peripheral){
+        this.peripheral=peripheral;
+    }
+
+    public void SetPowerusage(int powerusage) {
+        this.powerusage = powerusage;
+    }
+
+    public void SetType(String type) {
+        this.type = type;
+    }
+
+    public void SetCritical(String critical) {
+        this.critical = critical;
+    }
+
+    public int GetNumber() {
+        return this.number;
+    }
+
+    public String GetName() {
+        return this.name;
+    }
+
+    public String GetOrigin() {
+        return this.origin;
+    }
+
+    public double GetPrice() {
+        return this.price;
+    }
+
+    public String GetPeripheral() {
+        return this.peripheral;
+    }
+
+    public int GetPowerusage() {
+        return this.powerusage;
+    }
+
+    public String GetType() {
+        return this.type;
+    }
+
+    public String GetCritical() {
+        return this.critical;
+    }
+
+    public String toString() {
+        return " " + this.number +" " + this.name + " " + this.origin + " " + this.price + " руб " + this.peripheral +
+                " " + this.powerusage + " W " + this.type + " " + this.critical;
+    }
+}
+
+class Computer{
+
+    private String name;
+    private String location;
+    private List<Device> Devices;
+
+    public Computer(){
+        this.name="";
+        this.location="";
+        this.Devices=new ArrayList<>();
+    }
+
+    public Computer(String name, String location, List<Device> Devices){
+        this.name=name;
+        this.location=location;
+        this.Devices=Devices;
+    }
+
+    public void SetName(String name) {
+        this.name = name;
+    }
+
+    public void SetLocation(String location) {
+        this.location = location;
+    }
+
+    public void SetDevices(List<Device> Devices) {
+        this.Devices = Devices;
+    }
+
+    public String GetName() {
+        return this.name;
+    }
+
+    public String GetLocation() {
+        return this.location;
+    }
+
+    public List<Device> GetDevices() {
+        return this.Devices;
+    }
+
+    public void CreateNew(){
+        this.Devices=new ArrayList<>();
+    }
+
+    public List<Device> AddDevice(Device device){
+        Devices.add(device);
+        return Devices;
+    }
+
+    public List<Device> DeleteDevice(int number){
+        Devices.remove(number);
+        return Devices;
+    }
+
+    public List<Device> ChangeDevice(Device device, int number){
+
+        this.Devices.set(number, device);
+
+        return Devices;
+    }
+
+    public int ProveDevice(Device device) {
+
+        int k = 0;
+
+        for (Device i : this.Devices) {
+
+            k++;
+            if (i.GetNumber() == device.GetNumber() && i.GetName().equals(device.GetName()) && i.GetPrice() == device.GetPrice()
+                    && i.GetOrigin().equals(device.GetOrigin()) && i.GetPeripheral().equals(device.GetPeripheral()) && i.GetPowerusage() == device.GetPowerusage()
+                    && i.GetType().equals(device.GetType()) && i.GetCritical().equals(device.GetCritical())) {
+                break;
+            }
+        }
+
+        return k;
+    }
+
+    public List<Device> NewDevices(double price){
+
+        List<Device> Devices=new ArrayList<>();
+
+        for(Device i:this.Devices){
+            if(i.GetPrice()==price){
+                Devices.add(i);
+            }
+        }
+
+        return Devices;
+    }
+
+    public List<Device> NewDevices(String name){
+
+        List<Device> Devices=new ArrayList<>();
+
+        for(Device i:this.Devices){
+            if(i.GetName().equals(name)){
+                Devices.add(i);
+            }
+        }
+
+        return Devices;
+    }
+
+    public List<Device> SortbyPrice(){
+
+        Collections.sort(this.Devices, new SSort());
+
+        return Devices;
+    }
+
+    public List<Device> SortbyString(){
+
+        Collections.sort(this.Devices, new Sort());
+
+        return Devices;
+    }
+
+}
+
+class Sort implements Comparator<Device> {
+    @Override
+    public int compare(Device device1, Device device2) {
+        return device1.GetName().compareTo(device2.GetName());
+    }
+}
+
+class SSort implements Comparator<Device> {
+    @Override
+    public int compare(Device device1, Device device2) {
+        return (int)(device1.GetPrice()-device2.GetPrice());
+    }
+}

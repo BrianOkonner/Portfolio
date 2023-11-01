@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package teilor;
+
+/**
+ *
+ * @author lesha
+ */
+import java.util.Scanner;
+public class Teilor {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Scanner Reader = new Scanner(System.in);
+        double x;
+        double o;
+System.out.print("¬ведите X");
+        x = Reader.nextDouble();
+System.out.print("¬ведите точность(k)");
+        o = Reader.nextDouble();
+        double p = (U(1, 1/2)/fact(1))*x;
+        double res = 0;
+        int i =1;
+        while(Math.abs(p) < Math.pow(10.0, -o))
+        {
+            p = (U(i, (double)1/2)/fact(i))*Math.pow(x, i);
+            res = res + p;
+            i++;
+        }
+        System.out.print(res + 1);
+    }
+    static int fact(int n) {
+    int fact = 1;
+    for (int i = 2; i <= n; i++) {
+        fact = fact * i;
+    }
+    return fact;
+}
+    static double U(int n, double k) 
+    { 
+        double res = 1;
+        double el = k;
+        for(int i =0; i< n; i++)
+        {
+            res = res*el;
+            el = el-1;
+        }
+        return res;
+    } 
+    
+}

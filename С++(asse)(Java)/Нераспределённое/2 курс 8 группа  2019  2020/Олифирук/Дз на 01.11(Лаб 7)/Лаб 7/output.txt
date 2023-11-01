@@ -1,0 +1,57 @@
+
+1-Все композиции
+[ Id= 1 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: song longsing: 50.5 rate: 76.0
+,  Id= 2 NameOfComposition: Elize Author: Bethoven Firstname: Van Ganre: song longsing: 32.5 rate: 77.0
+,  Id= 3 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: opera longsing: 31.5 rate: 97.0
+,  Id= 4 NameOfComposition: Gorod Author: Chaykovski Firstname: Petsy Ganre: song longsing: 41.5 rate: 94.0
+,  Id= 5 NameOfComposition: Noti Author: Bah Firstname: Seba Ganre: song longsing: 21.5 rate: 90.0
+,  Id= 6 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: opera longsing: 50.5 rate: 76.0
+ reshiser: Richard year of remake: 1768
+,  Id= 7 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: song longsing: 31.5 rate: 97.0
+ reshiser: Van year of remake: 1687
+]
+
+2-Композиции Бетховена
+ Id= 1 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: song longsing: 50.5 rate: 76.0
+ Id= 2 NameOfComposition: Elize Author: Bethoven Firstname: Van Ganre: song longsing: 32.5 rate: 77.0
+ Id= 6 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: opera longsing: 50.5 rate: 76.0
+ reshiser: Richard year of remake: 1768
+
+
+3-Песни
+ Id= 1 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: song longsing: 50.5 rate: 76.0
+ Id= 2 NameOfComposition: Elize Author: Bethoven Firstname: Van Ganre: song longsing: 32.5 rate: 77.0
+ Id= 4 NameOfComposition: Gorod Author: Chaykovski Firstname: Petsy Ganre: song longsing: 41.5 rate: 94.0
+ Id= 5 NameOfComposition: Noti Author: Bah Firstname: Seba Ganre: song longsing: 21.5 rate: 90.0
+ Id= 7 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: song longsing: 31.5 rate: 97.0
+ reshiser: Van year of remake: 1687
+
+
+4-Композиции с рейтингом от 88 до 95
+ Id= 4 NameOfComposition: Gorod Author: Chaykovski Firstname: Petsy Ganre: song longsing: 41.5 rate: 94.0
+ Id= 5 NameOfComposition: Noti Author: Bah Firstname: Seba Ganre: song longsing: 21.5 rate: 90.0
+
+
+5-упорядочение по убыванию длительности звучания
+[ Id= 1 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: song longsing: 50.5 rate: 76.0
+,  Id= 6 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: opera longsing: 50.5 rate: 76.0
+ reshiser: Richard year of remake: 1768
+,  Id= 4 NameOfComposition: Gorod Author: Chaykovski Firstname: Petsy Ganre: song longsing: 41.5 rate: 94.0
+,  Id= 2 NameOfComposition: Elize Author: Bethoven Firstname: Van Ganre: song longsing: 32.5 rate: 77.0
+,  Id= 3 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: opera longsing: 31.5 rate: 97.0
+,  Id= 7 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: song longsing: 31.5 rate: 97.0
+ reshiser: Van year of remake: 1687
+,  Id= 5 NameOfComposition: Noti Author: Bah Firstname: Seba Ganre: song longsing: 21.5 rate: 90.0
+]
+
+6-упорядочение в алфавитном порядке
+[ Id= 2 NameOfComposition: Elize Author: Bethoven Firstname: Van Ganre: song longsing: 32.5 rate: 77.0
+,  Id= 4 NameOfComposition: Gorod Author: Chaykovski Firstname: Petsy Ganre: song longsing: 41.5 rate: 94.0
+,  Id= 1 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: song longsing: 50.5 rate: 76.0
+,  Id= 6 NameOfComposition: Lunnay Author: Bethoven Firstname: Mike Ganre: opera longsing: 50.5 rate: 76.0
+ reshiser: Richard year of remake: 1768
+,  Id= 5 NameOfComposition: Noti Author: Bah Firstname: Seba Ganre: song longsing: 21.5 rate: 90.0
+,  Id= 3 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: opera longsing: 31.5 rate: 97.0
+,  Id= 7 NameOfComposition: Reckviem Author: Mozart Firstname: Volf Ganre: song longsing: 31.5 rate: 97.0
+ reshiser: Van year of remake: 1687
+]

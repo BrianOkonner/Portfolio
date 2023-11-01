@@ -1,0 +1,67 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab3z2;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.io.*;
+/**
+ *
+ * @author Brian
+ */
+public class Program 
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args)
+    {
+        // TODO code application logic here
+	int n;
+	System.out.print("Введите сторону квадратной матрицы: ");
+        Scanner in=new Scanner(System.in);
+        n=in.nextInt();
+	int a[][]=new int[n][n];   //Создание строк
+	System.out.println("Полученная матрица :");
+        int i,p=0,o=1,k;
+        for(k=n;k>0;k=k-1)
+        {
+            if (k==1)
+            {
+                i=n/2;
+                a[i][i]=o;
+            }
+            else
+            {
+                for (i=p;i<k-1;i++)
+                {
+                    a[p][i]=o;
+                    o++;
+                }
+                for (i=p;i<k-1;i++)
+                {
+                    a[i][k-1]=o;
+                    o++;
+                }
+                for (i=k-1;i>=p+1;i--)
+                {
+                    a[k-1][i]=o;
+                    o++;
+                }
+                for (i=k-1;i>p;i--)
+                {
+                    a[i][p]=o;
+                    o++;
+                }
+                p=p+1;
+            }
+        }
+        System.out.println("Полученный массив:");
+            for(i=0;i<n;i++)
+                System.out.println(Arrays.toString(a[i])); 
+    }  
+}

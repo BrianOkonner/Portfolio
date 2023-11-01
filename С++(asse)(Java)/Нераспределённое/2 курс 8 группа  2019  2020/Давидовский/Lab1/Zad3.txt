@@ -1,0 +1,44 @@
+package sample;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc= new Scanner(System.in);
+
+        System.out.println("¬ведите аргумент");
+
+        int  znak=-1, a, k=3;
+        double n=1, number, x=sc.nextDouble(), x2=x;
+
+        if(x2>360){
+            x2=x2-360;
+        }
+        if(x2<0){
+            x2=x2+360;
+        }
+
+        x2=Math.PI*x2/180;
+        x=x2;
+        System.out.println("¬ведите точность");
+        a=sc.nextInt();
+
+        number=x;
+
+        for(int i=a; i>0;i--) {
+
+            x = x * x2 * x2;
+            for (int q = k; q > 1; q--) {
+                n = n * q;
+            }
+            number = number + znak * x / n;
+            znak = znak * (-1);
+            k = k + 2;
+            n = 1;
+        }
+
+        System.out.printf("%.10f\n",number);
+        System.out.printf("%.10f",Math.sin(Math.PI/6));
+    }
+}

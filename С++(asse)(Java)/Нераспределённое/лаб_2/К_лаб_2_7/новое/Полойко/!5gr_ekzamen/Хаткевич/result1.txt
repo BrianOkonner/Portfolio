@@ -1,0 +1,11 @@
+N   word   character     length      number of character
+1 aaa a 3 0
+2 hhh h 3 0
+3 a a 1 0
+4 ttt t 3 0
+5 hhh h 3 0
+6 aajjj j 3 2
+7 asdasd a 1 0
+8 hhh h 3 0
+9 k k 1 0
+10 j j 1 0

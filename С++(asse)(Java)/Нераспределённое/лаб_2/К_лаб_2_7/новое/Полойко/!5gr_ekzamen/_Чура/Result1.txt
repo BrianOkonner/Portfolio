@@ -1,0 +1,5 @@
+Номер слова  Слово         символ  номер 
+1             tururiiiii        i   6
+2             ukehkjkkk        k   7
+3             jfjkdkkk        k   6
+4             yruuutt        t   4

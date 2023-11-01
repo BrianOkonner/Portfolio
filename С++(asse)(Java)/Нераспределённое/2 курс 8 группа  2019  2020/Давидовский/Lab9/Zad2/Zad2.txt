@@ -1,0 +1,322 @@
+package com.company;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        try {
+            FileInputStream in = new FileInputStream("input.txt");
+            PrintStream out = new PrintStream("output.txt");
+            Scanner file=new Scanner(in);
+            Scanner console=new Scanner(System.in);
+
+            Planefigure[] figures3=new Planefigure[3];
+
+            figures3[0]=new Rectangle(file.nextInt(), file.nextInt(), file.nextInt(), file.nextInt());
+            figures3[1]=new Circle(file.nextInt(), file.nextInt(), file.nextInt());
+            figures3[2]=new Triangle(file.nextInt(), file.nextInt(), file.nextInt());
+
+            for (Planefigure i : figures3) {
+                System.out.println(i.toString());
+            }
+
+            Arrays.sort(figures3, new Sort());
+
+            Location[] locations= new Location[2];
+
+            locations[0]=new Rectangle(file.nextInt(), file.nextInt(), file.nextInt(), file.nextInt());
+            locations[1]=new Circle(file.nextInt(), file.nextInt(), file.nextInt());
+
+            System.out.println(((Rectangle)locations[0]).RelativeLocation(((Circle)locations[1])));
+            System.out.println(((Circle)locations[1]).RelativeLocation(((Rectangle)locations[0])));
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+
+    }
+}
+
+interface Planefigure{
+    double S();
+    double P();
+}
+
+interface Location{
+    int RelativeLocation();
+}
+
+class Rectangle implements Planefigure,Location {
+
+    private int x0;
+    private int y0;
+    private int length;
+    private int width;
+
+    public Rectangle() {
+        this.x0 = 0;
+        this.y0 = 0;
+        this.length = 1;
+        this.width = 0;
+    }
+
+    public Rectangle(int x0, int y0, int length, int width) {
+        this.x0 = x0;
+        this.y0 = y0;
+        this.length = length;
+        this.width = width;
+    }
+
+    public void SetX0(int x0) {
+        this.x0 = x0;
+    }
+
+    public void SetY0(int y0) {
+        this.y0 = y0;
+    }
+
+    public void SetLength(int length) {
+        this.length = length;
+    }
+
+    public void SetWidth(int width) {
+        this.width = width;
+    }
+
+    public int GetX0() {
+        return this.x0;
+    }
+
+    public int GetY0() {
+        return this.y0;
+    }
+
+    public int GetLength() {
+        return this.length;
+    }
+
+    public int GetWidth() {
+        return this.width;
+    }
+
+    public double S() {
+        return this.length * this.width;
+    }
+
+    public double P() {
+        return (this.length + this.width) * 2;
+    }
+
+    public int RelativeLocation() {
+        return 0;
+    }
+
+    public int RelativeLocation(Circle circle) {
+
+        if ((circle.GetX0() <= this.x0 && circle.GetX0() + circle.GetR() >= this.x0) ||
+                (circle.GetY0() <= this.y0 - this.width && circle.GetY0() + circle.GetR() >= this.y0 - this.width) ||
+                (circle.GetX0() >= this.x0 + this.length && circle.GetX0() - circle.GetR() <= this.x0 + this.length) ||
+                (circle.GetY0() >= this.y0 && circle.GetY0() - circle.GetR() <= this.y0) ||
+                (circle.GetX0() >= this.x0 && circle.GetX0() - circle.GetR() < this.x0) ||
+                (circle.GetY0() >= this.y0 - this.width && circle.GetY0() - circle.GetR() <= this.y0 - this.width) ||
+                (circle.GetX0() <= this.x0 + this.length && circle.GetX0() + circle.GetR() >= this.x0 + this.length) ||
+                (circle.GetY0() <= this.y0 && circle.GetY0() + circle.GetR() >= this.y0)) {
+            return 2;
+        }
+
+        if ((circle.GetX0() > this.x0 && circle.GetX0() - circle.GetR() > this.x0) &&
+                (circle.GetY0() > this.y0 - this.width && circle.GetY0() - circle.GetR() > this.y0 - this.width) &&
+                (circle.GetX0() < this.x0 + this.length && circle.GetX0() + circle.GetR() < this.x0 + this.length) &&
+                (circle.GetY0() < this.y0 && circle.GetY0() + circle.GetR() < this.y0)) {
+            return 2;
+        }
+
+        if ((circle.GetX0() < this.x0 && circle.GetX0() + circle.GetR() == this.x0) ||
+                (circle.GetY0() < this.y0 - this.width && circle.GetY0() + circle.GetR() == this.y0 - this.width) ||
+                (circle.GetX0() > this.x0 + this.length && circle.GetX0() - circle.GetR() == this.x0 + this.length) ||
+                (circle.GetY0() > this.y0 && circle.GetY0() - circle.GetR() == this.y0) ||
+                (circle.GetX0() > this.x0 && circle.GetX0() - circle.GetR() == this.x0) ||
+                (circle.GetY0() > this.y0 - this.width && circle.GetY0() - circle.GetR() == this.y0 - this.width) ||
+                (circle.GetX0() < this.x0 + this.length && circle.GetX0() + circle.GetR() == this.x0 + this.length) ||
+                (circle.GetY0() < this.y0 && circle.GetY0() + circle.GetR() == this.y0)) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    public String toString() {
+        return " Прямоугольник с координатами верхней левой вершины (" + this.x0 + "," + this.y0 +
+                "). Длиной " + this.GetLength() + " и шириной " + this.width +
+                ". Имеющий P=" + P() + " и S=" + S();
+    }
+}
+
+class Circle implements Planefigure,Location {
+
+    private int x0;
+    private int y0;
+    private int R;
+
+    public Circle(){
+        this.x0=0;
+        this.y0=0;
+        this.R=1;
+    }
+
+    public Circle(int x0, int y0, int R){
+        this.x0=x0;
+        this.y0=x0;
+        this.R=R;
+    }
+
+    public void SetX0(int x0) {
+        this.x0 = x0;
+    }
+
+    public void SetY0(int y0) {
+        this.y0 = y0;
+    }
+
+    public void SetR(int R) {
+        this.R = R;
+    }
+
+    public int GetX0() {
+        return this.x0;
+    }
+
+    public int GetY0() {
+        return this.y0;
+    }
+
+    public int GetR() {
+        return this.R;
+    }
+
+    public double S() {
+        return Math.PI * this.R * this.R;
+    }
+
+    public double P() {
+        return 2 * Math.PI * this.R;
+    }
+
+    public int RelativeLocation() {
+        return 0;
+    }
+
+    public int RelativeLocation(Rectangle rectangle) {
+
+        if ((rectangle.GetX0() + rectangle.GetLength() > this.x0 - this.R && rectangle.GetX0() < this.x0 - this.R) ||
+                (rectangle.GetY0() - rectangle.GetWidth() < this.y0 + this.R && rectangle.GetY0() > this.y0 + this.R) ||
+                (rectangle.GetX0() + rectangle.GetLength() > this.x0 + this.R && rectangle.GetX0() < this.x0 + this.R) ||
+                (rectangle.GetY0() - rectangle.GetWidth() < this.y0 - this.R && rectangle.GetY0() > this.y0 - this.R)) {
+            return 2;
+        }
+
+        if ((rectangle.GetX0() < this.x0 && rectangle.GetX0() > this.x0 - this.R) &&
+                (rectangle.GetY0() > this.y0 && rectangle.GetY0() < this.y0 + this.R) &&
+                (rectangle.GetX0() + rectangle.GetLength() > this.x0 && rectangle.GetX0() + rectangle.GetLength() < this.x0 + this.R) &&
+                (rectangle.GetY0() - rectangle.GetWidth() < this.y0 && rectangle.GetY0() - rectangle.GetWidth() > this.y0 - this.R)) {
+            return 2;
+        }
+
+        /*if((circle.GetX0()<this.x0 && circle.GetX0()+circle.GetR()==this.x0)||
+                (circle.GetY0()<this.y0-this.width && circle.GetY0()+circle.GetR()==this.y0-this.width)||
+                (circle.GetX0()>this.x0+this.length && circle.GetX0()-circle.GetR()==this.x0+this.length)||
+                (circle.GetY0()>this.y0 && circle.GetY0()-circle.GetR()==this.y0)||
+                (circle.GetX0()>this.x0 && circle.GetX0()-circle.GetR()==this.x0)||
+                (circle.GetY0()>this.y0-this.width && circle.GetY0()-circle.GetR()==this.y0-this.width)||
+                (circle.GetX0()<this.x0+this.length && circle.GetX0()+circle.GetR()==this.x0+this.length)||
+                (circle.GetY0()<this.y0 && circle.GetY0()+circle.GetR()==this.y0)){
+            return 1;
+        }*/
+
+        return 0;
+    }
+
+    public String toString() {
+        return " Круг с координатами центра (" + this.x0 + "," + this.y0 +
+                "). Радиусом " + this.R +
+                ". Имеющий P=" + P() + " и S=" + S();
+    }
+}
+
+class Triangle implements Planefigure {
+
+    private int side1;
+    private int side2;
+    private int side3;
+
+    public Triangle(){
+        this.side1=3;
+        this.side2=4;
+        this.side3=5;
+    }
+
+    public Triangle(int side1, int side2, int side3){
+        this.side1=side1;
+        this.side2=side2;
+        this.side3=side3;
+    }
+
+    public void SetSide1(int side1) {
+        this.side1 = side1;
+    }
+
+    public void SetSide2(int side2) {
+        this.side2 = side2;
+    }
+
+    public void SetSide3(int side3) {
+        this.side3 = side3;
+    }
+
+    public int GetSide1() {
+        return this.side1;
+    }
+
+    public int GetSide2() {
+        return this.side2;
+    }
+
+    public int GetSide3() {
+        return this.side3;
+    }
+
+    public double P() {
+        return this.side1 + this.side2 + this.side3;
+    }
+
+    public double S() {
+        return P() * (P() / 2 - this.side1) * (P() / 2 - this.side2) * (P() / 2 - this.side3) / 2;
+    }
+
+    public String toString() {
+        return " Треугольник со сторонами " + this.side1 + ", " + this.side2 + ", " + this.side3 +
+                ". Имеющий P=" + P() + " и S=" + S();
+    }
+}
+
+class Sort implements Comparator<Planefigure> {
+    @Override
+    public int compare(Planefigure planefigure1, Planefigure planefigure2) {
+
+        if (planefigure1.S() == planefigure2.S()) {
+            return 0;
+        }
+
+        if (planefigure1.S() > planefigure2.S()) {
+            return -1;
+        }
+
+        return 1;
+    }
+}

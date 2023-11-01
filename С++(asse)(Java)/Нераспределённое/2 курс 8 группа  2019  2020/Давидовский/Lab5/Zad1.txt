@@ -1,0 +1,344 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        SectionX[] lines = new SectionX[3];
+        SectionX line;
+        int compare = 0, number = 0, counter1 = 0, counter2 = 0, counter3 = 0;
+
+        System.out.println(" Введите начальные и конечные точки для 3 отрезков:");
+        System.out.println("(Начальная первая, конечная вторая)");
+
+        for (int i = 0; i < 3; i++) {
+
+            System.out.println(" Введите начальную и конечную точку для " + (i + 1) + "-го отрезка:");
+            lines[i] = new SectionX(sc.nextInt(), sc.nextInt());
+        }
+        System.out.println();
+
+        if (lines[0].equals(lines[1])) {
+
+            System.out.println("Совпадают 1 и 2 отрезки");
+            compare = 1;
+        }
+        if (lines[1].equals(lines[2])) {
+
+            System.out.println("Совпадают 2 и 3 отрезки");
+            compare = 1;
+        }
+        if (lines[2].equals(lines[0])) {
+
+            System.out.println("Совпадают 3 и 1 отрезки");
+            compare = 1;
+        }
+        if (compare == 0) {
+            System.out.println("Никакие из трех отрезков не совпадают");
+        }
+        compare = 0;
+
+        for (int i = 0; i < 2; i++) {
+
+            if (lines[i].compare(lines[i + 1]) == 1) {
+
+                if (lines[i].GetX2() < lines[i + 1].GetX1()) {
+
+                    if (lines[i + 1].GetX1() - lines[i].GetX2() > compare) {
+
+                        number = i * 10 + i + 1;
+                        compare = lines[i + 1].GetX1() - lines[i].GetX2();
+                    }
+                } else {
+
+                    if (lines[i].GetX1() - lines[i + 1].GetX2() > compare) {
+
+                        number = i * 10 + i + 1;
+                        compare = lines[i].GetX1() - lines[i + 1].GetX2();
+                    }
+                }
+            }
+        }
+        if (lines[2].compare(lines[0]) == 1) {
+
+            if (lines[2].GetX2() < lines[0].GetX1()) {
+
+                if (lines[2].GetX1() - lines[0].GetX2() > compare) {
+
+                    number = 31;
+                    compare = lines[2].GetX1() - lines[0].GetX2();
+                }
+            } else {
+
+                if (lines[0].GetX1() - lines[2].GetX2() > compare) {
+
+                    number = 31;
+                    compare = lines[0].GetX1() - lines[2].GetX2();
+                }
+            }
+        }
+
+        System.out.println(" Максимальное расстояние между отрезками " + (number / 10 + 1) + " и " + (number % 10 + 1));
+        System.out.println(" Оно равно " + compare);
+        System.out.println();
+
+        System.out.println(" Введите номера отрезков ,которые вы хотите сравнить:");
+        System.out.println(" (Если хотите выйти ,то введите любой другой номер)");
+        counter1 = sc.nextInt();
+        counter2 = sc.nextInt();
+
+        while (counter1 > 0 && counter1 < 4 && counter2 > 0 && counter2 < 4) {
+
+            if (lines[counter1 - 1].equals(lines[counter2 - 1])) {
+                System.out.println("Отрезки совпадают");
+            }
+
+            if (lines[counter1 - 1].compare(lines[counter2 - 1]) == 1) {
+                System.out.println("Отрезки отдалены друг от друга");
+            }
+
+            if (lines[counter1 - 1].compare(lines[counter2 - 1]) == 2) {
+                System.out.println("Отрезки соприкасаются");
+            }
+
+            if (lines[counter1 - 1].compare(lines[counter2 - 1]) == 3) {
+                System.out.println("Отрезки пересекаются");
+            }
+
+            if (lines[counter1 - 1].compare(lines[counter2 - 1]) == 4) {
+                System.out.println("Один отрезок содержится в другом");
+            }
+
+            System.out.println();
+            System.out.println(" Введите номера отрезков ,которые вы хотите сравнить:");
+            System.out.println(" (Если хотите выйти ,то введите любой другой номер)");
+            counter1 = sc.nextInt();
+            counter2 = sc.nextInt();
+        }
+        System.out.println();
+
+        System.out.println(" Введите номера отрезков ,с которыми вы хотите что-либо сделать:");
+        System.out.println(" (Если хотите выйти ,то введите любой другой номер)");
+        counter1 = sc.nextInt();
+        counter2 = sc.nextInt();
+        System.out.println();
+
+        while (counter1 > 0 && counter1 < 4 && counter2 > 0 && counter2 < 4) {
+
+            System.out.println(" Введите номер операции:");
+            System.out.println(" (Если хотите выйти ,то введите любой другой номер)");
+            System.out.println(" 1. Объединение");
+            System.out.println(" 2. Пересечение");
+            System.out.println(" 3. Вычитание");
+            counter3 = sc.nextInt();
+
+            while (counter3 > 0 && counter3 < 4) {
+
+                if (counter3 == 1) {
+
+                    if (lines[counter1 - 1].Union(lines[counter2 - 1]) != lines[counter1 - 1]) {
+
+                        System.out.println(" Полученный отрезок:");
+                        System.out.println(lines[counter1 - 1].Union(lines[counter2 - 1]).toString());
+                    } else {
+                        System.out.println("Нельзя получить отрезок");
+                    }
+                }
+
+                if (counter3 == 2) {
+
+                    if (lines[counter1 - 1].Crossing(lines[counter2 - 1]) != lines[counter1 - 1]) {
+
+                        System.out.println(" Полученный отрезок:");
+                        System.out.println(lines[counter1 - 1].Crossing(lines[counter2 - 1]).toString());
+                    } else {
+                        System.out.println("Нельзя получить отрезок");
+                    }
+                }
+
+                if (counter3 == 3) {
+
+                    if (lines[counter1 - 1].Difference(lines[counter2 - 1]) != lines[counter1 - 1]) {
+
+                        System.out.println(" Полученный отрезок:");
+                        System.out.println(lines[counter1 - 1].Difference(lines[counter2 - 1]).toString());
+                    } else {
+                        System.out.println("Нельзя получить отрезок");
+                    }
+                }
+
+                System.out.println();
+                System.out.println(" Введите номер операции:");
+                System.out.println(" (Если хотите выйти ,то введите любой другой номер)");
+                System.out.println(" 1. Объединение");
+                System.out.println(" 2. Пересечение");
+                System.out.println(" 3. Вычитание");
+                counter3 = sc.nextInt();
+            }
+
+            System.out.println();
+            System.out.println(" Введите номера отрезков ,с которыми вы хотите что-либо сделать:");
+            System.out.println(" (Если хотите выйти ,то введите любой другой номер)");
+            counter1 = sc.nextInt();
+            counter2 = sc.nextInt();
+        }
+
+        for (int out = 2; out >= 1; out--) {
+            for (int in2 = 0; in2 < out; in2++) {
+                if (lines[in2].length() > lines[in2 + 1].length()) {
+                    line = lines[in2];
+                    lines[in2] = lines[in2 + 1];
+                    lines[in2 + 1] = line;
+                }
+            }
+        }
+
+    }
+}
+
+class SectionX {
+    private int x1;
+    private int x2;
+
+    public SectionX() {
+        this.x1 = 0;
+        this.x2 = -1;
+    }
+
+    public SectionX(int x1, int x2) {
+
+        if (x1 == x2) {
+            System.out.println(" Это точка ,а не отрезок, идите нафиг");
+            System.exit(0);
+        }
+
+        this.x1 = x1;
+        this.x2 = x2;
+    }
+
+    public void SetX1(int x1) {
+        this.x1 = x1;
+    }
+
+    public int GetX1() {
+        return this.x1;
+    }
+
+    public void SetX2(int x2) {
+        this.x2 = x2;
+    }
+
+    public int GetX2() {
+        return this.x2;
+    }
+
+    public int length() {
+        return Math.abs(this.x2 - this.x1);
+    }
+
+    public SectionX simmetric() {
+
+        SectionX line = new SectionX(-this.GetX2(), -this.GetX1());
+
+        return line;
+    }
+
+    public boolean equals(SectionX line) {
+
+        if (this == line) {
+            return true;
+        }
+
+        return (line.GetX1() == this.x1) && (line.GetX2() == this.x2);
+    }
+
+    public int compare(SectionX line) {
+
+        if ((this.GetX1() < line.GetX2() && this.GetX1() > line.GetX1() && this.GetX2() > line.GetX2()) || (line.GetX1() < this.GetX2() && line.GetX1() > this.GetX1() && line.GetX2() > this.GetX2())) {
+            return 3;
+        }
+
+        if ((this.GetX1() <= line.GetX1() && this.GetX2() >= line.GetX2()) || (line.GetX1() <= this.GetX1() && line.GetX2() >= this.GetX2())) {
+            return 4;
+        }
+
+        if ((this.GetX1() == line.GetX2()) || (line.GetX1() == this.GetX2())) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    public SectionX Union(SectionX line) {
+
+        if (this.compare(line) == 2 || this.compare(line) == 3) {
+            SectionX unionline = new SectionX();
+
+            if (this.GetX1() < line.GetX1()) {
+
+                unionline.SetX1(this.GetX1());
+                unionline.SetX2(line.GetX2());
+            } else {
+
+                unionline.SetX1(line.GetX1());
+                unionline.SetX2(this.GetX2());
+            }
+
+            return unionline;
+        }
+
+        return this;
+    }
+
+    public SectionX Crossing(SectionX line) {
+
+        if (this.compare(line) == 2 || this.compare(line) == 3) {
+            SectionX crossline = new SectionX();
+
+            if (this.GetX1() < line.GetX1()) {
+
+                crossline.SetX1(line.GetX1());
+                crossline.SetX2(this.GetX2());
+            } else {
+
+                crossline.SetX1(this.GetX1());
+                crossline.SetX2(line.GetX2());
+            }
+
+            return crossline;
+        }
+
+        return this;
+    }
+
+    public SectionX Difference(SectionX line) {
+
+        if (this.compare(line) == 2 || this.compare(line) == 3) {
+            SectionX diffline = new SectionX();
+
+            if (this.GetX1() < line.GetX1()) {
+
+                diffline.SetX1(this.GetX1());
+                diffline.SetX2(line.GetX1());
+            } else {
+
+                diffline.SetX1(line.GetX1());
+                diffline.SetX2(this.GetX1());
+            }
+
+            return diffline;
+        }
+
+        return this;
+    }
+
+    public String toString() {
+        String info;
+
+        info = "Отрезок с начальной точкой " + this.x1 + " и конечной точкой " + this.x2;
+
+        return info;
+    }
+}

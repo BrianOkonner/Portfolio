@@ -1,0 +1,4 @@
+aaa a 1 faa 10
+bbb b 2 fbb 9
+ccc c 3 fcc 5
+ddd a 1 faa 15

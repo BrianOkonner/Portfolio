@@ -1,0 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab3z3;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.io.*;
+/**
+ *
+ * @author Brian
+ */
+public class Program
+{
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args)
+    {
+        // TODO code application logic
+        try
+        {
+            FileInputStream InputF=new FileInputStream("Input.txt");
+            Scanner in=new Scanner(InputF);
+            int n=in.nextInt();
+            int[][]M1=new int[n][n];
+            int i,j=0,c,f=0,fi=0,fj=0,buf;
+            for(i=0;i<n;i++)
+                for(j=0;j<n;j++)
+                    M1[i][j]=in.nextInt();
+            c=n/2;
+            for(i=0;i<c;i++)
+                for(j=0;j<c;j++)
+                {
+                    if(M1[i][j]==1&&M1[n-i-1][j]==1&&M1[n-i-1][n-j-1]==1&&M1[i][n-j-1]==1)
+                    {
+                        f=1;
+                        fi=i;
+                        fj=j;
+                    }
+                }
+            if(f==0)
+                System.out.println("Блок центральных единиц не создать");
+            else
+            {
+                for(i=0;i<n;i++)
+                {
+                    buf=M1[i][c-1];
+                    M1[i][c-1]=M1[i][fj];
+                    M1[i][fj]=buf;
+                    buf=M1[i][n-c];
+                    M1[i][n-c]=M1[i][n-1-fj];
+                    M1[i][n-1-fj]=buf;
+                }
+                for(i=0;i<n;i++)
+                    System.out.println(Arrays.toString(M1[i])); 
+                for(i=0;i<n;i++)
+                {
+                    buf=M1[c-1][i];
+                    M1[c-1][i]=M1[fi][i];
+                    M1[fi][i]=buf;
+                    buf=M1[n-c][i];
+                    M1[n-c][i]=M1[n-1-fj][i];
+                    M1[n-1-fj][i]=buf;
+                }
+                System.out.println("Матрица: "); 
+                for(i=0;i<n;i++)
+                System.out.println(Arrays.toString(M1[i])); 
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Файл не найден");
+        }   
+    }
+}

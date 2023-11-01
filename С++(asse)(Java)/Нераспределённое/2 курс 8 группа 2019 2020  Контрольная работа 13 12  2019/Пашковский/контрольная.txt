@@ -1,0 +1,171 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+class cmpMas implements Comparator<String>
+{
+    @Override
+    public int compare(String s1,String s2)
+    {
+        return s1.compareTo(s2);
+    }
+}
+class cmpSize implements Comparator<String>
+{
+    @Override
+    public int compare(String s1,String s2)
+    {
+        int i=0;
+        while(s1.charAt(i)!=' ')
+            i++;
+        int j=0;
+        while(s2.charAt(j)!=' ')
+            j++;
+        String cmp1=s1.substring(0,i);
+        String cmp2=s2.substring(0,j);
+        if(kr.getSize(cmp1)>kr.getSize(cmp2))
+            return 1;
+        if(kr.getSize(cmp1)<kr.getSize(cmp2))
+            return -1;
+        return 0;
+    }
+}
+class mas{
+    ArrayList<String> data;
+    mas(FileInputStream fis){
+        Scanner sc=new Scanner(fis);
+        StringBuilder input=new StringBuilder();
+        while(sc.hasNext())
+        {
+            input.append(sc.next());
+            if(input.charAt(input.length()-1)!=';')
+                input.append(" ");
+        }
+        String str=input.toString();
+        data=new ArrayList<>(Arrays.asList(str.split(";")));
+        /*for(int i=0;i<data.size();i++)
+            System.out.println(data.get(i));*/
+    }
+    public void out1() throws FileNotFoundException {
+        PrintStream printFile1=new PrintStream("out1.txt");
+        StringBuilder kek=new StringBuilder();
+        for(int i=0;i<data.size();i++)
+            kek.append(data.get(i)+" ");
+        ArrayList<String> out=new ArrayList<>(Arrays.asList(kek.toString().split(" ")));
+        for(int i=0;i<out.size();i++)
+            if(out.get(i).charAt(out.get(i).length()-1)!=']')
+                out.remove(i);
+        out.sort(new cmpMas());
+        for(int i=0;i<out.size();i++) {
+            int j=0;
+            while(out.get(i).charAt(j)!='[')
+                j++;
+            printFile1.println(out.get(i).substring(0,j));
+        }
+    }
+    public void out2() throws FileNotFoundException {
+        PrintStream printFile2 = new PrintStream("out2.txt");
+        StringBuilder kek = new StringBuilder();
+        ArrayList<String> buff=new ArrayList<>(data);
+        buff.sort(new cmpSize());
+        ListIterator<String> listIter=buff.listIterator();
+        while(listIter.hasNext())
+            kek.append(listIter.next()+" ");
+        ArrayList<String> out=new ArrayList<>(Arrays.asList(kek.toString().split(" ")));
+        for(int i=0;i<out.size();i++)
+            if(out.get(i).charAt(out.get(i).length()-1)!=']')
+                out.remove(i);
+        for(int i=0;i<out.size();i++) {
+            int j=0;
+            while(out.get(i).charAt(j)!='[')
+                j++;
+            printFile2.println(out.get(i).substring(0,j));
+        }
+    }
+    public void out3() throws FileNotFoundException {
+        PrintStream printFile3 = new PrintStream("out3.txt");
+        //StringBuilder kek = new StringBuilder();
+        for(int k=0;k<data.size();k++){
+            String str=new String(data.get(k));
+            int i=0;
+            while(str.charAt(i)!='[')
+                i++;
+            str=str.substring(i,str.length()-1);
+            int kolvo24=24;
+            int kolvo=1;
+
+            str=str.replace("["," ");
+            str=str.replace("]"," ");
+            str=str.replace("  "," ");
+
+            ArrayList<String> getnums=new ArrayList<>(Arrays.asList(str.split(" ")));
+            ListIterator<String> nums=getnums.listIterator();
+            while(nums.hasNext())//Удаляем пустые строки
+                if(nums.next().length()==0)
+                    nums.remove();
+            Stack<Integer> multiplers=new Stack<>();
+            if(getnums.size()>1)
+                for(int j=0;j<getnums.size();j++)
+                {
+                    int razmer=Integer.parseInt(getnums.get(j));
+                    kolvo*=razmer;
+                    if(j!=getnums.size()-1)
+                        multiplers.push(razmer);
+                }
+            else
+                kolvo*=Integer.parseInt(getnums.get(0));
+            while(!multiplers.empty())
+            {
+                int a=multiplers.pop();
+                if(!multiplers.isEmpty())
+                    kolvo24*=a+1;
+                else
+                {
+                    kolvo24*=a;
+                    kolvo24+=24;
+                }
+            }
+
+            String buff=data.get(k);
+            int it=0;
+            while(buff.charAt(it)!=' ')
+                it++;
+            buff=buff.substring(0,it);
+            printFile3.println(kolvo*kr.getSize(buff)+kolvo24);
+        }
+    }
+
+}
+public class kr {
+    public static int getSize(String type)
+    {
+        switch(type)
+        {
+            case "byte":
+                return 1;
+            case "char":
+                return 2;
+            case "short":
+                return 2;
+            case "int":
+                return 4;
+            case "float":
+                return 4;
+            case "long":
+                return 8;
+            case "double":
+                return 8;
+            default: return 0;
+        }
+    }
+    public static void main(String []args) throws FileNotFoundException {
+        FileInputStream inputStream=new FileInputStream("input.txt");
+        mas work=new mas(inputStream);
+        work.out1();
+        work.out2();
+        work.out3();
+    }
+}

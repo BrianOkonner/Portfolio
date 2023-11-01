@@ -1,0 +1,67 @@
+// ConsoleApplication1.cpp: определяет точку входа для консольного приложения.
+//Петров Констнатин 8 группа
+
+
+/*1.2	Описать процедуру, которая подсчитывает количество элементов стека, у которых равные "соседи".  */
+
+
+#include "stdafx.h"
+#include <fstream>
+#include <iostream>
+#include <stack>
+using namespace std;
+
+stack <int> S;
+
+int main(){
+	setlocale(LC_ALL, "rus");
+	int c, i = 0;
+	cout << "Заполните стек" << endl;
+	cout << "-1 для выхода" << endl;
+	do {
+		cin >> c;
+		if (c != -1) { S.push(c); i++; }
+	} while (c != -1);
+
+	if (i <= 2) {
+		cout << "Элементов с одинаковыми соседями нет" << endl;
+		exit(0);
+	}
+
+	int a1, a2, a3;
+	
+	a1 = S.top();
+	S.pop();
+	a2 = S.top();
+	S.pop();
+	a3 = S.top();
+	S.pop();
+
+	if (S.empty() == true) {  //Если элементов только 3
+		if (a3 == a1) {
+			cout << "Количество элементов стека с одинаковыми соседями равно - 1" << endl;
+			exit(0);
+		}
+		else {
+			cout << "Количество элементов стека с одинаковыми соседями равно - 0" << endl;
+			exit(0);
+		}
+	}
+
+	int num = 0;
+
+	do {   // Если элементов >3
+		if (a1 == a3) ++num;
+		a1 = a2;
+		a2 = a3;
+		a3 = S.top();
+		S.pop();
+	} while (S.empty() != true);
+
+	if (a1 == a3) ++num; //Проверка соседов предпоследнего элемета стека
+
+	cout <<"Количество элементов стека с одинаковыми соседями равно - " << num << endl;
+
+    return 0;
+}
+

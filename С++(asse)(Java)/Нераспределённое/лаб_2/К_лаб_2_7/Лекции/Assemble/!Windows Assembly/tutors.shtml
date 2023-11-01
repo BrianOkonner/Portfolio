@@ -1,0 +1,114 @@
+<html>
+<!-- Creation date: 21.03.01 -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>WASM E-Mag #1</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="programming, asm, assembler, windows, программирование, ассемблер, C, C++, soft, tutor, пособие, source, исходник, код">
+<meta name="Author" content="Aquila">
+<meta name="Generator" content="AceHTML 4 Pro">
+</head>
+<body marginheight="0" marginwidth="0" rightmargin="0" topmargin="0" leftmargin="0" bottommargin="0">
+
+<table border="0" cellspacing="0">
+  <tr>
+    <td width="150" align="center" bgcolor="#6837CF" valign="top">
+	        <a href="http://www.b-i-g.zite.ru"><img width="109" height="110" src="images/globe.gif" border="0" alt="Headquaters"><br><br>
+          <a href="index.shtml"><img width="120" height="30" src="images/siteinfo.gif" border="0" alt="Site Info"></a><br>
+          <a href="tutors.shtml"><img width="120" height="30" src="images/tutors.gif" border="0" alt="Tutors"></a><br>
+          <a href="links.shtml"><img width="120" height="30" src="images/links.gif" border="0" alt="Links"></a><br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+
+	</td>
+	<td valign="top">
+	  <table cellspacing="0" cellpadding="8">
+	    <tr>
+		  <td align="center"><img width="400" height="40" src="images/tutorst.gif" alt="Туториалы"></td>
+		</tr>
+		<tr>
+		  <td bgcolor="#FFFFFF">
+		    <p>
+			В данном разделе собраны туториалы и различные пособия по тематике сайта.
+            Вы сможете найти здесь ответы на многие вопросы, которые у вас, возможно,
+			были. 
+			<p>
+			<ul type="disc"> <!-- Main list -->
+			  <li>Туториалы <b>Iczelion</b>'а
+			  <ul type="disc"> <!-- Iczelion's list -->
+			    <li>Win32 API
+				<ul type="disc">
+				  <li><a href="tuts/itutor01.shtml">Урок 1: Основы</a>
+				  <li><a href="tuts/itutor02.shtml">Урок 2: MessageBox</a>
+				  <li><a href="tuts/itutor03.shtml">Урок 3: Простое окно</a>
+				  <li><a href="tuts/itutor04.shtml">Урок 4: Отрисовка текста</a>
+				  <li><a href="tuts/itutor05.shtml">Урок 5: Больше о тексте</a>
+				  <li><a href="tuts/itutor06.shtml">Урок 6: Клавиатура</a>
+				  <li><a href="tuts/itutor07.shtml">Урок 7: Мышь</a>
+				  <li><a href="tuts/itutor08.shtml">Урок 8: Меню</a>	
+				  <li><a href="tuts/itutor09.shtml">Урок 9: Дочерние окна</a>			  
+				  <li><a href="tuts/itutor10.shtml">Урок 10: Диалоговое окно как основное</a>			  
+				  <li><a href="tuts/itutor11.shtml">Урок 11: Больше о диалоговых окнах</a>			  
+				  <li><a href="tuts/itutor12.shtml">Урок 12: Память и файлы</a>		  
+				  <li><a href="tuts/itutor13.shtml">Урок 13: Memory Mapped файлы</a>			  
+				  <li><a href="tuts/itutor14.shtml">Урок 14: Процесс</a>			  
+				  <li><a href="tuts/itutor15.shtml">Урок 15: Треды (ветви)</a> 			  
+				  <li><a href="tuts/itutor16.shtml">Урок 16: Объект события</a>			  
+				  <li><a href="tuts/itutor17.shtml">Урок 17: Динамические библиотеки</a> 			  
+				  <li><a href="tuts/itutor18.shtml">Урок 18: Common Control'ы</a> 			  
+				  <li><a href="tuts/itutor19.shtml">Урок 19: Tree View Control</a>			  
+				  <li><a href="tuts/itutor20.shtml">Урок 20: Сабклассинг окна</a> 			  
+				  <li><a href="tuts/itutor21.shtml">Урок 21: Пайп</a>			  
+				  <li><a href="tuts/itutor22.shtml">Урок 22: Суперклассинг</a>			  
+				  <li><a href="tuts/itutor23.shtml">Урок 23: Иконка в system tray</a>
+				  <li><a href="tuts/itutor24.shtml">Урок 24: Windows-хуки</a>			  				  			  
+				</ul>
+			  </ul>
+			</ul>
+			<p align="center">
+<i>WASM E-Mag (c) Aquila (<a href="mailto:aquila@zite.ru">aquila@zite.ru</a>), 2000-2002</i>
+<p align="center">
+
+		  </td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

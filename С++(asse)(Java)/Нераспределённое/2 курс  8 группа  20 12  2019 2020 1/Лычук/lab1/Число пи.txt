@@ -1,0 +1,51 @@
+package com.company;
+public class Main {
+    public static void main(String[] args) {
+	// write your code here
+       // try {
+             tailor a = new tailor();
+            a.input();
+
+            double s2 = a.count2();
+
+            a.output("по тейлору pi=", s2);
+        }}
+
+
+
+--------------------------------------tailor.java
+
+
+
+package com.company;
+import java.util.Scanner;
+public class tailor {
+    private double x;
+
+    public void input() {
+        System.out.println("input x");
+        Scanner sc = new Scanner(System.in);
+        this.x = Double.parseDouble(sc.next());
+    }
+
+    public double count2() {
+        double sx2 = 0;
+        double add = 1;
+        int n = 1;
+        for (int i = 1; i <= x; i++)
+        // while(i<x)
+        {
+            sx2 += add;
+            add = (Math.pow(-1, n) )/ ((2 * n) + 1);
+            n++;
+        }
+        sx2 = sx2 * 4;
+        return sx2;
+    }
+
+
+    public void output(String str, double num) {
+        System.out.printf(str + "%.3f\n", num);
+
+    }
+}

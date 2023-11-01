@@ -1,0 +1,196 @@
+// istream get
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main ()
+{
+	char c, str[256];
+	ifstream is;
+
+	cout << "Enter the name of an existing text file: ";  
+	cin.get (str,256);
+	is.open (str);		// open file
+
+	while (is.good())	// loop while extraction from file is possible
+	{
+		c = is.get();	// get character from file
+		cout << c;
+	}
+  
+	is.close();			// close file  
+	
+	return 1;
+}// istream getline
+
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+	char name[256], title[256];
+
+	cout << "Enter your name: ";
+	cin.getline (name,256);
+
+	cout << "Enter your favourite movie: ";
+	cin.getline (title,256);
+
+	cout << name << "'s favourite movie is " << title << endl;
+
+	return 1;
+}
+// istream ignore
+
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+	char first, last;
+
+	cout << "Enter your first and last names: ";
+
+	first = cin.get();
+	cin.ignore(256, ' ');
+
+	last = cin.get();
+
+	cout << "Your initials are " << first << last << endl;
+
+	return 1;
+}
+// istream peek
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+	char c;
+	int n;
+	char str[256];
+
+	cout << "Enter a number or a word: ";
+	c = cin.peek();
+
+	if ( (c >= '0') && (c <= '9') )
+	{
+		cin >> n;
+		cout << "You have entered number " << n << endl;
+	}
+	else
+	{
+		cin >> str;
+		cout << " You have entered word " << str << endl;
+	}
+	
+	return 1;
+}
+// istream putback
+
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+	char c;
+	int n;
+	char str[256];
+	
+	cout << "Enter a number or a word: ";
+	c = cin.get();
+	
+	if ( (c >= '0') && (c <= '9') )
+	{
+		cin.putback (c);
+		cin >> n;
+		cout << "You have entered number " << n << endl;
+	}
+	else
+	{
+		cin.putback (c);
+		cin >> str;
+		cout << " You have entered word " << str << endl;
+	}
+	
+	return 1;
+}
+// read a file into memory
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main ()
+{
+	int length;
+	char * buffer;
+	
+	ifstream is;
+	is.open ("test.txt", ios::binary );
+	
+		// get length of file:
+	is.seekg (0, ios::end);
+	length = is.tellg();
+	is.seekg (0, ios::beg);
+	
+		// allocate memory:
+	buffer = new char [length];
+	
+		// read data as a block:
+	is.read (buffer, length);
+	
+	is.close();
+	
+	cout.write (buffer, length);
+	
+	return 1;
+}
+// read a file into memory
+
+#include <iostream>
+using namespace std;
+int main ()
+{
+	char first, second;
+
+	cout << "Please, enter a word: ";
+	first=cin.get();
+	cin.sync();
+	cout << "Please, enter another word: ";
+	second=cin.get();
+
+	cout << "The first word began by " << first << endl;
+	cout << "The second word began by " << second << endl;
+
+	return 1;
+}// read a file into memory
+
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+	char c;
+	int n;
+	char str[256];
+	
+	cout << "Enter a number or a word: ";
+	c = cin.get();
+	
+	if ( (c >= '0') && (c <= '9') )
+	{
+		cin.unget();
+		cin >> n;
+		cout << "You have entered number " << n << endl;
+	}
+	else
+	{
+		cin.unget();
+		cin >> str;
+		cout << " You have entered word " << str << endl;
+	}
+	
+	return 0;
+}
+

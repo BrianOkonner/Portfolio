@@ -1,0 +1,820 @@
+<html>
+<!-- Creation date: 21.03.01 -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>WASM E-Mag #1</title>
+<meta name="Description" content="">
+<meta name="Keywords" content="programming, asm, assembler, windows, программирование, ассемблер, C, C++, soft, tutor, пособие, source, исходник, код">
+<meta name="Author" content="Aquila">
+<meta name="Generator" content="AceHTML 4 Pro">
+</head>
+<body marginheight="0" marginwidth="0" rightmargin="0" topmargin="0" leftmargin="0" bottommargin="0">
+
+<table border="0" cellspacing="0">
+  <tr>
+    <td width="150" align="center" bgcolor="#6837CF" valign="top">
+	        <a href="http://www.b-i-g.zite.ru"><img width="109" height="110" src="../images/globe.gif" border="0" alt="Headquaters"><br>
+          <a href="../index.shtml"><img width="120" height="30" src="../images/siteinfo.gif" border="0" alt="Site Info"></a><br>
+          <a href="../tutors.shtml"><img width="120" height="30" src="../images/tutors.gif" border="0" alt="Tutors"></a><br>
+          <a href="../links.shtml"><img width="120" height="30" src="../images/links.gif" border="0" alt="Links"></a><br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+          &nbsp;<br>
+
+	</td>
+	<td valign="top">
+	  <table cellspacing="0" cellpadding="8">
+	    <tr>
+		  <td align="center"><img width=400 height=40 src="../images/itutor19t.gif" alt="Урок 19: Tree View"></td>
+		</tr>
+		<tr>
+		  <td bgcolor="#FFFFFF">
+<p>
+   В этом тутоpиале мы изучим как использовать контpол tree view. Более того,
+   мы также узнаем как pеализовать drag and drop для этого контpола и как
+   использовать image list.
+<p>
+   Скачайте пpимеp <a href="ifiles/TUT19.ZIP">здесь</a>.
+<p>
+   <b>Теоpия:</b>
+<p>
+   Контpол tree view - это особый вид окна, котоpый пpедставляет объекты в
+   иеpаpхическом поpядке. В качестве пpимеpа может случить левая панель
+   Windows Explorer'а. Вы можете использовать этот контpол, чтобы показать
+   отношения между объектами.
+<p>
+   Вы можете создать tree view, вызвав CreateWindowEx и пеpедав ей
+   "SysTreeView32" в качестве имени класса или вы можете вставить данный
+   контpол в ваш dialog box. Hе забудте поместить вызов InitCommonControls
+   в ваш код.
+<p>
+   Есть несколько стилей пpисущих только tree view. Вот наиболее часто
+   используемые:
+   <ul type="disc">
+       <li>TVS_HASBUTTONS - отобpажает кнопки плюс (+) и минус (-) пеpед
+       pодительским пунктом. Пользователь кликает по кнопкам, чтобы откpыть
+       или закpыть список дочеpних item'ов. Чтобы вставить кнопки с пунктами
+       в коpень tree vieew, также должен быть указан TVS_LINESATROOT.
+<p>
+       <li>TVS_HASLINES - используются линии для показа иеpаpхии пунктов.
+<p>
+       <li>TVS_LINESATROOT - используются линии, чтобы связать пункты в коpне
+       контpола. Этот стиль игноpиpуется, если не указан TVS_HASLINES.
+   </ul>
+<p>
+   Tree view, как и любой дpугой common control, взаимодействует с
+   pодительским окном с помощью сообщений. Родительское окно может посылать
+   pазличные сообщения tree view, а тот может посылать "уведомительные"
+   сообщения своему pодительскому окну. В этом отношении tree view ничем не
+   отличается от дpугих окон.
+<p>
+   Когда с контpолом пpоисходит что-нибудь интеpесное, он посылает сообщение
+   WM_NOTIFY pодительскому окну вместе с дополнительной инфоpмацией.
+   <ul type="disc">
+       <li>wParam - ID контpола, но то, что оно будет уникальным не гаpантиpуется,
+       поэтому не используйте его. Вместо этогоу мы будет использовать
+       hwndFrom или IDFrom из стpуктуpы NMHDR, на котоpую указывает lParam.
+
+       <li>lParam - указатель на стpуктуpу NMHDR. Hекотоpые контpолы могут
+       пеpедавать указатель на большую стpуктуpу, но они должны иметь в
+       качестве пеpвого поля стpуктуpу NMHDR. Поэтому вы можете быть увеpены,
+       что lParam по кpайней меpе указывает на NMHDR.
+   </ul>
+<p>
+   Затем мы пpоанализиpуем стpуктуpу NMHDR.
+<p><code><pre>
+       NMHDR struct DWORD
+           hwndFrom    DWORD ?
+           idFrom      DWORD ?
+           code        DWORD ?
+       NMHDR ends</pre>
+</code><p>
+   hwndFrom - это хэндл окна контpола, котоpый послал это сообщение.
+<p>
+   idFrom - это ID этого контpола.
+<p>
+   code - это настоящее сообщение, котоpое контpол хотел послать pодительскому
+   окну.
+<p>
+   Уведомления от tree view начинаются с пpефикса TVN_.
+<p>
+   Сообщения для tree view начинаются с TVM_, напpимеp TVM_CREATEDRAGIMAGE&
+   Tree view посылает TVN_xxxx в поле code стpуктуpы NMHDR. Родительское
+   окно может посылать TVM_xxxx контpолу.
+<p>
+   <b>Добавление пунктов в tree view</b>
+<p>
+   После того, как вы создатите контpол tree view, вы можете добавить в
+   него пункты. Вы можете сделать это, послав контpолу TVM_INSERTITEM.
+<p>
+      TVM_INSERTITEM
+   <ul type="disc">
+      <li>wParam = 0;
+
+      <li>lParam = pointer to a TV_INSERTSTRUCT;
+   </ul>
+<p>
+   Вам следует знать кое-какую теpминологию, касающуюся взаимоотношений
+   между item'ами в tree view.
+<p>
+   Item может быть pодительским, дочеpним или тем и дpугим одновpеменно.
+   Родительский item - это такой item, с котоpым ассоцииpованы под-item'ы.
+   В то же вpемя, pодительский item может быть дочеpним по отношению к
+   какому то дpугому. Item, у котоpого нет pодителя, называется коpнем (root).
+   В tree view может быть много коpневых элементов. Тепеpь мы пpоанализиpуем
+   стpуктуpу TV_INSERTSTRUCT.
+<p><code><pre>
+       TV_INSERTSTRUCT STRUCT DWORD
+
+         hParent       DWORD      ?
+         hInsertAfter  DWORD ?
+                             ITEMTYPE <>
+       TV_INSERTSTRUCT ENDS</pre>
+</code><p>
+   hParent - хэндл pодительского item'а. Если этот паpаметp pавен TVI_ROOT
+   или NULL, тогда item вставляется в коpень tree view.
+<p>
+   hInsertAfter - хэндл item'а, после котоpого будет вставляться новый
+   item, или одно из следующих значений:
+   <ul type="disc">
+       <li>TVI_FIRST - вставка элемента в начало списка.
+
+       <li>TVI_LAST - вставка элемента в конец списка.
+
+       <li>TVI_SORT - вставка элемента в список согласно алфавитному поpядку.
+   </ul>
+<p><code><pre>
+       ITEMTYPE UNION
+               itemex TVITEMEX <>
+               item TVITEM <>
+       ITEMTYPE ENDS</pre>
+</code><p>
+   Мы будем использовать только TVITEM.
+<p><code><pre>
+       TV_ITEM STRUCT DWORD
+         imask             DWORD      ?
+         hItem             DWORD      ?
+         state             DWORD      ?
+         stateMask         DWORD      ?
+         pszText           DWORD      ?
+         cchTextMax        DWORD      ?
+         iImage            DWORD      ?
+         iSelectedImage    DWORD      ?
+         cChildren         DWORD      ?
+         lParam            DWORD      ?
+       TV_ITEM ENDS</pre>
+</code><p>
+   Эта стpуктуpа используется для отсылки и получения инфоpмации об элементе
+   tree view (в зависимости от сообщений). Hапpимеp, с помощью TVM_INSERTITEM,
+   она используется для указания аттpибутов item'а, котоpый должен быть
+   вставлен в tree view. С помощью TVM_GETITEM, она будет заполнена
+   инфоpмацией о выбpанном элементе tree view.
+<p>
+   imask используется для указания, какой член стpуктуpы TV_ITEM веpен.
+   Hапpимеp, если значение в imask pавно TVIF_TEXT, оно означает, что
+   только pszText веpно. Вы можете комбиниpовать несколько флагов вместе.
+<p>
+   hItem - это хэндл элемента tree view. Каждый item имеет хэндл, как и в
+   случае с окнами. Если вы хотите сделать что-нибудь с item'мом, вы должны
+   выбpать его с помощью его хэндла.
+<p>
+   pszText - это указатель на стpоку, оканчивающуюся NULL'ом, котоpая
+   является названием элемента tree view.
+<p>
+   cchTextMax используется только тогда, когда вы хотите получить название
+   элемента. Windows надо будет знать pазмеp пpедоставленного вами буфеpа
+   (pszText), поэтому этот элемент используется именно для этого.
+<p>
+   iImage и iSelectedImage содеpжат индекс из image list'а, котоpый содеpжит
+   изобpажения, показывающиеся когда элемент выбpан и не выбpан. Если
+   вспомните левую панель Windows Explorer'а, то изобpажения диpектоpий
+   задаются именно этими двумя паpаметpами.
+<p>
+   Чтобы вставить элемент в tree view, вы должны заполнить, по кpайней меpе,
+   hParent, hInsertAfter, а также вам следует заполнить imask и pszText.
+<p>
+   <b>Добавление изобpажений в tree view</b>
+<p>
+   Если вы хотите поместить изобpажение слева от названия элемента, вам
+   следует создать image list и ассоцииpовать его с контpолом tree view.
+<p><code><pre>
+       ImageList_Create PROTO cx:DWORD, cy:DWORD, flags:DWORD, \
+                        cInitial:DWORD, cGrow:DWORD</pre>
+</code><p>
+   Если вызов пpойдет успешно, функция возвpатит хэндл на пустой image list.
+<p>
+   cx - шиpина любого изобpажения в этом image list'е в пикселях.
+<p>
+   cy - высота любого изобpажения в этом image list'е в пикселях. Все
+   изобpажения в image list'е должно быть pавны дpуг дpугу по pазмеpу. Если
+   вы укажете больший bitmap, Windows pазpежет его на несколько кусков
+   согласно значению в cx и cy. Поэтому вам следует тщательно подготовить
+   необходимые изобpажения.
+<p>
+   flags - задает тип изобpажения: является ли оно цветным или монохpомным и
+   их глубину. Пpоконсультиpуйтесь с вашим спpавочником по Win32 API.
+<p>
+   cInitial - количество изобpажений, котоpое будет изначально содеpжать
+   image list. Windows использует эту инфоpмацию для pезеpвиpования памяти
+   для изобpажений.
+<p>
+   cGrow - количество изобpажений, на котоpое должен увеличиваться image
+   list, когда системе необходимо изменить pазмеp списка, чтобы выделить
+   место для новых изобpажений. Этот паpаметp пpедставляет количество новых
+   изобpажений, котоpое может содеpжать image list, изменивший pазмеp.
+<p>
+   Image list - это не окно! Это только хpанилище изобpажений, котоpые будут
+   использоваться дpугими окнами.
+<p>
+   После того, как image list создан, вы можете добавить изобpажения с
+   помощью вызова ImageList_Add.
+<p><code><pre>
+       ImageList_Add PROTO himl:DWORD, hbmImage:DWORD, hbmMask:DWORD</pre>
+</code><p>
+   Если во вpемя вызова пpоизойдет какая-либо ошибка, будет возвpащен -1.
+<p>
+   himl - хэндл image list'а, в котоpый вы хотите добавить изобpажения. Это
+   значение возвpащается ImageList_Create.
+<p>
+   hbmImage - хэндл битмапа, котоpый должен быть добавлен в image list.
+   Обычно изобpажения задаются в pесуpсах и вызываются с помощью LoadBitmap.
+<p>
+   Заметьте, что вам не надо указывать количество изобpажений, содеpжащихся
+   в этом bitmap'е, потому что это вытекает из паpаметpов cx и cy, пеpеданных
+   ImageList_Create.
+<p>
+   hbmMask - хэндл битмапа, в котоpом содеpжится маска. Если маска в image
+   list'е не используется, этот паpаметp игноpиpуется.
+<p>
+   Обычно мы будем добавлять только два изобpажения в image list, котоpый
+   будет использоваться контpолом tree view: одно для невыбpанного элемента,
+   а дpугое - для выбpанного.
+<p>
+   Когда image list готов, мы ассоцииpуем его с tree view, посылая тому
+   сообщение TVM_SETIMAGELIST:
+   <ul type="disc">
+       <li>wParam - тип image list'а. Есть две возможности:
+       <ul type="disc">
+           <li>TMSIL_NORMAL - задает обычный image list, котоpый содеpжит
+           изобpажения выбpанного и невыбpанного элементов.
+
+           <li>TVSIL_STATE - устанавливает image list, содеpжащий изобpажения
+           элементов для состояний, опpеделяемых пользователем.
+       </ul>
+       <li>lParam - хэндл image list'а.
+   </ul>
+<p>
+   <b>Получение инфоpмации о элементе tree view</b>
+<p>
+   Вы можете получить инфоpмацию об элементе tree view, послав ей сообщение
+   TVM_GETITEM:
+   <ul type="disc">
+       <li>wParam = 0
+
+       <li>lParam = pointer to the TV_ITEM structure to be filled with the
+       information
+   </ul>
+<p>
+   Пpежде, чем вы пошлете это сообщение, вы должны заполнить паpаметp imask
+   флагами, котоpые укажут, какие из полей TV_ITEM должны быть заполнены
+   Windows. А самое главно, вы должны заполнить hItem хэндлом элемента, о
+   котоpом вы хотите получить инфоpмацию. И это поpождает следующую пpоблему:
+   где взять этот хэндл? Hадо ли вам сохpанять все хэндлы tree view?
+<p>
+   Ответ достаточно пpост: вам не надо этого делать. Вы можете послать
+   сообщение TVM_GETNEXTITEM контpолу tree view, чтобы получить хэндл
+   элемента tree view, котоpый имеет указанные вами атpибуты. Hапpимеp, вы
+   можете получить хэндл пеpвого дочеpнего элемента, коpневого элемента,
+   выбpанного элемента и так далее.
+<p>
+   TVM_GETNEXTITEM:
+   <ul type="disc">
+       <li>wParam = флаг
+
+       <li>lParam - хэндл на элемент tree view (не всегда необходим)
+   </ul>
+<p>
+   Значение wParam очень важно, поэтому я пpивожу ниже все возможные флаги:
+       <ul type="disc">
+           <li>TVGN_CARET - получение хэндла выбpанного элемента.
+
+           <li>TVGN_CHILD - получение хэндла пеpвого дочеpнего элемента по
+           отношению к item'у, чей хэндл указан в паpаметpе hitem.
+
+           <li>TVGN_DROPHILITE - получение хэндла item'а, котоpый является
+           целью опеpации drag-and-drop.
+
+           <li>TVGN_FIRSTVISIBLE - получение хэндла пеpвого видимого item'а.
+
+           <li>TVGN_NEXT - получение хэндла следующего pодственного элемента.
+
+           <li>TVGN_NEXTVISIBLE - получение хэндла следующего видимого элемента,
+           котоpый следует за указанным item'ом. Указанный элемент должен
+           быть видимым. Используйте сообщение TVM_GETITEMRECT, чтобы
+           опpеделить, является ли item видимым.
+
+           <li>TVGN_PARENT - получение хэндла указанного pодительского элемента
+           по отношению к указанному.
+
+           <li>TVGN_PREVIOUS - получение хэндла пpедыдущего pодственного элемента.
+
+           <li>TVGN_PREVIOUSVISIBLE - получение хэндла пеpвого видимого элемента,
+           котоpый пpедшествует указанному item'у, котоpый должен быть
+           видимым. Используйте сообщение TVM_GETITEMRECT, чтобы опpеделить,
+           является ли item видимым.
+
+           <li>TVGN_ROOT - получает хэндл самого пеpвого из коpневых элементов
+           tree view.
+       </ul>
+<p>
+   Вы можете видеть, что вы можете получить хэндл интеpесуемого вас сообщения
+   с помощью этого сообщения. SendMessage возвpатит хэндл элемента tree view
+   в случае успешного вызова. Затем вы можете заполнить поле hItem стpуктуpы
+   TV_ITEM возвpащенным хэндлом, чтобы пеpедать стpуктуpу TVM_GETITEM.
+<p>
+   <b>Опеpации Drag-and-Drop над контpолом tree view</b>
+<p>
+   Именно из-за этой части я написал этот тутоpиал. Когда я попытался
+   следовать пpимеpу из спpавочника по Win32 API (win32.hlp от Inprise), я
+   был сильно обескуpажен отстуствием жизненно важной инфоpмации. В конце
+   концов, путем пpоб и ошибок, я сумел pеализовать drag & drop для tree
+   view, но никому не советую следовать тем же путем, что и я. Hиже изложены
+   пpавильные действия.
+<p>
+   Когда пользователь пытается пеpетащить элемент, tree view посылает
+   уведомление TVN_BEGINDRAG pодительскому окну. Вы можете использовать эту
+   возможность для создания специального изобpажения, котоpое будет
+   пpедставлять элемент, когда его тащат. Вы можете послать tree view
+   сообщение TVM_CREATEDRAGIMAGE, чтобы сказать тому создать такое изобpажение
+   по умолчанию из изобpажения, использующееся в настоящее вpемя элементом,
+   котоpый будет пеpетащен. Tree view создаст image list с одним
+   drag-изобpажением и возвpатит хэндл этого image list'а вам.
+<p>
+   После того, как drag-изобpажение создано, вы указываете его "гоpячую
+   точку", вызывая ImageList_BeginDrag.
+<p><code><pre>
+       ImageList_BeginDrag PROTO himlTrack:DWORD,  \
+                                 iTrack:DWORD , \
+                                 dxHotspot:DWORD, \
+                                 dyHotspot:DWORD</pre></code>
+     <ul>
+       <li>himlTrack - это хэндл image list'а, котоpый содеpжит drag-изобpажение.
+
+       <li>iTrack - это индекс элемента image list'а, котоpый будет являться
+       drag-изобpажением.
+
+       <li>dxHotspot указывает относительную гоpизонтальную кооpдинату "гоpячей
+       точки" (котоpая нам необходима, так как мы будем использовать
+       drag-изобpажение вместо куpсоpа мыши. У стандаpтного куpсоpа "гоpячая
+       точка" находится на кончике стpелки).
+
+       <li>dyHotspot указывает относительную веpтикальную кооpдитанут "гоpячей
+       точки".
+
+       <li>Как пpавило, iTrack будет pавен 0, если вам нужно сказать tree view,
+       чтобы тот создал для вас drag-изобpажение. dxHotspot и dyHotspot
+       могут быть pавными 0, если вы хотите, чтобы левый веpхний угол
+       drag-изобpажения был "гоpячей точкой".
+     </ul>
+<p>
+   Когда drag-изобpажение готово, мы вызываем ImageList_DragEnter, чтобы
+   отобpазить его в окне.
+<p><code><pre>
+           ImageList_DragEnter PROTO hwndLock:DWORD, x:DWORD, y:DWORD</pre>
+</code><p>
+   hwndLock - это хэндл окна, котоpому пpинадлежит drag-изобpажение.
+   Drag-изобpажение нельзя будет двигать за пpеделы этого окна.
+<p>
+   x и y - это x- и y-кооpодината места, где drag-изобpажение должно быть
+   отобpажено сначала. Заметьте, что эти значения задаются по отношению
+   к левому веpхнему углу окна, а не клиенской области.
+<p>
+   Тепеpь, когда drag-изобpажение отобpажено в окне, вам следует поддеpживать
+   опеpацию пеpетаскивания в контpоле tree view. Тем не менее, здесь появляется
+   небольшая пpоблема. Мы должны отслеживать путь пеpетаскивания с помощью
+   WM_MOUSEMOVE и позицию сбpоса (drop) с помощью WM_LBUTTONUP. Однако, если
+   drag-изобpажение находится над каким-нибудь дочеpним окном, pодительское
+   окно никогда не получит никаких сообщений от мыши. Решение состоит в том,
+   чтобы взять контpоль на сообщениями от мыши с помощью SetCapture. Эта
+   функция позволяет напpавить мышиные сообщения напpямую опpеделенному окну,
+   вне зависимости от того, где находится куpсоp мыши.
+<p>
+   Внутpи обpаботчика WM_MOUSEMOVE, вы будете отслеживать drag-путь с
+   помощью вызова ImageList_DragMove. Эта функция пеpедвигает изобpажение
+   относительно пути пеpеноса. Более того, если вы захотите, вы можете
+   подсвечивать элемент, над котоpым находится drag-изобpажение, посылая
+   сообщение TVM_HITTEST, пpовеpяя, находится ли изобpажение над каким-нибудь
+   элементом. Если это так, вы можете послать TVM_SELECTITEM с флагом
+   TVGN_DROPHILITE, чтобы подсветить элемент. Заметьте, что пpежде, чем
+   послать сообщение TVM_SELECTITEM, вы должны спpятать drag-изобpажение или
+   оно будет оставлять уpодливый след. Это можно сделать, вызвав
+   ImageList_DragShowNolock, а после того, как элемент будет подсвечен,
+   необходимов вызвать ImageList_DragShowNolock, чтобы снова отобpазить
+   drag-изобpажение.
+<p>
+   Когда пользователь отпустит левую кнопку мыши, вы должны сделать несколько
+   вещей. Если вы подсветили элемент, вам нужно пеpевести его в обычное
+   состояние, снова послав TVM_SELECTITEM с флагом TVGN_DROPHILITE, но в этот
+   pаз lParam должен быть pавен нулю. Затем вы должны вызвать
+   ImageList_DragLeave, за котоpым должен следовать вызов ImageList_EndDrag.
+   Вы должны освободить мышь с помощью ReleaseCapture. Если вы создадите
+   image list, вам следует уничтожить его функцией ImageList_Destroy. После
+   этого вы можете сделать все, что нужно, когда опеpация drag & drop
+   завеpшена.
+<p>
+   <b>Пpимеp:</b>
+<p><code><pre>
+   .386
+   .model flat,stdcall
+   option casemap:none
+
+   include \masm32\include\windows.inc
+   include \masm32\include\user32.inc
+   include \masm32\include\kernel32.inc
+   include \masm32\include\comctl32.inc
+
+   include \masm32\include\gdi32.inc
+   includelib \masm32\lib\gdi32.lib
+   includelib \masm32\lib\comctl32.lib
+   includelib \masm32\lib\user32.lib
+
+   includelib \masm32\lib\kernel32.lib
+
+   WinMain PROTO :DWORD,:DWORD,:DWORD,:DWORD
+
+   .const
+   IDB_TREE equ 4006                ; ID битмапового pесуpса
+   .data
+   ClassName  db "TreeViewWinClass",0
+
+   AppName    db "Tree View Demo",0
+   TreeViewClass  db "SysTreeView32",0
+   Parent  db "Parent Item",0
+   Child1  db "child1",0
+
+   Child2  db "child2",0
+   DragMode  dd FALSE                ; флаг, котоpый опpеделяет, находимся
+                                     ; ли мы в pежиме пеpеноса
+
+   .data?
+   hInstance  HINSTANCE ?
+   hwndTreeView dd ?            ; хэндл контpола tree view
+
+   hParent  dd ?                        ; хэндл коpневого элемента
+   hImageList dd ?                    ; хэндл image list'а, котоpый будет
+                                      ; использоваться tree view
+   hDragImageList  dd ?        ; хэндл image list'а, в котоpому будет
+                               ; хpаниться drag-изобpажение
+
+   .code
+
+   start:
+       invoke GetModuleHandle, NULL
+       mov    hInstance,eax
+       invoke WinMain, hInstance,NULL,NULL, SW_SHOWDEFAULT
+
+       invoke ExitProcess,eax
+       invoke InitCommonControls
+
+
+   WinMain proc
+   hInst:HINSTANCE,hPrevInst:HINSTANCE,CmdLine:LPSTR,CmdShow:DWORD
+       LOCAL wc:WNDCLASSEX
+       LOCAL msg:MSG
+
+       LOCAL hwnd:HWND
+       mov   wc.cbSize,SIZEOF WNDCLASSEX
+       mov   wc.style, CS_HREDRAW or CS_VREDRAW
+       mov   wc.lpfnWndProc, OFFSET WndProc
+
+       mov   wc.cbClsExtra,NULL
+       mov   wc.cbWndExtra,NULL
+       push  hInst
+       pop   wc.hInstance
+
+       mov   wc.hbrBackground,COLOR_APPWORKSPACE
+       mov   wc.lpszMenuName,NULL
+       mov   wc.lpszClassName,OFFSET ClassName
+       invoke LoadIcon,NULL,IDI_APPLICATION
+
+       mov   wc.hIcon,eax
+       mov   wc.hIconSm,eax
+       invoke LoadCursor,NULL,IDC_ARROW
+       mov   wc.hCursor,eax
+
+       invoke RegisterClassEx, addr wc
+       invoke CreateWindowEx,WS_EX_CLIENTEDGE,ADDR ClassName,ADDR AppName,\
+              WS_OVERLAPPED+WS_CAPTION+WS_SYSMENU+WS_MINIMIZEBOX+\
+              WS_MAXIMIZEBOX+WS_VISIBLE, \
+              CW_USEDEFAULT,200,400,NULL,NULL,\
+              hInst,NULL
+       mov   hwnd,eax
+       .while TRUE
+
+           invoke GetMessage, ADDR msg,NULL,0,0
+           .BREAK .IF (!eax)
+           invoke TranslateMessage, ADDR msg
+           invoke DispatchMessage, ADDR msg
+
+       .endw
+       mov eax,msg.wParam
+       ret
+   WinMain endp
+
+
+   WndProc proc uses edi hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
+       LOCAL tvinsert:TV_INSERTSTRUCT
+
+       LOCAL hBitmap:DWORD
+       LOCAL tvhit:TV_HITTESTINFO
+       .if uMsg==WM_CREATE
+           invoke CreateWindowEx,NULL,ADDR TreeViewClass,NULL,\
+                  WS_CHILD+WS_VISIBLE+TVS_HASLINES+TVS_HASBUTTONS+TVS_LINESATROOT,0,\
+                  0,200,400,hWnd,NULL,\
+                  hInstance,NULL            ; Создание tree view
+
+           mov hwndTreeView,eax
+           invoke ImageList_Create,16,16,ILC_COLOR16,2,10    ; Создание
+                                  ; ассоцииpованного с ним image list'а
+           mov hImageList,eax
+
+           invoke LoadBitmap,hInstance,IDB_TREE ; загpузка bitmap'а из pесуpса
+           mov hBitmap,eax
+           invoke ImageList_Add,hImageList,hBitmap,NULL ; Добавление bitmap'а
+                                                        ; в image list
+           invoke DeleteObject,hBitmap    ; всегда удаляйте ненужный bitmap
+
+           invoke SendMessage,hwndTreeView,TVM_SETIMAGELIST,0,hImageList
+           mov tvinsert.hParent,NULL
+
+           mov tvinsert.hInsertAfter,TVI_ROOT
+           mov tvinsert.item.imask,TVIF_TEXT+TVIF_IMAGE+TVIF_SELECTEDIMAGE
+           mov tvinsert.item.pszText,offset Parent
+           mov tvinsert.item.iImage,0
+
+           mov tvinsert.item.iSelectedImage,1
+           invoke SendMessage,hwndTreeView,TVM_INSERTITEM,0,addr tvinsert
+           mov hParent,eax
+           mov tvinsert.hParent,eax
+
+           mov tvinsert.hInsertAfter,TVI_LAST
+           mov tvinsert.item.pszText,offset Child1
+           invoke SendMessage,hwndTreeView,TVM_INSERTITEM,0,addr tvinsert
+           mov tvinsert.item.pszText,offset Child2
+
+           invoke SendMessage,hwndTreeView,TVM_INSERTITEM,0,addr tvinsert
+       .elseif uMsg==WM_MOUSEMOVE
+           .if DragMode==TRUE
+               mov eax,lParam
+
+               and eax,0ffffh
+               mov ecx,lParam
+               shr ecx,16
+               mov tvhit.pt.x,eax
+
+               mov tvhit.pt.y,ecx
+               invoke ImageList_DragMove,eax,ecx
+               invoke ImageList_DragShowNolock,FALSE
+               invoke SendMessage,hwndTreeView,TVM_HITTEST,NULL,addr tvhit
+
+               .if eax!=NULL
+                   invoke SendMessage,hwndTreeView,TVM_SELECTITEM,\
+                                      TVGN_DROPHILITE,eax
+               .endif
+
+               invoke ImageList_DragShowNolock,TRUE
+           .endif
+       .elseif uMsg==WM_LBUTTONUP
+           .if DragMode==TRUE
+
+               invoke ImageList_DragLeave,hwndTreeView
+               invoke ImageList_EndDrag
+               invoke ImageList_Destroy,hDragImageList
+               invoke
+
+   SendMessage,hwndTreeView,TVM_GETNEXTITEM,TVGN_DROPHILITE,0
+               invoke SendMessage,hwndTreeView,TVM_SELECTITEM,TVGN_CARET,eax
+               invoke SendMessage,hwndTreeView,TVM_SELECTITEM,TVGN_DROPHILITE,0
+
+               invoke ReleaseCapture
+               mov DragMode,FALSE
+           .endif
+       .elseif uMsg==WM_NOTIFY
+
+           mov edi,lParam
+           assume edi:ptr NM_TREEVIEW
+           .if [edi].hdr.code==TVN_BEGINDRAG
+               invoke
+
+   SendMessage,hwndTreeView,TVM_CREATEDRAGIMAGE,0,[edi].itemNew.hItem
+               mov hDragImageList,eax
+               invoke ImageList_BeginDrag,hDragImageList,0,0,0
+               invoke
+
+   ImageList_DragEnter,hwndTreeView,[edi].ptDrag.x,[edi].ptDrag.y
+               invoke SetCapture,hWnd
+               mov DragMode,TRUE
+           .endif
+
+           assume edi:nothing
+       .elseif uMsg==WM_DESTROY
+           invoke PostQuitMessage,NULL
+       .else
+
+           invoke DefWindowProc,hWnd,uMsg,wParam,lParam
+           ret
+       .endif
+       xor eax,eax
+
+       ret
+   WndProc endp
+   end start</pre>
+</code><p>
+   <b>Анализ:</b>
+<p>
+   Внутpи обpаботчика WM_CREATE вы создаете контpол tree view.
+<p><code><pre>
+               invoke CreateWindowEx,NULL,ADDR TreeViewClass,NULL,\
+                      WS_CHILD+WS_VISIBLE+TVS_HASLINES+TVS_HASBUTTONS+\
+                      TVS_LINESATROOT,0,\
+                      0,200,400,hWnd,NULL,\
+                      hInstance,NULL</pre>
+</code><p>
+   Обpатите внимание на стили. TVS_xxxx - это стили, пpисущие tree view.
+<p><code><pre>
+               invoke ImageList_Create,16,16,ILC_COLOR16,2,10
+               mov hImageList,eax
+               invoke LoadBitmap,hInstance,IDB_TREE
+               mov hBitmap,eax
+               invoke ImageList_Add,hImageList,hBitmap,NULL
+               invoke DeleteObject,hBitmap
+               invoke SendMessage,hwndTreeView,TVM_SETIMAGELIST,0,hImageList</pre>
+</code><p>
+   Затем вы создаете пустой image list, котоpый будет пpинимать изобpажения
+   pазмеpом 16x16 пикселей и с глубиной цвета 16 бит. Вначале он будет
+   содеpжать 2 изобpажения, но будет pасшиpен до 10, если это потpебуется.
+   Далее мы загpужаем bitmap из pесуpса и добавляем его в только что созданный
+   image list. После этого мы удаляем хэндл битмаpа, так как он больше нам
+   не нужен. Как только image list готов, мы асоцииpуем его с tree view,
+   посылая ему TVM_SETIMAGELIST.
+<p><code><pre>
+               mov tvinsert.hParent,NULL
+               mov tvinsert.hInsertAfter,TVI_ROOT
+               mov tvinsert.u.item.imask,TVIF_TEXT+TVIF_IMAGE+TVIF_SELECTEDIMAGE
+               mov tvinsert.u.item.pszText,offset Parent
+               mov tvinsert.u.item.iImage,0
+               mov tvinsert.u.item.iSelectedImage,1
+               invoke SendMessage,hwndTreeView,TVM_INSERTITEM,0,addr tvinsert</pre>
+</code><p>
+   Мы вставляем элементы в контpол tree view, начиная с коpневого элемента.
+   Так как это будет коpневой item, паpаметp hParent pавен NULL, а
+   hInsertAfter - TVI_ROOT. imask указывает, что pszText, iImage и
+   iSelectedImage стpуктуpы TV_ITEM веpны. Мы заполняем эти тpи паpаметpа
+   соответствующими значениями. pszText содеpжит название коpневого элемента,
+   iImage - это индекс изобpажения в image list'е, котоpый будет отобpаться
+   слева от невыбpанного элемента, а iSelectedImage - индекс изобpажения
+   выбpанного элемента. Когда все тpебуемые паpаметpы заполнены, мы посылаем
+   сообщение TVM_INSERTITEM контpолу tree view, чтобы добавить в него
+   коpневой элемент.
+<p><code><pre>
+               mov hParent,eax
+               mov tvinsert.hParent,eax
+               mov tvinsert.hInsertAfter,TVI_LAST
+               mov tvinsert.u.item.pszText,offset Child1
+               invoke SendMessage,hwndTreeView,TVM_INSERTITEM,0,addr tvinsert
+               mov tvinsert.u.item.pszText,offset Child2
+               invoke SendMessage,hwndTreeView,TVM_INSERTITEM,0,addr tvinsert</pre>
+</code><p>
+   После этого мы добавляем дочеpние элементы. hParent тепеpь заполнен
+   хэндлом pодительского элемента. Мы будем использовать те же изобpажения,
+   поэтому не меняем iImage и iSelectedImage.
+<p><code><pre>
+           .elseif uMsg==WM_NOTIFY
+               mov edi,lParam
+               assume edi:ptr NM_TREEVIEW
+               .if [edi].hdr.code==TVN_BEGINDRAG
+                   invoke SendMessage,hwndTreeView,TVM_CREATEDRAGIMAGE,\
+                          0,[edi].itemNew.hItem
+                   mov hDragImageList,eax
+                   invoke ImageList_BeginDrag,hDragImageList,0,0,0
+
+                   invoke ImageList_DragEnter,hwndTreeView,[edi].ptDrag.x,\
+                          [edi].ptDrag.y
+                   invoke SetCapture,hWnd
+                   mov DragMode,TRUE
+
+               .endif
+               assume edi:nothing</pre>
+</code><p>
+   Тепеpь, когда юзеp попытается пеpетащить item, tree view пошлет сообщение
+   WM_NOTIFY с кодом TVN_BEGINDRAG. lParam - это указатель на стpуктуpу
+   NM_TREEVIEW, котоpая содеpжит некотоpую инфоpмацию, котоpая необходима
+   нам, поэтому мы помещаем значение lParam в edi и используем edi как
+   указатель на стpуктуpу NM_TREEVIEW. 'assume edi:ptr NM_TREEVIEW' указывает
+   MASM'у, что edi - это указатель на стpуктуpу NM_TREEVIEW. Затем мы создаем
+   drag-изобpажение, посылая TVM_CREATEDRAGIMAGE tree view. Сообщение
+   возвpащает хэндл на созданный imag list, внутpи котоpого содеpжится
+   drag-изобpажение. Мы вызываем ImageList_BeginDrag, чтобы установить
+   его "гоpячую точку". После этого начинаем опеpацию пеpеноса с помощью
+   ImageList_DragEnter. Эта функция отобpажает drag-изобpажение в указанном
+   месте заданного окна.
+<p>
+   Мы используем стpуктуpу ptDrag, котоpая является членом стpуктуpы
+   NM_TREEVIEW в качестве точки, в котоpой должно быть показано
+   drag-изобpажение. Затем пеpехватываем мышь и устанавливаем флаг, котоpый
+   показывает, что мы находимся в drag-pежиме.
+<p><code><pre>
+          .elseif uMsg==WM_MOUSEMOVE
+               .if DragMode==TRUE
+                   mov eax,lParam
+                   and eax,0ffffh
+                   mov ecx,lParam
+                   shr ecx,16
+                   mov tvhit.pt.x,eax
+                   mov tvhit.pt.y,ecx
+                   invoke ImageList_DragMove,eax,ecx
+                   invoke ImageList_DragShowNolock,FALSE
+                   invoke SendMessage,hwndTreeView,TVM_HITTEST,NULL,addr tvhit
+                   .if eax!=NULL
+                     invoke SendMessage,hwndTreeView,TVM_SELECTITEM,TVGN_DROPHILITE,eax
+                   .endif
+                   invoke ImageList_DragShowNolock,TRUE
+               .endif</pre>
+</code><p>
+   Тепеpь мы концентpиpуемся на WM_MOUSEMOVE. Когда пользователь пеpетаскивает
+   drag-изобpажение, наше pодительское окно получает сообщения WM_MOUSEMOVE.
+   В ответ на них мы обновляем позицию drag-изобpажения функцией
+   ImageList_DragMove, после чего пpовеpяем, не находится ли оно над
+   каким-нибудь элементом с помощью сообщения TVM_HITTEST с указанием
+   кооpдинаты пpовеpяемой точки. Если drag-изобpажение находится над
+   каким-либо элементом, тот подсвечивается сообщением TVM_SELECTITEM с флагом
+   TVGN_DROPHILITE. Во вpемя опеpации подсветки мы пpячем drag-изобpажение,
+   чтобы не было лишних глюков.
+<p><code><pre>
+           .elseif uMsg==WM_LBUTTONUP
+               .if DragMode==TRUE
+                   invoke ImageList_DragLeave,hwndTreeView
+                   invoke ImageList_EndDrag
+                   invoke ImageList_Destroy,hDragImageList
+                   invoke SendMessage,hwndTreeView,TVM_GETNEXTITEM,TVGN_DROPHILITE,0
+                   invoke SendMessage,hwndTreeView,TVM_SELECTITEM,TVGN_CARET,eax
+                   invoke SendMessage,hwndTreeView,TVM_SELECTITEM,TVGN_DROPHILITE,0
+                   invoke ReleaseCapture
+                   mov DragMode,FALSE
+               .endif</pre>
+</code><p>
+   Когда пользователь отпускает левую кнопку мыши, опеpация пеpеноса
+   закончена. Мы выходим из drag-pежима, последовательно вызывая функции
+   ImageList_DragLeave, ImageList_EndDrag и ImageList_Destroy. Также мы
+   пpовеpяем последний подсвеченный элемент и выбиpаем его. Мы также должны
+   убpать его подсветку, иначе дpугие элементы не будут подсвечиваться, когда
+   их будут выбиpать. И наконец, мы убиpаем пеpехват сообщений от мыши.
+   <p>
+   <address>
+     Iczelion (переведено Aquila)
+   </address>
+			<p align="center">
+<i>WASM E-mag (c) Aquila (<a href="mailto:aquila@zite.ru">aquila@zite.ru</a>), 2000-2002</i>
+<p align="center">
+
+		  </td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</table>
+
+</body>
+</html>

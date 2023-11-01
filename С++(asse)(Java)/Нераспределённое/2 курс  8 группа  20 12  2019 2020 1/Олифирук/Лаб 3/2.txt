@@ -1,0 +1,72 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lab3ex2;
+import java.util.Scanner;
+import java.util.Arrays;
+import java.io.*;
+
+/**
+ *
+ * @author Maxim
+   —пираль
+ */
+public class Lab3Ex2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+       System.out.println("¬ведите размерность матрицы ");
+       Scanner sc=new Scanner(System.in);
+       int a=sc.nextInt();
+       int b=sc.nextInt();
+       int [][]Mas=new int[a][b];
+       int chislo=1;
+       int t=0;
+       int k=Math.min(a, b)/2;
+       
+       while(chislo<a*b)
+       {
+          for(int j=t;j<b-1-t;j++)
+          {
+              Mas[t][j]=chislo;
+              chislo++;
+          }
+          
+          for(int i=t;i<a-1-t;i++)
+          {  
+              Mas[i][b-1-t]=chislo;
+              chislo++;
+          }
+          
+          for(int j=b-1-t;j>t;j--)
+          {
+              Mas[a-1-t][j]=chislo;
+              chislo++;
+          }
+          
+          for(int i=a-1-t;i>t;i--)
+          {
+              Mas[i][t]=chislo;
+              chislo++;
+          }
+         t++;
+       }
+       
+       
+       for(int i=0;i<a;i++)
+       {
+           for(int j=0;j<b;j++)
+           {
+               System.out.print(Mas[i][j]+" ");
+           }
+           System.out.println();
+           
+       }
+    }
+    
+}

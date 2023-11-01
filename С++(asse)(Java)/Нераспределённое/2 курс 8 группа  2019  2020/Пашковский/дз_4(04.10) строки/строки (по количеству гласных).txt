@@ -1,0 +1,88 @@
+package app;
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Collection;
+import java.io.*;
+
+public class strApp {
+	
+	public static void quickSortUp(String[] str, int btm, int top) {
+        if (str.length == 0)
+            return;
+ 
+        if (btm >= top)
+            return;
+        
+        int middle = btm + (top - btm) / 2;
+        int opora = vowel(str[middle]);
+ 
+        
+        int i = btm, j = top;
+        while (i <= j) {
+            while (vowel(str[i]) < opora) {
+                i++;
+            }
+ 
+            while (vowel(str[j]) > opora) {
+                j--;
+            }
+ 
+            if (i <= j) {
+                String temp = str[i];
+                str[i] = str[j];
+                str[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        
+        if (btm < j)
+            quickSortUp(str, btm, j);
+ 
+        if (top > i)
+            quickSortUp(str, i, top);
+    }
+	
+	public static int vowel(String word)
+	{
+		String str="eyuioa";
+		int kolvo=0;
+		for(int j=0;j<word.length();j++)
+			for(int i=0;i<6;i++)
+				if(word.charAt(j)==str.charAt(i))
+					kolvo++;
+		return kolvo;
+	}
+	
+	public static void main(String[] args) {
+		try{
+			FileInputStream file=new FileInputStream("input.txt");
+			Scanner sc=new Scanner(file);
+			PrintStream printFile=new PrintStream("output.txt");
+			StringBuffer buf=new StringBuffer();
+			
+			while(sc.hasNext()) {
+				String str=sc.nextLine();
+				String []arr=str.split(" ");
+				//bSort(arr);
+				quickSortUp(arr,0,arr.length-1);
+				printFile.println(Arrays.toString(arr));
+			}
+			//printFile.println(buf);
+			//buf.delete(0, buf.length()-1);
+			System.out.println(vowel("avlada"));
+			sc.close();
+			file.close();
+			printFile.close();
+		}
+		catch(IOException e)
+		
+		{
+			System.out.println("Файл не найден!");
+		}
+
+	}
+	
+
+}

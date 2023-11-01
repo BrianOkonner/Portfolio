@@ -1,0 +1,122 @@
+/*программа ,переставляющая симметрично стоящие числа и слова*/
+package com.company;
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int quan = 0, len, num = 0, i = 0, k = 0, i2 = 0;
+        int[][] vow;
+        String str , let, finalstr = "";
+
+        try {
+            FileInputStream in = new FileInputStream("Input.txt");
+            Scanner sc2 = new Scanner(in);
+
+            while (sc2.hasNext()) {
+                str = sc2.nextLine();
+
+                len = str.length();
+                i++;
+                while (i < len) {
+
+                    if ((String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) && (String.valueOf(str.charAt(i-1)).matches("^(?i:[ ,.?!:;]).*") == false)) {
+                        num++;
+                    }
+                    i++;
+                }
+                if (String.valueOf(str.charAt(len-1)).matches("^(?i:[ ,.?!:;]).*") == false) {
+                    num++;
+                }
+                i = 0;
+
+                vow = new int[2][num];
+
+                while (i < len) {
+
+                    let = String.valueOf(str.charAt(i));
+                    if (let.matches("^(?i:[0123456789]).*") == true) {
+                        quan = 1;
+                    }
+
+                    if (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) {
+
+                        if (i != 0) {
+                            vow[0][k] = quan;
+                            vow[1][k] = i2;
+                            i2 = i;
+                            k++;
+                            quan = 0;
+                        }
+
+                        while(i<len){
+
+                            if(String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true) {
+                                i++;
+                            }else{
+                                break;
+                            }
+                        }
+                        i--;
+                    }
+                    i++;
+                }
+
+                if (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == false) {
+                    vow[0][k] = quan;
+                    vow[1][k] = i2;
+                    i2 = i;
+                    k++;
+                }
+
+                for (k = 0, i = num - 1; k < i; k++, i--) {
+
+                    if (vow[0][k] == vow[0][i]) {
+                        i2 = vow[1][k];
+                        vow[1][k] = vow[1][i];
+                        vow[1][i] = i2;
+                    }
+                }
+
+                for (k = 0; k < num; k++) {
+                    i = vow[1][k];
+
+                    while(String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == true){
+                        i++;
+                    }
+
+                    while (i < len) {
+
+                        if (String.valueOf(str.charAt(i)).matches("^(?i:[ ,.?!:;]).*") == false) {
+                            finalstr = finalstr + String.valueOf(str.charAt(i));
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                    finalstr = finalstr + " ";
+
+                    if (String.valueOf(str.charAt(i-1)).matches("^(?i:[ ,.?!:;]).*") == true) {
+                        finalstr = finalstr + " ";
+                    }
+                }
+
+                System.out.println(finalstr);
+                finalstr = "";
+                num = 0;
+                i = 0;
+                quan = 0;
+                i2 = 0;
+                k = 0;
+            }
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ОШИБКА");
+            System.out.println("Файл не открывается");
+        }
+
+    }
+}

@@ -1,0 +1,255 @@
+
+  To change this license header, choose License Headers in Project Properties.
+  To change this template file, choose Tools  Templates
+  and open the template in the editor.
+ 
+package shop;
+
+
+ 
+  @author lesha
+ 
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+        import java.io.;
+import java.util.;
+class wrongCost extends Exception{}
+class wrongNumber extends Exception{}
+        class Comparer_Manufacturer implements Comparator Products
+{
+    public int compare(Products a, Products b)
+    {
+        return a.getManufacturer().compareTo(b.getManufacturer());
+    }
+}
+    class Comparer_shelfLife implements Comparator Products
+    {
+         public int compare(Products a, Products b)
+    {
+        if(a.getShelfLife() == b.getShelfLife())
+            return 0;
+        if(a.getShelfLife()  b.getShelfLife())
+            return -1;
+        return 1;
+    }
+    }
+enum Grade
+    {
+        fgrade,sgrade,tgrade
+        
+    }
+class Products {
+
+        protected final int id;
+        protected final String name;
+        protected final String manufacturer;
+        protected  int cost;
+        protected final int shelfLife;
+        protected final Grade prodGrade;
+        protected final int number;
+        protected static int count = 0;
+
+        {
+            count += 1;
+        }
+
+        public Products( String name, String manufacturer, int cost, int shelfLife, Grade prodGrade, int number)throws wrongCost, wrongNumber {
+            count ++;
+            if( cost= 0)
+                throw new wrongCost();
+             if( number= 0)
+                throw new wrongNumber();
+            this.id = count;
+            this.name = name;
+            this.manufacturer = manufacturer;
+            this.cost = cost;
+            this.shelfLife = shelfLife;
+            this.prodGrade = prodGrade;
+            this.number = number;
+
+        }
+        public Products(Products product)throws wrongCost, wrongNumber {
+            count ++;
+           
+            this.id = count;
+            this.name = product.name;
+            this.manufacturer = product.manufacturer;
+            this.cost = product.cost;
+            this.shelfLife = product.shelfLife;
+            this.prodGrade = product.prodGrade;
+            this.number = product.number;
+
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setManufacturer(String manufacturer) {
+            this.manufacturer = manufacturer;
+        }
+
+        public void setCost(int cost) {
+            this.cost = cost;
+        }
+
+        public void setShelfLife(int shelfLife) {
+            this.shelfLife = shelfLife;
+        }
+
+        public void setProdGrade(Grade prodGrade) {
+            this.prodGrade = prodGrade;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getManufacturer() {
+            return manufacturer;
+        }
+
+        public int getCost() {
+            return cost;
+        }
+
+        public int getShelfLife() {
+            return shelfLife;
+        }
+
+        public Grade getProdGrade() {
+            return prodGrade;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public  int get_count() {
+            return count;
+        }
+@Override
+        public String toString() {
+            return id =  + id +   + name =  + name +   + manufacturer =  + manufacturer +   + cost =  + cost +   + shelfLife =  + shelfLife +   + prodGrade =  + prodGrade +   + number =  + number;
+        }
+    }
+     
+        
+
+              
+            
+        
+public class Shop {
+
+    
+      @param args the command line arguments
+     
+               public static String getNameGrade(String name, Grade grade, Products []products)
+            {
+                StringBuffer sb = new StringBuffer();
+                for(Products a products)
+                {
+                    if(a.getProdGrade() == grade && a.getName().equalsIgnoreCase(name))
+                    {
+                        sb.append(n);
+                        sb.append(a);
+                    }
+                }
+                return sb.toString();
+                        
+            }
+            public static String getNameCost(String name, int cost, Products []products)
+            {
+                StringBuffer sb = new StringBuffer();
+                for(Products a products)
+                {
+                    if(a.getCost() = cost && a.getName().equalsIgnoreCase(name))
+                    {
+                        sb.append(n);
+                        sb.append(a);
+                    }
+                }
+                return sb.toString();
+            }
+              public static String getShelfShop( int shelfLife, Products []products)
+            {
+                StringBuffer sb = new StringBuffer();
+                for(Products a products)
+                {
+                    if(a.getShelfLife()  shelfLife)
+                    {
+                        sb.append(n);
+                        sb.append(a);
+                    }
+                }
+                return sb.toString();
+            }
+              public static void sortbyManufacturer( Products []products)
+              {
+                  Arrays.sort(products, new Comparer_Manufacturer());
+              }
+               public static void sortbyshelflife(Products []products)
+              {
+                  Arrays.sort(products, new Comparer_shelfLife());
+              }
+    public static void main(String[] args) throws IOException, wrongCost, wrongNumber {
+         TODO code application logic here
+        FileInputStream ifr = new FileInputStream(input.txt);
+        System.setProperty(console.encoding,Cp1251);
+        Scanner sr = new Scanner(ifr ,Cp1251);
+        
+        PrintStream pw = new PrintStream(output.txt);
+        Products[] products = new Products[4];
+        int i =0;
+        while(sr.hasNext())
+        {
+            String str = sr.nextLine();
+            String a[]  =str.split( );
+            String name = a[0];
+            String manufacturer = a[1];
+            int cost = Integer.parseInt(a[2]);
+            int shelfLife = Integer.parseInt(a[3]);
+            Grade prodGrade = Grade.valueOf(a[4]);
+            int number = Integer.parseInt(a[5]);
+            products[i++] = new Products(name,  manufacturer, cost, shelfLife, prodGrade, number);
+        }
+        
+            System.setProperty(console.encoding,Cp866);
+            System.out.println(Перечислекние всех);
+       for(int j =0; j 4; j++)
+       {
+        System.out.println(products[j].toString());
+       }
+       System.out.println(определённое имя и сорт);
+        System.out.println(getNameGrade(Собака, Grade.fgrade,products));
+        System.out.println(определённое имя и меньше определённой цены);
+        System.out.println(getNameCost(Волк, 10,products));
+        System.out.println(срок хранения больше заданного);
+        System.out.println(getShelfShop(6,products));
+        System.out.println(сортировка по алфавиту производителей );
+         sortbyManufacturer(products);
+        for(int j =0; j 4; j++)
+       {
+        System.out.println(products[j].toString());
+       }
+        System.out.println(сортировка по сроку годности);
+         sortbyshelflife(products);
+       for(int j =0; j 4; j++)
+       {
+        System.out.println(products[j].toString());
+       }
+         
+        
+        
+    }
+
+}

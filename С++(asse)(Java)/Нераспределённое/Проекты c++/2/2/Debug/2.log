@@ -1,0 +1,39 @@
+﻿Построение начато 20.09.2018 10:47:59.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\2\2\2.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\2.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "УП2_4(Стек).cpp"
+         УП2_4(Стек).cpp
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(138): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\stdlib.h(867): см. объявление "itoa"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(140): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(105): см. объявление "strcpy"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(145): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(146): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(152): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(153): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(159): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+     1>d:\учеба\программирование\проекты c++\2\2\уп2_4(стек).cpp(160): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\program files\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\2\Debug\2.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\2\Debug\2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\2\Debug\2.lib" /MACHINE:X86 Debug\MineQueue.obj
+         "Debug\My Stack.obj"
+         "Debug\УП2_4(Стек).obj"
+         LINK : не найден или не выполнена сборка D:\Учеба\Программирование\Проекты c++\2\Debug\2.exe при последней инкрементной компоновке; выполняется полная компоновка
+         2.vcxproj -> D:\Учеба\Программирование\Проекты c++\2\Debug\2.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\2\Debug\2.exe;#1" /manifest Debug\2.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Debug\2.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\2.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\2\2\2.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:03.13

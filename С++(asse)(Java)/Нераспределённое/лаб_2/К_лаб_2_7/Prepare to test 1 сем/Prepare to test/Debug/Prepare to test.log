@@ -1,0 +1,16 @@
+﻿Построение начато 17.01.2018 17:21:36.
+     1>Проект "D:\Программирование\Проекты c++\Prepare to test\Prepare to test\Prepare to test.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Обращение к "Debug\Prepare to test.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt kr_var_another.cpp
+         kr_var_another.cpp
+     1>d:\программирование\проекты c++\prepare to test\prepare to test\kr_var_another.cpp(68): warning C4244: =: преобразование "std::streamoff" в "int", возможна потеря данных
+     1>d:\программирование\проекты c++\prepare to test\prepare to test\kr_var_another.cpp(70): error C2510: carrier: выражение слева от "::" должно быть классом, структурой или объединением
+     1>d:\программирование\проекты c++\prepare to test\prepare to test\kr_var_another.cpp(70): error C3861: SetCursorPosition: идентификатор не найден
+     1>d:\программирование\проекты c++\prepare to test\prepare to test\kr_var_another.cpp(71): warning C4244: =: преобразование "std::streamoff" в "int", возможна потеря данных
+     1>Построение проекта "D:\Программирование\Проекты c++\Prepare to test\Prepare to test\Prepare to test.vcxproj" завершено (целевые объекты build) с ошибкой.
+
+СБОЙ построения.
+
+Затраченное время: 00:00:01.60

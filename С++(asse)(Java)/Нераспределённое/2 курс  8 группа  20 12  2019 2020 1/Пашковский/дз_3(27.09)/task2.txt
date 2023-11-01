@@ -1,0 +1,68 @@
+//Пашковский Лев 8 группа
+//Задача: заполнить матрицу натуральными числами по часовой стрелке
+
+package packAge;
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Task2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Введите размерность матрицы:");
+		
+		int m,n;
+		m=sc.nextInt();
+		n=sc.nextInt();
+		
+		int array[][]=new int[m][n];
+		for(int i=0;i<m;i++)
+			for(int j=0;j<n;j++)
+				array[i][j]=0;
+		int k=1;
+		int x=0;
+		int y=0;
+		char direction='r';
+		//direction:r l u d
+		while(k<=m*n)
+		{
+			switch(direction) {
+			case 'r':
+				array[y][x++]=k++;
+				while(x<n-1 && array[y][x+1]==0)
+					array[y][x++]=k++;
+				direction='d';
+				break;
+			case 'd':
+				array[y++][x]=k++;
+				while(y<m-1 && array[y+1][x]==0)
+					array[y++][x]=k++;
+				direction='l';
+				break;
+			case 'l':
+				array[y][x--]=k++;
+				while(x>0 && array[y][x-1]==0)
+					array[y][x--]=k++;
+				direction='u';
+				break;
+			case 'u':
+				array[y--][x]=k++;
+				while(array[y-1][x]==0)
+					array[y--][x]=k++;
+				direction='r';
+			break;
+			}
+			
+			
+		}
+		for(int i=0;i<m;i++)
+			System.out.println(Arrays.toString(array[i]));
+		
+		
+	}	
+
+}
+

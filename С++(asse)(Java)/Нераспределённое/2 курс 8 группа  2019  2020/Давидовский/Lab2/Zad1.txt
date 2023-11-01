@@ -1,0 +1,57 @@
+package com.company;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Integer[] arr;
+        int quan;
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("¬ведите количество элементов последовательности");
+        quan = sc.nextInt();
+
+        arr = new Integer[quan];
+
+        System.out.println("¬ведите последовательность чисел");
+
+        for (int i = 0; i < quan; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        Arrays.sort(arr, 0, quan, new Sort());
+
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+class Sort implements Comparator<Integer> {
+    @Override
+    public int compare(Integer P1, Integer P2) {
+        int p1 = P1, sum1 = 0;
+        int p2 = P2, sum2 = 0;
+
+        while (p1 > 0) {
+            sum1 = sum1 + p1 % 10;
+            p1 = p1 / 10;
+        }
+
+        while (p2 > 0) {
+            sum2 = sum2 + p2 % 10;
+            p2 = p2 / 10;
+        }
+
+        if (sum1 == sum2) {
+            return 0;
+        }
+
+        if (sum1 > sum2) {
+            return -1;
+        }
+
+        return 1;
+    }
+}

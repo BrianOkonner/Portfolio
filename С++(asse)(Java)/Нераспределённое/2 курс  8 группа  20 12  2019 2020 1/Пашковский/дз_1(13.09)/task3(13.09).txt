@@ -1,0 +1,46 @@
+﻿
+--------------------=====================TASK3==========================--------------------------------
+
+
+package packAge;
+
+import java.util.Scanner;
+
+public class Task3 {
+
+	public static int fact(int n)
+	{
+		if(n>1)
+			return n*fact(n-1);
+		else
+			return 1;
+	}
+	public static double PreSin(double precision,double x)
+	{
+		double n=1;
+		double res=0;
+		double sign=1;
+		String ter="";
+		while(Math.pow(x,n)/fact((int)n)>precision)
+		{
+
+			System.out.println(ter+"x^"+n+"/"+n+"!");
+			ter=(sign<0)?"+":"-";
+			res+=Math.pow(x,n)*sign/fact((int)n);
+			sign*=-1;
+			n+=2;
+		}
+		return res;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		double precision;
+		double x;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Введите точность и x:");
+		precision=sc.nextDouble();
+		x=sc.nextDouble();
+		System.out.println("sin(x) = "+PreSin(precision,x));
+	}
+
+}

@@ -1,0 +1,360 @@
+package prog;
+
+import java.io.FileInputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.*;
+
+class wrongPrice extends Exception{};
+class wrongDosage extends Exception{}
+enum consistency{pill,liquid,mixture,powdery,spray};
+enum indication{respiratory,organism_disorders,mental_disorders,bracing};
+class medicine implements Serializable
+{
+    private String Name;
+    private String Origin;
+    private double Price;
+    private double Dosage;
+    private String Color;
+    private consistency State;
+    private indication Indications;
+    medicine(String name,String origin,double price,double dosage,String color,consistency state,indication indications) throws wrongPrice, wrongDosage
+    {
+        Name=name;
+        Origin=origin;
+        if(price<0)
+        {
+            Price=0;
+            throw new wrongPrice();
+        }
+        Price=price;
+        if(dosage<0)
+        {
+            Dosage=0;
+            throw new wrongDosage();
+        }
+        Dosage=dosage;
+        Color=color;
+        State=state;
+        Indications=indications;
+    }
+    public String getColor()
+    {
+        return Color;
+    }
+    public String getName()
+    {
+        return Name;
+    }
+    public String getOrigin()
+    {
+        return Origin;
+    }
+    public double getPrice() { return Price; }
+    public void setPrice(double p){ Price=p;}
+    public double getDosage()
+    {
+        return Dosage;
+    }
+    public consistency getState()
+    {
+        return State;
+    }
+    public indication getIndications()
+    {
+        return this.Indications;
+    }
+    @Override
+    public String toString()
+    {
+        return "Наименование: "+Name+"\nСтрана производитель: "+Origin+"\nЦена: "+Price+"\nДозировка: "+Dosage+"\nФорма выпуска: "+State+"\nПоказания к применению: "+Indications;
+    }
+    public boolean equals(medicine m) {
+        if (m == this) {
+            return true;
+        }
+        else
+            return (m.getName().equals(this.Name))&&(m.getPrice()==this.Price)&&(m.getOrigin().equals(this.Origin))&&
+                    (m.getDosage()==this.Dosage)&& (m.getIndications().equals(this.Indications))&&(m.getState().equals(this.State));
+    }
+}
+class pharmacy
+{
+    private String name;
+    private String address;
+    private List<medicine> Base;
+    public String getName()
+    {
+        return name;
+    }
+    public String getAddress()
+    {
+        return address;
+    }
+    public pharmacy(String Name, String Address)
+    {
+        name=Name;
+        address=Address;
+        Base=new ArrayList<medicine>();
+    }
+    public pharmacy AddMedicine(medicine M)
+    {
+        Base.add(M);
+        return this;
+    }
+    public medicine DelMedicine(int index)
+    {
+        return Base.remove(index);
+    }
+    public void setMedicine(int index,medicine M)
+    {
+        Base.set(index,M);
+    }
+    public void setBase(List<medicine> m)
+    {
+        Base=m;
+    }
+    public int nameSearch(String name) //-1 not found else index
+    {
+        for(medicine r:Base){
+            if(r.getName().equals(name))
+                return Base.indexOf(r);
+        }
+        return -1;
+    }
+    public int objSearch(medicine m)
+    {
+        for(medicine r:Base) {
+            if (m.equals(r))
+                return Base.indexOf(r);
+        }
+        return -1;
+    }
+    public void setPrice(double []prices) throws wrongPrice{
+        if(prices.length!=Base.size())
+            throw new wrongPrice();
+        for(int i=0;i<Base.size();i++)
+        {
+            medicine M=Base.get(i);
+            M.setPrice(prices[i]);
+            Base.set(i,M);
+        }
+    }
+    public List<medicine> byDosage(double dose){
+        List<medicine> res=new ArrayList<medicine>();
+        for(medicine r:Base)
+            if(r.getDosage()==dose)
+                res.add(r);
+        return res;
+    }
+    public List<medicine> byCountry(String country){
+        List<medicine> res=new ArrayList<medicine>();
+        for(medicine r:Base)
+            if(r.getOrigin().equals(country))
+                res.add(r);
+        return res;
+    }
+    public void sortByName()
+    {
+        Collections.sort(Base, new Comparator<medicine>() {
+            @Override
+            public int compare(medicine m1, medicine m2) {
+                return m1.getName().compareTo(m2.getName());
+            }
+        });
+    }
+    public void sortByPrice()
+    {
+        Collections.sort(Base, new Comparator<medicine>() {
+            @Override
+            public int compare(medicine m1, medicine m2) {
+                if(m1.getPrice()==m2.getPrice())
+                    return 0;
+                if(m1.getPrice()>m2.getPrice())
+                    return 1;
+                return -1;
+            }
+        });
+    }
+    public pharmacy FromFile(String nameFile) throws Exception{
+        FileInputStream pv=new FileInputStream(nameFile);
+        medicine A;
+        Scanner sc=new Scanner(pv);
+        while(sc.hasNext()){
+            A=new medicine(sc.next(),sc.next(),sc.nextDouble(),sc.nextDouble(),sc.next(),consistency.valueOf(sc.next()),indication.valueOf(sc.next()));
+            Base.add(A);
+        }
+        pv.close();
+        sc.close();
+        return this;
+    }
+    public void SafeToFile(String NameFile) throws Exception
+    {
+        PrintStream pv=new PrintStream(NameFile);
+        pv.println(this.name+" "+this.address);
+        for(medicine r:Base){
+            pv.println("Номер: "+Base.indexOf(r));
+            pv.println(r+"\n");
+        }
+        pv.close();
+    }
+    @Override
+    public String toString()
+    {
+        StringBuilder st=new StringBuilder();
+        st.append(this.name+" "+this.address+"\n\nСписок лекарств:\n");
+        for(medicine r:Base)
+        {
+            st.append("Номер: "+Base.indexOf(r)+"\n");
+            st.append(r+"\n\n");
+        }
+        return st.toString();
+    }
+    public Set<String> getCountry()
+    {
+        Set<String> Countries=new HashSet<String>();
+        for(medicine m:Base)
+            Countries.add(m.getOrigin());
+        return Countries;
+    }
+
+    public void reversePrint(PrintStream pr)
+    {
+        ListIterator<medicine> it=Base.listIterator(Base.size());
+        while(it.hasPrevious()){
+            pr.println(it.previous());
+        }
+    }
+    public void straightPrint(PrintStream pr)
+    {
+        ListIterator<medicine> it=Base.listIterator(0);
+        while(it.hasNext()){
+            pr.println(it.next());
+        }
+    }
+}
+public class ttt {
+    public static void main(String[] args) throws Exception {
+        pharmacy p=new pharmacy("Планета Здоровья","Бобруйская 10");
+        p.FromFile("input.txt");
+        PrintStream rev=new PrintStream("revPrint.txt");
+        PrintStream str=new PrintStream("straightPrint.txt");
+        Scanner sc=new Scanner(System.in);
+        int n=1;
+        while(n!=0) {
+            System.out.println("Выберите что нужно сделать (1 и 2 уже сделаны чтобы не было ошибок):\n" +
+                    "3.Вывести содержимое коллекции на экран\n" +
+                    "4.Вывести содержимое с помощью итератора в прямом порядке\n" +
+                    "5.Вывести содержимое с помощью итератора в обратном порядке\n" +
+                    "6.Добавить элемент" +
+                    "\n7.Удалить указанный элемент из коллекции (по индексу)\n" +
+                    "8.Заменить указанный элемент на новый\n" +
+                    "9.Определить наличие заданного элемента\n" +
+                    "10.Вывести содержимое коллекции в текстовый файл\n" +
+                    "11.Новая коллекция по числовому признаку" +
+                    "\n12.Новая коллекция по строковому признаку\n" +
+                    "?13.Сериализовать коллекцию\n" +
+                    "14.Отсортировать коллекцию по числовому полю\n" +
+                    "?15.Десериализовать\n" +
+                    "16.Отсортировать по текстовому полю\n" +
+                    "?17.Set'ы\n0.Выход\n");
+            n=sc.nextInt();
+            switch(n)
+            {
+                case 3:
+                    System.out.println(p);
+                    break;
+                case 4:
+                    p.straightPrint(str);
+                    break;
+                case 5:
+                    p.reversePrint(rev);
+                    break;
+                case 6:
+                {
+                    System.out.println("Введите параметры нового элемента:\n ( String Name;\n" +
+                            "     String Origin;\n" +
+                            "     double Price;\n" +
+                            "     double Dosage;\n" +
+                            "     String Color;\n" +
+                            "consistency{pill,liquid,mixture,powdery,spray};\n" +
+                            "indication{respiratory,organism_disorders,mental_disorders,bracing};)\n");
+                    medicine buff = new medicine(sc.next(), sc.next(), sc.nextDouble(), sc.nextDouble(), sc.next(), consistency.valueOf(sc.next()), indication.valueOf(sc.next()));
+                    p=p.AddMedicine(buff);
+                    break;
+                }
+                case 7:
+                    System.out.println("Какой элемент удалить?\n");
+                    p.DelMedicine(sc.nextInt());
+                    break;
+                case 8: {
+                    System.out.println("Какой элемент заменить?\n");
+                    int k = sc.nextInt();
+                    System.out.println("Введите параметры нового элемента:\n ( String Name;\n" +
+                            "     String Origin;\n" +
+                            "     double Price;\n" +
+                            "     double Dosage;\n" +
+                            "     String Color;\n" +
+                            "consistency{pill,liquid,mixture,powdery,spray};\n" +
+                            "indication{respiratory,organism_disorders,mental_disorders,bracing};)\n");
+                    medicine buff = new medicine(sc.next(), sc.next(), sc.nextDouble(), sc.nextDouble(), sc.next(), consistency.valueOf(sc.next()), indication.valueOf(sc.next()));
+                    p.setMedicine(k, buff);
+                    break;
+                }
+                case 9: {
+                    System.out.println("Введите параметры нового элемента:\n ( String Name;\n" +
+                            "     String Origin;\n" +
+                            "     double Price;\n" +
+                            "     double Dosage;\n" +
+                            "     String Color;\n" +
+                            "consistency{pill,liquid,mixture,powdery,spray};\n" +
+                            "indication{respiratory,organism_disorders,mental_disorders,bracing};)\n");
+                    medicine buff = new medicine(sc.next(), sc.next(), sc.nextDouble(), sc.nextDouble(), sc.next(), consistency.valueOf(sc.next()), indication.valueOf(sc.next()));
+                    System.out.println("Данный элемент расположен по индексу: "+p.objSearch(buff));
+                    break;
+                }
+                case 91: {
+                    System.out.println("Введите название искомого элемента:\n");
+                    System.out.println("Данный элемент расположен по индексу: "+p.nameSearch(sc.next()));
+                    break;
+                }
+                case 10:
+                {
+                    p.SafeToFile("output.txt");
+                    break;
+                }
+                case 11:
+                {
+                    System.out.println("По какой дозировке создать коллекцию?\n");
+                    double k = sc.nextDouble();
+                    pharmacy buff=new pharmacy("Buff","Buff");
+                    buff.setBase(p.byDosage(k));
+                    buff.SafeToFile("outputDosage.txt");
+                    break;
+                }
+                case 12:
+                {
+                    System.out.println("По какой стране создать коллекцию?\n");
+                    String k = sc.next();
+                    pharmacy buff=new pharmacy("Buff","Buff");
+                    buff.setBase(p.byCountry(k));
+                    buff.SafeToFile("outputCountry.txt");
+                    break;
+                }
+                case 14:
+                    p.sortByPrice();
+                    break;
+                case 16:
+                    p.sortByName();
+                    break;
+                case 17:
+                    Set<String> buff1=p.getCountry();
+                    for(String s:buff1)
+                        System.out.println(s);
+                    break;
+                default:
+                    n=0;
+            }
+        }
+    }
+}

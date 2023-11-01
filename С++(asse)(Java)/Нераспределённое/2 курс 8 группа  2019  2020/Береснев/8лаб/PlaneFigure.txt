@@ -1,0 +1,11 @@
+package com.company;
+
+public interface PlaneFigure {
+    abstract public double perimetr();
+    abstract public double square();
+
+}
+
+interface  Location{
+    abstract  public  int location(Object obj);
+}

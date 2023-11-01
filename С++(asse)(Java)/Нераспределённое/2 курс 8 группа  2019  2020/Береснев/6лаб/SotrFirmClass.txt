@@ -1,0 +1,152 @@
+package com.company;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+
+enum Job{Portrait, Landscape, Nature }
+
+class WrongYear extends Exception{}
+class WrongOclad extends Exception{}
+
+class cmpFIO implements Comparator <SotrFirm> {
+    @Override
+    public int compare(SotrFirm t1, SotrFirm t2) {
+        return t1.getfIO().compareToIgnoreCase(t2.getfIO());
+    }
+}
+
+class cmpRevOclad implements Comparator <SotrFirm>{
+    @Override
+    public int compare(SotrFirm t1, SotrFirm t2){
+        if(t1.getDoubleOclad() == t2.getDoubleOclad())
+            return 0;
+        if(t1.getDoubleOclad() < t2.getDoubleOclad())
+            return 1;
+        return -1;
+    }
+}
+
+class SotrFirm{
+    private final int id;
+    private final String fIO;
+    private final int yearOfBirth;
+    private final Job jobOfSotr;
+    private double doubleOclad;
+    private final String nameOfOtdel;
+    private static int count = 0;
+
+    SotrFirm(String fIO1, int yearOfBirth, Job jobOfSotr, double doubleOclad, String nameOfOtdel)throws WrongYear,WrongOclad{
+        
+
+        if((yearOfBirth>2019)||(yearOfBirth<=0))
+            throw new WrongYear();
+        if(doubleOclad<=0)
+            throw new WrongOclad();
+
+        count++;
+        this.id = count;
+        this.fIO = fIO1;
+        this.yearOfBirth = yearOfBirth;
+        this.jobOfSotr = jobOfSotr;
+        this.doubleOclad = doubleOclad;
+        this.nameOfOtdel = nameOfOtdel;
+
+
+    }
+
+    public void setDoubleOclad(double doubleOclad) {
+        this.doubleOclad = doubleOclad;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getfIO() {
+        return fIO;
+    }
+
+    public double getDoubleOclad() {
+        return doubleOclad;
+    }
+
+    public Job getJobOfSotr() {
+        return jobOfSotr;
+    }
+
+    public int getyearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public int getYearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public String getNameOfOtdel() {
+        return nameOfOtdel;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+
+    public String toString(){
+        return "SOTR "+this.id
+                +":"+ this.fIO
+                +" "+ this.yearOfBirth
+                +" "+ this.jobOfSotr
+                +" "+ this.doubleOclad
+                +" "+ this.nameOfOtdel;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+	    try{
+            SotrFirm []myArr = {
+                    new SotrFirm("ABC",  1745, Job.Nature, 50,"A"),
+                    new SotrFirm("DEF",  1834, Job.Portrait, 67.9,"A"),
+                    new SotrFirm("GHI",  1845, Job.Nature, 47.99,"B"),
+                    new SotrFirm("AJK",  1857, Job.Nature, 68.9,"C"),
+                    new SotrFirm("BLM",  1871, Job.Landscape, 30,"D")};
+
+            System.out.println("список всех:");
+            System.out.println(Arrays.toString(myArr));
+
+            System.out.println("натюрморты:");
+            for(SotrFirm b:myArr)
+                if(b.getJobOfSotr() == Job.Nature)
+                    System.out.println(b);
+
+            System.out.println("год выпуска >1845:");
+            for(SotrFirm b:myArr)
+                if(b.getyearOfBirth() == 1845)
+                    System.out.println(b);
+
+            String name  ="A";
+            System.out.println("вывод отдела "+name+":");
+            for(SotrFirm b:myArr)
+                if(b.getNameOfOtdel().equals(name))
+                    System.out.println(b);
+
+            System.out.println("убывание оклада:");
+            Arrays.sort(myArr, new cmpRevOclad());
+            System.out.println(Arrays.toString(myArr));
+            System.out.println("алфавит:");
+            Arrays.sort(myArr, new cmpFIO());
+            System.out.println(Arrays.toString(myArr));
+
+
+
+        }
+	    catch (WrongYear e){
+	        System.out.println("Проверьте год");
+        }
+	    catch (WrongOclad e){
+            System.out.println("Проверьте цену");
+        }
+    }
+}

@@ -1,0 +1,13 @@
+body {
+  .MuiButtonBase-root {
+    &.MuiButton-containedPrimary {
+      background-color: #b97f44;
+      color: #dedddd;
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(#b97f44, 0.8);
+      }
+    }
+  }
+}

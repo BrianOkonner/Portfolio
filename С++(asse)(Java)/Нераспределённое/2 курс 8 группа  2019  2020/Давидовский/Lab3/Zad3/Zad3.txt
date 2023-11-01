@@ -1,0 +1,122 @@
+package com.company;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int quan = 6, change = 0, q1 = 2, q2 = 2;
+        Integer[][] arr = new Integer[quan][quan];
+        Integer[] nums = new Integer[8];
+        Scanner sc = new Scanner(System.in);
+
+        for (int i = 0; i < 8; i++) {
+            nums[i] = 0;
+        }
+
+        try {
+            FileInputStream in = new FileInputStream("Input.txt");
+            Scanner sc2 = new Scanner(in);
+
+            for (int i = 0; i < quan; i++) {
+                for (int k = 0; k < quan; k++) {
+                    arr[i][k] = sc2.nextInt();
+                }
+            }
+
+            int i = 0, k = 0;
+
+            while ((nums[7] == 0) && ((i < 5) || (k < 0))) {
+
+                while ((nums[7] == 0) && (k < 5)) {
+
+                    if (arr[i][k] == 1) {
+
+                        nums[0] = i;
+                        nums[1] = k;
+                        k++;
+                        while (k < 6) {
+
+                            if (arr[i][k] == 1) {
+
+                                nums[2] = i;
+                                nums[3] = k;
+                                i++;
+                                while (i < 6) {
+
+                                    if (arr[i][k] == 1) {
+
+                                        nums[4] = i;
+                                        nums[5] = k;
+                                        if (arr[i][nums[1]] == 1) {
+
+                                            nums[6] = i;
+                                            nums[7] = nums[1];
+
+                                            for (k = 0; k < 6; k++) {
+                                                change = arr[2][k];
+                                                arr[2][k] = arr[nums[0]][k];
+                                                arr[nums[0]][k] = change;
+                                            }
+
+                                            for (k = 0; k < 6; k++) {
+                                                change = arr[k][2];
+                                                arr[k][2] = arr[k][nums[1]];
+                                                arr[k][nums[1]] = change;
+                                            }
+
+                                            for (k = 0; k < 6; k++) {
+                                                change = arr[3][k];
+                                                arr[3][k] = arr[nums[4]][k];
+                                                arr[nums[4]][k] = change;
+                                            }
+
+                                            for (k = 0; k < 6; k++) {
+                                                change = arr[k][3];
+                                                arr[k][3] = arr[k][nums[3]];
+                                                arr[k][nums[3]] = change;
+                                            }
+
+                                            for (i = 0; i < quan; i++) {
+                                                System.out.println(Arrays.toString(arr[i]));
+                                            }
+
+                                            in.close();
+                                            return;
+                                        }
+                                    }
+
+                                    i++;
+                                }
+
+                                if (i == 6) {
+                                    i = nums[2];
+                                    k = nums[3];
+                                }
+                            }
+
+                            k++;
+                        }
+
+                        if (k == 6) {
+                            i = nums[0];
+                            k = nums[1];
+                        }
+                    }
+
+                    k++;
+                }
+
+                k = 0;
+                i++;
+            }
+
+            in.close();
+        } catch (IOException e) {
+            System.out.println("ÎØÈÁÊÀ ÎØÈÁÊÀ");
+        }
+
+    }
+}

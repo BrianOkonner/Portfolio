@@ -1,0 +1,27 @@
+﻿Построение начато 12.03.2021 9:27:01.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\ocl1\ocl1\ocl1.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Release\ocl1.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt l1operCre.cpp
+         l1operCre.cpp
+     1>l1operCre.cpp(46): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 D:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdlib.h(867): см. объявление "itoa"
+     1>l1operCre.cpp(74): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 D:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdlib.h(867): см. объявление "itoa"
+     1>l1operCre.cpp(35): warning C4101: empl: неиспользованная локальная переменная
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\ocl1\Release\ocl1.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\ocl1.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\ocl1\Release\ocl1.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\ocl1\Release\ocl1.lib" /MACHINE:X86 Release\l1operCre.obj
+         Создание кода
+         Создание кода завершено
+         ocl1.vcxproj -> D:\Учеба\Программирование\Проекты c++\ocl1\Release\ocl1.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\ocl1\Release\ocl1.exe;#1" /manifest Release\ocl1.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Release\ocl1.unsuccessfulbuild" удаляется.
+         Обращение к "Release\ocl1.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\ocl1\ocl1\ocl1.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:01.54

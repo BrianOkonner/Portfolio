@@ -1,0 +1,87 @@
+//Найти набольшую последоват одинаковых значений в ряду, и вывести номер ряда
+
+package javaapplication3;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.io.*;
+public class JavaApplication3 {
+
+   
+    public static void main(String[] args) {
+       try{
+        FileInputStream InputF=new FileInputStream("Input.txt");    
+        Scanner sc=new Scanner(InputF);
+
+      
+        int i1=0;
+        int j1=1;
+        while(sc.hasNextInt())
+        {
+            i1++;
+            sc.nextLine();
+        }
+        sc.close();
+        FileInputStream InputF1=new FileInputStream("Input.txt");
+         Scanner sc1=new Scanner(InputF1);
+         String ska;
+         ska=sc1.nextLine();
+         String[] razb=ska.split(" ");
+         j1=razb.length;
+sc1.close();
+ FileInputStream InputF2=new FileInputStream("Input.txt");
+         Scanner sc2=new Scanner(InputF2);
+          int[][] M1=new int[i1][j1]; 
+        int[] M2=new int[i1];
+        for(int i=0;i<i1;i++)
+        {
+            for(int j=0;j<j1;j++)
+            {
+                M1[i][j]=sc2.nextInt();
+           
+            }
+        }
+        int max=0;
+        int g;
+        for(int i=0;i<i1;i++)
+        {
+             max=1; 
+             g=1;
+            for(int j=0;j<j1-1;j++)
+            {
+            
+                if(M1[i][j]==M1[i][j+1])
+                    
+                {
+                    if(j+2==M1[i].length)
+                        max=g+1;
+                    g++;
+                }
+                else
+                {
+                    if(g>max)
+                        max=g;
+                }
+            }
+            M2[i]=max;
+        }
+        PrintStream pv=new PrintStream("output.txt");
+        int max1=M2[0];
+        int nomer=0;
+        for (int i=1;i<M2.length;i++)
+        {
+            if(M2[i]>=max1)
+            {
+                nomer=i+1;
+                max1=M2[i];
+            }
+        }
+        System.out.println("Номер ряда с наибольшей длиной посл-ти: "+nomer);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Ошибка");
+     }
+
+    }
+    
+}

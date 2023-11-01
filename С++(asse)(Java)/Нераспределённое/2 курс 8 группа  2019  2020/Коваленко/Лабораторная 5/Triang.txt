@@ -1,0 +1,113 @@
+package com.company;
+class Triangle{
+    int side1;
+    int side2;
+    int side3;
+    int flagType=0;
+    public Triangle(){
+        side1=1;
+        side2=1;
+        side3=1;
+        flagType=1;
+    }
+    public Triangle(int s1,int s2,int s3){
+        side1=s1;
+        side2=s2;
+        side3=s3;
+    }
+    public Triangle(int s1,int s2){
+        side1=s1;
+        side2=s1;
+        side3=s2;
+        flagType=2;
+    }
+    public Triangle(int s1){
+        side1=s1;
+        side2=s1;
+        side3=s1;
+        flagType=1;
+    }
+
+    public int getSide1() {
+        return side1;
+    }
+
+    public int getSide2() {
+        return side2;
+    }
+
+    public int getSide3() {
+        return side3;
+    }
+
+    public int getFlagType() {
+        return flagType;
+    }
+
+    public void setSide1(int side1) {
+        this.side1 = side1;
+    }
+
+    public void setSide2(int side2) {
+        this.side2 = side2;
+    }
+
+    public void setSide3(int side3) {
+        this.side3 = side3;
+    }
+
+    public void SetFlagType(){
+        if(flagType==0){
+            if(side1==side2&&side2==side3){
+                flagType=1;
+            }else if(side1==side2||side2==side3||side1==side3){
+                flagType=2;
+            }else if(side1*side1==side2*side2+side3*side3||side2*side2==side1*side1+side3*side3||side3*side3==side2*side2+side1*side1){
+                flagType=3;
+            }
+            else{
+                flagType=4;
+            }
+        }
+
+    }
+    public Triangle doubleS(){
+        return new Triangle(side1*2,side2*2,side3*2);
+    }
+    public int P() {
+        return this.side1 + this.side2 + this.side3;
+    }
+
+    public double S() {
+        return Math.pow((P() / 2) * (P() / 2 - side1) * (P() / 2 - side2) * (P() / 2 - side3), 0.5);
+    }
+
+
+    public boolean equals(Triangle T) {
+        if (this == T) {
+            return true;
+        }
+        return side1==T.getSide1()&&side2==T.getSide2()&&side3==T.getSide3();
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder s=new StringBuilder();
+        s.append(side1);
+        s.append(" ");
+        s.append(side2);
+        s.append(" ");
+        s.append(side3);
+
+        return s.toString();
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+	Triangle T1=new Triangle();
+	Triangle T2=new Triangle(5);
+	Triangle T3=new Triangle(5,5,1);
+	Triangle[] Tarr={T1,T2,T3};
+    }
+}

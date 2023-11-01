@@ -1,0 +1,172 @@
+﻿/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package l5z3;
+import java.util.Arrays;
+import java.util.Comparator;
+/**
+ *
+ * @author Brian
+ */
+class Non_Triangle extends Exception{}
+class Triangle
+{
+    private double x;
+    private double y;
+    private double z;
+    public Triangle()
+    {
+        this.x=1;
+        this.y=1;
+        this.z=1;
+    }
+    public Triangle(double x,double y,double z)throws Non_Triangle
+    {
+        if(x+y<=z||y+z<=x||x+z<=y)
+            throw new Non_Triangle();
+        this.x=x;
+        this.y=y;
+        this.z=z;
+    }
+    public Triangle(double x,double y)
+    {
+        this.x=x;
+        this.y=y;
+        this.z=Math.sqrt(x*x+y*y);
+    }
+    public Triangle(double x)
+    {
+        this.x=x;
+        this.y=x;
+        this.z=x;
+    }
+    public double getX()
+    {
+        return this.x;
+    }
+    public double getY()
+    {
+        return this.y;
+    }
+    public double getZ()
+    {
+        return this.z;
+    }
+    public void setX(double x)throws Non_Triangle
+    {
+        double t[]={x,this.z,this.y};
+	Arrays.sort(t);
+	if(t[0]+t[1]<=t[2])throw new Non_Triangle();
+        else
+            this.x=x;
+    }
+    public void setY(double y)throws Non_Triangle
+    {
+        double t[]={y,this.x,this.z};
+	Arrays.sort(t);
+	if(t[0]+t[1]<=t[2])throw new Non_Triangle();
+        else
+            this.y=y;
+    }
+    public void setZ(double z)throws Non_Triangle
+    {
+        double t[]={z,this.x,this.y};
+	Arrays.sort(t);
+	if(t[0]+t[1]<=t[2])throw new Non_Triangle();
+        else
+            this.z=z;
+    }
+    public double perim()
+    {
+        return Math.sqrt(this.x+this.y+this.z);
+    }
+    public double square()
+    {
+        return Math.sqrt(this.perim()*((this.perim()/2)-this.x)*
+                ((this.perim()/2)-this.y)*((this.perim()/2)-this.z)/2);
+    }
+    public int type()
+    {
+        double t[]={this.x,this.z,this.y};
+	Arrays.sort(t);
+        if(this.x==this.z&&this.y==this.x)
+            return 1;
+        if(t[0]==t[1]||t[0]==t[2]||t[1]==t[2])
+            return 2;
+        if(((t[2]*t[2])-((t[0]*t[0])+(t[1]*t[1])))<0.00001)
+            return 3;
+        return 4;
+    }
+    public boolean equals(Triangle a)
+    {
+        double t[]={this.z,this.x,this.y},d[]={a.z,a.x,a.y};
+	Arrays.sort(t);
+        Arrays.sort(d);
+        if(t[0]==d[0]&&t[1]==d[1]&&t[2]==d[2])
+            return true;
+        else return false;        
+    }
+    public Triangle doubl()throws Non_Triangle
+    {
+        double t[]={this.x,this.z,this.y};
+	Arrays.sort(t);
+        if(((t[0]*2)+(t[1]*2))<=(t[2]*2))throw new Non_Triangle();
+        else
+            return new Triangle(this.x*2,this.y*2,this.z*2);
+    }
+    public String toString()
+    {
+        return "Triangle :"+"a="+this.x+" b="+this.y+" c="+this.z;
+    }
+}
+class cmpt implements Comparator<Triangle>
+{
+	@Override
+	public int compare(Triangle t1,Triangle t2)
+	{
+		if(t1.perim()==t2.perim())
+			return 0;
+		if(t1.perim()<t2.perim())
+			return -1;
+		return 1;
+	}
+}
+public class Program 
+{
+    public static void main(String[] args) 
+    {
+        Triangle a,b,c;
+        try
+        {
+            a=new Triangle(5,5,7);
+            b=new Triangle(3);
+            c=new Triangle(4,6);
+            Triangle[] A={a,b,c};
+            for(int i=0;i<3;i++)
+                System.out.println(A[i]);
+            System.out.println("Сведения о типах");
+            for(int i=0;i<3;i++)
+                System.out.println(A[i]+" "+A[i].type());
+            System.out.println("Новые");
+            for(int i=0;i<3;i++)
+                System.out.println(A[i].doubl());
+            System.out.println("Площади");
+            for(int i=0;i<3;i++)
+                System.out.println(A[i]+" "+A[i].square());
+            System.out.println("Одинаковые?");
+            for(int i=0;i<3;i++)
+                for(int j=0;j<3;j++)
+                    System.out.println(A[i]+" "+A[j]+" "+A[i].equals(A[j]));
+            System.out.println("Сортировка по периметру");
+            Arrays.sort(A,new cmpt());
+            for(int i=0;i<3;i++)
+                System.out.println(A[i]);
+        }
+        catch(Non_Triangle e)
+        {
+            System.out.println("Непревильные размеры сторон");
+        }
+    }  
+}

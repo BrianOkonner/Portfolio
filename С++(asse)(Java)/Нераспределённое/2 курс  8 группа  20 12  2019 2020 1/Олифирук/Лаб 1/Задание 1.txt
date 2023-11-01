@@ -1,0 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package homeworkex1;
+import java.util.Scanner;
+/**
+ *
+ * @author fpm.olifirukMV
+ */
+public class program {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static boolean palindrom(int n)
+    {
+        int k=n;
+        int perev=0;
+        while(n!=0)
+        {
+            perev=perev*10;
+            perev=perev+n%10;
+            n=n/10;   
+        }
+        if(k==perev)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    
+    public static void main(String[] args) 
+    {
+       Scanner sc=new Scanner(System.in);
+
+       System.out.println("¬ведите натуральное число m1");
+       int m1=sc.nextInt();
+     
+       System.out.println("¬ведите натуральное число m2>m1");
+       int m2=sc.nextInt();
+       
+       System.out.println("ƒвойные палиндромы: ");
+       while(m2!=m1)
+       {
+           if((palindrom(m1)==true)&&(palindrom(m1*m1)==true))
+           {
+               System.out.println(m1);
+           }
+           m1++;
+       }
+       
+    }
+}

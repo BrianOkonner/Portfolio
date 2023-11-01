@@ -1,0 +1,59 @@
+//”пор€дочить по кол-ву гласных строчных и вывести в новый файл
+package javaapplication2;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Comparator;
+import java.io.*;
+import static javaapplication2.NuMeinDa.test;
+class revcomp implements Comparator<String>
+ {
+     @Override
+     public int compare(String t11,String t22)
+     {
+      
+         if (test(t11)==test(t22))
+             return 0;
+         if (test(t11)<test(t22))
+             return -1;
+         return 1;
+     }
+ }
+public class NuMeinDa {
+    public static int test(String word)
+    {
+        String str="aeiouy";
+        int max=0;
+        for(int i=0;i<word.length();i++)
+        {   
+            if(str.indexOf(word.charAt(i))!=-1)
+                max++;   
+        }
+        return max;
+    }
+ 
+    
+    public static void main(String[] args) {
+       try{ 
+           FileInputStream pv=new FileInputStream("Input.txt");
+           Scanner sc=new Scanner(pv);
+           PrintStream pv1=new PrintStream("output.txt");
+           while(sc.hasNext())
+           {              
+               String str=sc.nextLine();
+               String []arr=str.split(" ");
+               Arrays.sort(arr,new revcomp());
+          
+               pv1.println(Arrays.toString(arr));
+               }
+           pv.close();
+           pv1.close();
+               
+           }    
+        catch(IOException e)
+        {
+            System.out.println("ќшибка");
+     }
+    }
+    
+    
+}

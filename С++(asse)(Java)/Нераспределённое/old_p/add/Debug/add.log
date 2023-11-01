@@ -1,0 +1,17 @@
+﻿Построение начато 09.04.2018 20:21:56.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\add\add\add.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\add.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         Для всех выходных данных обновления не требуется.
+         add.vcxproj -> D:\Учеба\Программирование\Проекты c++\add\Debug\add.exe
+       FinalizeBuildStatus:
+         Файл "Debug\add.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\add.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\add\add\add.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.10

@@ -1,0 +1,43 @@
+package com.company;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("input x, k");
+        double x;
+        int k;
+        try (Scanner sc = new Scanner(System.in)) {
+           // x = sc.nextDouble();
+            x =Double.parseDouble(sc.next());
+            k = sc.nextInt();
+        }
+        double s1 = count1(x);
+        double s2 = count2(x,k);
+
+         System.out.printf("По формуле Тейлора: %.3f\n",s2);
+         System.out.printf("По функции Math.sqrt(): %.3f\n",s1);
+
+    }
+
+
+
+private static double count2(double x, int k) {
+        double sx2 = 0;
+        double e = Math.pow((double) 10, (double) (-k));
+        double add = 1;
+        int n = 1;
+        while (Math.abs(add) >= e) {
+            sx2 = sx2 + add;
+            add = add * (-1);
+            add = add * x ;
+            add *= (double) (2 * n - 1) / (2 * n);
+            n++;
+        }
+     return sx2;
+    }
+
+ private static double count1(double x) {
+        double sx1 = Math.sqrt(1+x);
+        return 1/sx1;
+    }
+ }

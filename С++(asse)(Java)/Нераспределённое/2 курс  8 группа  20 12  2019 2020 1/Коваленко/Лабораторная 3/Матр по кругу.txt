@@ -1,0 +1,30 @@
+package com.company;
+public class Main {
+
+    public static void main(String[] args) {
+        int m=3,n=3;
+        int[][] Arr=new int[m][n];
+        int  j, k = 0, p=1;
+        while (p <= n*m) {
+            k++;
+            for (j=k-1;j<m-k+1;j++) {
+                Arr[k-1][j]=p++;
+            }
+            for (j=k;j<n-k+1;j++) {
+                Arr[j][m-k]=p++;
+            }
+            for (j=m-k-1;j>=k-1;j--) {
+                Arr[n-k][j]=p++;
+            }
+            for (j=n-k-1;j>=k;j--) {
+                Arr[j][k-1]=p++;
+            }
+        }
+        for (int l = 0; l <m ; l++) {
+            for (int o = 0; o <m ; o++) {
+                System.out.print(Arr[l][o]);
+            }
+            System.out.println(" ");
+        }
+    }
+}

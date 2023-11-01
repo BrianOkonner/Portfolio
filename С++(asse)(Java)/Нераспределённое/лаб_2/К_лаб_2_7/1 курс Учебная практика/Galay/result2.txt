@@ -1,0 +1,4 @@
+Inter chisla          povtory         sort inter chisla 
+24	3	2
+2	2	10
+10	3	24

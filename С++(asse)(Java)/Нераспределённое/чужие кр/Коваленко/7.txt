@@ -1,0 +1,50 @@
+package com.company;
+interface PlaneFigure{
+    abstract public double perim();
+    abstract  public double area();
+}
+interface Location{
+    abstract public int location(Object o);
+}
+class Circle implements PlaneFigure, Location{
+    private int x;
+    //private int y;
+    private int r;
+    Circle(int x,int y,int r){
+        this.x=x;
+        this.r=r;
+        //this.y=y;
+    }
+
+    @Override
+    public double area() {
+        return 3.14*r*r;
+    }
+
+    @Override
+    public double perim() {
+        return 2*3.14*r;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int location(Object o){
+        if(!(o instanceof Circle))
+            return 0;
+        Circle t =(Circle)o;
+        if(t.getR()+t.getX()<)
+    }
+
+}
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+    }
+}

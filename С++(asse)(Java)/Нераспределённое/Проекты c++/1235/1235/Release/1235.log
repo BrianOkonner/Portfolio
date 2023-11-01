@@ -1,0 +1,22 @@
+﻿Построение начато 15.02.2020 21:35:40.
+     1>Проект "D:\Учеба\Программирование\Проекты c++\1235\1235\1235.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Release\1235.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt 12.cpp
+         12.cpp
+       Link:
+         D:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\1235.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.lib" /MACHINE:X86 Release\12.obj
+         Создание кода
+         Создание кода завершено
+         1235.vcxproj -> D:\Учеба\Программирование\Проекты c++\1235\Release\1235.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Учеба\Программирование\Проекты c++\1235\Release\1235.exe;#1" /manifest Release\1235.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Файл "Release\1235.unsuccessfulbuild" удаляется.
+         Обращение к "Release\1235.lastbuildstate".
+     1>Построение проекта "D:\Учеба\Программирование\Проекты c++\1235\1235\1235.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.82

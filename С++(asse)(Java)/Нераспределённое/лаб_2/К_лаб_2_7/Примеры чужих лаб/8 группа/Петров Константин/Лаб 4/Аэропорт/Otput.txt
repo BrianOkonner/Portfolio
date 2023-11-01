@@ -1,0 +1,11 @@
+Отправление    Назначение     Дата           Цена             Имя комп.
+
+Minsk          Madrid         14.4           349              easyJet   
+Madrid         Moscow         27.4           1061             easyJet   
+Tokio          Madrid         22.3           558              easyJet   
+Washington     Moscow         25.3           939              easyJet   
+Moscow         Washington     18.3           1093             easyJet   
+Tokio          Washington     11.4           1808             easyJet   
+Moscow         Minsk          24.3           1069             easyJet   
+Moscow         Minsk          20.4           1961             easyJet   
+Washington     Madrid         18.4           1316             easyJet   

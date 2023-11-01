@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+import static java.lang.Math.abs;
+
+public class app3 {
+    public static void main(String[] args) {
+        System.out.println("Enter the number of terms: ");
+        Scanner scanner = new Scanner(System.in);
+        int terms = scanner.nextInt();
+
+        double pi = 0;
+        int odd = 1;
+
+        for (int n = 0; n < terms; n++) {
+            double current = 0.0;
+            if (n % 2 == 0) {
+                current = (double) -4 / odd;
+            } else {
+                current = (double) 4 / odd;
+            }
+            odd = odd + 2;
+            pi = pi + current;
+        }
+        System.out.println(abs(pi));
+    }
+}

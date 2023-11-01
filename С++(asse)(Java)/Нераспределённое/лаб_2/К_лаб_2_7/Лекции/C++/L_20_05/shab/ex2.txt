@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string.h>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+bool str_equal (const char* a_, const char* b_)
+{
+  return ::strcmp (a_, b_) == 0 ? 1 : 0;
+}
+
+const unsigned size = 5;
+char* n1[size] = { "Brett", "Graham", "Jack", "Mike", "Todd" };
+
+int main ()
+{
+  char* n2[size];
+  copy (n1, n1 + 5, n2);
+  pair <char**, char**> result;
+  result = mismatch (n1, n1+ size, n2, str_equal);
+/*
+mismatch возвращает пару итераторов i и j таких, что j == first2 + (i - first1) и i является первым итератором в диапазоне [first1, last1), для которого следующие соответствующие условия выполнены: !(*i == *(first2 + (i - first1))), binary_pred (*i, *(first2 + (i - first1))) == false. Если такой итератор i не найден, пара last1 и first2 + (last1 - first1) возвращается. Соответствующий предикат применяется, самое большее, last1 - first1 раз.
+*/
+  if (result.first == n1 + size && result.second == n2 + size)
+    cout << "n1 and n2 are the same" << endl;
+  else
+    cout << "mismatch at index: " << (result.first - n1) << endl;
+  n2[3] = "QED";
+  result = mismatch (n1, n1 + size, n2, str_equal);
+  if (result.first == n2 + size && result.second == n2 + size)
+    cout << "n1 and n2 are the same" << endl;
+  else
+    cout << "mismatch at index: " << (result.first - n1) << endl;
+  return 0;
+}

@@ -1,0 +1,106 @@
+﻿
+import java.util.Scanner;
+import java.util.Arrays;
+
+/*
+ @author fpm.pashkovs
+ */
+public class Main {
+
+    // @param args the command line arguments
+    public static int razmer(int a)
+    {
+        int i=0;
+        while(a>0)
+        {
+            a/=10;
+            i++;
+        }
+        return i;
+    }
+    public static boolean PalPosCheck(int[] arr)
+    {
+        int kolvoNech=0;
+
+        for(int i=0;i<10;i++)
+        {
+            if(arr[i]%2==1)
+                kolvoNech++;
+        }
+        return (kolvoNech>1)? false:true;
+    }
+    public static void main(String[] args)
+    {
+        int arr1[]=new int[10];
+        int num;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("ВВедите число:");
+        num=sc.nextInt();
+        int check=num;
+        while(num>0)
+        {
+            for(int i=0;i<10;i++)
+                if(num%10==i)
+                    arr1[i]++;
+            num/=10;
+        }
+        System.out.println(Arrays.toString(arr1));
+        if(PalPosCheck(arr1)==false || check%Math.pow(10,razmer(check)-1)==0)
+            System.out.println("Из числа нельзя составить палиндром!");
+        else
+        {
+            int res=0;
+            for(int i=1;i<10;i++)
+                if(arr1[i]%2==1)
+                {
+                    res*=10;
+                    arr1[i]--;
+                    res+=i;
+
+                }
+            for(int i=1;i<10;i++)
+                while(arr1[i]>0)
+                {
+                    res+=Math.pow(10, razmer(res))*i;
+                    res*=10;
+                    res+=i;
+                    arr1[i]-=2;
+                }
+            if(arr1[0]>0)
+            {
+                if(arr1[0]%2==1)
+                {
+                    int left= (int) (res/Math.pow(10,razmer(res)/2));
+                    left*=Math.pow(10,razmer(res)/2);
+                    int right= (int) (res%Math.pow(10,razmer(res)/2));
+                    left*=Math.pow(10,arr1[0]);
+                    res=left+right;
+                }
+                else if(razmer(res)%2==0)
+                {
+                    int left= (int) (res/Math.pow(10,razmer(res)/2));
+                    left*=Math.pow(10,razmer(res)/2);
+                    int right= (int) (res%Math.pow(10,razmer(res)/2));
+                    left*=Math.pow(10,arr1[0]);
+                    res=left+right;
+                }
+                else
+                {
+                    int left= (int) (res/Math.pow(10,razmer(res)/2+1));
+                    left*=Math.pow(10,razmer(res)/2+1);
+                    left*=Math.pow(10,arr1[0]/2);
+                    int a=(int)(res/Math.pow(10,razmer(res)/2))%10;
+                    a*=Math.pow(10,razmer(res)/2);
+                    left+=a;
+                    left*=Math.pow(10,arr1[0]/2);
+                    int right= (int) (res%Math.pow(10,razmer(res)/2));
+
+                    res=left+right;
+                }
+            }
+            System.out.println(res);
+
+        }
+    }
+
+}

@@ -1,0 +1,396 @@
+           package com.company;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.*;
+import java.io.*;
+
+class wrongSugar extends Exception{};
+class wrongWater extends Exception{};
+
+
+
+class Candy implements Serializable {
+    private String name;
+    private int kalor;
+    private String  type;
+    private int water;
+    private int sugar;
+    private int nutritional_value;
+    private String manufacturer;
+
+
+    public Candy(String l_name,
+                 int l_kalor,
+                 String  l_type,
+                 int l_water,
+                 int l_sugar,
+                 int l_nutritional_value,
+                 String l_manufacturer) throws wrongSugar,wrongWater
+    {
+        if(l_sugar<=0)
+        {
+            throw new wrongSugar();
+        }
+        if(l_water<=0)
+        {
+            throw new wrongWater();
+        }
+
+        this.name=l_name;
+        this.kalor=l_kalor;
+        this.type=l_type;
+        this.water=l_water;
+        this.sugar=l_sugar;
+        this.nutritional_value=l_nutritional_value;
+        this.manufacturer=l_manufacturer;
+    }
+    @Override
+    public String toString()
+    {
+        return "Название: "+this.name+" Калорийность(ккал) "+this.kalor+" Тип "+this.type+" Вода(мг) "+this.water+" Сахар(мг) "+
+                this.sugar+" Пищ.ценность "+this.nutritional_value+" Производитель "+this.manufacturer;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public int getKalor()
+    {
+        return this.kalor;
+    }
+
+    public String getType()
+    {
+        return this.type;
+    }
+
+    public int getWater()
+    {
+        return this.water;
+    }
+
+    public int getSugar()
+    {
+        return this.sugar;
+    }
+
+    public int getNutritional_value()
+    {
+        return this.nutritional_value;
+    }
+
+    public String getManufacturer()
+    {
+        return this.manufacturer;
+    }
+
+    public void setWater(int l_water)
+    {
+        this.water=l_water;
+    }
+
+    public void setSugar(int l_sugar)
+    {
+        this.sugar=l_sugar;
+    }
+}
+
+class  ListCandy implements Serializable{
+    private String name;
+    private List<Candy> lCandy;
+
+    public ListCandy(String Name)
+    {
+        name=Name;
+        lCandy=new ArrayList<>();
+    }
+
+
+    public String getname()
+    {
+        return this.name;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuffer sf=new StringBuffer();
+        for(Candy r: lCandy)
+            sf.append(r+"\n");
+        return this.name+"\n"+sf.toString();
+    }
+
+    public ListCandy addElement(Candy A)
+    {
+        lCandy.add(A);
+        return this;
+    }
+
+    public ListCandy deleteElement(Candy A)
+    {
+        lCandy.remove(A);
+        return this;
+    }
+
+    public ListCandy ChangeIndex(Candy A,int index)
+    {
+        lCandy.remove(index);
+        lCandy.add(index, A);
+        return this;
+    }
+
+    public String HaveObject(Candy A)
+    {
+        for(Candy r: lCandy)
+            if(r.equals(A))
+                return "Есть объект";
+        return "Нет объекта";
+    }
+
+
+    public void SafeToFile(String NameFile) throws Exception
+    {
+        PrintStream pv=new PrintStream(NameFile);
+        pv.println(this.name);
+        for(Candy r: lCandy){
+            pv.println(r);
+
+        }
+        pv.close();
+    }
+
+    public ListCandy newCollectionWithWater(double lWater)
+    {
+        ListCandy A=new ListCandy(this.name);
+        for(Candy r: lCandy)
+        {
+            if(r.getWater()>=lWater)
+                A.addElement(r);
+        }
+        return A;
+    }
+
+    public ListCandy newCollectionWithManufacturer(String lMan)
+    {
+        ListCandy A=new ListCandy(this.name);
+        for(Candy r: lCandy)
+        {
+            if(r.getManufacturer().equals(lMan))
+                A.addElement(r);
+        }
+        return A;
+    }
+
+    public void reversePrint()
+    {
+        ListIterator<Candy> it=lCandy.listIterator(lCandy.size());
+        while(it.hasPrevious()){
+            System.out.println(it.previous());
+        }
+    }
+
+    public void sortWithManufacturer()
+    {
+        Collections.sort(lCandy, new Comparator<Candy>()
+        {
+            @Override
+            public int compare(Candy s1, Candy s2)
+            {
+                return s1.getManufacturer().compareTo(s2.getManufacturer());
+            }
+        });
+    }
+
+    public void sortWater()
+    {
+        Collections.sort(lCandy, new Comparator<Candy>()
+        {
+            @Override
+            public int compare(Candy  s1, Candy  s2)
+            {
+                if(s1.getWater()==s2.getWater())
+                    return 0;
+                if(s1.getWater()<s2.getWater())
+                    return -1;
+                return 1;
+            }
+        });
+    }
+
+    public void sortSugar()
+    {
+        Collections.sort(lCandy, new Comparator<Candy >()
+        {
+            @Override
+            public int compare(Candy  s1, Candy  s2)
+            {
+                if(s1.getSugar()==s2.getSugar())
+                    return 0;
+                if(s1.getSugar()<s2.getSugar())
+                    return -1;
+                return 1;
+            }
+        });
+    }
+
+
+
+    public Set<String> getMatman()
+    {
+        Set<String> Origins=new HashSet<String>();
+        for(Candy s: lCandy)
+            Origins.add(s.getManufacturer());
+        return Origins;
+    }
+    public Set<String> getMattype()
+    {
+        Set<String> Origins=new TreeSet<String>();
+        for(Candy s: lCandy)
+            Origins.add(s.getType());
+        return Origins;
+    }
+
+}
+
+
+public class Main {
+
+    public static Set<String> Summa(Set<String> A,Set<String> B)
+    {
+        Set<String> Set1=new HashSet<String>();
+        for(String str1:A)
+        {
+            Set1.add(str1);
+        }
+        Set1.addAll(B);
+        return Set1;
+    }
+
+    public static Set<String> Raznica(Set<String> A,Set<String> B)
+    {
+        Set<String> Set1=new HashSet<String>();
+        Set<String> Set2=new HashSet<String>();
+        for(String st1:A)
+        {
+            Set2.add(st1);
+        }
+        Set2.removeAll(B);
+        for(String st2:Set2)
+        {
+            Set1.add(st2);
+        }
+        return Set1;
+    }
+
+
+    public static Set<String> Peresechenie(Set<String> A,Set<String> B)
+    {
+        Set<String>  Set1=new HashSet<String>();
+        Set<String>  Set2=new HashSet<String>();
+        for(String st1:A)
+        {
+            Set2.add(st1);
+        }
+        Set1=Raznica(Set2,Raznica(Summa(Set2,B),B));
+        return  Set1;
+    }
+
+    public static void main(String[] args) throws wrongSugar,wrongWater
+    {
+        try{
+            ListCandy A=new ListCandy("Новогодняя коробка конфет");
+            Candy[] List=new Candy[8];
+            List[0]=new Candy("Баунти",448,"Батончик",10,20,56,"Спартак");
+            List[1]=new Candy("Драже сахарное",393,"Драже",11,20,97,"Рошен");
+            List[2]=new Candy("Драже ореховое",548,"Драже",10,40,41,"Коммунарка");
+            List[3]=new Candy("Драже фруктово-ягодное в шоколаде",389,"Драже",18,30,73,"Коммунарка");
+            List[4]=new Candy("Жвачка",360,"Жвачка",9,30,94,"Рошен");
+            List[5]=new Candy("Жвачка без сахара",268,"Жвачка",11,1,92,"Рошен");
+            List[6]=new Candy("Ирис",400,"Ирис",10,20,83,"Спартак");
+            List[7]=new Candy("Ирис «Меллер с шоколадом»",410,"Ирис",15,20,79,"Спартак");
+
+            for(Candy r:List)
+                A.addElement(r);
+            A.SafeToFile("Output.txt");
+            System.out.println(A);
+
+            Candy C=new Candy("«Москвичка»",396,"Батончик",10,20,79,"Рошен");
+
+            System.out.println("Добавленный элемент в коллекцию: ");
+            A.addElement(C);
+            System.out.println(A);
+
+            System.out.println("Этото же элемент удаленный из коллекции: ");
+            A.deleteElement(C);
+            System.out.println(A);
+
+            System.out.println("Замена элемента коллекции по индексу: ");
+            A.ChangeIndex(C, 3);
+            System.out.println(A);
+
+            System.out.println("Проверка на элемент коллекцию: ");
+            System.out.println(A.HaveObject(C));
+
+            System.out.println("Коллекция с помощью итератора в о.п.: ");
+            A.reversePrint();
+            System.out.println(A);
+
+            System.out.println("Коллекция запис. в файл");
+            A.SafeToFile("output.txt");
+
+            System.out.println("Сформ.новая кол. по числовому типу(вода): ");
+            System.out.println(A.newCollectionWithWater(9));
+
+            System.out.println("Сформированая новая коллекция по строковому типу(производитель): ");
+            System.out.println(A. newCollectionWithManufacturer("Рошен"));
+
+            System.out.println("Сортировка по производителю: ");
+            A.sortWithManufacturer();
+            System.out.println(A);
+
+            System.out.println("Сортировка по воде: ");
+            A.sortWater();
+            System.out.println(A);
+
+            System.out.println("Сортировка по сахару: ");
+            A.sortSugar();
+            System.out.println(A);
+
+            System.out.println("Set");
+            Set<String> Hash1=new HashSet(A.getMatman());
+            Set<String> Hash2=new TreeSet(A.getMattype());
+
+            Hash1.remove("Рошен");
+            Hash2.remove("Драже");
+
+
+            System.out.println(Hash1);
+            System.out.println(Hash2);
+
+            System.out.println("Сумма: \n"+Summa(Hash1,Hash2));
+            System.out.println("Объединение: \n"+Raznica(Hash2,Hash1));
+            System.out.println("Пересечение: \n"+Peresechenie(Hash1,Hash2));
+
+
+        }
+        catch(wrongSugar e)
+        {
+            System.out.println("сахар не может быть отрицателтной");
+        }
+        catch(wrongWater e)
+        {
+            System.out.println("вода не может быть отрицательной");
+        }
+        catch(Exception e)
+        {
+            System.out.println("Ошибка");
+        }
+
+
+    }
+
+}

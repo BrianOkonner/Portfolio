@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class app2 {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input the searching range:\nfrom ");
+        int a = sc.nextInt();
+        System.out.print("to ");
+        int b = sc.nextInt();
+
+        if (a > b) {
+            System.out.println("Error: invalid range. Changing the variables");
+            int temp = a;
+            a = b;
+            b = temp;
+            System.out.println("a = " + a + ", b = " + b);
+        }
+
+        System.out.println("\nPalindromes: ");
+        for (int k = a; k <= b; k++) {
+            if (palindrom(k)) {
+                System.out.print(k + " ");
+            }
+        }
+
+        System.out.println("\n\nDouble palindromes: ");
+        for (int k = a; k <= b; k++) {
+            if (palindrom(k) && palindrom(k * k)) {
+                System.out.println(k + " && " + k * k);
+            }
+        }
+    }
+
+    public static boolean palindrom(int n) {
+        int n1 = n;
+        int k = 0;
+
+        while (n1 != 0) {
+            int ost = n1 % 10;
+            k = k * 10 + ost;
+            n1 = n1 / 10;
+        }
+        return n == k;
+    }
+}

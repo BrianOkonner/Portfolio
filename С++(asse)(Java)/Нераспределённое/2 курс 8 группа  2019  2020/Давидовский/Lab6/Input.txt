@@ -1,0 +1,5 @@
+Davidovski Nikita Sergeevich, 2001, town, gymnasium, 9, 8, 8 
+Ragulya Nikita Antonovich, 2000, town, gymnasium, 7, 6, 6 
+Turuto Aleksey Petrovich, 2001, town, gymnasium, 9, 8, 8 
+Cheliadinskiy Ivan Jmyhovich, 2000, town, lyceum, 8, 8, 7 
+Valera Jmyhov Petrovich, 1999, countryside, school, 10, 10, 10 

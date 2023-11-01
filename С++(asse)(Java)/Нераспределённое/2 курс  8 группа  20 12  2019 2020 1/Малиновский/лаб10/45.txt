@@ -1,0 +1,343 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package green;
+
+/**
+ *
+ * @author lesha
+ */
+//    @Override
+//    public int compareTo(Simpson simpson) {
+//        return this.name.compareTo(simpson.name);
+//    }
+//String fileName = "C:\data_dir\data_file.txt";
+//if ((new File(fileName)).exists()) {
+//	// существует
+//} else {
+//	// не существует
+//}
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.io.*;
+import java.util.*;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.HashSet;
+ class Comparer_size implements Comparator <Flower>
+    {
+         public int compare(Flower a, Flower b)
+    {
+        if(a.size == b.size)
+            return 0;
+        if(a.size > b.size)
+            return -1;
+        return 1;
+    }
+    }
+class Comparer_name implements Comparator<Flower> {
+
+    public int compare(Flower a, Flower b) {
+        return a.getName().compareTo(b.getName());
+    }
+}
+
+enum Soil {
+    podzolic, grunt, drevn_podzolic;
+
+}
+
+enum Light {
+
+    photophilous, not_photophilous;
+}
+
+enum Multiplying {
+    leaves, stalk, seeds;
+}
+
+class Flower {
+
+    protected final int id;
+    protected final String name;
+    protected final String origin;
+    protected final Soil soil;
+    protected final String color_stem;
+    protected final String color_leaves;
+    protected final int size;
+    protected final int tempriture;
+    protected final Light light;
+    protected final int watering;
+    protected final Multiplying multiplying;
+    protected static int count = 0;
+
+    public Flower(String name, String origin, Soil soil, String color_stem, String color_leaves, int size, int tempriture, Light light, int watering, Multiplying multiplying) {
+        count++;
+        this.id = count;
+        this.name = name;
+        this.origin = origin;
+        this.soil = soil;
+        this.color_stem = color_stem;
+        this.color_leaves = color_leaves;
+        this.size = size;
+        this.tempriture = tempriture;
+        this.light = light;
+        this.watering = watering;
+        this.multiplying = multiplying;
+
+    }
+
+    @Override
+    public String toString() {
+        return "id = " + id + " " + "name = " + name + " " + "origin = " + origin + " " + "color_stem = " + color_stem + " " + "soil = " + soil + " "
+                + "color_leaves= " + color_leaves + " " + "size = " + size + " " + "tempriture = " + tempriture + " " + "light = " + light + " " + "watering = " + watering + " multiplying = " + multiplying;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Greenhouse {
+
+    protected final String name;
+    protected final String adres;
+    protected final ArrayList<Flower> flowers;
+
+    public Greenhouse(String name, String adres) {
+        this.name = name;
+        this.adres = adres;
+        this.flowers = new ArrayList<>();
+    }
+
+    public Greenhouse(String name, String adres, ArrayList<Flower> flowers) {
+        this.name = name;
+        this.adres = adres;
+        this.flowers = new ArrayList<>(flowers);
+
+    }
+
+    public Greenhouse(Greenhouse x) {
+        this.name = x.name;
+        this.adres = x.adres;
+        this.flowers = new ArrayList<>(x.flowers);
+    }
+
+    public void sort1() {
+        Collections.sort(this.flowers, new Comparer_name());
+    }
+
+    public Greenhouse remove_el(int x) {
+        Greenhouse greenhouse2 = new Greenhouse(this);
+        greenhouse2.flowers.remove(x);
+        return greenhouse2;
+    }
+
+    public Greenhouse add_el(Flower x) {
+        Greenhouse greenhouse2 = new Greenhouse(this);
+        greenhouse2.flowers.add(x);
+        return greenhouse2;
+    }
+    @Override
+    public String toString() {
+         StringBuffer sb = new StringBuffer();
+                for(int i =0;i< flowers.size();i++)
+                {
+                    sb.append("\n");
+                    sb.append(i+1 + ". ");
+                    sb.append(flowers.get(i));
+                }
+                return sb.toString();
+    }
+    public Greenhouse set_el(int x1,Flower x2)
+    {
+        Greenhouse greenhouse2 = new Greenhouse(this);
+        greenhouse2.flowers.set(x1, x2);
+        return greenhouse2;
+        
+    }
+    public String get_adres()
+    {
+        return this.adres;
+    }
+    public Greenhouse set_adres(String x)
+    {
+       Greenhouse greenhouse2 = new Greenhouse(this.name, x, this.flowers);
+        return greenhouse2;
+      
+    }
+
+public void sortbyname()
+              {
+                  Collections.sort(this.flowers, new Comparer_name());
+              }
+public void sortbysize()
+              {
+                  Collections.sort(this.flowers, new Comparer_size());
+              }
+public EnumSet enumset(String s)
+{
+    if(s.equals("soil"))
+    {
+        EnumSet<Soil> set = EnumSet.noneOf(Soil.class);
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).soil);
+        }
+        return set;
+    }
+    if(s.equals("light"))
+    {
+        EnumSet<Light> set = EnumSet.noneOf(Light.class);
+          for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).light);
+        }
+        return set;
+    }
+    if(s.equals("multiplying"))
+    {
+        EnumSet<Multiplying> set = EnumSet.noneOf(Multiplying.class);
+          for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).multiplying);
+        }
+        return set;
+    }
+    return null;
+}
+public HashSet hashset(String s)
+{
+    if(s.equals("name"))
+    {
+        HashSet<String> set = new HashSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).name);
+        }
+        return set;
+    }
+    if(s.equals("origin"))
+    {
+        HashSet<String> set=   new HashSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).origin);
+        }
+        return set;
+    }
+    if(s.equals("color_stem"))
+    {
+     HashSet<String> set = new HashSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).color_stem);
+        }
+        return set;
+    }
+       if(s.equals("color_leaves"))
+    {
+     HashSet<String> set = new HashSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).color_leaves);
+        }
+        return set;
+    }
+    return null;
+}
+public TreeSet treeset(String s)
+{
+    if(s.equals("name"))
+    {
+        TreeSet<String> set = new TreeSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).name);
+        }
+        return set;
+    }
+    if(s.equals("origin"))
+    {
+        TreeSet<String> set = new TreeSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).origin);
+        }
+        return set;
+    }
+    if(s.equals("color_stem"))
+    {
+     TreeSet<String> set = new TreeSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).color_stem);
+        }
+        return set;
+    }
+       if(s.equals("color_leaves"))
+    {
+     TreeSet<String> set = new TreeSet<String>();
+        for(int i =0;i<flowers.size();i++)
+        {
+            set.add(flowers.get(i).color_leaves);
+        }
+        return set;
+    }
+    return null;
+}
+
+}
+
+public class Green {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+        // TODO code application logic here
+        Greenhouse g = new Greenhouse("Зелёное", "Пушкинская, 6");//Формируем коллекцию
+        FileInputStream ifr = new FileInputStream("input.txt");
+        System.setProperty("console.encoding", "Cp1251");
+        Scanner sr = new Scanner(ifr, "Cp1251");
+//String name, String origin, Soil soil, String color_stem, String color_leaves, int size, int tempriture, Light light, int watering, Multiplying multiplying
+        PrintStream pw = new PrintStream("output.txt");
+        while (sr.hasNext()) {
+            String str = sr.nextLine();
+            String a[] = str.split(" ");
+            String name = a[0];
+            String origin = a[1];
+            Soil soil = Soil.valueOf(a[2]);                     //Читаем из файла
+            String color_stem = a[3];
+            String color_leaves = a[4];
+            int size = Integer.parseInt(a[5]);
+            int tempriture = Integer.parseInt(a[6]);
+            Light light = Light.valueOf(a[7]);
+            int watering = Integer.parseInt(a[8]);
+            Multiplying multiplying = Multiplying.valueOf(a[9]);
+            Flower f = new Flower(name, origin,soil, color_stem,color_leaves, size, tempriture, light, watering, multiplying);
+            g = g.add_el(f);// добавляем элементы в коллекцию
+
+        }
+        System.out.println(g.toString());//Вывод коллекции
+        g = g.remove_el(0);//убираем первый элемент из коллекции
+         Flower f = new Flower("non", "knkn", Soil.grunt, "jnik","fvv", 45, 0, Light.photophilous, 8,Multiplying.stalk);
+        System.out.println(g.toString());
+        g = g.set_el(0, f);// Заменяем первый элемент
+        g = g.set_adres("Пушкинская, 10");
+        g.sortbyname();
+        g.sortbysize();
+        HashSet<String> set1 = g.hashset("name");
+        HashSet<String> set5 = g.hashset("name");
+        TreeSet<String> set2 = g.treeset("name");
+        EnumSet<Soil> set3 = g.enumset("soil");
+       set1.addAll(set2);
+       set1.removeAll(set3);
+        System.out.println(g.toString());
+
+    }
+
+}
